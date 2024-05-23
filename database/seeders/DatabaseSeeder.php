@@ -3,8 +3,10 @@
 namespace Database\Seeders;
 
 use Database\Factories\ClientFactory;
+use Database\Factories\LogsFactory;
 use Database\Factories\PaymentFactory;
 use Database\Factories\ReservationFactory;
+use Database\Factories\UserFactory;
 use Database\Factories\VenueFactory;
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\DB;
@@ -21,8 +23,10 @@ class DatabaseSeeder extends Seeder
     {
         $this->seedVenues();
         $this->seedClients();
+        $this->seedUsers();
         $this->seedReservations();
         $this->seedPayments();
+        $this->seedLogs();
         DB::table('users')->insert([
             'username' => 'admin',
             'first_name' => 'Admin',
@@ -39,6 +43,9 @@ class DatabaseSeeder extends Seeder
     public function seedClients() {
         (new ClientFactory())->count(50)->create();
     }
+    public function seedUsers() {
+        (new UserFactory())->count(20)->create();
+    }
 
     public function seedReservations() {
         (new ReservationFactory())->count(50)->create();
@@ -46,4 +53,9 @@ class DatabaseSeeder extends Seeder
     public function seedPayments() {
         (new PaymentFactory())->count(50)->create();
     }
+    public function seedLogs() {
+        (new LogsFactory())->count(50)->create();
+    }
+
+
 }

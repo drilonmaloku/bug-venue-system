@@ -27,12 +27,21 @@ class UsersService
      *
      * @return \Illuminate\Database\Eloquent\Collection The collection of users with admin or super-admin roles.
      */
-    public function getAll(){
+    public function getAll($request){
         $query = User::query();
-        $query->whereHas("roles", function ($query) {
-            $query->whereIn("name", ["admin","super-admin"]);
-        });
-        return $query->orderBy('id', 'desc')->get();
+        if ($request->has("search")) {
+            $searchTerm = '%' . $request->input("search") . '%';
+
+            $query->where(function ($subquery) use ($searchTerm) {
+                $subquery->where('first_name', 'LIKE', $searchTerm)
+                    ->orWhere('email', 'LIKE', $searchTerm)
+                    ->orWhere('last_name', 'LIKE', $searchTerm)
+                    ->orWhere('username', 'LIKE', $searchTerm);
+            });
+        }
+    
+
+        return $query->paginate(50);
     }
 
      /**
@@ -49,6 +58,7 @@ class UsersService
         $usersQuery
             ->where(function ($query) use ($search) {
                 $query
+                ->where("username", "like", "%" . $search . "%")
                     ->where("first_name", "like", "%" . $search . "%")
                     ->where("last_name", "like", "%" . $search . "%")
                     ->orWhere("email", "like", "%" . $search . "%");
@@ -150,23 +160,20 @@ class UsersService
     /**
      * Store a new user based on the provided request data.
      *
-     * @param array $request The request data containing information for the new user.
+     * 
      * @return User|null The newly created user instance, or null if creation fails.
      */
     public function store($request) {
-        $password = data_get($request, "generate_password") ? bcrypt(Str::random(10)) : bcrypt(data_get($request, "password"));
         $user =  (new User)->create([
-            "first_name" => data_get($request, "first_name"),
-            "last_name" => data_get($request, "last_name"),
-            "email" => data_get($request, "email"),
-            "phone" => data_get($request, "phone"),
-            "password" => $password
-            ]);
-        if($user){
-            $user->assignRole(data_get($request, "role"));
-            $user->setUserMeta('terms_of_use_accepted',null);
-            return $user;
-        }
+            "username" => $request->input("username"),
+            "first_name" => $request->input("first_name"),
+            "last_name" => $request->input("last_name"),
+            "email" => $request->input("email"),
+            "phone" => $request->input("phone"),
+            "password" => Hash::make($request->input("password")),
+            ]
+        );
+        return $user;
     }
 
 
@@ -252,5 +259,30 @@ class UsersService
         Storage::deleteDirectory("public/staff-files/user/{$user->id}");
         return $user->forceDelete();
     }
+
+
+
+    /**
+     * Updates existing client
+     **/
+    public function update($request, User $user) {
+        $user->first_name = $request->input('first_name');
+        $user->last_name = $request->input('last_name');
+        $user->email = $request->input('email');
+        $user->phone = $request->input('phone');
+
+        $clientSaved = $user->save();
+
+        if($clientSaved){
+            $this->logService->log([
+                'message' => 'User was updated successfully',
+                'context' => Log::LOG_CONTEXT_USERS,
+                'ttl'=> Log::LOG_TTL_THREE_MONTHS,
+            ]);
+        }
+
+        return $user;
+    }
+
 
 }

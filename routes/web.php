@@ -28,8 +28,8 @@ use App\Http\Controllers\RegisterController;
 use App\Http\Controllers\LoginController;
 use App\Http\Controllers\UserProfileController;
 use App\Http\Controllers\ResetPassword;
-use App\Http\Controllers\ChangePassword;            
-            
+use App\Http\Controllers\ChangePassword;
+use App\Modules\Users\Controllers\UsersController;
 
 Route::get('/', function () {return redirect('/dashboard');})->middleware('auth');
 	Route::get('/register', [RegisterController::class, 'create'])->middleware('guest')->name('register');
@@ -74,7 +74,11 @@ Route::group(['middleware' => 'auth'], function () {
     Route::get('/reservations/create', [ReservationsController::class, 'create'])->name('reservations.create');
     Route::post('/reservations', [ReservationsController::class, 'store'])->name('reservations.store');
 
+    Route::get('/reservation/{id}', [ReservationsController::class, 'view'])->name('reservation.view');
+
     Route::get('/payments', [PaymentsController::class, 'index'])->name('payments.index');
+    Route::get('/payments/{id}', [PaymentsController::class, 'view'])->name('payments.view');
+
 
     Route::get('/profile-static', [PageController::class, 'profile'])->name('profile-static');
     Route::get('/sign-in-static', [PageController::class, 'signin'])->name('sign-in-static');
@@ -84,7 +88,14 @@ Route::group(['middleware' => 'auth'], function () {
 
 
 
-
+Route::group(['middleware' => 'auth'], function () {
+    Route::get('/users', [UsersController::class, 'index'])->name('users.index');
+    Route::get('/users/create', [UsersController::class, 'create'])->name('users.create');
+    Route::post('/users-store', [UsersController::class, 'store'])->name('users.store');
+    Route::get('/users/{id}', [UsersController::class, 'view'])->name('users.view');
+    Route::get('/users/{id}/edit', [UsersController::class, 'edit'])->name('users.edit');
+    Route::put('/users/{id}/update', [UsersController::class, 'update'])->name('users.update');
+});
 
 Route::group(['middleware' => 'auth'], function () {
     Route::get('/logs', [LogsController::class, 'index'])->name('logs.index');

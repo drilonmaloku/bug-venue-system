@@ -60,7 +60,7 @@ class PaymentsController extends Controller
             return abort(404);
         }
 
-        return view('pages/payments/single', [
+        return view('pages/payments/show', [
             'payment' => $payment
         ]);
     }

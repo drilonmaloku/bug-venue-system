@@ -43,7 +43,7 @@
                     @foreach($logs as $log)
                         <tr>
                             <td>
-                                {{$log->user->firstname}} {{$log->user->lastname}}
+                               <a class="hubers-link" href="{{route('users.view',['id'=>$log->user->id])}}"> {{$log->user->first_name}} {{$log->user->last_name}}</a>
                             </td>
                             <td>
                                 {{$log->created_at->format('d-m-Y H:i')}}

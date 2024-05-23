@@ -3,6 +3,7 @@
 namespace Database\Factories;
 
 use App\Models\User;
+use App\Modules\Logs\Models\Log;
 use Illuminate\Database\Eloquent\Factories\Factory;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Str;
@@ -10,7 +11,7 @@ use Illuminate\Support\Str;
 /**
  * @extends \Illuminate\Database\Eloquent\Factories\Factory<\App\Models\User>
  */
-class UserFactory extends Factory
+class LogsFactory extends Factory
 {
     /**
      * The current password being used by the factory.
@@ -22,20 +23,24 @@ class UserFactory extends Factory
      *
      * @return array<string, mixed>
      */
-    protected $model = User::class;
 
+     protected $model = Log::class;
     public function definition(): array
     {
-        return [
-            'username' => fake()->name(),
-            'first_name' => fake()->name(),
-            'last_name' => fake()->name(),
-            'email' => fake()->unique()->safeEmail(),
-            'phone' => fake()->phoneNumber(),
-
-            'email_verified_at' => now(),
-            'password' => static::$password ??= Hash::make('password'),
-            'remember_token' => Str::random(10),
+        $user = (new UserFactory)->create();
+        $user = User::find($user->id);
+        
+        return [            
+            "user_id" =>  $user,
+            "updated_data" => $this->faker->sentence,
+            "updated_at" => $this->faker->dateTimeThisMonth,
+            "ttl" => $this->faker->numberBetween(0, 3),
+            "previous_data" => $this->faker->sentence,
+            "message" => $this->faker->sentence,
+            "keep_alive" => $this->faker->boolean,
+            "deletes_at" => $this->faker->dateTimeThisYear,
+            "created_at" => $this->faker->dateTimeThisMonth,
+            "context" => $this->faker->numberBetween(1, 4),
         ];
     }
 

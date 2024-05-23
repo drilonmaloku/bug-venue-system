@@ -32,7 +32,7 @@ class PaymentsService
      * @param int|array $id
      **/
     public function getByID($id){
-        return Venue::find($id);
+        return Payment::find($id);
     }
 
     /**
