@@ -169,27 +169,6 @@ class UsersService
         }
     }
 
-    /**
-     * Update the account status of multiple users.
-     *
-     * @param object $request The request data containing user IDs and the new status.
-     * @return void
-     */
-    public function updateUserAccountStatus($request)
-    {
-       (new User)->whereIn("id", data_get($request, "users"))
-            ->update([
-                "is_enabled" => $request['status'],
-            ]);
-
-        $log = $this->logService->store([
-            "message" => auth()->user()->name . " changed status for users with id "
-                . implode(", ", data_get($request, "users")) . " to " . $request->status,
-            "context" => Log::LOG_CONTEXT_USERS,
-            "ttl" => Log::LOG_TTL_THREE_MONTHS,
-            "keep_alive" => Log::LOG_TTL_DESTROY,
-        ]);
-    }
 
     /**
      * Delete a user and log the action.

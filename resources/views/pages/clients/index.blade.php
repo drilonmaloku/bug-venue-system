@@ -62,7 +62,7 @@
             </div>
         @else
             <div class="hubers-empty-tab">
-                @if (request()->has('search'))
+                @if ($is_on_search)
                     <h5 class="text-center">Nuk ka klienta sipas search</h5>
                     @else
                     <h5 class="text-center">Nuk ka klienta momentalisht</h5>

@@ -28,8 +28,8 @@ class LogsController extends Controller
     {
         $logs = $this->logService->getAll($request);
 
-
         return view('pages/logs/index',[
+            'is_on_search'=>count($request->all()),
             'logs'=>$logs
         ]);
 

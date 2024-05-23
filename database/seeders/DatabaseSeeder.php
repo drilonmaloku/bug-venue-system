@@ -25,8 +25,8 @@ class DatabaseSeeder extends Seeder
         $this->seedPayments();
         DB::table('users')->insert([
             'username' => 'admin',
-            'firstname' => 'Admin',
-            'lastname' => 'Admin',
+            'first_name' => 'Admin',
+            'last_name' => 'Admin',
             'email' => 'admin@argon.com',
             'password' => bcrypt('secret')
         ]);

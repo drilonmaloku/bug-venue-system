@@ -142,30 +142,6 @@ class UsersController extends Controller
     }
 
     /**
-     * Update the account status of multiple users.
-     *
-     * @param Request $request The HTTP request object containing user IDs and new status.
-     * @return JsonResponse|Response A JSON response or HTTP response indicating the success of the operation.
-     */
-    public function userStatus(Request $request)
-    {
-        $request->validate([
-            "users" => "required|array",
-            "users.*" => "exists:users,id",
-            "users.*" => "prohibited_if:users.*," . auth()->id(),
-            "status" => "required",
-        ],
-        [
-            'users.*.prohibited_if' => 'You cannot change you status.',
-        ]);
-
-        $user = $this->usersService->updateUserAccountStatus($request);
-
-        if (! $request->header("x-inertia")) {
-            return response()->json(["users" => data_get($request, "users")], JsonResponse::HTTP_OK);
-        }
-    }
-    /**
      * Generate a signed URL for setting up password and return a response.
      *
      * @return Response
