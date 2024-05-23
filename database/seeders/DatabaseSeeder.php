@@ -27,13 +27,6 @@ class DatabaseSeeder extends Seeder
         $this->seedReservations();
         $this->seedPayments();
         $this->seedLogs();
-        DB::table('users')->insert([
-            'username' => 'admin',
-            'first_name' => 'Admin',
-            'last_name' => 'Admin',
-            'email' => 'admin@argon.com',
-            'password' => bcrypt('secret')
-        ]);
     }
 
     public function seedVenues() {
@@ -43,16 +36,26 @@ class DatabaseSeeder extends Seeder
     public function seedClients() {
         (new ClientFactory())->count(50)->create();
     }
+
     public function seedUsers() {
         (new UserFactory())->count(20)->create();
+        DB::table('users')->insert([
+            'username' => 'admin',
+            'first_name' => 'Admin',
+            'last_name' => 'Admin',
+            'email' => 'admin@argon.com',
+            'password' => bcrypt('secret')
+        ]);
     }
 
     public function seedReservations() {
         (new ReservationFactory())->count(50)->create();
     }
+
     public function seedPayments() {
         (new PaymentFactory())->count(50)->create();
     }
+
     public function seedLogs() {
         (new LogsFactory())->count(50)->create();
     }
