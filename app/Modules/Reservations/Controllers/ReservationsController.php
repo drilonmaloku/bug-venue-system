@@ -49,22 +49,40 @@ class ReservationsController extends Controller
         ]);
     }
 
+
+
+
+
     public function view($id)
     {
-
-        $client = $this->venuesService->getByID($id);
-        if(is_null($client)) {
+        $reservations = $this->venuesService->getByID($id);
+        if(is_null($reservations)) {
             return abort(404);
         }
-
-        return Inertia::render(
-            "Clients/Single",
-            [
-                "client" => ClientViewResource::make($client),
-                "contact_persons" => ContactPersonResource::collection($client->contactPersons),
-            ]
-        );
+        return view('pages/reservations/show',[
+            'reservations'=>$reservations
+        ]);
     }
+
+
+
+
+    // public function view($id)
+    // {
+
+    //     $client = $this->venuesService->getByID($id);
+    //     if(is_null($client)) {
+    //         return abort(404);
+    //     }
+
+    //     return Inertia::render(
+    //         "Clients/Single",
+    //         [
+    //             "client" => ClientViewResource::make($client),
+    //             "contact_persons" => ContactPersonResource::collection($client->contactPersons),
+    //         ]
+    //     );
+    // }
 
     public function store(Request $request) {
         $clientData = [

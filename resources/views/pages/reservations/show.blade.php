@@ -1,7 +1,7 @@
 @extends('layouts.app')
 
 @section('header')
-   Pagesa : {{$payment->id}}
+   Rezervimi : {{$reservations->name}}
 @endsection
 @section('content')
     <div class="vms_panel">
@@ -16,20 +16,16 @@
                     </thead>
                     <tbody>
                     <tr>
-                        <td>Klienti</td>
-                        <td>{{ $payment->client->name}}</td>
+                        <td>Venue</td>
+                        <td>{{ $reservations->name }}</td>
                     </tr>
                     <tr>
-                        <td>Rezervimi</td>
-                        <td>{{ $payment->reservation->description}}</td>
+                        <td>Decription</td>
+                        <td>{{ $reservations->description }}</td>
                     </tr>
                     <tr>
-                        <td>Vlera</td>
-                        <td>{{ $payment->value }}</td>
-                    </tr>
-                    <tr>
-                        <td>Notes</td>
-                        <td>{{ $payment->notes }}</td>
+                        <td>Kapaciteti</td>
+                        <td>{{ $reservations->capacity}}</td>
                     </tr>
                     </tbody>
                 </table>

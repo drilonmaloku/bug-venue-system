@@ -3,6 +3,7 @@
 declare(strict_types=1);
 
 namespace App\Modules\Users\Controllers;
+use Inertia\Inertia;
 
 use App\Models\User;
 use App\Modules\Logs\Models\Log;
@@ -45,12 +46,47 @@ class UsersController extends Controller
      *
      * @return Response The rendered view displaying the users.
      */
-    public function index(){
-        $users = $this->usersService->getAll();
-        return Inertia::render('Users/Users',[
-            'users' => UserListResource::collection($users)
+    public function index(Request $request){
+        // $users = $this->usersService->getAll();
+
+        $users = $this->usersService->getAll($request);
+
+        return view('pages/users/index',[
+            'is_on_search'=>count($request->all()),
+            'users'=>$users
         ]);
     }
+
+
+
+    public function view($id)
+    {
+        $users = $this->usersService->getByID($id);
+        if(is_null($users)) {
+            return abort(404);
+        }
+        return view('pages/users/show',[
+            'users'=>$users
+        ]);
+    }
+
+    public function edit($id)
+    {
+        $user = $this->usersService->getByID($id);
+        if(is_null($user)) {
+            return abort(404);
+        }
+        return view('pages/users/edit',[
+            'user'=>$user
+        ]);
+    }
+
+
+    public function create()
+    {
+        return view('pages/users/create');
+    }
+
 
 
     /**
@@ -61,7 +97,8 @@ class UsersController extends Controller
      */
     public function store(CreateUserRequest $request)
     {
-        $user = $this->usersService->store($request->all());
+
+        $user = $this->usersService->store($request);
 
         if($user) {
              $this->logService->log([
@@ -70,13 +107,22 @@ class UsersController extends Controller
             'ttl'=> Log::LOG_TTL_SIX_MONTHS
        ]);
         }
-        return response()->json(
-            [
-                "message" => "User was created successfully",
-                "data" => UserListResource::make($user)
-            ],
-            JsonResponse::HTTP_OK);
+        return redirect()->to('users');
     }
+
+    // public function store(Request $request) {
+    //     $venue = $this->venuesService->store($request);
+
+    //     return redirect()->to('venues');
+    //     try {
+
+
+    //     } catch (\Exception $e) {
+    //         return response()->json([
+    //             'message' => 'Internal Server Error'
+    //         ], 500);
+    //     }
+    // }
 
     /**
      * Display the specified user.
@@ -142,30 +188,6 @@ class UsersController extends Controller
     }
 
     /**
-     * Update the account status of multiple users.
-     *
-     * @param Request $request The HTTP request object containing user IDs and new status.
-     * @return JsonResponse|Response A JSON response or HTTP response indicating the success of the operation.
-     */
-    public function userStatus(Request $request)
-    {
-        $request->validate([
-            "users" => "required|array",
-            "users.*" => "exists:users,id",
-            "users.*" => "prohibited_if:users.*," . auth()->id(),
-            "status" => "required",
-        ],
-        [
-            'users.*.prohibited_if' => 'You cannot change you status.',
-        ]);
-
-        $user = $this->usersService->updateUserAccountStatus($request);
-
-        if (! $request->header("x-inertia")) {
-            return response()->json(["users" => data_get($request, "users")], JsonResponse::HTTP_OK);
-        }
-    }
-    /**
      * Generate a signed URL for setting up password and return a response.
      *
      * @return Response
@@ -211,23 +233,23 @@ class UsersController extends Controller
         return redirect()->route("profile.show");
     }
 
-    /**
-     * Edit user information.
-     *
-     * @param User $user
-     * @return JsonResponse
-     */
-    public function edit(User $user)
-    {
-        $userCollect = new User([
-            "id" => $user->id,
-            "name" => $user->name,
-            "email" => $user->email,
-            "phone" => $user->phone,
-        ]);
+    // /**
+    //  * Edit user information.
+    //  *
+    //  * @param User $user
+    //  * @return JsonResponse
+    //  */
+    // public function edit(User $user)
+    // {
+    //     $userCollect = new User([
+    //         "id" => $user->id,
+    //         "first_name" => $user->first_name,
+    //         "last_name" => $user->last_name,
+    //         "email" => $user->email,
+    //     ]);
 
-        return response()->json($userCollect, JsonResponse::HTTP_OK);
-    }
+    //     return response()->json($userCollect, JsonResponse::HTTP_OK);
+    // }
 
     /**
      * Update user information.
@@ -236,37 +258,26 @@ class UsersController extends Controller
      * @param User $user
      * @return JsonResponse
      */
-    public function update(UpdateUserRequest $request, User $user)
-    {
-        $previousData = ['Name' => $user->name,'Email' => $user->email];
-        $user->fill($request->validated());
 
-        $userSaved = $user->save();
-       
-   
+     public function update(Request $request,$id) {
+        $client = $this->usersService->getByID($id);
 
-
-        if($userSaved) {
-             $this->logService->log([
-            'message' => 'The user is updated',
-            'previous_data' => json_encode($previousData),
-            'updated_data' => json_encode(['Name' => $user->name, 'Email' => $user->email]),
-            'context' => Log::LOG_CONTEXT_CLIENTS,
-            'ttl'=> Log::LOG_TTL_THREE_MONTHS
-       ]);
+        if(is_null($client)) {
+            return abort(404);
         }
 
+        try {
 
-        return response()->json(
-            [
-                "data" => UserListResource::make($user),
-                "message" => "User has been updated succesfully"
+            $client = $this->usersService->update($request,$client);
 
-            ],
-            JsonResponse::HTTP_OK
-        );
+            return redirect()->to('users');
+
+        } catch (\Exception $e) {
+            return response()->json([
+                'message' => 'Internal Server Error'
+            ], 500);
+        }
     }
-
     /**
      * Export users to Excel.
      *

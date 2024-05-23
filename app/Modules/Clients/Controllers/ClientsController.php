@@ -39,6 +39,7 @@ class ClientsController extends Controller
         $clients = $this->clientsService->getAll($request);
 
         return view('pages/clients/index',[
+            'is_on_search'=>count($request->all()),
             'clients'=>$clients
         ]);
     }

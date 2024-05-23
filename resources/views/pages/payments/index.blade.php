@@ -25,9 +25,11 @@
                     <tbody>
                     @foreach($payments as $payment)
                         <tr>
+                          
+
                             <td>
-                                {{$payment->client->name}}
-                            </td>
+                                <a class="hubers-link" href="{{route('clients.view',['id'=>$payment->client->id])}}"> {{$payment->client->name}} </a>
+                             </td>
                             <td>
                                 {{$payment->value}}
                             </td>
@@ -38,11 +40,11 @@
                                {{$payment->notes}}
                             </td>
                             <td>
-                                {{--                                                <div class="d-flex px-3">--}}
-                                {{--                                                    <a href="{{route('venues.view',['id'=>$reservation->id])}}">--}}
-                                {{--                                                        <i class="fa fa-eye"></i>--}}
-                                {{--                                                    </a>--}}
-                                {{--                                                </div>--}}
+                                                                               <div class="d-flex px-3">
+                                                                                   <a href="{{route('payments.view',['id'=>$payment->id])}}">
+                                                                                       <i class="fa fa-eye"></i>
+                                                                                   </a>
+                                                                               </div>
                             </td>
                         </tr>
                     @endforeach

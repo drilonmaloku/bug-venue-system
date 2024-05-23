@@ -1,7 +1,6 @@
 @extends('layouts.app')
 @section('header')
     Sallat
-
 @endsection
 @section('header-actions')
     <a class="hubers-btn" href="{{route('venues.create')}}">Krijo</a>

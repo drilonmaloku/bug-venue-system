@@ -47,7 +47,7 @@
                         <li><a href="{{route('reservations.index')}}">Rezervimet</a></li>
                         <li><a href="{{route('payments.index')}}">Pagesat</a></li>
                         <li><a href="{{route('clients.index')}}">Klientat</a></li>
-                        <li><a href="{{route('reservations.index')}}">Perdoruesit</a></li>
+                        <li><a href="{{route('users.index')}}">Perdoruesit</a></li>
                         <li><a href="{{route('venues.index')}}">Raportet</a></li>
                         <li><a href="{{route('venues.index')}}">Sallat</a></li>
                         <li><a href="{{route('logs.index')}}">Aktiviteti</a></li>

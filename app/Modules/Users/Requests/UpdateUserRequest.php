@@ -18,7 +18,7 @@ class UpdateUserRequest extends FormRequest
         return [
             "first_name" => "nullable|string|max:255",
             "last_name" => "nullable|string|max:255",
-            "email" => "nullable|email|unique:users,email," . $this->user->id,
+            "email" => "nullable|email|unique:users,email",
             "phone" => "nullable|string|max:255",
             "attributes" => "nullable|json"
         ];

@@ -20,7 +20,9 @@
                         </tr>
                         <tr>
                             <td>Perdoruesi</td>
-                            <td>{{ $log->user->firstanme }} {{ $log->user->lastname }}</td>
+                            <td>
+                                <a class="hubers-link" href="{{route('users.view',['id'=>$log->user->id])}}"> {{$log->user->first_name}} {{$log->user->last_name}}</a>
+                             </td>
                         </tr>
                         <tr>
                             <td>Konteksti</td>

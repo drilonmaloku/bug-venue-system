@@ -72,8 +72,8 @@ class LogService
         if(!empty($request->input('date'))) {
             $query->whereDate('created_at', $request->input('date'));
         }
-        if(!empty($request->input('message'))) {
-            $query->where('message','like', '%' . $request->input('message') . '%');
+        if(!empty($request->input('search'))) {
+            $query->where('message','like', '%' . $request->input('search') . '%');
         }
         return $query->orderBy('id', 'desc')->with('user')->paginate($perPage);
 
