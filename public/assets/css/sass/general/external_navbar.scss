@@ -1,0 +1,25 @@
+.hubers-external-nav {
+  box-shadow: 0 2px 6px rgba(0,0,0,.2);
+  background: white;
+  height: 80px;
+  display: flex;
+  align-items: center;
+  .hubers-external-nav-items {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+  .hubers-external-nav-list {
+    display: flex;
+    li {
+      margin-right: 24px;
+      &.active {
+        font-weight: bold;
+        text-decoration: underline;
+      }
+      &:last-child {
+        margin-right: 0;
+      }
+    }
+  }
+}

@@ -1,0 +1,105 @@
+.hubers-pagination {
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  padding: 16px;
+  .hubers-pagination-items {
+    display: flex;
+    align-items: center;
+    .hubers-pagination-items-arrow {
+      &.prev {
+        transform: rotate(180deg);
+        margin-right: 16px;
+      }
+      &.next {
+        margin-left: 16px;
+        margin-right: 16px;
+      }
+      &.disabled {
+        opacity: 0.3;
+      }
+    }
+    .hubers-pagination-items-pages {
+      display: flex;
+      .hubers-pagination-items-pages-item {
+        border-radius: 4px;
+        padding: 4px 8px;
+        margin-right: 4px;
+        font-weight: 600;
+        font-size: 18px;
+        line-height: 22px;
+        transition: all .3s ease;
+        border: 1px solid white;
+        &:not(.disabled) {
+          cursor: pointer;
+        }
+
+        &.active:not(.disabled),&:hover:not(.disabled) {
+          background: #ceecff;
+          border: 1px solid #ceecff;
+        }
+      }
+    }
+  }
+  .hubers-pagination-items-to-show {
+    padding: 8px 16px;
+    border: 1px solid #D1DBDF;
+
+    border-radius: 4px;
+    position: relative;
+    cursor: pointer;
+    .hubers-pagination-items-to-show-main {
+      cursor: pointer;
+      display: flex;
+
+      svg {
+        transition: all .3s ease;
+      }
+      &.active {
+        svg {
+          transform: rotate(180deg);
+        }
+      }
+    }
+    .hubers-pagination-items-to-show-options {
+      position: absolute;
+      top: 100%;
+      left: 0;
+      width: 100%;
+      background: #F8FBFC;
+      padding: 8px 16px;
+      border: 1px solid #EAF3F5;
+      z-index: 1001;
+      opacity: 0;
+      pointer-events: none;
+      transition: all .3s ease;
+      .hubers-pagination-items-to-show-options-option {
+        margin-bottom: 8px;
+        &:last-child {
+          margin-bottom: 0;
+        }
+      }
+
+      &.active {
+        opacity: 1;
+        pointer-events: auto;
+      }
+    }
+  }
+
+  @media (max-width:576px) {
+    flex-direction: column;
+    .hubers-pagination-items-to-show {
+      width: 100%;
+      display: flex;
+      justify-content: center;
+      margin-top: 8px;
+    }
+  }
+
+}
+
+
+
+
+

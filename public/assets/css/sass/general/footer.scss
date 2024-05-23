@@ -1,0 +1,20 @@
+.footer {
+  background-color: #333333;
+  color: #ffffff;
+  padding: 40px;
+  display: flex;
+  justify-content: space-between;
+  ul {
+    li {
+      a {
+        color : white;
+      }
+    }
+  }
+
+  
+  @media (max-width: 576px) {
+    padding: 40px 20px;
+  }
+
+}

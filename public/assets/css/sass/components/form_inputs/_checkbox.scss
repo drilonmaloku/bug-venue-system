@@ -1,0 +1,29 @@
+.hubers-checkbox {
+  input {
+    display: none;
+  }
+  label {
+    display: flex;
+    color: #1a1a1a;
+  }
+  .custom-checkbox {
+    width: 20px;
+    height: 20px;
+    border: 2px solid #DBDDE7;
+    border-radius: 2px;
+    margin-right: 8px;
+    cursor : pointer;
+
+    span {
+      width: 100%;
+      height: 100%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    &.checked {
+      background: #1A1A1A;
+      border-color:#1A1A1A ;
+    }
+  }
+}

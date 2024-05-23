@@ -1,0 +1,87 @@
+@import "components/pagination";
+@import "components/panel";
+@import "components/form_inputs/search";
+@import "components/form_inputs/text_input";
+@import "components/form_inputs/checkbox";
+@import "components/popups";
+@import "components/flash_notifications";
+@import "components/no_results_found";
+@import "components/table";
+@import "components/bulkoptions";
+@import "general/footer";
+@import "general/general";
+@import "general/external_navbar";
+
+@import "components/avatar_cropper";
+@import "components/form_inputs/phone_number_input";
+
+
+
+.hubers-input-wrapper {
+  position: relative;
+  padding: 0;
+  border: none;
+  .hubers-input-icon {
+    display: flex;
+    position: absolute;
+    top: 50%;
+    right: 16px;
+    transform: translateY(-50%);
+    cursor: pointer;
+  }
+}
+
+.hubers-filter-group {
+  display: flex;
+  flex-direction: column;
+  margin-right: 12px;
+  margin-bottom: 8px;
+  label {
+    font-size: 14px;
+    line-height: 18px;
+    font-weight: 600;
+  }
+
+  @media (max-width:767px) {
+    width: 100%;
+  }
+}
+
+.huber-filters-reset {
+  display: block;
+  font-size: 14px;
+  line-height: 18px;
+  font-weight: 600;
+
+  cursor: pointer;
+}
+
+.hubers-filter-list-actions {
+  display: flex;
+  align-items: center;
+  border-top: 2px solid gray;
+  padding: 8px 0;
+  margin-top: 8px;
+  span,button {
+    margin-right: 12px;
+  }
+}
+
+
+.hubers-list-options {
+  display: flex;
+  flex-direction: column;
+  margin-top: 8px;
+  .hubers-list-option {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border-radius: 8px;
+    background: #F8FBFC;
+    border: 1px solid #D1DBDF;
+    padding: 8px 8px;
+    margin-bottom: 8px;
+    font-size: 14px;
+    line-height: 18px;
+  }
+}
