@@ -37,7 +37,7 @@
                             </div>
                             <div class="col-md-12">
                                 <div class="form-group">
-                                    <label for="example-text-input" class="bug-label">Phone</label>
+                                    <label for="example-text-input" class="bug-label">Telefoni</label>
                                     <input class="bug-text-input" type="text" name="phone" value="{{$user->phone}}">
                                 </div>
                             </div>

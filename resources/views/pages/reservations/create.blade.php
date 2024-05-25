@@ -58,13 +58,13 @@
                         </div>
                         <div class="col-md-6">
                             <div class="form-group">
-                                <label for="example-text-input" class="form-control-label">Phone Number</label>
+                                <label for="example-text-input" class="form-control-label">Telefoni</label>
                                 <input class="form-control" type="text" name="client_phone_number" >
                             </div>
                         </div>
                         <div class="col-md-6">
                             <div class="form-group">
-                                <label for="example-text-input" class="form-control-label">Optional Phone Number</label>
+                                <label for="example-text-input" class="form-control-label">Telefoni Opsional</label>
                                 <input class="form-control" type="text" name="client_additional_phone_number" >
                             </div>
                         </div>

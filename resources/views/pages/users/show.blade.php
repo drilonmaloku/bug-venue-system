@@ -19,6 +19,10 @@
                     </tr>
                     </thead>
                     <tbody>
+                        <tr>
+                            <td>Username</td>
+                            <td>{{ $users->username }}</td>
+                        </tr>
                     <tr>
                         <td>Emri</td>
                         <td>{{ $users->first_name }}</td>
