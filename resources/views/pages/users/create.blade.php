@@ -47,7 +47,15 @@
                                     <input class="bug-text-input" type="password" name="password">
                                 </div>
                             </div>
-                        
+                            <div class="col-md-12">
+                                <div class="form-group">
+                                    <label for="example-text-input" class="bug-label">Roli</label>
+                                    <select class="bug-text-input" name="role" id="">
+                                        <option value="admin">Admin</option>
+                                        <option value="super-admin">Super Admin</option>
+                                    </select>
+                                </div>
+                            </div>
                         </div>
                         <button type="submit" class="hubers-btn">Ruaj</button>
 

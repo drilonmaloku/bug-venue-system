@@ -27,9 +27,9 @@ class UsersService
      *
      * @return \Illuminate\Database\Eloquent\Collection The collection of users with admin or super-admin roles.
      */
-    public function getAll($request){
+    public function getAll($request,$withoutPagination = false){
         $query = User::query();
-        if ($request->has("search")) {
+        if ($request && $request->has("search")) {
             $searchTerm = '%' . $request->input("search") . '%';
 
             $query->where(function ($subquery) use ($searchTerm) {
@@ -40,7 +40,9 @@ class UsersService
             });
         }
     
-
+        if($withoutPagination) {
+            return $query->get();
+        }
         return $query->paginate(50);
     }
 
@@ -164,7 +166,7 @@ class UsersService
      * @return User|null The newly created user instance, or null if creation fails.
      */
     public function store($request) {
-        $user =  (new User)->create([
+        $user = User::create([
             "username" => $request->input("username"),
             "first_name" => $request->input("first_name"),
             "last_name" => $request->input("last_name"),
@@ -173,6 +175,8 @@ class UsersService
             "password" => Hash::make($request->input("password")),
             ]
         );
+
+        $user->assignRole($request->input("role"));
         return $user;
     }
 

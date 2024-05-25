@@ -8,12 +8,33 @@
             <div class="hubers-filter-options">
                 <div class="hubers-filter-list-options">
                     <div class="hubers-filter-group">
+                        <label>Perdoruesi:</label>
+                        <select class="hubers-select-input white medium" name="user" id="">
+                            <option value="">Selekto</option>
+                            @foreach($users as $user)
+                                <option @if(app('request')->input('user') == $user->id) selected @endif  value="{{$user->id}}">{{$user->first_name}} {{$user->last_name}}</option>
+                            @endforeach
+                        </select>
+                    </div>
+                    <div class="hubers-filter-group">
+                        <label>Konteksti:</label>
+                        <select class="hubers-select-input white medium" name="context" id="">
+                            <option value="">Selekto</option>
+                            <option @if(app('request')->input('context') == 1) selected @endif value="1">Rezervimet</option>
+                            <option @if(app('request')->input('context') == 2) selected @endif value="2">Pagesat</option>
+                            <option @if(app('request')->input('context') == 3) selected @endif value="3">Klientat</option>
+                            <option @if(app('request')->input('context') == 4) selected @endif value="4">Sallat</option>
+                            <option @if(app('request')->input('context') == 5) selected @endif value="5">Userat</option>
+                            <option @if(app('request')->input('context') == 6) selected @endif value="6">Raportet</option>
+                        </select>
+                    </div>
+                    <div class="hubers-filter-group">
                         <label>Search:</label>
-                        <input placeholder="Search" class="hubers-text-input white medium" type="text" name="search">
+                        <input placeholder="Search" class="hubers-text-input white medium" type="text" name="search" value="{{old('search',app('request')->input('search'))}}">
                     </div>
                     <div class="hubers-filter-group">
                         <label>Data:</label>
-                        <input placeholder="Search" class="hubers-text-input white medium" type="date" name="date">
+                        <input placeholder="Search" class="hubers-text-input white medium" type="date" name="date" value="{{old('date',app('request')->input('data'))}}">
                     </div>
                 </div>
                 <div class="hubers-filter-list-actions">

@@ -9,7 +9,7 @@
                 <div class="hubers-filter-list-options">
                     <div class="hubers-filter-group">
                         <label>Search:</label>
-                        <input placeholder="Search" class="hubers-text-input white medium" type="text" name="search">
+                        <input placeholder="Search" class="hubers-text-input white medium" type="text" name="search" value="{{ request('search') }}">
                     </div>
                 </div>
                 <div class="hubers-filter-list-actions">

@@ -3,25 +3,25 @@
 namespace App\Modules\Logs\Controllers;
 
 
-use App\Models\User;
-use App\Modules\Logs\Resources\LogResource;
-use Inertia\Inertia;
+use App\Modules\Users\Services\UsersService;
 use Illuminate\Http\Request;
-use App\Modules\Logs\Models\Log;
-use Illuminate\Http\JsonResponse;
 use App\Http\Controllers\Controller;
 use Maatwebsite\Excel\Facades\Excel;
-use App\Modules\Logs\Exports\LogsExport;
 use App\Modules\Logs\Services\LogService;
-use App\Modules\Logs\Resources\LogListResource;
+
 
 class LogsController extends Controller
 {
     private $logService;
+    private $usersService;
 
-    public function __construct(LogService $logService)
+    public function __construct(
+        LogService $logService,
+        UsersService $usersService
+    )
     {
         $this->logService = $logService;
+        $this->usersService = $usersService;
     }
 
     public function index(Request $request)
@@ -30,7 +30,8 @@ class LogsController extends Controller
 
         return view('pages/logs/index',[
             'is_on_search'=>count($request->all()),
-            'logs'=>$logs
+            'logs'=>$logs,
+            'users'=>$this->usersService->getAll(null,true)
         ]);
 
     }

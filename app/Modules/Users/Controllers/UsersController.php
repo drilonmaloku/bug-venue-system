@@ -61,12 +61,12 @@ class UsersController extends Controller
 
     public function view($id)
     {
-        $users = $this->usersService->getByID($id);
-        if(is_null($users)) {
+        $user = $this->usersService->getByID($id);
+        if(is_null($user)) {
             return abort(404);
         }
         return view('pages/users/show',[
-            'users'=>$users
+            'user'=>$user
         ]);
     }
 
