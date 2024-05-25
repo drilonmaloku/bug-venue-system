@@ -52,7 +52,7 @@ class DatabaseSeeder extends Seeder
             'first_name' => 'Admin',
             'last_name' => 'Admin',
             'email' => 'admin@argon.com',
-            'password' => bcrypt('secret')
+            'password' => bcrypt('admin')
         ]);
         $user->assignRole(User::ROLE_SUPERAMDIN);
     }

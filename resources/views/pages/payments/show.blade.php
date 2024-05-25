@@ -17,7 +17,7 @@
                     <tbody>
                     <tr>
                         <td>Klienti</td>
-                        <td>{{ $payment->client->name}}</td>
+                        <td><a class="hubers-link" href="{{route('clients.view',['id'=>$payment->client->id])}}"> {{$payment->client->name}} </a></td>
                     </tr>
                     <tr>
                         <td>Rezervimi</td>

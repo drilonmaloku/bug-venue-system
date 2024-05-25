@@ -18,15 +18,9 @@ class CreateUserRequest extends FormRequest
             "first_name" => "required|string",
             "last_name" => "nullable",
             "email" => "nullable|string|unique:users",
-            "phone" => "nullable|string|unique:users",
-            
+            "phone" => "nullable|string",
+            "role" => "string",
         ];
-
-        // Check if generate_password is set to true, skip password validation
-        if ($this->input('generate_password') === true) {
-            return $rules;
-        }
-
         return $rules;
     }
 }

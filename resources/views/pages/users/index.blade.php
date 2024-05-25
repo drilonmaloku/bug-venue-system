@@ -26,9 +26,9 @@
                 <table class="bug-table">
                     <thead>
                     <tr>
-                        <th>UserName</th>
+                        <th>Username</th>
                         <th>Emri</th>
-                        <th>Mbiemri</th>
+                        <th>Roli</th>
                         <th>Emaili</th>
                         <th>Telefoni</th>
 
@@ -42,10 +42,10 @@
                                 {{$user->username}}
                             </td>
                             <td>
-                                {{$user->first_name}}
+                                {{$user->first_name}} {{$user->last_name}}
                             </td>
                             <td>
-                                {{$user->last_name}}
+                                {{ $user->getRoleNames()->first() ?? 'No role assigned' }}
                             </td>
                             <td>
                                 {{$user->email}}

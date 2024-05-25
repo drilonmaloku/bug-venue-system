@@ -13,25 +13,16 @@ use Illuminate\Support\Str;
  */
 class LogsFactory extends Factory
 {
-    /**
-     * The current password being used by the factory.
-     */
-    protected static ?string $password;
 
-    /**
-     * Define the model's default state.
-     *
-     * @return array<string, mixed>
-     */
+    protected $model = Log::class;
 
-     protected $model = Log::class;
     public function definition(): array
     {
-        $user = (new UserFactory)->create();
-        $user = User::find($user->id);
+
+        $userIds = User::pluck('id');
         
         return [            
-            "user_id" =>  $user,
+            "user_id" =>  $this->faker->randomElement($userIds),
             "updated_data" => $this->faker->sentence,
             "updated_at" => $this->faker->dateTimeThisMonth,
             "ttl" => $this->faker->numberBetween(0, 3),
@@ -44,13 +35,4 @@ class LogsFactory extends Factory
         ];
     }
 
-    /**
-     * Indicate that the model's email address should be unverified.
-     */
-    public function unverified(): static
-    {
-        return $this->state(fn (array $attributes) => [
-            'email_verified_at' => null,
-        ]);
-    }
 }

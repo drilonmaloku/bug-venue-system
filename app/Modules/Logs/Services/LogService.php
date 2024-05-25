@@ -66,14 +66,17 @@ class LogService
     public function getAll(Request $request){
         $perPage = $request->has('per_page') ? $request->input('per_page') : 25;
         $query = Log::query();
-        if(!empty($request->input('user_id'))) {
-            $query->where('user_id',$request->input('user_id'));
+        if(!empty($request->input('user'))) {
+            $query->where('user_id',$request->input('user'));
         }
         if(!empty($request->input('date'))) {
             $query->whereDate('created_at', $request->input('date'));
         }
         if(!empty($request->input('search'))) {
             $query->where('message','like', '%' . $request->input('search') . '%');
+        }
+        if(!empty($request->input('context'))) {
+            $query->where('context',$request->input('context'));
         }
         return $query->orderBy('id', 'desc')->with('user')->paginate($perPage);
 
