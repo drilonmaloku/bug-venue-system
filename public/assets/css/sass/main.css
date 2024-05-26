@@ -2305,4 +2305,11 @@ body {
   line-height: 18px;
 }
 
+.vms_border_panel {
+  border: 1px solid rgba(0, 0, 0, 0.1);
+  padding: 16px;
+  border-radius: 12px;
+  margin-bottom: 16px;
+}
+
 /*# sourceMappingURL=main.css.map */

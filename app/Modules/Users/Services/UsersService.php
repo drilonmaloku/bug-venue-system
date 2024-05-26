@@ -29,7 +29,7 @@ class UsersService
      */
     public function getAll($request,$withoutPagination = false){
         $query = User::query();
-        if ($request && $request->has("search")) {
+        if ($request && $request->has("search") && $request->input("search") != '') {
             $searchTerm = '%' . $request->input("search") . '%';
 
             $query->where(function ($subquery) use ($searchTerm) {
@@ -37,6 +37,13 @@ class UsersService
                     ->orWhere('email', 'LIKE', $searchTerm)
                     ->orWhere('last_name', 'LIKE', $searchTerm)
                     ->orWhere('username', 'LIKE', $searchTerm);
+            });
+        }
+        if ($request && $request->has('role')  && $request->input("role") != '') {
+            $role = $request->input('role');
+
+            $query->whereHas('roles', function ($subquery) use ($role) {
+                $subquery->where('name', $role);
             });
         }
     

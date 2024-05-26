@@ -25,8 +25,6 @@
                     <tbody>
                     @foreach($payments as $payment)
                         <tr>
-                          
-
                             <td>
                                 <a class="hubers-link" href="{{route('clients.view',['id'=>$payment->client->id])}}"> {{$payment->client->name}} </a>
                              </td>
@@ -40,11 +38,11 @@
                                {{$payment->notes}}
                             </td>
                             <td>
-                                                                               <div class="d-flex px-3">
-                                                                                   <a href="{{route('payments.view',['id'=>$payment->id])}}">
-                                                                                       <i class="fa fa-eye"></i>
-                                                                                   </a>
-                                                                               </div>
+                                <div class="bug-table-item-options">
+                                    <a class="bug-table-item-option" href="{{route('payments.view',['id'=>$payment->id])}}">
+                                        <i class="fa fa-eye"></i>
+                                    </a>
+                                </div>
                             </td>
                         </tr>
                     @endforeach
