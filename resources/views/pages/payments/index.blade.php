@@ -49,6 +49,7 @@
                     </tbody>
                 </table>
             </div>
+            {{$payments->links()}}
         @else
             <h6 class="text-center">There are no reservations currently</h6>
         @endif

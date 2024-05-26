@@ -23,22 +23,23 @@
                                     <input class="bug-text-input" type="number" name="number_of_guests" >
                                 </div>
                             </div>
-                            <div class="col-md-4">
-                                <div class="form-group flex-col">
-                                    <label for="example-text-input" class="form-control-label">Dit e Plot</label>
-                                    <input name="full_day" type="checkbox" id="rememberMe">
+                            <div class="col-md-12">
+                                <div class="vms_checkbox_options">
+                                    <div class="vms_checkbox_option">
+                                        <input class="bug-checkbox-input" name="reservation_type" type="radio" id="rememberMe">
+                                        <label for="example-text-input" class="form-control-label">Ditë e Plotë</label>
+                                    </div>
+                                    <div class="vms_checkbox_option">
+                                        <input class="bug-checkbox-input" name="reservation_type" type="radio" id="rememberMe">
+                                        <label for="example-text-input" class="form-control-label">Mëngjes</label>
+                                    </div>
+                                    <div class="vms_checkbox_option">
+                                        <input class="bug-checkbox-input" name="reservation_type" type="radio" id="rememberMe">
+                                        <label for="example-text-input" class="form-control-label">Mbrëmje</label>
+                                    </div>
                                 </div>
-                            </div>
-                            <div class="col-md-4">
                                 <div class="form-group flex-col">
-                                    <label for="example-text-input" class="form-control-label">Mengjes</label>
-                                    <input name="full_day" type="checkbox" id="rememberMe">
-                                </div>
-                            </div>
-                            <div class="col-md-4">
-                                <div class="form-group flex-col">
-                                    <label for="example-text-input" class="form-control-label">Mbremje</label>
-                                    <input name="full_day" type="checkbox" id="rememberMe">
+
                                 </div>
                             </div>
                             <div class="col-md-6">
