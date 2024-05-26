@@ -81,7 +81,7 @@
                             </td>
                             <td>
                                 <div class="d-flex px-3">
-                                    <a class="bug-table-item-option" href="{{route('reservation.view',['id'=>$reservation->id])}}">
+                                    <a class="bug-table-item-option" href="{{route('reservations.view',['id'=>$reservation->id])}}">
                                         <i class="fa fa-eye"></i>
                                     </a>
                                 </div>

@@ -13,14 +13,14 @@
                     <thead>
                     <tr>
                         <th class="">
-                            Date</th>
+                            Data</th>
                         <th class="text-uppercase text-secondary text-sm font-weight-bolder opacity-7">
-                            Venue</th>
+                            Salla</th>
                         <th class="text-uppercase text-secondary text-sm font-weight-bolder opacity-7">
-                            Description</th>
-                            <th class="text-uppercase text-secondary text-sm font-weight-bolder opacity-7">
-                                Payment
-                            </th>
+                            Pershkrimi</th>
+                        <th class="text-uppercase text-secondary text-sm font-weight-bolder opacity-7">
+                            Pagesa
+                        </th>
                         <th class="text-uppercase text-secondary text-sm font-weight-bolder opacity-7">
                             Klienti
                         </th>
@@ -47,11 +47,11 @@
                                 {{$reservation->client->name}}
                              </td>
                             <td>
-                                <div class="d-flex px-3">
-                                    <a class="bug-table-item-option" href="{{route('reservation.view',['id'=>$reservation->id])}}">
+                                <div class="bug-table-item-options">
+                                    <a class="bug-table-item-option" href="{{route('reservations.view',['id'=>$reservation->id])}}">
                                         <i class="fa fa-eye"></i>
                                     </a>
-                                   </div>
+                                </div>
                             </td>
                         </tr>
                     @endforeach

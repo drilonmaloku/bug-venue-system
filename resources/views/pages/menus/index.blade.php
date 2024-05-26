@@ -7,7 +7,7 @@
 @endsection
 @section('content')
     <div class="vms_panel">
-        <form action="/clients" method="GET" >
+        <form action="/menus" method="GET" >
             <div class="hubers-filter-options">
                 <div class="hubers-filter-list-options">
                     <div class="hubers-filter-group">
@@ -17,7 +17,7 @@
                 </div>
                 <div class="hubers-filter-list-actions">
                     <button type="submit" class="hubers-btn mr-2">Filtro</button>
-                    <a href="/clients" class="hubers-btn inverse">Reset</a>
+                    <a href="/menus" class="hubers-btn inverse">Reset</a>
                 </div>
             </div>
         </form>

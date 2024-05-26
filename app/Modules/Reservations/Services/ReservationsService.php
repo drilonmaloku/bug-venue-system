@@ -32,7 +32,7 @@ class ReservationsService
      * @param int|array $id
      **/
     public function getByID($id){
-        return Venue::find($id);
+        return Reservation::find($id);
     }
 
     /**

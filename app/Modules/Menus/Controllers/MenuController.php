@@ -79,23 +79,23 @@ class MenuController extends Controller
     }
 
     public function update(Request $request,$id) {
-        $client = $this->clientsService->getByID($id);
+        $menu = $this->menuService->getByID($id);
 
-        if(is_null($client)) {
+        if(is_null($menu)) {
             return abort(404);
         }
+        $client = $this->menuService->update($request,$menu);
 
-        try {
+        return redirect()->back();
+    }
 
-            $client = $this->clientsService->update($request,$client);
-
-            return redirect()->to('clients');
-
-        } catch (\Exception $e) {
-            return response()->json([
-                'message' => 'Internal Server Error'
-            ], 500);
+    public function delete($id){
+        $menu = $this->menuService->getByID($id);
+        if(is_null($menu)) {
+            abort('Venue not found',404);
         }
+        $menuDeleted = $this->menuService->delete($menu);
+        return redirect()->to('menus');
     }
 
 }

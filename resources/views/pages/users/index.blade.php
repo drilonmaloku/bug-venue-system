@@ -76,6 +76,7 @@
                     </tbody>
                 </table>
             </div>
+            {{$users->links()}}
         @else
             <div class="hubers-empty-tab">
                 @if ($is_on_search)

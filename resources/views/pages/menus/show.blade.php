@@ -7,6 +7,13 @@
     <div class="vms_panel">
         <div class="row">
             <div class="col-md-8">
+
+                    <form action="{{ route('menus.destroy', $menu->id) }}" method="POST">
+                        @csrf
+                        @method('DELETE')
+                        <button class="btn btn-danger btn-sm ms-auto mb-0" type="submit"><i class="fa fa-trash"></i> Fshij</button>
+                    </form>
+
                 <div class="bug-table-item-options">
                     <a class="bug-table-item-option" href="{{route('menus.edit',['id'=>$menu->id])}}">
                         <i class="fa fa-edit"></i>

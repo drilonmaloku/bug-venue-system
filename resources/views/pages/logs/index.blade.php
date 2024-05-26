@@ -87,6 +87,7 @@
                     </tbody>
                 </table>
             </div>
+            {{$logs->links()}}
         @else
             <div class="hubers-empty-tab">
                 @if ($is_on_search)

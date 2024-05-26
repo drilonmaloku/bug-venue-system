@@ -1,38 +1,32 @@
 @extends('layouts.app')
 @section('header')
-    Përditso Klientin: {{$client->name}}
+    Përditso Menun: {{$menu->name}}
 @endsection
 @section('content')
     <div class="vms_panel">
         <div class="container-fluid">
             <div class="row">
                 <div class="col-md-8">
-                    <form role="form" method="POST" action="{{ route('clients.update',['id'=>$client->id]) }}" enctype="multipart/form-data">
+                    <form role="form" method="POST" action="{{ route('menus.update',['id'=>$menu->id]) }}" enctype="multipart/form-data">
                         @csrf
                         @method('PUT')
                         <div class="row">
                             <div class="col-md-12">
                                 <div class="form-group">
                                     <label for="example-text-input" class="bug-label">Emri*</label>
-                                    <input class="bug-text-input" type="text" name="name" value="{{$client->name}}">
+                                    <input class="bug-text-input" type="text" name="name" value="{{$menu->name}}">
                                 </div>
                             </div>
                             <div class="col-md-12">
                                 <div class="form-group">
-                                    <label for="example-text-input" class="bug-label">Email</label>
-                                    <textarea class="bug-text-input" rows="4" name="email" >{{$client->email}}</textarea>
+                                    <label for="example-text-input" class="bug-label">Qmimi*</label>
+                                    <input type="number" class="bug-text-input" name="price" required value="{{$menu->price}}">
                                 </div>
                             </div>
                             <div class="col-md-12">
                                 <div class="form-group">
-                                    <label for="example-text-input" class="bug-label">Telefoni</label>
-                                    <input class="bug-text-input" type="text" name="phone_number" value="{{$client->phone_number}}">
-                                </div>
-                            </div>
-                            <div class="col-md-12">
-                                <div class="form-group">
-                                    <label for="example-text-input" class="bug-label">Telefoni Opsional</label>
-                                    <input class="bug-text-input" type="text" name="additional_phone_number" value="{{$client->additional_phone_number}}">
+                                    <label for="example-text-input" class="bug-label">Pershkrimi</label>
+                                    <input class="bug-text-input" type="text" name="description" value="{{$menu->description}}">
                                 </div>
                             </div>
                         </div>

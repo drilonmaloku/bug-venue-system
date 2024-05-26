@@ -85,41 +85,24 @@ class MenuService
     /**
      * Updates existing client
      **/
-    public function update($request, Client $client) {
-        $client->name = $request->input('name');
-        $client->email = $request->input('email');
-        $client->phone_number = $request->input('phone_number');
-        $client->additional_phone_number = $request->input('additional_phone_number');
-        $clientSaved = $client->save();
+    public function update($request, Menu $menu) {
+        $menu->name = $request->input('name');
+        $menu->price = $request->input('price');
+        $menu->description = $request->input('description');
+        $menuUpdated = $menu->save();
 
-        if($clientSaved){
-            $this->logService->log([
-                'message' => 'Client was updated successfully',
-                'context' => Log::LOG_CONTEXT_CLIENTS,
-                'ttl'=> Log::LOG_TTL_THREE_MONTHS,
-            ]);
-        }
 
-        return $client;
+        return $menuUpdated;
     }
 
     /**
-     * Deletes existing client
+     * Deletes existing menu
      **/
-    public function delete(Client $client) {
-         $previousData = $client->attributesToArray();
-         $clientDeleted = $client->delete();
+    public function delete(Menu $menu) {
+         $previousData = $menu->attributesToArray();
+         $menuDeleted = $menu->delete();
 
-         if($clientDeleted){
-            $this->logService->log([
-                'message' => 'Client was deleted succesfully',
-                'context' => Log::LOG_CONTEXT_CLIENTS,
-                'ttl'=> Log::LOG_TTL_THREE_MONTHS,
-                'previous_data'=> json_encode($previousData)
-            ]);
-        }
-
-        return $client;
+        return $menuDeleted;
     }
 
 }

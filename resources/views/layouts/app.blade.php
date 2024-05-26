@@ -44,6 +44,7 @@
                 </div>
                 <div class="hubers-navbar-links">
                     <ul>
+                        <li><a href="{{route('dashboard.index')}}">Dashboard</a></li>
                         <li><a href="{{route('reservations.index')}}">Rezervimet</a></li>
                         <li><a href="{{route('payments.index')}}">Pagesat</a></li>
                         <li><a href="{{route('menus.index')}}">Menut</a></li>
@@ -52,6 +53,7 @@
                         <li><a href="{{route('reports.index')}}">Raportet</a></li>
                         <li><a href="{{route('venues.index')}}">Sallat</a></li>
                         <li><a href="{{route('logs.index')}}">Aktiviteti</a></li>
+                        <li><a href="{{route('profile')}}">Profili</a></li>
                     </ul>
                 </div>
             </div>
