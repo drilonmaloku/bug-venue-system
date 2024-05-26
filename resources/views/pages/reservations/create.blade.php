@@ -19,7 +19,7 @@
                             </div>
                             <div class="col-md-6">
                                 <div class="form-group">
-                                    <label for="example-text-input" class="form-control-label">Numri i te ftuarve</label>
+                                    <label for="example-text-input" class="form-control-label">Numri i të ftuarve</label>
                                     <input class="bug-text-input" type="number" name="number_of_guests" >
                                 </div>
                             </div>
@@ -97,17 +97,17 @@
                                 </div>
                             </div>
                         </div>
-                        <p class="text-uppercase text-sm">Payment Information</p>
+                        <h6 class="text-uppercase text-sm"></h6>
                         <div class="row">
                             <div class="col-md-6">
                                 <div class="form-group">
-                                    <label for="example-text-input" class="form-control-label">Date</label>
+                                    <label for="example-text-input" class="form-control-label">Data e Pagesës</label>
                                     <input class="bug-text-input" type="date" name="payment_date" >
                                 </div>
                             </div>
                             <div class="col-md-6">
                                 <div class="form-group">
-                                    <label for="example-text-input" class="form-control-label">Initial Payment</label>
+                                    <label for="example-text-input" class="form-control-label">Vlera e Pagesës</label>
                                     <input class="bug-text-input" type="number" name="initial_payment_value" >
                                 </div>
                             </div>
