@@ -22,6 +22,7 @@
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/js/bootstrap.bundle.min.js"></script>
     <link href="{{ asset('../resources/css/sass/main.css') }}" rel="stylesheet" />
     <link href="http://127.0.0.1:8000/assets/css/sass/main.css" rel="stylesheet" />
+    <script src='https://cdn.jsdelivr.net/npm/fullcalendar/index.global.min.js'></script>
 
 </head>
 
@@ -43,14 +44,16 @@
                 </div>
                 <div class="hubers-navbar-links">
                     <ul>
-                        <li><a href="">Dashboard</a></li>
+                        <li><a href="{{route('dashboard.index')}}">Dashboard</a></li>
                         <li><a href="{{route('reservations.index')}}">Rezervimet</a></li>
                         <li><a href="{{route('payments.index')}}">Pagesat</a></li>
+                        <li><a href="{{route('menus.index')}}">Menut</a></li>
                         <li><a href="{{route('clients.index')}}">Klientat</a></li>
                         <li><a href="{{route('users.index')}}">Perdoruesit</a></li>
-                        <li><a href="{{route('venues.index')}}">Raportet</a></li>
+                        <li><a href="{{route('reports.index')}}">Raportet</a></li>
                         <li><a href="{{route('venues.index')}}">Sallat</a></li>
                         <li><a href="{{route('logs.index')}}">Aktiviteti</a></li>
+                        <li><a href="{{route('profile')}}">Profili</a></li>
                     </ul>
                 </div>
             </div>

@@ -47,7 +47,6 @@ class UsersController extends Controller
      * @return Response The rendered view displaying the users.
      */
     public function index(Request $request){
-        // $users = $this->usersService->getAll();
 
         $users = $this->usersService->getAll($request);
 
@@ -110,20 +109,6 @@ class UsersController extends Controller
         return redirect()->to('users');
     }
 
-    // public function store(Request $request) {
-    //     $venue = $this->venuesService->store($request);
-
-    //     return redirect()->to('venues');
-    //     try {
-
-
-    //     } catch (\Exception $e) {
-    //         return response()->json([
-    //             'message' => 'Internal Server Error'
-    //         ], 500);
-    //     }
-    // }
-
     /**
      * Display the specified user.
      *
@@ -159,32 +144,27 @@ class UsersController extends Controller
         ]);
     }
 
-    /**
-     * Display the authenticated user's profile.
-     *
-     * @return Response The rendered view displaying the user's profile and related data.
-     */
+
     public function profile()
     {
-        $user = auth()->user();
-        $groups = $this->groupsService->getAllGroupsForUser($user->id);
-        $activeGroups = [];
-        $archivedGroups = [];
-
-        foreach ($groups as $group) {
-            if($group->trashed()) {
-                array_push($archivedGroups,$group);
-            }else {
-                array_push($activeGroups,$group);
-            }
-        }
-
-        return Inertia::render('Users/Single', [
-            'user' => UserListResource::make($user),
-            'active_groups' => GroupsListResource::collection($activeGroups),
-            'archived_groups' => GroupsListResource::collection($archivedGroups),
-            'logs' => LogListResource::collection($user->logs()->latest()->take(25)->get())
+        return view('pages/users/profile',[
+            'user'=>auth()->user()
         ]);
+    }
+
+    public function editProfile()
+    {
+        return view('pages/users/edit-profile',[
+            'user'=>auth()->user()
+        ]);
+    }
+
+    public function updateProfile(Request $request) {
+
+        $user = $this->usersService->update($request,auth()->user());
+
+        return redirect()->to('profile');
+
     }
 
     /**
@@ -233,23 +213,6 @@ class UsersController extends Controller
         return redirect()->route("profile.show");
     }
 
-    // /**
-    //  * Edit user information.
-    //  *
-    //  * @param User $user
-    //  * @return JsonResponse
-    //  */
-    // public function edit(User $user)
-    // {
-    //     $userCollect = new User([
-    //         "id" => $user->id,
-    //         "first_name" => $user->first_name,
-    //         "last_name" => $user->last_name,
-    //         "email" => $user->email,
-    //     ]);
-
-    //     return response()->json($userCollect, JsonResponse::HTTP_OK);
-    // }
 
     /**
      * Update user information.

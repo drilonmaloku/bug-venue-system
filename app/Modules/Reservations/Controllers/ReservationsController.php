@@ -55,34 +55,17 @@ class ReservationsController extends Controller
 
     public function view($id)
     {
-        $reservations = $this->venuesService->getByID($id);
-        if(is_null($reservations)) {
+        $reservation = $this->reservationsService->getByID($id);
+        if(is_null($reservation)) {
             return abort(404);
         }
+
         return view('pages/reservations/show',[
-            'reservations'=>$reservations
+            'reservation'=>$reservation
         ]);
     }
 
 
-
-
-    // public function view($id)
-    // {
-
-    //     $client = $this->venuesService->getByID($id);
-    //     if(is_null($client)) {
-    //         return abort(404);
-    //     }
-
-    //     return Inertia::render(
-    //         "Clients/Single",
-    //         [
-    //             "client" => ClientViewResource::make($client),
-    //             "contact_persons" => ContactPersonResource::collection($client->contactPersons),
-    //         ]
-    //     );
-    // }
 
     public function store(Request $request) {
         $clientData = [
@@ -96,14 +79,6 @@ class ReservationsController extends Controller
 
         $reservation = $this->reservationsService->store($request,$client->id);
         return redirect()->to('reservations');
-        try {
-
-
-        } catch (\Exception $e) {
-            return response()->json([
-                'message' => 'Internal Server Error'
-            ], 500);
-        }
     }
 
     public function update(Request $request) {

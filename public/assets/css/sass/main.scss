@@ -85,3 +85,42 @@
     line-height: 18px;
   }
 }
+
+
+.vms_border_panel {
+  border: 1px solid rgba(0,0,0,.1);
+  padding: 16px;
+  border-radius: 12px;
+  margin-bottom: 16px;
+}
+
+.vms_pagination {
+  display: flex;
+  justify-content: center;
+  margin-top: 16px;
+  margin-bottom: 16px;
+}
+
+
+.bug-checkbox-input {
+  width: 18px;
+  height: 18px;
+}
+.vms_checkbox_options {
+  display: flex;
+  .vms_checkbox_option {
+    margin-right: 16px;
+    &:last-child {
+      margin-right: 0;
+    }
+  }
+}
+.vms_checkbox_option{
+  display: flex;
+  align-items: center;
+  margin-bottom: 8px;
+  label {
+    margin-left: 8px;
+    margin-bottom: 0;
+  }
+}

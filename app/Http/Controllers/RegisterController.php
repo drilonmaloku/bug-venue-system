@@ -2,7 +2,6 @@
 
 namespace App\Http\Controllers;
 
-// use App\Http\Requests\RegisterRequest;
 use App\Models\User;
 
 class RegisterController extends Controller
@@ -23,6 +22,6 @@ class RegisterController extends Controller
         $user = User::create($attributes);
         auth()->login($user);
 
-        return redirect('/dashboard');
+        return redirect('/reservations');
     }
 }

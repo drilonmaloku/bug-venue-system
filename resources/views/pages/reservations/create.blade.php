@@ -4,107 +4,125 @@
 @endsection
 @section('content')
     <div class="vms_panel">
-        <div class="card">
-            <form role="form" method="POST" action={{ route('reservations.store') }} enctype="multipart/form-data">
-                @csrf
-                <div class="card-header pb-0">
-                    <div class="d-flex align-items-center">
-                        <p class="mb-0">Create Reservation</p>
-                        <button type="submit" class="btn btn-primary btn-sm ms-auto">Save</button>
-                    </div>
-                </div>
-                <div class="card-body">
-                    <p class="text-uppercase text-sm">Reservation Information</p>
-                    <div class="row">
-                        <div class="col-md-6">
-                            <div class="form-group">
-                                <label for="example-text-input" class="form-control-label">Date</label>
-                                <input class="form-control" type="date" name="date" >
+        <div class="container-fluid">
+            <div class="row">
+                <div class="col-md-8">
+                    <form role="form" method="POST" action={{ route('reservations.store') }} enctype="multipart/form-data">
+                        @csrf
+                        <h6><strong>Informatat e Rezervimit</strong></h6>
+                        <div class="row">
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label for="example-text-input" class="form-control-label">Data</label>
+                                    <input class="bug-text-input" type="date" name="date" >
+                                </div>
                             </div>
-                        </div>
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label for="example-text-input" class="form-control-label">Numri i të ftuarve</label>
+                                    <input class="bug-text-input" type="number" name="number_of_guests" >
+                                </div>
+                            </div>
+                            <div class="col-md-12">
+                                <div class="vms_checkbox_options">
+                                    <div class="vms_checkbox_option">
+                                        <input class="bug-checkbox-input" name="reservation_type" type="radio" id="rememberMe">
+                                        <label for="example-text-input" class="form-control-label">Ditë e Plotë</label>
+                                    </div>
+                                    <div class="vms_checkbox_option">
+                                        <input class="bug-checkbox-input" name="reservation_type" type="radio" id="rememberMe">
+                                        <label for="example-text-input" class="form-control-label">Mëngjes</label>
+                                    </div>
+                                    <div class="vms_checkbox_option">
+                                        <input class="bug-checkbox-input" name="reservation_type" type="radio" id="rememberMe">
+                                        <label for="example-text-input" class="form-control-label">Mbrëmje</label>
+                                    </div>
+                                </div>
+                                <div class="form-group flex-col">
 
-                        <div class="col-md-6">
-                            <div class="form-group flex-col">
-                                <label for="example-text-input" class="form-control-label">Full Day</label>
-                                <input name="full_day" type="checkbox" id="rememberMe">
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label for="example-text-input" class="form-control-label">Salla</label>
+                                    <select class="bug-text-input" name="venue_id" id="">
+                                        @foreach($venues as $venue)
+                                            <option value="{{$venue->id}}">{{$venue->name}},{{$venue->capacity}}</option>
+                                        @endforeach
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label for="example-text-input" class="form-control-label">Menu</label>
+                                    <select class="bug-text-input" name="venue_id" id="">
+                                        @foreach($venues as $venue)
+                                            <option value="{{$venue->id}}">{{$venue->name}},{{$venue->capacity}}</option>
+                                        @endforeach
+                                    </select>
+                                </div>
+                            </div>
+
+                            <div class="col-md-12">
+                                <div class="form-group">
+                                    <label for="example-text-input" class="form-control-label">Notes</label>
+                                    <textarea class="bug-text-input" type="text" name="description" ></textarea>
+                                </div>
                             </div>
                         </div>
-                        <div class="col-md-6">
-                            <div class="form-group">
-                                <label for="example-text-input" class="form-control-label">Number of Guests</label>
-                                <input class="form-control" type="number" name="number_of_guests" >
+                        <h6><strong>Informatat mbi klientin:</strong></h6>
+                        <div class="row">
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label for="example-text-input" class="form-control-label">Emri</label>
+                                    <input class="bug-text-input" type="text" name="client_name" >
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label for="example-text-input" class="form-control-label">Emaili</label>
+                                    <input class="bug-text-input" type="text" name="client_email" >
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label for="example-text-input" class="form-control-label">Telefoni</label>
+                                    <input class="bug-text-input" type="text" name="client_phone_number" >
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label for="example-text-input" class="form-control-label">Telefoni Opsional</label>
+                                    <input class="bug-text-input" type="text" name="client_additional_phone_number" >
+                                </div>
                             </div>
                         </div>
-                        <div class="col-md-12">
-                            <div class="form-group">
-                                <label for="example-text-input" class="form-control-label">Notes</label>
-                                <textarea class="form-control" type="text" name="description" ></textarea>
+                        <h6 class="text-uppercase text-sm"></h6>
+                        <div class="row">
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label for="example-text-input" class="form-control-label">Data e Pagesës</label>
+                                    <input class="bug-text-input" type="date" name="payment_date" >
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label for="example-text-input" class="form-control-label">Vlera e Pagesës</label>
+                                    <input class="bug-text-input" type="number" name="initial_payment_value" >
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label for="example-text-input" class="form-control-label">Total Payment</label>
+                                    <input class="bug-text-input" type="number" name="total_payment_value" >
+                                </div>
                             </div>
                         </div>
-                    </div>
-                    <p class="text-uppercase text-sm">Client Information</p>
-                    <div class="row">
-                        <div class="col-md-6">
-                            <div class="form-group">
-                                <label for="example-text-input" class="form-control-label">Name</label>
-                                <input class="form-control" type="text" name="client_name" >
-                            </div>
-                        </div>
-                        <div class="col-md-6">
-                            <div class="form-group">
-                                <label for="example-text-input" class="form-control-label">Email</label>
-                                <input class="form-control" type="text" name="client_email" >
-                            </div>
-                        </div>
-                        <div class="col-md-6">
-                            <div class="form-group">
-                                <label for="example-text-input" class="form-control-label">Telefoni</label>
-                                <input class="form-control" type="text" name="client_phone_number" >
-                            </div>
-                        </div>
-                        <div class="col-md-6">
-                            <div class="form-group">
-                                <label for="example-text-input" class="form-control-label">Telefoni Opsional</label>
-                                <input class="form-control" type="text" name="client_additional_phone_number" >
-                            </div>
-                        </div>
-                    </div>
-                    <p class="text-uppercase text-sm">Payment Information</p>
-                    <div class="row">
-                        <div class="col-md-6">
-                            <div class="form-group">
-                                <label for="example-text-input" class="form-control-label">Date</label>
-                                <input class="form-control" type="date" name="payment_date" >
-                            </div>
-                        </div>
-                        <div class="col-md-6">
-                            <div class="form-group">
-                                <label for="example-text-input" class="form-control-label">Initial Payment</label>
-                                <input class="form-control" type="number" name="initial_payment_value" >
-                            </div>
-                        </div>
-                        <div class="col-md-6">
-                            <div class="form-group">
-                                <label for="example-text-input" class="form-control-label">Total Payment</label>
-                                <input class="form-control" type="number" name="total_payment_value" >
-                            </div>
-                        </div>
-                    </div>
-                    <p class="text-uppercase text-sm">Venue Information</p>
-                    <div class="row">
-                        <div class="col-md-6">
-                            <div class="form-group">
-                                <label for="example-text-input" class="form-control-label">Name</label>
-                                <select class="form-control" name="venue_id" id="">
-                                    @foreach($venues as $venue)
-                                        <option value="{{$venue->id}}">{{$venue->name}},{{$venue->capacity}}</option>
-                                    @endforeach
-                                </select>
-                            </div>
-                        </div>
-                    </div>
+                        <button type="submit" class="hubers-btn">Ruaj</button>
+                    </form>
                 </div>
-            </form>
+            </div>
         </div>
     </div>
+
 @endsection

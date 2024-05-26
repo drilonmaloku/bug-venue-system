@@ -12,7 +12,15 @@
                 <div class="hubers-filter-list-options">
                     <div class="hubers-filter-group">
                         <label>Search:</label>
-                        <input placeholder="Search" class="hubers-text-input white medium" type="text" name="search">
+                        <input placeholder="Search" class="hubers-text-input white medium" type="text" name="search" value="{{ request('search') }}">
+                    </div>
+                    <div class="hubers-filter-group">
+                        <label>Roli:</label>
+                        <select class="hubers-select-input white medium" name="role" id="">
+                            <option value="">Selekto</option>
+                            <option @if(app('request')->input('role') == 1) selected @endif value="admin">Admin</option>
+                            <option @if(app('request')->input('context') == 2) selected @endif value="super-admin">Super Admin</option>
+                        </select>
                     </div>
                 </div>
                 <div class="hubers-filter-list-actions">
@@ -31,7 +39,6 @@
                         <th>Roli</th>
                         <th>Emaili</th>
                         <th>Telefoni</th>
-
                         <th></th>
                     </tr>
                     </thead>
@@ -69,6 +76,7 @@
                     </tbody>
                 </table>
             </div>
+            {{$users->links()}}
         @else
             <div class="hubers-empty-tab">
                 @if ($is_on_search)

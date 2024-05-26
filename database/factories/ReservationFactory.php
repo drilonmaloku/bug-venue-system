@@ -21,7 +21,7 @@ class ReservationFactory extends Factory
         return [
             'venue_id' => fake()->randomNumber(1,5),
             'client_id' => fake()->randomNumber(1,50),
-            'date' => fake()->date('d-m-Y'),
+            'date' => $this->faker->dateTimeBetween('first day of this month', 'last day of this month')->format('d-m-Y'),
             'description' => fake()->text('50'),
             'full_day' => fake()->boolean(),
             'number_of_guests' => fake()->numberBetween(50,200),

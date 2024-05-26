@@ -45,7 +45,6 @@ class VenuesController extends Controller
         return view('pages/venues/create');
     }
 
-
     public function view($id)
     {
         $venue = $this->venuesService->getByID($id);

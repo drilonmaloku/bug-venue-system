@@ -59,6 +59,7 @@
                     @endforeach
                     </tbody>
                 </table>
+                {{$clients->links()}}
             </div>
         @else
             <div class="hubers-empty-tab">
