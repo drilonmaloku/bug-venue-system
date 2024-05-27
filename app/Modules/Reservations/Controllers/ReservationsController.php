@@ -67,7 +67,7 @@ class ReservationsController extends Controller
 
     public function checkVenueAvailability(Request $request)
     {
-        $date = Carbon::createFromFormat('Y-m-d', $request->input('date'))->format('m-d-Y');
+        $date = Carbon::createFromFormat('Y-m-d', $request->input('date'))->format('d-m-Y');
 
         $reservations = Reservation::where('date', $date)
             ->get();
@@ -123,6 +123,21 @@ class ReservationsController extends Controller
             'reservation'=>$reservation,
             'payments' => $payments,
         ]);
+    }
+
+    public function viewJson($id)
+    {
+
+        $reservation = $this->reservationsService->getByID($id);
+        if(is_null($reservation)) {
+            return abort(404);
+        }
+
+        return response()->json(['data' => [
+            'reservation' => $reservation,
+            'reservation_client' => $reservation->client,
+            'reservation_venue' => $reservation->venue,
+        ]]);
     }
 
 

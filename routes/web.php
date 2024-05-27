@@ -61,7 +61,8 @@ Route::group(['middleware' => 'auth'], function () {
     Route::get('/reservations', [ReservationsController::class, 'index'])->name('reservations.index');
     Route::get('/reservations/create', [ReservationsController::class, 'create'])->name('reservations.create');
     Route::post('/reservations', [ReservationsController::class, 'store'])->name('reservations.store');
-    Route::get('/reservation/{id}', [ReservationsController::class, 'view'])->name('reservations.view');
+    Route::get('/reservations/json/{id}', [ReservationsController::class, 'viewJson'])->name('reservations.viewJson');
+    Route::get('/reservations/{id}', [ReservationsController::class, 'view'])->name('reservations.view');
     Route::delete('/reservation/{id}', [ReservationsController::class, 'delete'])->name('reservation.destroy');
     Route::post('/reservation/check-availability', [ReservationsController::class, 'checkVenueAvailability'])->name('reservation.destroy');
 

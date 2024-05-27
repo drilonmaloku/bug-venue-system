@@ -46,6 +46,10 @@
                             <td>{{ $reservation->current_payment}}€</td>
                         </tr>
                         <tr>
+                            <td>Pagesa E Mbetur:</td>
+                            <td>{{ $reservation->total_payment - $reservation->current_payment}}€</td>
+                        </tr>
+                        <tr>
                             <td>Pagesa Totale:</td>
                             <td>{{ $reservation->total_payment}}€</td>
                         </tr>

@@ -5,17 +5,20 @@ use App\Modules\Clients\Models\Client;
 use App\Modules\Payments\Models\Payment;
 use App\Modules\Reservations\Models\Reservation;
 use App\Modules\Venues\Models\Venue;
+use Illuminate\Support\Carbon;
 
 class ReportsService
 {
     public function generateGeneralReport($startDate, $endDate)
     {
         // Convert to Carbon instances for date comparison
-        $startDate = \Carbon\Carbon::parse($startDate)->startOfDay();
-        $endDate = \Carbon\Carbon::parse($endDate)->endOfDay();
+        $startDate = Carbon::parse($startDate)->startOfDay();
+        $endDate = Carbon::parse($endDate)->endOfDay();
 
         // Calculate the number of days in the period
         $daysCount = $startDate->diffInDays($endDate) + 1; // +1 to include both start and end dates
+
+
 
         // Count the number of clients created during the period
         $clientsCount = Client::whereBetween('created_at', [$startDate, $endDate])->count();
