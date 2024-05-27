@@ -6,6 +6,7 @@ use App\Modules\Venues\Models\Venue;
 use Illuminate\Http\Request;
 use App\Modules\Logs\Models\Log;
 use App\Modules\Logs\Services\LogService;
+use Illuminate\Support\Carbon;
 use Illuminate\Support\Facades\DB;
 
 class PaymentsService
@@ -59,33 +60,35 @@ class PaymentsService
     }
 
     /**
-     * Get Clients by ID
+     * Get Payments by ID
      * @param int|array $id
      **/
     public function getByIds($ids){
-        return Client::whereIn('id', $ids)->get();
+        return Payment::whereIn('id', $ids)->get();
     }
 
     /**
      * Stores new Venue
      **/
-    public function store($request)
+    public function store($data,$reservation_id,$client_id)
     {
-        $venue = Venue::create([
-            "name" => data_get($request, "name"),
-            "description" => data_get($request, "description"),
-            "capacity" => data_get($request, "capacity"),
+        $payment = Payment::create([
+            "reservation_id" => $reservation_id,
+            "client_id" => $client_id,
+            "value" => data_get($data, "initial_payment_value"),
+            "notes" => data_get($data, "payment_notes"),
+            "date" => Carbon::createFromFormat('Y-m-d', data_get($data, "payment_date"))->format('d-m-Y'),
         ]);
 
-        if($venue){
+        if($payment){
             $this->logService->log([
                 'message' => 'Pagesa është krijuar me sukses',
-                'context' => Log::LOG_CONTEXT_CLIENTS,
+                'context' => Log::LOG_CONTEXT_PAYMENTS,
                 'ttl'=> Log::LOG_TTL_THREE_MONTHS,
             ]);
         }
 
-        return $venue;
+        return $payment;
     }
 
     /**

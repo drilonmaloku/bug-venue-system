@@ -63,6 +63,7 @@ Route::group(['middleware' => 'auth'], function () {
     Route::post('/reservations', [ReservationsController::class, 'store'])->name('reservations.store');
     Route::get('/reservation/{id}', [ReservationsController::class, 'view'])->name('reservations.view');
     Route::delete('/reservation/{id}', [ReservationsController::class, 'delete'])->name('reservation.destroy');
+    Route::post('/reservation/check-availability', [ReservationsController::class, 'checkVenueAvailability'])->name('reservation.destroy');
 
 
     Route::get('/payments', [PaymentsController::class, 'index'])->name('payments.index');

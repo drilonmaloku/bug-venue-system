@@ -14,6 +14,20 @@ class Reservation extends Model
 
     protected $guarded =[];
 
+    const RESERVATION_TYPES = [
+        1 => 'Ditë e Plotë',
+        2 => 'Mëngjes',
+        3 => 'Mbrëmje',
+    ];
+    // Add a custom accessor for human-readable reservation type
+    public function getReservationTypeNameAttribute()
+    {
+        return self::RESERVATION_TYPES[$this->reservation_type] ?? 'Unknown';
+    }
+
+    // Append custom attribute to model's array and JSON representations
+    protected $appends = ['reservation_type_name'];
+
     public function venue()
     {
         return $this->belongsTo(Venue::class);

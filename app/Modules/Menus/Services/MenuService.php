@@ -18,7 +18,7 @@ class MenuService
     /**
      * Gets the list of clients
      **/
-    public function getAll(Request $request){
+    public function getAll(Request $request,$paginated = true){
         $perPage = $request->has('per_page') ? $request->input('per_page') : 10;
         $query = Menu::query();
 
@@ -32,6 +32,9 @@ class MenuService
             });
         }
         $query->orderBy('updated_at', 'desc');
+        if(!$paginated) {
+            return $query->get();
+        }
         return $query->paginate($perPage);
 
     }

@@ -31,29 +31,42 @@
                         <tr>
                             <td>Numri i te ftuarve</td>
                             <td>{{ $reservation->number_of_guests}}</td>
+
                         </tr>
                         <tr>
                             <td>Klienti</td>
                             <td>{{ $reservation->client->name }}</td>
+                        </tr>
+                        <tr>
+                            <td>Koha:</td>
+                            <td>{{ $reservation->reservation_type_name}}</td>
+                        </tr>
+                        <tr>
+                            <td>Pagesa Momentale:</td>
+                            <td>{{ $reservation->current_payment}}€</td>
+                        </tr>
+                        <tr>
+                            <td>Pagesa Totale:</td>
+                            <td>{{ $reservation->total_payment}}€</td>
                         </tr>
                     </tbody>
                 </table>
             </div>
         </div>
     </div>
-
+    </div>
     <div class="vms_panel">
         <h5>Pagesat:</h5>
         @if(count($payments) > 0)
             <div class="table-responsive ">
-                <table class="bug-venue-table">
+                <table class="bug-table">
                     <thead>
                     <tr>
                         <th>ID</th>
 
                         <th>Vlera</th>
                         <th class="text-uppercase text-secondary text-sm font-weight-bolder opacity-7">
-                            Data</th>                   
+                            Data</th>
                         <th class="text-uppercase text-secondary text-sm font-weight-bolder opacity-7">
                             Pershkrimi</th>
                         <th width="40" class="text-uppercase text-secondary text-sm font-weight-bolder opacity-7">
@@ -67,7 +80,7 @@
                                 {{$payment->id}}
                             </td>
                             <td>
-                                {{$payment->value}}
+                                {{$payment->value}}€
                             </td>
                             <td>
                                 {{$payment->date}}
@@ -78,18 +91,17 @@
                             <td>
                                 {{$payment->description}}
                             </td>
-                        
+
                         </tr>
                     @endforeach
                     </tbody>
                 </table>
             </div>
 
-            @else
+        @else
             <div class="hubers-empty-tab">
-                    <h5 class="text-center">Nuk ka Pagesa për këte rezervim.</h5>
+                <h5 class="text-center">Nuk ka Pagesa për këte rezervim.</h5>
             </div>
         @endif
     </div>
-
 @endsection

@@ -75,7 +75,13 @@
                 </table>
             </div>
         @else
-            <h6 class="text-center">There are no reservations currently</h6>
+            <div class="hubers-empty-tab">
+                @if ($is_on_search)
+                    <h5 class="text-center">Nuk ka rezervime sipas search</h5>
+                @else
+                    <h5 class="text-center">Nuk ka rezervime momentalisht</h5>
+                @endif
+            </div>
         @endif
     </div>
 

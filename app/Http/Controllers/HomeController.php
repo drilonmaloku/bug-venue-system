@@ -58,6 +58,7 @@ class HomeController extends Controller
 
         return view('pages.dashboard.index', [
             'events' => $events->toArray(),
+            'venues' => $venues,
         ]);
     }
 }

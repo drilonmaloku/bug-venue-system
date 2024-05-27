@@ -15,9 +15,12 @@ return new class extends Migration
             $table->id();
             $table->unsignedBigInteger('venue_id');
             $table->unsignedBigInteger('client_id');
+            $table->unsignedBigInteger('menu_id');
+            $table->longText('menu_contents')->nullable();
+            $table->double('menu_price')->nullable();
             $table->double('number_of_guests')->nullable();
             $table->string('date')->nullable();
-            $table->boolean('full_day')->nullable();
+            $table->integer('reservation_type')->nullable();
             $table->string('description')->nullable();
             $table->double('current_payment')->nullable();
             $table->double('total_payment')->nullable();
@@ -27,9 +30,15 @@ return new class extends Migration
                 ->references('id')
                 ->on('venues')
                 ->onDelete("cascade");
+
             $table->foreign('client_id')
                 ->references('id')
                 ->on('clients')
+                ->onDelete("cascade");
+
+            $table->foreign('menu_id')
+                ->references('id')
+                ->on('menus')
                 ->onDelete("cascade");
         });
     }

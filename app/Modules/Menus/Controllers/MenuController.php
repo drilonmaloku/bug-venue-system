@@ -57,7 +57,9 @@ class MenuController extends Controller
     public function store(Request $request) {
         $menu = $this->menuService->store($request);
 
-        return redirect()->to('menus')->withSuccessMessage('dddddd');
+        return redirect()->to('menus')
+            ->withSuccessMessage('Menyja u shtua me sukses');
+
     }
 
     public function view($id)
@@ -89,7 +91,7 @@ class MenuController extends Controller
             return abort(404);
         }
         $client = $this->menuService->update($request,$menu);
-        return redirect()->to('menus')->withSuccessMessage('dddddd');
+        return redirect()->to('menus')->withSuccessMessage('Menyja u be update me sukses');
     }
 
     public function delete($id){
@@ -98,7 +100,7 @@ class MenuController extends Controller
             abort('Venue not found',404);
         }
         $menuDeleted = $this->menuService->delete($menu);
-        return redirect()->to('menus')->withSuccessMessage('dddddd');
+        return redirect()->to('menus')->withSuccessMessage('Menyja u be delete');
     }
 
 }
