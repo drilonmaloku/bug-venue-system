@@ -7,6 +7,11 @@
     <div class="vms_panel">
         <div class="row">
             <div class="col-md-8">
+                <form action="{{ route('reservation.destroy',$reservation->id) }}" method="POST">
+                    @csrf
+                    @method('DELETE')
+                    <button class="btn btn-danger btn-sm ms-auto mb-0" type="submit"><i class="fa fa-trash"></i> Fshij</button>
+                </form>
                 <div class="bug-table-item-options">
                 <table>
                     <thead>
@@ -36,4 +41,55 @@
             </div>
         </div>
     </div>
+
+    <div class="vms_panel">
+        <h5>Pagesat:</h5>
+        @if(count($payments) > 0)
+            <div class="table-responsive ">
+                <table class="bug-venue-table">
+                    <thead>
+                    <tr>
+                        <th>ID</th>
+
+                        <th>Vlera</th>
+                        <th class="text-uppercase text-secondary text-sm font-weight-bolder opacity-7">
+                            Data</th>                   
+                        <th class="text-uppercase text-secondary text-sm font-weight-bolder opacity-7">
+                            Pershkrimi</th>
+                        <th width="40" class="text-uppercase text-secondary text-sm font-weight-bolder opacity-7">
+                        </th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    @foreach($payments as $payment)
+                        <tr>
+                            <td>
+                                {{$payment->id}}
+                            </td>
+                            <td>
+                                {{$payment->value}}
+                            </td>
+                            <td>
+                                {{$payment->date}}
+                            </td>
+                            <td>
+                                {{$payment->notes}}
+                            </td>
+                            <td>
+                                {{$payment->description}}
+                            </td>
+                        
+                        </tr>
+                    @endforeach
+                    </tbody>
+                </table>
+            </div>
+
+            @else
+            <div class="hubers-empty-tab">
+                    <h5 class="text-center">Nuk ka Pagesa për këte rezervim.</h5>
+            </div>
+        @endif
+    </div>
+
 @endsection

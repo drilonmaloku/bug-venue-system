@@ -120,25 +120,23 @@ class PaymentsController extends Controller
     }
 
     public function delete($id){
-        $client = $this->venuesService->getByID($id);
-        if(is_null($client)) {
+        $payment = $this->paymentsService->getByID($id);
+        if(is_null($payment)) {
             return response()->json([
-                'message' => 'Client Not Found'
+                'message' => 'Payment Not Found'
             ], JsonResponse::HTTP_NOT_FOUND);
         }
 
         try {
 
-            $clientDeleted = $this->venuesService->delete($client);
+            $paymentDeleted = $this->paymentsService->delete($payment);
 
-            if($clientDeleted) {
-                return response()->json([
-                    'message' => 'Client was deleted successfully'
-                ], JsonResponse::HTTP_OK);
+            if($paymentDeleted) {
+              return  redirect()->to('payments');
             }
 
             return response()->json([
-                "message" => "Failed to delete existing client."
+                "message" => "Failed to delete existing Payment."
             ], JsonResponse::HTTP_BAD_REQUEST);
 
         } catch (\Exception $e) {

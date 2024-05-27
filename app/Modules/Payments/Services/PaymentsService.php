@@ -23,6 +23,29 @@ class PaymentsService
     public function getAll(Request $request){
         $perPage = $request->has('per_page') ? $request->input('per_page') : 25;
         $query = Payment::query();
+
+
+        if ($request && $request->has("search") && $request->input("search") != '') {
+            $searchTerm = '%' . $request->input("search") . '%';
+
+            $query->where(function ($subquery) use ($searchTerm) {
+                $subquery->where('value', 'LIKE', $searchTerm)
+                    ->orWhere('notes', 'LIKE', $searchTerm);
+            });
+
+               $query->orWhereHas('client', function ($clientQuery) use ($searchTerm) {
+            $clientQuery->where('name', 'LIKE', $searchTerm); 
+        });
+        }
+
+       // Handle date filter
+       if ($request->has('date') && $request->input('date') != '') {
+        $date = $request->input('date');
+        $formattedDate = \Carbon\Carbon::createFromFormat('Y-m-d', $date)->format('d-m-Y');
+        $query->where('date', $formattedDate); // Use the 'date' column for filtering
+    }
+
+
         return $query->paginate($perPage);
 
     }
@@ -56,7 +79,7 @@ class PaymentsService
 
         if($venue){
             $this->logService->log([
-                'message' => 'Venue is created successfully',
+                'message' => 'Pagesa është krijuar me sukses',
                 'context' => Log::LOG_CONTEXT_CLIENTS,
                 'ttl'=> Log::LOG_TTL_THREE_MONTHS,
             ]);
@@ -76,7 +99,7 @@ class PaymentsService
 
         if($venueSaved){
             $this->logService->log([
-                'message' => 'Venue was updated successfully',
+                'message' => 'Pagesa u përditësua me sukses',
                 'context' => Log::LOG_CONTEXT_CLIENTS,
                 'ttl'=> Log::LOG_TTL_THREE_MONTHS,
             ]);
@@ -88,20 +111,37 @@ class PaymentsService
     /**
      * Deletes existing venue
      **/
-    public function delete(Venue $venue) {
-         $previousData = $venue->attributesToArray();
-         $venueDeleted = $venue->delete();
+    // public function delete(Payment $payment) {
+    //      $previousData = $venue->attributesToArray();
+    //      $venueDeleted = $venue->delete();
 
-         if($venueDeleted){
-            $this->logService->log([
-                'message' => 'Venue was deleted successfully',
-                'context' => Log::LOG_CONTEXT_CLIENTS,
-                'ttl'=> Log::LOG_TTL_THREE_MONTHS,
-                'previous_data'=> json_encode($previousData)
-            ]);
-        }
+    //      if($venueDeleted){
+    //         $this->logService->log([
+    //             'message' => 'Pagesa u fshi me sukses',
+    //             'context' => Log::LOG_CONTEXT_CLIENTS,
+    //             'ttl'=> Log::LOG_TTL_THREE_MONTHS,
+    //             'previous_data'=> json_encode($previousData)
+    //         ]);
+    //     }
 
-        return $venue;
-    }
+    //     return $venue;
+    // }
+
+
+
+    public function delete(Payment $payment) {
+        $previousData = $payment->attributesToArray();
+        $paymentDeleted = $payment->delete();
+
+
+        if($paymentDeleted){
+           $this->logService->log([
+               'message' => 'Pagesa është fshirë me sukses',
+               'context' => Log::LOG_CONTEXT_CLIENTS,
+               'ttl'=> Log::LOG_TTL_THREE_MONTHS,
+           ]);
+       }
+       return $paymentDeleted;
+   }
 
 }

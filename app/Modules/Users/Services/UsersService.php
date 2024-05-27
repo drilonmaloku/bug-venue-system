@@ -194,18 +194,20 @@ class UsersService
      * @param User $user The user instance to be deleted.
      * @return bool True if the user was deleted successfully, otherwise false.
      */
-    public function destroy($user)
+    public function destroy(User $user)
     {
         $userDeleted = $user->delete();
-        if($userDeleted) {
-            $log = $this->logService->store([
-                "message" => auth()->user()->name . " deleted user with id: ".$user->id. 'and name: '.$user->name,
+
+        if ($userDeleted) {
+            $this->logService->store([
+                "message" => auth()->user()->name . " deleted user with id: " . $user->id . ' and name: ' . $user->name,
                 "context" => Log::LOG_CONTEXT_USERS,
                 "ttl" => Log::LOG_TTL_FOREVER,
                 "keep_alive" => Log::LOG_TTL_KEEP_ALIVE,
             ]);
         }
-        return $user->delete();
+
+        return $userDeleted;
     }
     /**
      * Reset the password for a user.
@@ -286,7 +288,7 @@ class UsersService
 
         if($clientSaved){
             $this->logService->log([
-                'message' => 'User was updated successfully',
+                'message' => 'Përdoruesi u përditësua me sukses',
                 'context' => Log::LOG_CONTEXT_USERS,
                 'ttl'=> Log::LOG_TTL_THREE_MONTHS,
             ]);
@@ -295,5 +297,22 @@ class UsersService
         return $user;
     }
 
+
+
+
+    public function updatePassword(Request $request, User $user)
+    {
+        $oldPassword = $request->input('password_old');
+        $newPassword = $request->input('password_new');
+        
+        if (!Hash::check($oldPassword, $user->password)) {
+            
+            return false;
+        }
+
+        $user->password = Hash::make($newPassword);
+
+        return $user->save();
+    }
 
 }

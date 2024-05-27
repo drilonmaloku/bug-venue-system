@@ -87,6 +87,7 @@
 <script src="assets/js/plugins/perfect-scrollbar.min.js"></script>
 <script src="assets/js/plugins/smooth-scrollbar.min.js"></script>
 @stack('js');
+@include('sweetalert::alert')
 </body>
 
 </html>

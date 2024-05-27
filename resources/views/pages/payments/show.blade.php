@@ -7,6 +7,11 @@
     <div class="vms_panel">
         <div class="row">
             <div class="col-md-8">
+                <form action="{{ route('payments.destroy',$payment->id) }}" method="POST">
+                    @csrf
+                    @method('DELETE')
+                    <button class="btn btn-danger btn-sm ms-auto mb-0" type="submit"><i class="fa fa-trash"></i> Fshij</button>
+                </form>
                 <div class="bug-table-item-options">
                 <table>
                     <thead>

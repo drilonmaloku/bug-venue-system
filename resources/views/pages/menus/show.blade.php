@@ -11,7 +11,7 @@
                     <form action="{{ route('menus.destroy', $menu->id) }}" method="POST">
                         @csrf
                         @method('DELETE')
-                        <button class="btn btn-danger btn-sm ms-auto mb-0" type="submit"><i class="fa fa-trash"></i> Fshij</button>
+                        <button class="btn btn-danger btn-sm ms-auto mb-0" type="submit"><i class="fa fa-trash" data-confirm-delete="true"></i> Fshij</button>
                     </form>
 
                 <div class="bug-table-item-options">

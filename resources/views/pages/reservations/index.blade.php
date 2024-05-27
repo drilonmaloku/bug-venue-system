@@ -7,6 +7,20 @@
 @endsection
 @section('content')
     <div class="vms_panel">
+        <form action="/reservations" method="GET" >
+            <div class="hubers-filter-options">
+                <div class="hubers-filter-list-options">
+                    <div class="hubers-filter-group">
+                        <label>Search:</label>
+                        <input placeholder="Search" class="hubers-text-input white medium" type="text" name="search" value="{{ request('search') }}">
+                    </div>
+                </div>
+                <div class="hubers-filter-list-actions">
+                    <button type="submit" class="hubers-btn mr-2">Filtro</button>
+                    <a href="/reservations" class="hubers-btn inverse">Reset</a>
+                </div>
+            </div>
+        </form>
         @if(count($reservations) > 0)
             <div class="table-responsive ">
                 <table class="bug-venue-table">
@@ -34,17 +48,19 @@
                             <td>
                                {{$reservation->date}}
                             </td>
+                          
                             <td>
-                                {{$reservation->venue->name}}
-                            </td>
+                                <a class="hubers-link" href="{{route('venues.view',['id'=>$reservation->venue->id])}}"> {{$reservation->venue->name}} </a>
+                             </td>
                             <td>
                                {{$reservation->description}}
                             </td>
                             <td>
                                 {{$reservation->current_payment}} $
                              </td>
-                            <td>
-                                {{$reservation->client->name}}
+                       
+                             <td>
+                                <a class="hubers-link" href="{{route('clients.view',['id'=>$reservation->client->id])}}"> {{$reservation->client->name}} </a>
                              </td>
                             <td>
                                 <div class="bug-table-item-options">

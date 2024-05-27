@@ -87,6 +87,11 @@
                     </tbody>
                 </table>
             </div>
+
+            @else
+            <div class="hubers-empty-tab">
+                    <h5 class="text-center">Nuk ka rezervime për këte klient.</h5>
+            </div>
         @endif
     </div>
     <div class="vms_panel">
@@ -131,6 +136,11 @@
                     </tbody>
                 </table>
             </div>
+            @else
+            <div class="hubers-empty-tab">
+                    <h5 class="text-center">Nuk ka pagesa për këte klient.</h5>
+            </div>
         @endif
     </div>
 @endsection
+

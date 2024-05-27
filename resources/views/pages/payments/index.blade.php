@@ -5,6 +5,25 @@
 @endsection
 @section('content')
     <div class="vms_panel">
+        <form action="/payments" method="GET" >
+            <div class="hubers-filter-options">
+                <div class="hubers-filter-list-options">
+                    <div class="hubers-filter-group">
+                        <label>Search:</label>
+                        <input placeholder="Search" class="hubers-text-input white medium" type="text" name="search" value="{{ request('search') }}">
+                    </div>
+                    <div class="hubers-filter-group">
+                        <label>Data:</label>
+                        <input placeholder="Search" class="hubers-text-input white medium" type="date" name="date" value="{{old('date',app('request')->input('date'))}}">
+                    </div>
+                </div>
+                
+                <div class="hubers-filter-list-actions">
+                    <button type="submit" class="hubers-btn mr-2">Filtro</button>
+                    <a href="/payments" class="hubers-btn inverse">Reset</a>
+                </div>
+            </div>
+        </form>
         @if(count($payments) > 0)
             <div class="table-responsive p-0">
                 <table class="bug-table">

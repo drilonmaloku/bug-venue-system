@@ -26,6 +26,8 @@
                             <option @if(app('request')->input('context') == 4) selected @endif value="4">Sallat</option>
                             <option @if(app('request')->input('context') == 5) selected @endif value="5">Userat</option>
                             <option @if(app('request')->input('context') == 6) selected @endif value="6">Raportet</option>
+                            <option @if(app('request')->input('context') == 7) selected @endif value="7">Menu</option>
+
                         </select>
                     </div>
                     <div class="hubers-filter-group">

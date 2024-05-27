@@ -11,7 +11,11 @@
                     <a class="bug-table-item-option" href="{{route('profile.edit')}}">
                         <i class="fa fa-edit"></i>
                     </a>
+                    <a class="bug-table-item-option" href="{{route('profile.password-update')}}">
+                        <i class="fa fa-lock"></i>
+                    </a>
                 </div>
+                
                 <table>
                     <thead>
                         <tr>

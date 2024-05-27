@@ -59,9 +59,10 @@ class ReservationsController extends Controller
         if(is_null($reservation)) {
             return abort(404);
         }
-
+        $payments = $reservation->payments()->get();
         return view('pages/reservations/show',[
-            'reservation'=>$reservation
+            'reservation'=>$reservation,
+            'payments' => $payments,
         ]);
     }
 
@@ -113,21 +114,19 @@ class ReservationsController extends Controller
     }
 
     public function delete($id){
-        $client = $this->venuesService->getByID($id);
-        if(is_null($client)) {
+        $reservation = $this->reservationsService->getByID($id);
+        if(is_null($reservation)) {
             return response()->json([
-                'message' => 'Client Not Found'
+                'message' => 'Reservation Not Found'
             ], JsonResponse::HTTP_NOT_FOUND);
         }
 
         try {
 
-            $clientDeleted = $this->venuesService->delete($client);
+            $reservationDeleted = $this->reservationsService->delete($reservation);
 
-            if($clientDeleted) {
-                return response()->json([
-                    'message' => 'Client was deleted successfully'
-                ], JsonResponse::HTTP_OK);
+            if($reservationDeleted) {
+                return redirect()->to('reservations');
             }
 
             return response()->json([

@@ -75,7 +75,7 @@ class ClientsService
 
         if($client){
             $this->logService->log([
-                'message' => 'Client is created succesfully',
+                'message' => 'Klienti është krijuar me sukses',
                 'context' => Log::LOG_CONTEXT_CLIENTS,
                 'ttl'=> Log::LOG_TTL_THREE_MONTHS,
             ]);
@@ -96,7 +96,7 @@ class ClientsService
 
         if($clientSaved){
             $this->logService->log([
-                'message' => 'Client was updated successfully',
+                'message' => 'Klienti u përditësua me sukses',
                 'context' => Log::LOG_CONTEXT_CLIENTS,
                 'ttl'=> Log::LOG_TTL_THREE_MONTHS,
             ]);
@@ -114,7 +114,7 @@ class ClientsService
 
          if($clientDeleted){
             $this->logService->log([
-                'message' => 'Client was deleted succesfully',
+                'message' => 'Klienti u fshi me sukses',
                 'context' => Log::LOG_CONTEXT_CLIENTS,
                 'ttl'=> Log::LOG_TTL_THREE_MONTHS,
                 'previous_data'=> json_encode($previousData)

@@ -62,9 +62,13 @@ Route::group(['middleware' => 'auth'], function () {
     Route::get('/reservations/create', [ReservationsController::class, 'create'])->name('reservations.create');
     Route::post('/reservations', [ReservationsController::class, 'store'])->name('reservations.store');
     Route::get('/reservation/{id}', [ReservationsController::class, 'view'])->name('reservations.view');
+    Route::delete('/reservation/{id}', [ReservationsController::class, 'delete'])->name('reservation.destroy');
+
 
     Route::get('/payments', [PaymentsController::class, 'index'])->name('payments.index');
     Route::get('/payments/{id}', [PaymentsController::class, 'view'])->name('payments.view');
+    Route::delete('/payments/{id}', [PaymentsController::class, 'delete'])->name('payments.destroy');
+
 
 
     Route::get('/profile-static', [PageController::class, 'profile'])->name('profile-static');
@@ -92,6 +96,10 @@ Route::group(['middleware' => 'auth'], function () {
     Route::get('/users/{id}', [UsersController::class, 'view'])->name('users.view');
     Route::get('/users/{id}/edit', [UsersController::class, 'edit'])->name('users.edit');
     Route::put('/users/{id}/update', [UsersController::class, 'update'])->name('users.update');
+    Route::put('/users/{id}/update-password-profile', [UsersController::class, 'updatePassword'])->name('users-password.update');
+    Route::delete('//users/{user}', [UsersController::class, 'destroy'])->name('users.destroy');
+
+
 });
 
 // Profile
@@ -99,6 +107,8 @@ Route::group(['middleware' => 'auth'], function () {
     Route::get('/profile', [UsersController::class, 'profile'])->name('profile');
     Route::get('/profile/edit', [UsersController::class, 'editProfile'])->name('profile.edit');
     Route::put('/profile', [UsersController::class, 'updateProfile'])->name('profile.update');
+    Route::get('/profile/password', [UsersController::class, 'editPassword'])->name('profile.password-update');
+
 });
 
 // Logs

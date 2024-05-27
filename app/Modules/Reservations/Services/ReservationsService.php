@@ -23,6 +23,16 @@ class ReservationsService
     public function getAll(Request $request){
         $perPage = $request->has('per_page') ? $request->input('per_page') : 25;
         $query = Reservation::query();
+
+
+        if ($request && $request->has("search") && $request->input("search") != '') {
+            $searchTerm = '%' . $request->input("search") . '%';
+
+            $query->where(function ($subquery) use ($searchTerm) {
+                $subquery->where('description', 'LIKE', $searchTerm)
+                    ->orWhere('current_payment', 'LIKE', $searchTerm);
+            });
+        }
         return $query->paginate($perPage);
 
     }
@@ -59,7 +69,7 @@ class ReservationsService
         ]);
         if($reservation){
             $this->logService->log([
-                'message' => 'Reservation is created successfully',
+                'message' => 'Rezervimi është krijuar me sukses',
                 'context' => Log::LOG_CONTEXT_CLIENTS,
                 'ttl'=> Log::LOG_TTL_THREE_MONTHS,
             ]);
@@ -79,7 +89,7 @@ class ReservationsService
 
         if($venueSaved){
             $this->logService->log([
-                'message' => 'Venue was updated successfully',
+                'message' => 'Rezervimi u përditësua me sukses',
                 'context' => Log::LOG_CONTEXT_CLIENTS,
                 'ttl'=> Log::LOG_TTL_THREE_MONTHS,
             ]);
@@ -91,20 +101,20 @@ class ReservationsService
     /**
      * Deletes existing venue
      **/
-    public function delete(Venue $venue) {
-         $previousData = $venue->attributesToArray();
-         $venueDeleted = $venue->delete();
+    public function delete(Reservation $reservation) {
+        $previousData = $reservation->attributesToArray();
+        $reservationDeleted = $reservation->delete();
 
-         if($venueDeleted){
-            $this->logService->log([
-                'message' => 'Venue was deleted successfully',
-                'context' => Log::LOG_CONTEXT_CLIENTS,
-                'ttl'=> Log::LOG_TTL_THREE_MONTHS,
-                'previous_data'=> json_encode($previousData)
-            ]);
-        }
 
-        return $venue;
-    }
+        if($reservationDeleted){
+           $this->logService->log([
+               'message' => 'Rezervimi është fshirë me sukses',
+               'context' => Log::LOG_CONTEXT_CLIENTS,
+               'ttl'=> Log::LOG_TTL_THREE_MONTHS,
+           ]);
+       }
+       return $reservationDeleted;
+   }
+
 
 }

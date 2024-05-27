@@ -73,7 +73,7 @@ class MenuService
 
         if($menu){
             $this->logService->log([
-                'message' => 'Menu is created succesfully',
+                'message' => 'Menuja është krijuar me sukses',
                 'context' => Log::LOG_CONTEXT_CLIENTS,
                 'ttl'=> Log::LOG_TTL_THREE_MONTHS,
             ]);
@@ -92,6 +92,14 @@ class MenuService
         $menuUpdated = $menu->save();
 
 
+        if($menuUpdated){
+            $this->logService->log([
+                'message' => 'Menuja është përditësuar me sukses',
+                'context' => Log::LOG_CONTEXT_CLIENTS,
+                'ttl'=> Log::LOG_TTL_THREE_MONTHS,
+            ]);
+        }
+        
         return $menuUpdated;
     }
 
@@ -102,6 +110,14 @@ class MenuService
          $previousData = $menu->attributesToArray();
          $menuDeleted = $menu->delete();
 
+
+         if($menuDeleted){
+            $this->logService->log([
+                'message' => 'Menuja është fshirë me sukses',
+                'context' => Log::LOG_CONTEXT_CLIENTS,
+                'ttl'=> Log::LOG_TTL_THREE_MONTHS,
+            ]);
+        }
         return $menuDeleted;
     }
 

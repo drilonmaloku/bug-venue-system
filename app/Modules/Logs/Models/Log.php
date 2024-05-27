@@ -60,6 +60,9 @@ class Log extends Model
         else if($log->context == 6) {
             return 'Raportet';
         }
+        else if($log->context == 7) {
+            return 'Menu';
+        }
     }
 
 }

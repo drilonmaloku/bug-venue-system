@@ -22,6 +22,7 @@ use App\Modules\Users\Requests\UpdateUserRequest;
 use App\Modules\Users\Requests\CreateUserRequest;
 use App\Modules\Users\Requests\RegisterUserRequest;
 use App\Modules\Groups\Resources\GroupsListResource;
+use Illuminate\Support\Facades\Auth;
 
 class UsersController extends Controller
 {
@@ -101,7 +102,7 @@ class UsersController extends Controller
 
         if($user) {
              $this->logService->log([
-            'message' => 'New client created with id: '.$user->id,
+            'message' => 'Klienti i ri është krijuar me ID: '.$user->id,
             'context' => Log::LOG_CONTEXT_CLIENTS,
             'ttl'=> Log::LOG_TTL_SIX_MONTHS
        ]);
@@ -165,6 +166,13 @@ class UsersController extends Controller
 
         return redirect()->to('profile');
 
+    }
+
+    public function editPassword()
+    {
+        return view('pages/users/update-password',[
+            'user'=>auth()->user()
+        ]);
     }
 
     /**
@@ -263,15 +271,14 @@ class UsersController extends Controller
      * @param Request $request
      * @return JsonResponse
      */
-    public function destroy(User $user, Request $request) {
+    public function destroy(User $user, Request $request)
+    {
         try {
             $userDeleted = $this->usersService->destroy($user);
 
             if (!$request->header("x-inertia")) {
                 if ($userDeleted) {
-                    return response()->json([
-                        'message' => 'User deleted successfully'
-                    ], 200);
+                    return redirect()->to('users');
                 } else {
                     return response()->json([
                         'message' => 'Failed to delete user'
@@ -279,9 +286,11 @@ class UsersController extends Controller
                 }
             }
         } catch (\Exception $e) {
+
             if (!$request->header("x-inertia")) {
                 return response()->json([
-                    'message' => 'Internal Server Error'
+                    'message' => 'Internal Server Error',
+                    'error' => $e->getMessage()
                 ], 500);
             }
         }
@@ -331,7 +340,7 @@ class UsersController extends Controller
 
             if($userDeleted) {
                 $this->logService->log([
-                    'message' => 'User: '.$user->name.' has been deleted forever, the user had id: '.$id,
+                    'message' => 'Përdoruesi: '.$user->name.' është fshirë përgjithmonë, përdoruesi kishte ID: '.$id,
                     'context' => Log::LOG_CONTEXT_USERS,
                     'ttl'=> Log::LOG_TTL_FOREVER
                 ]);
@@ -348,6 +357,25 @@ class UsersController extends Controller
             return response()->json([
                 'message' => 'Internal Server Error When Deleting User'
             ], 500);
+        }
+    }
+
+
+
+
+    public function updatePassword(Request $request, $id)
+    {
+        $user = $this->usersService->getByID($id);
+        if (!$user) {
+            return redirect()->back()->with('error', 'User not found.');
+        }
+
+        $updated = $this->usersService->updatePassword($request, $user);
+
+        if ($updated) {
+            return redirect()->route("profile");
+        } else {
+            return redirect()->back()->with('error', 'Failed to update password.');
         }
     }
 

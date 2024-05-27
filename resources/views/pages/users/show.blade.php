@@ -8,7 +8,14 @@
         <div class="row">
             <div class="col-md-8">
                 <div class="bug-table-item-options">
-                    <a class="bug-table-item-option" href="{{route('users.edit',['id'=>$user->id])}}">
+                    <form action="{{ route('users.destroy', ['user' => $user->id]) }}" method="POST" style="display: inline;">
+                        @csrf
+                        @method('DELETE')
+                        <span type="submit" class="bug-table-item-option">
+                            <i class="fa fa-trash"></i>
+                        </span>
+                    </form>
+                    <a class="ml-2 bug-table-item-option" href="{{route('users.edit',['id'=>$user->id])}}">
                         <i class="fa fa-edit"></i>
                     </a>
                 </div>

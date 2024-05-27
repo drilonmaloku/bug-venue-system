@@ -20,6 +20,7 @@ use App\Http\Controllers\Controller;
 use App\Modules\Logs\Services\LogService;
 use App\Modules\Clients\Services\VenuesService;
 use App\Modules\Clients\Resources\ClientListResource;
+use RealRashid\SweetAlert\Facades\Alert;
 
 class MenuController extends Controller
 {
@@ -39,6 +40,9 @@ class MenuController extends Controller
     {
         $menus = $this->menuService->getAll($request);
 
+        if(session('success_message')){
+            Alert::success('Success!', session('success_message'))->position('bottom-end');
+        }
         return view('pages/menus/index',[
             'is_on_search'=>count($request->all()),
             'menus'=>$menus
@@ -53,7 +57,7 @@ class MenuController extends Controller
     public function store(Request $request) {
         $menu = $this->menuService->store($request);
 
-        return redirect()->to('menus');
+        return redirect()->to('menus')->withSuccessMessage('dddddd');
     }
 
     public function view($id)
@@ -85,8 +89,7 @@ class MenuController extends Controller
             return abort(404);
         }
         $client = $this->menuService->update($request,$menu);
-
-        return redirect()->back();
+        return redirect()->to('menus')->withSuccessMessage('dddddd');
     }
 
     public function delete($id){
@@ -95,7 +98,7 @@ class MenuController extends Controller
             abort('Venue not found',404);
         }
         $menuDeleted = $this->menuService->delete($menu);
-        return redirect()->to('menus');
+        return redirect()->to('menus')->withSuccessMessage('dddddd');
     }
 
 }
