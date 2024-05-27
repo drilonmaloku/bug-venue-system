@@ -40,7 +40,8 @@ class PaymentsController extends Controller
         $payments = $this->paymentsService->getAll($request);
 
         return view('pages/payments/index',[
-            'payments'=>$payments
+            'payments'=>$payments,
+            'is_on_search'=>count($request->all()),
         ]);
 
     }

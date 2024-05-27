@@ -35,7 +35,8 @@ class VenuesController extends Controller
         $venues = $this->venuesService->getAll($request);
 
         return view('pages/venues/index',[
-            'venues'=>$venues
+            'venues'=>$venues,
+             'is_on_search'=>count($request->all())
         ]);
 
     }

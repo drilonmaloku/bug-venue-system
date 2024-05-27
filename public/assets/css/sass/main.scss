@@ -124,3 +124,42 @@
     margin-bottom: 0;
   }
 }
+
+
+.venue-items {
+  .venue-item {
+    border: 3px solid rgba(0,0,0,.14);
+    padding: 16px;
+    border-radius: 12px;
+    margin-bottom: 16px;
+
+
+    &.partially-available {
+      border: 3px solid #8e9803;
+    }
+    &.available {
+      border: 3px solid #039855;
+    }
+    &.not-available {
+      border: 3px solid #b42318;;
+    }
+  }
+}
+
+.venue-slots {
+
+  .slot {
+
+    display: flex;
+    align-items: center;
+    margin-bottom: 4px;
+    label {
+      margin-bottom: 0;
+      margin-left: 8px;
+    }
+
+    &:first-child {
+      margin-top: 8px;
+    }
+  }
+}

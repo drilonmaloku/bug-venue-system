@@ -2,6 +2,7 @@
 
 
 
+use App\Modules\Menus\Models\Menu;
 use App\Modules\Reservations\Models\Reservation;
 use App\Modules\Venues\Models\Venue;
 use App\Http\Controllers\Controller;
@@ -36,7 +37,7 @@ class DashboardController extends Controller
             $color = isset($colors[$reservation->venue_id]) ? $colors[$reservation->venue_id] : '#000000'; // Default to black
 
             return [
-                'title' => $reservation->description, // Use venue name as event title
+                'title' => $reservation->client->name.','.$reservation->venue->name,
                 'start' => $formattedDate,
                 'end' => $formattedDate,
                 'color' => $color,
@@ -46,6 +47,7 @@ class DashboardController extends Controller
         return view('pages.dashboard.index', [
             'venues' => $venues,
             'events' => $events->toArray(),
+            'menus' =>Menu::all(),
         ]);
     }
 

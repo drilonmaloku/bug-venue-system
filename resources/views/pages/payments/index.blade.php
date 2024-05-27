@@ -70,7 +70,13 @@
             </div>
             {{$payments->links()}}
         @else
-            <h6 class="text-center">There are no reservations currently</h6>
+            <div class="hubers-empty-tab">
+                @if ($is_on_search)
+                    <h5 class="text-center">Nuk ka pagesa sipas search</h5>
+                @else
+                    <h5 class="text-center">Nuk ka pagesa momentalisht</h5>
+                @endif
+            </div>
         @endif
     </div>
 

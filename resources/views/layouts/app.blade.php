@@ -23,7 +23,8 @@
     <link href="{{ asset('../resources/css/sass/main.css') }}" rel="stylesheet" />
     <link href="http://127.0.0.1:8000/assets/css/sass/main.css" rel="stylesheet" />
     <script src='https://cdn.jsdelivr.net/npm/fullcalendar/index.global.min.js'></script>
-
+    <script src="assets/js/core/scripts.min.js"></script>
+    <script src="{{ asset('../resources/js/app.js') }}"></script>
 </head>
 
 <body class="{{ $class ?? '' }}">

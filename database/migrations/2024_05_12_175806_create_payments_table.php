@@ -17,7 +17,7 @@ return new class extends Migration
             $table->unsignedBigInteger('client_id');
             $table->string('date');
             $table->double('value');
-            $table->string('notes');
+            $table->string('notes')->nullable();
             $table->timestamps();
 
             $table->foreign('reservation_id')

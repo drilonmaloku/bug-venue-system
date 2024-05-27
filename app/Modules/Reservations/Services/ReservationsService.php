@@ -6,6 +6,7 @@ use App\Modules\Venues\Models\Venue;
 use Illuminate\Http\Request;
 use App\Modules\Logs\Models\Log;
 use App\Modules\Logs\Services\LogService;
+use Illuminate\Support\Carbon;
 use Illuminate\Support\Facades\DB;
 
 class ReservationsService
@@ -58,19 +59,27 @@ class ReservationsService
      **/
     public function store($request,$clientId)
     {
+        $numberOfGuests = intval($request->input('number_of_guests'));
+        $menuPrice = doubleval($request->input('menu_price'));
+        $totalPayment = $numberOfGuests * $menuPrice;
+        $date = Carbon::createFromFormat('Y-m-d', $request->input('date'))->format('d-m-Y');
+        $venueData = explode(",", $request->input('reservation'));
         $reservation = Reservation::create([
             "client_id" => $clientId,
-            "venue_id" => data_get($request, "venue_id"),
-            "date" => data_get($request, "date"),
-            "description" => data_get($request, "description"),
-            "number_of_guests" => data_get($request, "number_of_guests"),
-            "current_payment" => data_get($request, "initial_payment_value"),
-            "total_payment" => data_get($request, "total_payment_value"),
+            "venue_id" => $venueData[0],
+            "menu_id" => $request->input("menu_id"),
+            "reservation_type" => $venueData[1],
+            "date" => $date,
+            "description" => $request->input("description"),
+            "number_of_guests" =>$numberOfGuests,
+            "current_payment" => $request->input("initial_payment_value"),
+            "total_payment" => $totalPayment,
+            "menu_contents" => 'test',
         ]);
         if($reservation){
             $this->logService->log([
                 'message' => 'Rezervimi është krijuar me sukses',
-                'context' => Log::LOG_CONTEXT_CLIENTS,
+                'context' => Log::LOG_CONTEXT_RESERVATIONS,
                 'ttl'=> Log::LOG_TTL_THREE_MONTHS,
             ]);
         }

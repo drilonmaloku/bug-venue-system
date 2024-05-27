@@ -47,7 +47,13 @@
                 </table>
             </div>
         @else
-            <h6 class="text-center">Nuk ka salla momentalisht</h6>
+            <div class="hubers-empty-tab">
+                @if ($is_on_search)
+                    <h5 class="text-center">Nuk ka salla sipas search</h5>
+                @else
+                    <h5 class="text-center">Nuk ka salla momentalisht</h5>
+                @endif
+            </div>
         @endif
     </div>
 @endsection
