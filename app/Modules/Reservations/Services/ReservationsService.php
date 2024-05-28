@@ -34,6 +34,7 @@ class ReservationsService
                     ->orWhere('current_payment', 'LIKE', $searchTerm);
             });
         }
+        $query->orderBy('created_at', 'desc');
         return $query->paginate($perPage);
 
     }
@@ -90,21 +91,22 @@ class ReservationsService
     /**
      * Updates existing Venue
      **/
-    public function update($request, Venue $venue) {
-        $venue->name = $request->input('name');
-        $venue->description = $request->input('description');
-        $venue->capacity = $request->input('capacity');
-        $venueSaved = $venue->save();
-
-        if($venueSaved){
+    public function update($request, Reservation $reservation) {
+        // Update the reservation with the new data from the request
+        $reservation->number_of_guests = $request->input('number_of_guests');
+      
+        // Save the updated reservation
+        $reservationSaved = $reservation->save();
+    
+        if($reservationSaved) {
             $this->logService->log([
                 'message' => 'Rezervimi u përditësua me sukses',
-                'context' => Log::LOG_CONTEXT_CLIENTS,
+                'context' => Log::LOG_CONTEXT_RESERVATIONS,
                 'ttl'=> Log::LOG_TTL_THREE_MONTHS,
             ]);
         }
-
-        return $venueSaved;
+    
+        return $reservationSaved;
     }
 
     /**

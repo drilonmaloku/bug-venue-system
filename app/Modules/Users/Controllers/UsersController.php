@@ -23,6 +23,7 @@ use App\Modules\Users\Requests\CreateUserRequest;
 use App\Modules\Users\Requests\RegisterUserRequest;
 use App\Modules\Groups\Resources\GroupsListResource;
 use Illuminate\Support\Facades\Auth;
+use RealRashid\SweetAlert\Facades\Alert;
 
 class UsersController extends Controller
 {
@@ -50,7 +51,9 @@ class UsersController extends Controller
     public function index(Request $request){
 
         $users = $this->usersService->getAll($request);
-
+        if(session('success_message')){
+            Alert::success('Success!', session('success_message'));
+        }
         return view('pages/users/index',[
             'is_on_search'=>count($request->all()),
             'users'=>$users
@@ -107,7 +110,7 @@ class UsersController extends Controller
             'ttl'=> Log::LOG_TTL_SIX_MONTHS
        ]);
         }
-        return redirect()->to('users');
+        return redirect()->to('users')->withSuccessMessage('Perduruesi u krijua me sukses');
     }
 
     /**
@@ -164,7 +167,7 @@ class UsersController extends Controller
 
         $user = $this->usersService->update($request,auth()->user());
 
-        return redirect()->to('profile');
+        return redirect()->to('profile')->withSuccessMessage('Perduruesi u be update me sukses');
 
     }
 
@@ -241,7 +244,7 @@ class UsersController extends Controller
 
             $client = $this->usersService->update($request,$client);
 
-            return redirect()->to('users');
+            return redirect()->to('users')->withSuccessMessage('Perduruesi u be update me sukses');
 
         } catch (\Exception $e) {
             return response()->json([
@@ -278,7 +281,7 @@ class UsersController extends Controller
 
             if (!$request->header("x-inertia")) {
                 if ($userDeleted) {
-                    return redirect()->to('users');
+                    return redirect()->to('users')->withSuccessMessage('Perduruesi u fshi me sukses');
                 } else {
                     return response()->json([
                         'message' => 'Failed to delete user'
@@ -373,7 +376,7 @@ class UsersController extends Controller
         $updated = $this->usersService->updatePassword($request, $user);
 
         if ($updated) {
-            return redirect()->route("profile");
+            return redirect()->route("profile")->withSuccessMessage('PAssswordi u ndryshua me sukses');
         } else {
             return redirect()->back()->with('error', 'Failed to update password.');
         }

@@ -19,6 +19,7 @@ use App\Http\Controllers\Controller;
 use App\Modules\Logs\Services\LogService;
 use App\Modules\Clients\Services\VenuesService;
 use App\Modules\Clients\Resources\ClientListResource;
+use RealRashid\SweetAlert\Facades\Alert;
 
 class ClientsController extends Controller
 {
@@ -37,6 +38,10 @@ class ClientsController extends Controller
     public function index(Request $request)
     {
         $clients = $this->clientsService->getAll($request);
+
+        if(session('success_message')){
+            Alert::success('Success!', session('success_message'));
+        }
 
         return view('pages/clients/index',[
             'is_on_search'=>count($request->all()),
@@ -77,7 +82,7 @@ class ClientsController extends Controller
 
             $client = $this->clientsService->update($request,$client);
 
-            return redirect()->to('clients');
+            return redirect()->to('clients')->withSuccessMessage('Klienti u be update me sukses');
 
         } catch (\Exception $e) {
             return response()->json([

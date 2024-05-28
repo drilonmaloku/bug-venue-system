@@ -19,6 +19,12 @@ use Maatwebsite\Excel\Facades\Excel;
 use App\Http\Controllers\Controller;
 use App\Modules\Logs\Services\LogService;
 use App\Modules\Clients\Resources\ClientListResource;
+use App\Modules\Reservations\Models\ReservationComment;
+use App\Modules\Reservations\Requests\AddCommentRequest;
+use App\Modules\Reservations\Resources\ReservationListCommentResource;
+use App\Modules\Reservations\Services\ReservationCommentServices;
+use Illuminate\Validation\ValidationException;
+use RealRashid\SweetAlert\Facades\Alert;
 
 class ReservationsController extends Controller
 {
@@ -27,13 +33,17 @@ class ReservationsController extends Controller
     private $clientsService;
     private $menuService;
     private $paymentsService;
+    private $commentReservationService;
+
 
     public function __construct(
         VenuesService $venuesService,
         ReservationsService $reservationsService,
         ClientsService $clientsService,
         MenuService $menuService,
-        PaymentsService $paymentsService
+        PaymentsService $paymentsService,
+        ReservationCommentServices $commentReservationService,
+
     )
     {
         $this->venuesService = $venuesService;
@@ -41,12 +51,16 @@ class ReservationsController extends Controller
         $this->clientsService = $clientsService;
         $this->menuService = $menuService;
         $this->paymentsService = $paymentsService;
+        $this->commentReservationService = $commentReservationService;
+
     }
 
     public function index(Request $request)
     {
         $reservations = $this->reservationsService->getAll($request);
-
+        if(session('success_message')){
+            Alert::success('Success!', session('success_message'));
+        }
         return view('pages/reservations/index',[
             'reservations'=>$reservations,
             'is_on_search'=>count($request->all())
@@ -118,10 +132,9 @@ class ReservationsController extends Controller
         if(is_null($reservation)) {
             return abort(404);
         }
-        $payments = $reservation->payments()->get();
         return view('pages/reservations/show',[
             'reservation'=>$reservation,
-            'payments' => $payments,
+
         ]);
     }
 
@@ -156,40 +169,80 @@ class ReservationsController extends Controller
         if($reservation && $request->input('initial_payment_value')  && $request->input('initial_payment_value')) {
             $this->paymentsService->store($request,$reservation->id,$client->id);
         }
-        return redirect()->to('reservations');
+        return redirect()->to('reservations')->withSuccessMessage('Rezervimi u krijua me sukses');
     }
 
-    public function update(Request $request) {
-        $client = $this->venuesService->getByID($request->input('id'));
 
-        if(is_null($client)) {
+    public function storePayment(Request $request, $reservationID)
+    {
+        $reservation = $this->reservationsService->getByID($reservationID);
+        if (!$reservation) {
+            return redirect()->back()->withErrors(['error' => 'Reservation not found.']);
+        }
+    
+        $validatedData = $request->validate([
+            'payment_date' => 'required|date',
+            'initial_payment_value' => 'required|numeric',
+            'payment_notes' => 'nullable|string',
+        ]);
+    
+        // Assuming $reservation has a 'client_id' property or method to get client ID
+        $clientID = $reservation->client_id;
+    
+        // Call the payment service
+        $this->paymentsService->storePayment($validatedData, $reservationID, $clientID);
+    
+        return redirect()->route('reservations.view', ['id' => $reservationID])
+                         ->with('success', 'Payment added successfully.');
+    }
+
+
+    public function edit($id)
+    {
+        $reservation = $this->reservationsService->getByID($id);
+        if(is_null($reservation)) {
+            return abort(404);
+        }
+        return view('pages/reservations/edit',[
+            'reservation'=>$reservation
+        ]);
+    }
+
+    public function update(Request $request, $id) {
+        $reservation = $this->reservationsService->getByID($id);
+    
+        if(is_null($reservation)) {
             return response()->json([
-                'message' => 'Client Not Found'
+                'message' => 'Rezervimi nuk u gjet '
             ], JsonResponse::HTTP_NOT_FOUND);
         }
-
+    
         try {
-
-            $client = $this->clientsService->update($request,$client);
-
-            if($client) {
-                return response()->json([
-                    'message' => 'Client was updated successfully',
-                    'data' => ClientViewResource::make($client)
-                ], JsonResponse::HTTP_OK);
+            $this->validate($request, [
+                'number_of_guests' => 'required|integer|min:1',
+            ]);
+    
+            $reservationUpdated = $this->reservationsService->update($request, $reservation);
+    
+            if($reservationUpdated) {
+                return redirect()->route('reservations.view', ['id' => $reservation->id]);
             }
-
+    
             return response()->json([
-                "message" => "Failed to update existing client."
+                "message" => "Failed to update the reservation."
             ], JsonResponse::HTTP_BAD_REQUEST);
-
+    
+        } catch (ValidationException $e) {
+            return response()->json([
+                'message' => 'Validation error',
+                'errors' => $e->validator->errors()->all()
+            ], JsonResponse::HTTP_BAD_REQUEST);
         } catch (\Exception $e) {
             return response()->json([
                 'message' => 'Internal Server Error'
             ], 500);
         }
     }
-
     public function delete($id){
         $reservation = $this->reservationsService->getByID($id);
         if(is_null($reservation)) {
@@ -203,7 +256,7 @@ class ReservationsController extends Controller
             $reservationDeleted = $this->reservationsService->delete($reservation);
 
             if($reservationDeleted) {
-                return redirect()->to('reservations');
+                return redirect()->to('reservations')->withSuccessMessage('Rezervimi u fshi me sukses');
             }
 
             return response()->json([
@@ -227,6 +280,66 @@ class ReservationsController extends Controller
             ->get();
 
         return $reservations->isEmpty();
+    }
+
+
+
+
+
+      
+    public function storeComment(Request $request,$id) {
+        $reservation = $this->reservationsService->getByID($id);
+        $reservationComment = $this->commentReservationService->storeComment($request,$reservation);
+        if($reservationComment) {
+
+            return redirect()->back()->withSuccessMessage('Komenti per rezervim u shtua me sukses');
+        }
+
+        return response()->json([
+            "message" => "Failed to create new Comment."
+        ], JsonResponse::HTTP_BAD_REQUEST);
+
+
+   
+
+        try {  
+            $reservation = $this->reservationsService->getByID($id);
+            $reservationComment = $this->commentReservationService->storeComment($request,$reservation);
+            if($reservationComment) {
+
+                return response()->json([
+                    'message' => 'Comment was created successfully',
+                    'data' => ReservationListCommentResource::make($reservationComment)
+                ], JsonResponse::HTTP_OK);
+            }
+
+            return response()->json([
+                "message" => "Failed to create new Comment."
+            ], JsonResponse::HTTP_BAD_REQUEST);
+
+        } catch (\Exception $e) {
+            return response()->json([
+                'message' => 'Internal Server Error'
+            ], 500);
+        }
+    }
+
+
+
+    public function deleteComment($id)
+    {
+        $comment = ReservationComment::find($id);
+
+        if (is_null($comment)) {
+            return response()->json(['message' => 'Comment Not Found'], JsonResponse::HTTP_NOT_FOUND);
+        }
+
+        try {
+            $this->commentReservationService->deleteComment($comment);
+            return redirect()->back()->withSuccessMessage('Komenti eshte fshire me sukses');
+        } catch (\Exception $e) {
+            return response()->json(['message' => 'Internal Server Error'], JsonResponse::HTTP_INTERNAL_SERVER_ERROR);
+        }
     }
 
 

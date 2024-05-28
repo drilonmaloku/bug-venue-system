@@ -7,7 +7,7 @@
         <div class="container-fluid">
             <div class="row">
                 <div class="col-md-8">
-                    <form role="form" method="POST" action={{ route('users.store') }} enctype="multipart/form-data">
+                    <form role="form" method="POST" action={{ route('users.store') }} enctype="multipart/form-data" onsubmit="return disableSubmitButton();">
                         @csrf
                         <div class="row">
                             <div class="col-md-12">
@@ -57,7 +57,7 @@
                                 </div>
                             </div>
                         </div>
-                        <button type="submit" class="hubers-btn">Ruaj</button>
+                        <button id="submitBtn" type="submit" class="hubers-btn">Ruaj</button>
 
 
                     </form>
@@ -67,3 +67,12 @@
     </div>
 
 @endsection
+
+
+
+<script>
+    function disableSubmitButton() {
+        document.getElementById("submitBtn").disabled = true;
+        return true;
+    }
+</script>

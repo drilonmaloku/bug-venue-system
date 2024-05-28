@@ -6,6 +6,7 @@ use App\Modules\Venues\Models\Venue;
 use Illuminate\Http\Request;
 use App\Modules\Logs\Models\Log;
 use App\Modules\Logs\Services\LogService;
+use App\Modules\Reservations\Models\Reservation;
 use Illuminate\Support\Carbon;
 use Illuminate\Support\Facades\DB;
 
@@ -46,7 +47,7 @@ class PaymentsService
         $query->where('date', $formattedDate); // Use the 'date' column for filtering
     }
 
-
+        $query->orderBy('created_at', 'desc');
         return $query->paginate($perPage);
 
     }
@@ -88,6 +89,31 @@ class PaymentsService
             ]);
         }
 
+        return $payment;
+    }
+
+    public function storePayment($data, $reservation_id, $client_id)
+    {
+        $payment = Payment::create([
+            "reservation_id" => $reservation_id,
+            "client_id" => $client_id,
+            "value" => data_get($data, "initial_payment_value"),
+            "notes" => data_get($data, "payment_notes"),
+            "date" => Carbon::createFromFormat('Y-m-d', data_get($data, "payment_date"))->format('d-m-Y'),
+        ]);
+        $reservation = Reservation::findOrFail($reservation_id);
+
+        $updated_momental_payment = $reservation->current_payment + $payment->value;
+    
+        $reservation->update(['current_payment' => $updated_momental_payment]);
+        if ($payment) {
+            $this->logService->log([
+                'message' => 'Pagesa është krijuar me sukses',
+                'context' => Log::LOG_CONTEXT_PAYMENTS,
+                'ttl' => Log::LOG_TTL_THREE_MONTHS,
+            ]);
+        }
+    
         return $payment;
     }
 

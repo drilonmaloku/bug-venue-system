@@ -35,6 +35,7 @@ class MenuService
         if(!$paginated) {
             return $query->get();
         }
+        $query->orderBy('created_at', 'desc');
         return $query->paginate($perPage);
 
     }
