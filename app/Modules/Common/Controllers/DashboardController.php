@@ -37,6 +37,7 @@ class DashboardController extends Controller
             $color = isset($colors[$reservation->venue_id]) ? $colors[$reservation->venue_id] : '#000000'; // Default to black
 
             return [
+                'id' => $reservation->id,
                 'title' => $reservation->client->name.','.$reservation->venue->name,
                 'start' => $formattedDate,
                 'end' => $formattedDate,

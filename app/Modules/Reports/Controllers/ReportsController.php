@@ -45,8 +45,8 @@ class ReportsController extends Controller
 
     public function generate(Request $request)
     {
-        $startDate = $request->input('start_date');
-        $endDate = $request->input('end_date');
+        $startDate = $request->input('starting_date');
+        $endDate = $request->input('ending_date');
         $reportsData = $this->reportsService->generateGeneralReport($startDate,$endDate);
         return view('pages/reports/generated',
         [

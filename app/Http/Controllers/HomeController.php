@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Modules\Menus\Models\Menu;
 use App\Modules\Reservations\Models\Reservation;
 use App\Modules\Reservations\Services\ReservationsService;
 use App\Modules\Venues\Models\Venue;
@@ -59,6 +60,7 @@ class HomeController extends Controller
         return view('pages.dashboard.index', [
             'events' => $events->toArray(),
             'venues' => $venues,
+            'menus' => Menu::all(),
         ]);
     }
 }

@@ -149,8 +149,48 @@
                             <span aria-hidden="true">&times;</span>
                         </button>
                     </div>
-                    <div class="modal-body">
-                      test
+                    <div id="informationModalContent" class="modal-body">
+                        <table>
+                            <thead>
+                            <tr>
+                                <th colspan="2">Informatat:</th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            <tr>
+                                <td>Data</td>
+                                <td></td>
+                            </tr>
+                            <tr>
+                                <td>Salla</td>
+                                <td></td>
+                            </tr>
+                            <tr>
+                                <td>Numri i te ftuarve</td>
+                                <td></td>
+                            </tr>
+                            <tr>
+                                <td>Klienti</td>
+                                <td></td>
+                            </tr>
+                            <tr>
+                                <td>Koha:</td>
+                                <td></td>
+                            </tr>
+                            <tr>
+                                <td>Pagesa Momentale:</td>
+                                <td></td>
+                            </tr>
+                            <tr>
+                                <td>Pagesa E Mbetur:</td>
+                                <td></td>
+                            </tr>
+                            <tr>
+                                <td>Pagesa Totale:</td>
+                                <td></td>
+                            </tr>
+                            </tbody>
+                        </table>
                     </div>
                     <div class="modal-footer">
                         <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
@@ -167,21 +207,69 @@
             var calendar = new FullCalendar.Calendar(calendarEl, {
                 initialView: 'dayGridMonth',
                 events: events,
-                dateClick: function (info) {
-                    // Open a modal or form to add a new event
-                    var event = events.find(e => e.start === info.dateStr);
+                dateClick: function(info) {
+                    // Check if the date has an event
+                    $('#dateInput').val(info.dateStr);
+                    checkAvailabilityAndUpdateTotal();
+                    $('#reservationModal').modal('show');
 
-                    if (event) {
-                        console.log('test2',event);
-                        $('#informationModal').modal('show');
-                    } else {
-                        console.log('test23',event);
-                        // Open the reservation modal
-                        $('#dateInput').val(info.dateStr);
-                        $('#reservationModal').modal('show');
-                        checkAvailabilityAndUpdateTotal();
-                    }
+                },
+                eventClick: function(info) {
+                    // An event was clicked, open the information modal
 
+                    // Optionally, load additional information via AJAX if necessary
+                    fetch(`/reservations/json/${info.event.id}`)
+                        .then(response => response.json())
+                        .then(data => {
+                            const reservation = data.data.reservation;
+                            const tableContent = `
+                    <thead>
+                        <tr>
+                            <th colspan="2">Informatat:</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>Data</td>
+                            <td>${reservation.date}</td>
+                        </tr>
+                        <tr>
+                            <td>Salla</td>
+                            <td>${reservation.venue.name}</td>
+                        </tr>
+                        <tr>
+                            <td>Numri i te ftuarve</td>
+                            <td>${reservation.number_of_guests}</td>
+                        </tr>
+                        <tr>
+                            <td>Klienti</td>
+                            <td>${reservation.client.name}</td>
+                        </tr>
+                        <tr>
+                            <td>Koha:</td>
+                            <td>${reservation.reservation_type_name}</td>
+                        </tr>
+                        <tr>
+                            <td>Pagesa Momentale:</td>
+                            <td>${reservation.current_payment}€</td>
+                        </tr>
+                        <tr>
+                            <td>Pagesa E Mbetur:</td>
+                            <td>${reservation.total_payment - reservation.current_payment}€</td>
+                        </tr>
+                        <tr>
+                            <td>Pagesa Totale:</td>
+                            <td>${reservation.total_payment}€</td>
+                        </tr>
+                    </tbody>
+                `;
+
+                            document.getElementById('informationModalContent').innerHTML = `<table>${tableContent}</table>`;
+                        })
+                        .catch(error => {
+                            console.error('Error fetching event information:', error);
+                        });
+                    $('#informationModal').modal('show');
                 }
             });
 
@@ -216,7 +304,6 @@
                     3: 'Mbrëmje'
                 };
                 availability.forEach(slot => {
-                    console.log(slot);
                     const slotDiv = document.createElement('div');
                     slotDiv.classList.add('slot');
                     const input = document.createElement('input');
@@ -251,7 +338,11 @@
             }
 
             function checkAvailabilityAndUpdateTotal() {
-
+                console.log(
+                    JSON.stringify({
+                        date: dateInput.value, // Y-m-d format
+                    })
+                )
                 fetch('/reservation/check-availability', {
                     method: 'POST',
                     headers: {
@@ -264,7 +355,7 @@
                 })
                     .then(response => response.json())
                     .then(res => {
-
+                        console.log(res.data);
                         res.data.forEach(venue => {
                             generateReservationTypeOptions(venue.id,venue.availability);
                         });
@@ -278,6 +369,8 @@
 
             menuSelect.addEventListener('change', updateMenuPrice);
             dateInput.addEventListener('input', checkAvailabilityAndUpdateTotal);
+            dateInput.addEventListener('change', checkAvailabilityAndUpdateTotal);
+            dateInput.addEventListener('keyup', checkAvailabilityAndUpdateTotal);
             menuPriceInput.addEventListener('input', updateTotalPrice);
             numberOfGuestsInput.addEventListener('input', updateTotalPrice);
         });
