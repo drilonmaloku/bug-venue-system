@@ -176,6 +176,65 @@
             </div>
         @endif
     </div>
+
+
+    <div class="vms_panel">
+   
+        <h5>Pricing Tracking for Reservation:</h5>
+        @if(count($reservation->pricingTracking) > 0)
+            <div class="table-responsive ">
+                <table class="bug-table">
+                    <thead>
+                    <tr>
+                        <th>ID</th>
+
+                        <th>Cmimi</th>
+                        <th class="text-uppercase text-secondary text-sm font-weight-bolder opacity-7">
+                            Numri i te ftuarve</th>
+                        <th class="text-uppercase text-secondary text-sm font-weight-bolder opacity-7">
+                            Cmimi total</th>
+                        <th  class="text-uppercase text-secondary text-sm font-weight-bolder opacity-7">
+                            Cmimi i menus
+                        </th>
+
+                    </tr>
+                    </thead>
+                    <tbody>
+                    @foreach($reservation->pricingTracking as $tracking)
+                        <tr>
+                            <td>
+                                {{$tracking->id}}
+                            </td>
+                            <td>
+                                {{$tracking->price}}€
+                            </td>
+                            <td>
+                                {{$tracking->number_of_guests}}
+                            </td>
+                            <td>
+                                {{$tracking->total_price}}
+                            </td>
+                            <td>
+                                {{$tracking->menu_price}}
+                            </td>
+                            
+                      
+                        </tr>
+                    @endforeach
+                    </tbody>
+                </table>
+            </div>
+
+        @else
+            <div class="hubers-empty-tab">
+                <h5 class="text-center">Nuk ka ndryshime  për këte rezervim.</h5>
+            </div>
+        @endif
+    </div>
+
+
+
+
     <div class="vms_panel">
         <div id="commentForm" class="hubers-panel-bordered" style="display: block;">
             <form action="{{ route('reservations.comment.store', ['id' => $reservation->id]) }}" method="POST">

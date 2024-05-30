@@ -46,4 +46,9 @@ class Reservation extends Model
     {
         return $this->hasMany(ReservationComment::class);
     }
+
+    public function pricingTracking()
+    {
+        return $this->hasMany(PricingStatusTracking::class);
+    }
 }

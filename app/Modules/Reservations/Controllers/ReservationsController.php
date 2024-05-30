@@ -135,6 +135,7 @@ class ReservationsController extends Controller
         return view('pages/reservations/show',[
             'reservation'=>$reservation,
 
+
         ]);
     }
 

@@ -6,6 +6,7 @@ use App\Modules\Venues\Models\Venue;
 use Illuminate\Http\Request;
 use App\Modules\Logs\Models\Log;
 use App\Modules\Logs\Services\LogService;
+use App\Modules\Reservations\Models\PricingStatusTracking;
 use Illuminate\Support\Carbon;
 use Illuminate\Support\Facades\DB;
 
@@ -94,6 +95,8 @@ class ReservationsService
     public function update($request, Reservation $reservation) {
         // Update the reservation with the new data from the request
         $reservation->number_of_guests = $request->input('number_of_guests');
+        $reservation->menu_price = $request->input('menu_price');
+
       
         // Save the updated reservation
         $reservationSaved = $reservation->save();
@@ -127,5 +130,24 @@ class ReservationsService
        return $reservationDeleted;
    }
 
+
+
+
+   public function storePricingTracking(Reservation $reservation, $numberOfGuests,$newMenuPrice)
+   {
+       try {
+           return PricingStatusTracking::create([
+               'user_id' => auth()->user()->id,
+               'number_of_guests' => $numberOfGuests,
+               'menu_price' => $newMenuPrice,
+            //    'price' => $numberOfGuests,
+               'reservation_id' => $reservation->id,
+           ]);
+       } catch (\Exception $e) {
+           
+           Log::error('Failed to store pricing tracking: ' . $e->getMessage());
+           return null; 
+       }
+   }
 
 }

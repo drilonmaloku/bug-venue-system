@@ -18,6 +18,12 @@
                                     <input id="numberOfGuests" class="bug-text-input" type="number" name="number_of_guests" value="{{$reservation->number_of_guests}}" >
                                 </div>
                             </div>
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label for="example-text-input" class="form-control-label">Cmimi i menus*</label>
+                                    <input id="menuPrice" class="bug-text-input" type="number" name="menu_price" value="{{$reservation->menu_price}}" >
+                                </div>
+                            </div>
                         </div>
                         <button type="submit" class="hubers-btn">Ruaj</button>
 
