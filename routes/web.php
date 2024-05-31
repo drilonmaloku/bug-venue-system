@@ -31,6 +31,7 @@ use App\Http\Controllers\RegisterController;
 use App\Http\Controllers\LoginController;
 use App\Http\Controllers\ResetPassword;
 use App\Http\Controllers\ChangePassword;
+use App\Modules\Common\Controllers\BackupController;
 use App\Modules\Users\Controllers\UsersController;
 
 Route::get('/', function () {return redirect('/dashboard');})->middleware('auth');
@@ -56,7 +57,7 @@ Route::group(['middleware' => 'auth'], function () {
     Route::get('/clients/{id}', [ClientsController::class, 'view'])->name('clients.view');
     Route::put('/clients/{id}/update', [ClientsController::class, 'update'])->name('clients.update');
 });
-
+// reservation.edit
 Route::group(['middleware' => 'auth'], function () {
     Route::get('/reservations', [ReservationsController::class, 'index'])->name('reservations.index');
     Route::get('/reservations/create', [ReservationsController::class, 'create'])->name('reservations.create');
@@ -65,6 +66,13 @@ Route::group(['middleware' => 'auth'], function () {
     Route::get('/reservations/{id}', [ReservationsController::class, 'view'])->name('reservations.view');
     Route::delete('/reservation/{id}', [ReservationsController::class, 'delete'])->name('reservation.destroy');
     Route::post('/reservation/check-availability', [ReservationsController::class, 'checkVenueAvailability'])->name('reservation.destroy');
+    Route::post("/reservations/{id}/comment", [ReservationsController::class, "storeComment"])->name('reservations.comment.store');
+    Route::delete('/reservations/comment/{id}', [ReservationsController::class, 'deleteComment'])->name('reservations.comment.delete');
+    Route::post('/reservations/{id}/payments', [ReservationsController::class, 'storePayment'])->name('reservations.payment.store');
+    Route::get('/reservations/{id}/edit', [ReservationsController::class, 'edit'])->name('reservation.edit');
+    Route::put('/reservations/{id}/update', [ReservationsController::class, 'update'])->name('reservations.update');
+
+
 
 
     Route::get('/payments', [PaymentsController::class, 'index'])->name('payments.index');
@@ -148,3 +156,12 @@ Route::group(['middleware' => 'auth'], function () {
 });
 
 Auth::routes();
+
+
+// Backup 
+Route::middleware(['middleware' => 'auth'])->group(function () {
+    Route::get('/backup', [BackupController::class, 'index'])->name('common.backup');
+    Route::get('/backup-db', [BackupController::class, 'createDatabaseBackup'])->name('common.db-backup');
+    Route::get('/download-db-backup/{file}', [BackupController::class, 'downloadDatabaseBackup'])->name('common.db-backup-download');
+    Route::get('/delete-db-backup/{file}', [BackupController::class, 'deleteDatabaseBackup'])->name('common.db-backup-delete');
+});

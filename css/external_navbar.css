@@ -1,0 +1,38 @@
+.hubers-external-nav {
+  -webkit-box-shadow: 0 2px 6px rgba(0, 0, 0, 0.2);
+          box-shadow: 0 2px 6px rgba(0, 0, 0, 0.2);
+  background: white;
+  height: 80px;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+}
+.hubers-external-nav .hubers-external-nav-items {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-pack: justify;
+      -ms-flex-pack: justify;
+          justify-content: space-between;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+}
+.hubers-external-nav .hubers-external-nav-list {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+}
+.hubers-external-nav .hubers-external-nav-list li {
+  margin-right: 24px;
+}
+.hubers-external-nav .hubers-external-nav-list li.active {
+  font-weight: bold;
+  text-decoration: underline;
+}
+.hubers-external-nav .hubers-external-nav-list li:last-child {
+  margin-right: 0;
+}/*# sourceMappingURL=external_navbar.css.map */

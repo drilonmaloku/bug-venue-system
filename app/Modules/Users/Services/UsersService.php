@@ -50,6 +50,7 @@ class UsersService
         if($withoutPagination) {
             return $query->get();
         }
+        $query->orderBy('created_at', 'desc');
         return $query->paginate(50);
     }
 

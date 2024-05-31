@@ -14,6 +14,7 @@ use Maatwebsite\Excel\Facades\Excel;
 use App\Http\Controllers\Controller;
 use App\Modules\Logs\Services\LogService;
 use App\Modules\Clients\Resources\ClientListResource;
+use RealRashid\SweetAlert\Facades\Alert;
 
 class PaymentsController extends Controller
 {
@@ -38,6 +39,9 @@ class PaymentsController extends Controller
     public function index(Request $request)
     {
         $payments = $this->paymentsService->getAll($request);
+        if(session('success_message')){
+            Alert::success('Success!', session('success_message'));
+        }
 
         return view('pages/payments/index',[
             'payments'=>$payments,
@@ -78,7 +82,7 @@ class PaymentsController extends Controller
 
         $venue = $this->venuesService->store($request);
 
-        return redirect()->to('reservations');
+        return redirect()->to('payments')->withSuccessMessage('Pagesa u krijua me sukses');
         try {
 
 
@@ -133,7 +137,7 @@ class PaymentsController extends Controller
             $paymentDeleted = $this->paymentsService->delete($payment);
 
             if($paymentDeleted) {
-              return  redirect()->to('payments');
+              return  redirect()->to('payments')->withSuccessMessage('Pagesa u fshi me sukses');
             }
 
             return response()->json([

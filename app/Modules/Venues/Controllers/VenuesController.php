@@ -15,6 +15,7 @@ use Maatwebsite\Excel\Facades\Excel;
 use App\Http\Controllers\Controller;
 use App\Modules\Logs\Services\LogService;
 use App\Modules\Clients\Resources\ClientListResource;
+use RealRashid\SweetAlert\Facades\Alert;
 
 class VenuesController extends Controller
 {
@@ -33,7 +34,9 @@ class VenuesController extends Controller
     public function index(Request $request)
     {
         $venues = $this->venuesService->getAll($request);
-
+        if(session('success_message')){
+            Alert::success('Success!', session('success_message'));
+        }
         return view('pages/venues/index',[
             'venues'=>$venues,
              'is_on_search'=>count($request->all())
@@ -60,7 +63,7 @@ class VenuesController extends Controller
     public function store(Request $request) {
         $venue = $this->venuesService->store($request);
 
-        return redirect()->to('venues');
+        return redirect()->to('venues')->withSuccessMessage('Salla u krijua me sukses');
         try {
 
 
@@ -93,7 +96,7 @@ class VenuesController extends Controller
 
             $venue = $this->venuesService->update($request,$venue);
 
-            return redirect()->to('venues');
+            return redirect()->to('venues')->withSuccessMessage('Perduruesi u be update me sukses');
 
         } catch (\Exception $e) {
             return response()->json([
@@ -111,7 +114,7 @@ class VenuesController extends Controller
             $clientDeleted = $this->venuesService->delete($venue);
 
             if($clientDeleted) {
-                return redirect()->to('venues');
+                return redirect()->to('venues')->withSuccessMessage('Perduruesi u fshi me sukses');
             }
             return redirect()->to('venues');
 

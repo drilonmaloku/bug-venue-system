@@ -41,7 +41,7 @@ class MenuController extends Controller
         $menus = $this->menuService->getAll($request);
 
         if(session('success_message')){
-            Alert::success('Success!', session('success_message'))->position('bottom-end');
+            Alert::success('Success!', session('success_message'));
         }
         return view('pages/menus/index',[
             'is_on_search'=>count($request->all()),

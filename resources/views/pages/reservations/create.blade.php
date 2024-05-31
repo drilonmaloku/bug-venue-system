@@ -7,7 +7,7 @@
         <div class="container-fluid">
             <div class="row">
                 <div class="col-md-8">
-                    <form role="form" method="POST" action={{ route('reservations.store') }} enctype="multipart/form-data">
+                    <form role="form" method="POST" action={{ route('reservations.store') }} enctype="multipart/form-data" onsubmit="return disableSubmitButton();">
                         @csrf
                         <h6><strong>Informatat e Rezervimit</strong></h6>
                         <div class="row">
@@ -116,7 +116,7 @@
                                 </div>
                             </div>
                         </div>
-                        <button type="submit" class="hubers-btn">Ruaj</button>
+                        <button id="submitBtn" type="submit" class="hubers-btn">Ruaj</button>
                     </form>
                 </div>
             </div>
@@ -218,5 +218,12 @@
             menuPriceInput.addEventListener('input', updateTotalPrice);
             numberOfGuestsInput.addEventListener('input', updateTotalPrice);
         });
+
+
+
+        function disableSubmitButton() {
+            document.getElementById("submitBtn").disabled = true;
+            return true;
+        }
     </script>
 @endsection

@@ -1,0 +1,19 @@
+.footer {
+  background-color: #333333;
+  color: #ffffff;
+  padding: 40px;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-pack: justify;
+      -ms-flex-pack: justify;
+          justify-content: space-between;
+}
+.footer ul li a {
+  color: white;
+}
+@media (max-width: 576px) {
+  .footer {
+    padding: 40px 20px;
+  }
+}/*# sourceMappingURL=footer.css.map */

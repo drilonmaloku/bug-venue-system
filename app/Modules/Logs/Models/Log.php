@@ -11,6 +11,8 @@ class Log extends Model
     const LOG_CONTEXT_VENUES = 4;
     const LOG_CONTEXT_USERS = 5;
     const LOG_CONTEXT_REPORTS = 6;
+    const LOG_CONTEXT_COMMON = 99;
+
 
 
     const LOG_TTL_FOREVER = 0;

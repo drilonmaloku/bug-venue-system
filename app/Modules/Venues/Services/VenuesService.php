@@ -22,6 +22,7 @@ class VenuesService
     public function getAll(Request $request){
         $perPage = $request->has('per_page') ? $request->input('per_page') : 25;
         $query = Venue::query();
+        $query->orderBy('created_at', 'desc');
         return $query->paginate($perPage);
     }
 
