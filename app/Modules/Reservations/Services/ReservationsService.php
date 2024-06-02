@@ -70,6 +70,7 @@ class ReservationsService
             "client_id" => $clientId,
             "venue_id" => $venueData[0],
             "menu_id" => $request->input("menu_id"),
+            "menu_price" => $request->input("menu_price"),
             "reservation_type" => $venueData[1],
             "date" => $date,
             "description" => $request->input("description"),
@@ -97,8 +98,11 @@ class ReservationsService
         $reservation->number_of_guests = $request->input('number_of_guests');
         $reservation->menu_price = $request->input('menu_price');
 
-      
+        $numberOfGuests = intval($request->input('number_of_guests'));
+        $menuPrice = doubleval($request->input('menu_price'));
+        $totalPayment = $numberOfGuests * $menuPrice;
         // Save the updated reservation
+        $reservation->total_payment = $totalPayment;
         $reservationSaved = $reservation->save();
     
         if($reservationSaved) {
@@ -140,7 +144,8 @@ class ReservationsService
                'user_id' => auth()->user()->id,
                'number_of_guests' => $numberOfGuests,
                'menu_price' => $newMenuPrice,
-            //    'price' => $numberOfGuests,
+               'price' => $newMenuPrice,
+               'total_price' => intval($numberOfGuests) * doubleval($newMenuPrice),
                'reservation_id' => $reservation->id,
            ]);
        } catch (\Exception $e) {

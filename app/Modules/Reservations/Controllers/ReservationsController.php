@@ -42,7 +42,7 @@ class ReservationsController extends Controller
         ClientsService $clientsService,
         MenuService $menuService,
         PaymentsService $paymentsService,
-        ReservationCommentServices $commentReservationService,
+        ReservationCommentServices $commentReservationService
 
     )
     {
@@ -221,6 +221,7 @@ class ReservationsController extends Controller
         try {
             $this->validate($request, [
                 'number_of_guests' => 'required|integer|min:1',
+                'menu_price' => 'nullable',
             ]);
     
             $reservationUpdated = $this->reservationsService->update($request, $reservation);

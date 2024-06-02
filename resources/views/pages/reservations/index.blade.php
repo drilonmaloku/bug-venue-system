@@ -56,8 +56,8 @@
                                {{$reservation->description}}
                             </td>
                             <td>
-                                {{$reservation->current_payment}} $
-                             </td>
+                                {{$reservation->current_payment}}€ / {{$reservation->total_payment}}€
+                            </td>
                        
                              <td>
                                 <a class="hubers-link" href="{{route('clients.view',['id'=>$reservation->client->id])}}"> {{$reservation->client->name}} </a>

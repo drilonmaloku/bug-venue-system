@@ -188,7 +188,6 @@
                     <tr>
                         <th>ID</th>
 
-                        <th>Cmimi</th>
                         <th class="text-uppercase text-secondary text-sm font-weight-bolder opacity-7">
                             Numri i te ftuarve</th>
                         <th class="text-uppercase text-secondary text-sm font-weight-bolder opacity-7">
@@ -206,13 +205,10 @@
                                 {{$tracking->id}}
                             </td>
                             <td>
-                                {{$tracking->price}}€
-                            </td>
-                            <td>
                                 {{$tracking->number_of_guests}}
                             </td>
                             <td>
-                                {{$tracking->total_price}}
+                                {{$tracking->total_price}}€
                             </td>
                             <td>
                                 {{$tracking->menu_price}}

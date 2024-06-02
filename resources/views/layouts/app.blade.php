@@ -25,7 +25,7 @@
     <script src='https://cdn.jsdelivr.net/npm/fullcalendar/index.global.min.js'></script>
     <script src="assets/js/core/scripts.min.js"></script>
     <script src="{{ asset('../resources/js/app.js') }}"></script>
-    @vite(['resources/sass/app.scss'])
+    
 </head>
 
 <body class="{{ $class ?? '' }}">
