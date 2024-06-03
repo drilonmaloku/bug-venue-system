@@ -2,6 +2,7 @@
 
 
 use App\Modules\Clients\Models\Client;
+use App\Modules\Expenses\Models\Expense;
 use App\Modules\Payments\Models\Payment;
 use App\Modules\Reservations\Models\Reservation;
 use App\Modules\Venues\Models\Venue;
@@ -40,6 +41,9 @@ class ReportsService
         // Get all venues
         $allVenues = Venue::all();
 
+        $expensesSum = Expense::whereBetween('date', [$startDate->format('Y-m-d'), $endDate->format('Y-m-d')])->sum('amount');
+
+
         // Get the venues with the number of reservations and total value of reservations
         $venues = $allVenues->map(function ($venue) use ($startDate, $endDate) {
             $reservations = $venue->reservations()->whereBetween('date', [$startDate->format('d-m-Y'), $endDate->format('d-m-Y')])->get();
@@ -77,6 +81,7 @@ class ReportsService
             'total_venues' => $allVenues->count(),
             'venues_with_reservations_count' => $venuesWithReservationsCount,
             'total_payments_due' => $totalPaymentsDue,
+            'expenses_sum' => $expensesSum
         ];
 
         // Return or process the report data as needed

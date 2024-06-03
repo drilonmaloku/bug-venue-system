@@ -38,6 +38,10 @@
                             <td>Sallat me rezervime:</td>
                             <td>{{ $reportsData['venues_with_reservations_count'] }}/{{ $reportsData['total_venues'] }}</td>
                         </tr>
+                        <tr>
+                            <td>Shpenzimet:</td>
+                            <td>{{ $reportsData['expenses_sum'] }}€</td>
+                        </tr>
                     </tbody>
                 </table>
                 <hr>
