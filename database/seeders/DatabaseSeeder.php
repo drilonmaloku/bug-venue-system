@@ -4,6 +4,7 @@ namespace Database\Seeders;
 
 use App\Models\User;
 use Database\Factories\ClientFactory;
+use Database\Factories\ExpenseFactory;
 use Database\Factories\LogsFactory;
 use Database\Factories\MenuFactory;
 use Database\Factories\PaymentFactory;
@@ -33,6 +34,8 @@ class DatabaseSeeder extends Seeder
         $this->seedUsers();
         $this->seedReservations();
         $this->seedPayments();
+        $this->seedExpenses();
+
         $this->seedLogs();
     }
 
@@ -72,6 +75,10 @@ class DatabaseSeeder extends Seeder
         (new PaymentFactory())->count(50)->create();
     }
 
+    public function seedExpenses() {
+        (new ExpenseFactory())->count(50)->create();
+    }
+    
     public function seedLogs() {
         (new LogsFactory())->count(50)->create();
     }
