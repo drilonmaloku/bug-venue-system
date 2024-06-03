@@ -32,6 +32,7 @@ use App\Http\Controllers\LoginController;
 use App\Http\Controllers\ResetPassword;
 use App\Http\Controllers\ChangePassword;
 use App\Modules\Common\Controllers\BackupController;
+use App\Modules\Expenses\Controllers\ExpensesController;
 use App\Modules\Users\Controllers\UsersController;
 
 Route::get('/', function () {return redirect('/dashboard');})->middleware('auth');
@@ -57,6 +58,21 @@ Route::group(['middleware' => 'auth'], function () {
     Route::get('/clients/{id}', [ClientsController::class, 'view'])->name('clients.view');
     Route::put('/clients/{id}/update', [ClientsController::class, 'update'])->name('clients.update');
 });
+
+// Expenses
+Route::group(['middleware' => 'auth'], function () {
+    Route::get('/expenses', [ExpensesController::class, 'index'])->name('expenses.index');
+    Route::get('/expenses/create', [ExpensesController::class, 'create'])->name('expenses.create');
+    Route::post('/expenses', [ExpensesController::class, 'store'])->name('expenses.store');
+
+    Route::get('/expenses/{id}/edit', [ExpensesController::class, 'edit'])->name('expenses.edit');
+    Route::put('/expenses/{id}/update', [ExpensesController::class, 'update'])->name('expenses.update');
+    Route::get('/expenses/{id}', [ExpensesController::class, 'view'])->name('expenses.view');
+    Route::delete('/expenses/{id}', [ExpensesController::class, 'destroy'])->name('expenses.destroy');
+
+});
+
+
 // reservation.edit
 Route::group(['middleware' => 'auth'], function () {
     Route::get('/reservations', [ReservationsController::class, 'index'])->name('reservations.index');

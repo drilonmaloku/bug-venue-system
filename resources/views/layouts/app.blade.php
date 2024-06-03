@@ -48,6 +48,8 @@
                     <ul>
                         <li><a href="{{route('dashboard.index')}}">Dashboard</a></li>
                         <li><a href="{{route('reservations.index')}}">Rezervimet</a></li>
+                        <li><a href="{{route('expenses.index')}}">Shpenzimet</a></li>
+
                         <li><a href="{{route('payments.index')}}">Pagesat</a></li>
                         <li><a href="{{route('menus.index')}}">Menut</a></li>
                         <li><a href="{{route('clients.index')}}">Klientat</a></li>
