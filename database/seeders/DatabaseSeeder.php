@@ -3,6 +3,7 @@
 namespace Database\Seeders;
 
 use App\Models\User;
+use App\Modules\Reservations\Models\Reservation;
 use Database\Factories\ClientFactory;
 use Database\Factories\LogsFactory;
 use Database\Factories\MenuFactory;
@@ -65,7 +66,10 @@ class DatabaseSeeder extends Seeder
         (new MenuFactory())->count(10)->create();
     }
     public function seedReservations() {
-        (new ReservationFactory())->count(50)->create();
+        Reservation::withoutEvents(function () {
+            (new ReservationFactory())->count(50)->create();
+        });
+ 
     }
 
     public function seedPayments() {
