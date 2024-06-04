@@ -31,6 +31,7 @@
                 <table class="bug-table">
                     <thead>
                     <tr>
+                        <th>User</th>
                         <th>Data</th>
                         <th>Pershkrimi</th>
                         <th>Shuma</th>
@@ -41,6 +42,9 @@
                     <tbody>
                     @foreach($expenses as $expense)
                         <tr>
+                            <td>
+                                {{$expense->user->first_name }}
+                            </td>
                             <td>
                                 {{$expense->date}}
                             </td>

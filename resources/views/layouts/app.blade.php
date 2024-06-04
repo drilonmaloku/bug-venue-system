@@ -56,7 +56,9 @@
                         <li><a href="{{route('users.index')}}">Perdoruesit</a></li>
                         <li><a href="{{route('reports.index')}}">Raportet</a></li>
                         <li><a href="{{route('venues.index')}}">Sallat</a></li>
+                        @role('super-admin')
                         <li><a href="{{route('logs.index')}}">Aktiviteti</a></li>
+                        @endrole
                         <li><a href="{{route('profile')}}">Profili</a></li>
                     </ul>
                 </div>

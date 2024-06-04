@@ -23,6 +23,7 @@ use App\Modules\Reservations\Models\ReservationComment;
 use App\Modules\Reservations\Requests\AddCommentRequest;
 use App\Modules\Reservations\Resources\ReservationListCommentResource;
 use App\Modules\Reservations\Services\ReservationCommentServices;
+use App\Modules\Users\Services\UsersService;
 use Illuminate\Validation\ValidationException;
 use RealRashid\SweetAlert\Facades\Alert;
 
@@ -34,6 +35,8 @@ class ReservationsController extends Controller
     private $menuService;
     private $paymentsService;
     private $commentReservationService;
+    private $userService;
+
 
 
     public function __construct(
@@ -42,7 +45,8 @@ class ReservationsController extends Controller
         ClientsService $clientsService,
         MenuService $menuService,
         PaymentsService $paymentsService,
-        ReservationCommentServices $commentReservationService
+        ReservationCommentServices $commentReservationService,
+        UsersService $userService
 
     )
     {
@@ -52,6 +56,8 @@ class ReservationsController extends Controller
         $this->menuService = $menuService;
         $this->paymentsService = $paymentsService;
         $this->commentReservationService = $commentReservationService;
+        $this->userService = $userService;
+
 
     }
 
@@ -72,7 +78,8 @@ class ReservationsController extends Controller
     {
         return view('pages/reservations/create', [
             'venues' => $this->venuesService->getVenues(),
-            'menus' => $this->menuService->getAll(request(),false)
+            'menus' => $this->menuService->getAll(request(),false),
+            'users'=> $this->userService->getAll(request(),false)
         ]);
     }
 
@@ -205,7 +212,9 @@ class ReservationsController extends Controller
             return abort(404);
         }
         return view('pages/reservations/edit',[
-            'reservation'=>$reservation
+            'reservation'=>$reservation,
+            'users'=> $this->userService->getAll(request(),false)
+
         ]);
     }
 

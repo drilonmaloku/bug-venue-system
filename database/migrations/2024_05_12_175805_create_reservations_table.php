@@ -15,6 +15,7 @@ return new class extends Migration
             $table->id();
             $table->unsignedBigInteger('venue_id');
             $table->unsignedBigInteger('client_id');
+            $table->unsignedBigInteger('menager_id')->nullable();
             $table->unsignedBigInteger('menu_id');
             $table->longText('menu_contents')->nullable();
             $table->double('menu_price')->nullable();
@@ -34,6 +35,11 @@ return new class extends Migration
             $table->foreign('client_id')
                 ->references('id')
                 ->on('clients')
+                ->onDelete("cascade");
+                
+                $table->foreign('menager_id')
+                ->references('id')
+                ->on('users')
                 ->onDelete("cascade");
 
             $table->foreign('menu_id')

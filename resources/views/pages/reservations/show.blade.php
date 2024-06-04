@@ -33,7 +33,8 @@
                         </tr>
                         <tr>
                             <td>Salla</td>
-                            <td>{{ $reservation->venue->name }}</td>
+                           <td> <a class="hubers-link" href="{{route('venues.view',['id'=>$reservation->venue->id])}}"> {{$reservation->venue->name}} </a>
+                           </td>
                         </tr>
                         <tr>
                             <td>Numri i te ftuarve</td>
@@ -42,7 +43,9 @@
                         </tr>
                         <tr>
                             <td>Klienti</td>
-                            <td>{{ $reservation->client->name }}</td>
+                            <td>
+                                <a class="hubers-link" href="{{route('clients.view',['id'=>$reservation->client->id])}}"> {{$reservation->client->name}} </a>
+                            </td>
                         </tr>
                         <tr>
                             <td>Koha:</td>
@@ -115,9 +118,7 @@
     </div>
     <div class="vms_panel">
         <div class="d-flex justify-content-end mb-2">
-            <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#reservationModal">
-                Shto pagese per kete rezervim
-            </button>
+        <a class="btn hubers-btn" data-toggle="modal" data-target="#reservationModal">Shto pagese per kete rezervim</a>
         </div>
         <h5>Pagesat:</h5>
         @if(count($reservation->payments) > 0)
