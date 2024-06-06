@@ -34,6 +34,13 @@
                                     </select>
                                 </div>
                             </div>
+
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label for="example-text-input" class="form-control-label">Shpenzimet e Stafit*</label>
+                                    <input id="menuPrice" class="bug-text-input" type="number" name="staff_expenses" value="{{$reservation->staff_expenses}}" >
+                                </div>
+                            </div>
                         </div>
                         <button type="submit" class="hubers-btn">Ruaj</button>
 

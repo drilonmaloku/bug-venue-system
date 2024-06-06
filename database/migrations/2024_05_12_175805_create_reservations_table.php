@@ -25,6 +25,8 @@ return new class extends Migration
             $table->string('description')->nullable();
             $table->double('current_payment')->nullable();
             $table->double('total_payment')->nullable();
+            $table->double('staff_expenses')->nullable();
+
             $table->timestamps();
 
             $table->foreign('venue_id')

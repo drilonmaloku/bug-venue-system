@@ -79,6 +79,7 @@ class ReservationsService
             "current_payment" => $request->input("initial_payment_value"),
             "total_payment" => $totalPayment,
             "menu_contents" => 'test',
+            "staff_expenses" => 0,
         ]);
         if($reservation){
             $this->logService->log([
@@ -99,6 +100,8 @@ class ReservationsService
         $reservation->number_of_guests = $request->input('number_of_guests');
         $reservation->menu_price = $request->input('menu_price');
         $reservation->menager_id = $request->input('menager_id');
+        $reservation->staff_expenses = $request->input('staff_expenses');
+
 
 
         $numberOfGuests = intval($request->input('number_of_guests'));

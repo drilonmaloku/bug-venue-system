@@ -63,6 +63,10 @@
                             <td>Pagesa Totale:</td>
                             <td>{{ $reservation->total_payment}}€</td>
                         </tr>
+                        <tr>
+                            <td>Shpenzimet e Stafit:</td>
+                            <td>{{ $reservation->staff_expenses}}€</td>
+                        </tr>
                     </tbody>
                 </table>
             </div>

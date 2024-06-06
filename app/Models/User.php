@@ -18,6 +18,8 @@ class User extends Authenticatable
 
     const ROLE_ADMIN = "admin";
     const ROLE_SUPERAMDIN = "super-admin";
+    const ROLE_MANAGER = "manager";
+
 
     /**
      * The attributes that are mass assignable.

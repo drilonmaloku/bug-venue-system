@@ -91,6 +91,9 @@ class DatabaseSeeder extends Seeder
         Role::firstOrCreate([
             "name" => User::ROLE_ADMIN
         ]);
+        Role::firstOrCreate([
+            "name" => User::ROLE_MANAGER
+        ]);
     }
 
 
