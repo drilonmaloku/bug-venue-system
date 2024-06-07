@@ -1,4 +1,6 @@
-<?php namespace App\Modules\Payments\Controllers;
+<?php
+
+namespace App\Modules\Payments\Controllers;
 
 
 
@@ -28,8 +30,7 @@ class PaymentsController extends Controller
         LogService $logService,
         ClientsService $clientsService,
         PaymentsService $paymentsService
-    )
-    {
+    ) {
         $this->paymentsService = $paymentsService;
         $this->venuesService = $venuesService;
         $this->logService = $logService;
@@ -39,15 +40,14 @@ class PaymentsController extends Controller
     public function index(Request $request)
     {
         $payments = $this->paymentsService->getAll($request);
-        if(session('success_message')){
+        if (session('success_message')) {
             Alert::success('Success!', session('success_message'));
         }
 
-        return view('pages/payments/index',[
-            'payments'=>$payments,
-            'is_on_search'=>count($request->all()),
+        return view('pages/payments/index', [
+            'payments' => $payments,
+            'is_on_search' => count($request->all()),
         ]);
-
     }
 
     public function create()
@@ -61,7 +61,7 @@ class PaymentsController extends Controller
     {
 
         $payment = $this->paymentsService->getByID($id);
-        if(is_null($payment)) {
+        if (is_null($payment)) {
             return abort(404);
         }
 
@@ -70,7 +70,19 @@ class PaymentsController extends Controller
         ]);
     }
 
-    public function store(Request $request) {
+    public function edit($id)
+    {
+        $payment = $this->paymentsService->getByID($id);
+        if (is_null($payment)) {
+            return abort(404);
+        }
+        return view('pages/payments/edit', [
+            'payment' => $payment
+        ]);
+    }
+
+    public function store(Request $request)
+    {
         $clientData = [
             'name' => $request->input('client_name'),
             'email' => $request->input('client_email'),
@@ -84,8 +96,6 @@ class PaymentsController extends Controller
 
         return redirect()->to('payments')->withSuccessMessage('Pagesa u krijua me sukses');
         try {
-
-
         } catch (\Exception $e) {
             return response()->json([
                 'message' => 'Internal Server Error'
@@ -93,30 +103,25 @@ class PaymentsController extends Controller
         }
     }
 
-    public function update(Request $request) {
-        $client = $this->venuesService->getByID($request->input('id'));
+    public function update(Request $request, $id)
+    {
+        $payment = $this->paymentsService->getByID($id);
 
-        if(is_null($client)) {
+
+        if (is_null($payment)) {
             return response()->json([
-                'message' => 'Client Not Found'
+                'message' => 'Payment Not Found'
             ], JsonResponse::HTTP_NOT_FOUND);
         }
 
         try {
 
-            $client = $this->clientsService->update($request,$client);
-
-            if($client) {
-                return response()->json([
-                    'message' => 'Client was updated successfully',
-                    'data' => ClientViewResource::make($client)
-                ], JsonResponse::HTTP_OK);
-            }
+            $payment = $this->paymentsService->update($request, $payment);
+            return redirect()->to('payments')->withSuccessMessage('Pagesa u be update me sukses');
 
             return response()->json([
-                "message" => "Failed to update existing client."
+                "message" => "Failed to update existing Payment."
             ], JsonResponse::HTTP_BAD_REQUEST);
-
         } catch (\Exception $e) {
             return response()->json([
                 'message' => 'Internal Server Error'
@@ -124,9 +129,10 @@ class PaymentsController extends Controller
         }
     }
 
-    public function delete($id){
+    public function delete($id)
+    {
         $payment = $this->paymentsService->getByID($id);
-        if(is_null($payment)) {
+        if (is_null($payment)) {
             return response()->json([
                 'message' => 'Payment Not Found'
             ], JsonResponse::HTTP_NOT_FOUND);
@@ -136,23 +142,17 @@ class PaymentsController extends Controller
 
             $paymentDeleted = $this->paymentsService->delete($payment);
 
-            if($paymentDeleted) {
-              return  redirect()->to('payments')->withSuccessMessage('Pagesa u fshi me sukses');
+            if ($paymentDeleted) {
+                return  redirect()->to('payments')->withSuccessMessage('Pagesa u fshi me sukses');
             }
 
             return response()->json([
                 "message" => "Failed to delete existing Payment."
             ], JsonResponse::HTTP_BAD_REQUEST);
-
         } catch (\Exception $e) {
             return response()->json([
                 'message' => 'Internal Server Error'
             ], 500);
         }
-
-
-
     }
-
-
 }

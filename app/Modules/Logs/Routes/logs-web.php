@@ -7,7 +7,7 @@ use Illuminate\Support\Facades\Route;
 
 
 // Logs
-Route::group(['middleware' => 'auth'], function () {
+Route::group(['middleware' => ['auth', 'role:super-admin']], function () {
     Route::get('/logs', [LogsController::class, 'index'])->name('logs.index');
     Route::get('/logs/{id}', [LogsController::class, 'view'])->name('logs.view');
 });
