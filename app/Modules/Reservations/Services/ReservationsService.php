@@ -70,6 +70,7 @@ class ReservationsService
             "client_id" => $clientId,
             "venue_id" => $venueData[0],
             "menu_id" => $request->input("menu_id"),
+            "menager_id" => $request->input("menager_id"),
             "menu_price" => $request->input("menu_price"),
             "reservation_type" => $venueData[1],
             "date" => $date,
@@ -78,6 +79,7 @@ class ReservationsService
             "current_payment" => $request->input("initial_payment_value"),
             "total_payment" => $totalPayment,
             "menu_contents" => 'test',
+            "staff_expenses" => 0,
         ]);
         if($reservation){
             $this->logService->log([
@@ -97,6 +99,10 @@ class ReservationsService
         // Update the reservation with the new data from the request
         $reservation->number_of_guests = $request->input('number_of_guests');
         $reservation->menu_price = $request->input('menu_price');
+        $reservation->menager_id = $request->input('menager_id');
+        $reservation->staff_expenses = $request->input('staff_expenses');
+
+
 
         $numberOfGuests = intval($request->input('number_of_guests'));
         $menuPrice = doubleval($request->input('menu_price'));

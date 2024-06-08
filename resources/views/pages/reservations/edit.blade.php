@@ -24,6 +24,23 @@
                                     <input id="menuPrice" class="bug-text-input" type="number" name="menu_price" value="{{$reservation->menu_price}}" >
                                 </div>
                             </div>
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label for="example-text-input" class="form-control-label">Selekto Menagjerin</label>
+                                    <select id="menuId" class="bug-text-input" name="menager_id">
+                                        @foreach($users as $user)
+                                        <option value="{{$user->id}}" {{$user->id == $reservation->menager_id ? 'selected' : ''}}>{{$user->first_name}}</option>
+                                        @endforeach
+                                    </select>
+                                </div>
+                            </div>
+
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label for="example-text-input" class="form-control-label">Shpenzimet e Stafit*</label>
+                                    <input id="menuPrice" class="bug-text-input" type="number" name="staff_expenses" value="{{$reservation->staff_expenses}}" >
+                                </div>
+                            </div>
                         </div>
                         <button type="submit" class="hubers-btn">Ruaj</button>
 

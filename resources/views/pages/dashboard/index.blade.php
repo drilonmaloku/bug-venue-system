@@ -6,11 +6,12 @@
     <div class="vms_panel">
         <div id='calendar'></div>
         <script>
-            document.addEventListener('DOMContentLoaded', function () {
+            document.addEventListener('DOMContentLoaded', function() {
 
             });
         </script>
-        <div class="modal fade" id="reservationModal" tabindex="-1" role="dialog" aria-labelledby="reservationModalLabel" aria-hidden="true">
+        <div class="modal fade" id="reservationModal" tabindex="-1" role="dialog" aria-labelledby="reservationModalLabel"
+            aria-hidden="true">
             <div class="modal-dialog" role="document">
                 <div class="modal-content">
                     <div class="modal-header">
@@ -19,7 +20,8 @@
                             <span aria-hidden="true">&times;</span>
                         </button>
                     </div>
-                    <form role="form" method="POST" action={{ route('reservations.store') }} enctype="multipart/form-data">
+                    <form role="form" method="POST" action={{ route('reservations.store') }}
+                        enctype="multipart/form-data">
                         @csrf
                         <div class="modal-body">
                             <h6><strong>Informatat e Rezervimit</strong></h6>
@@ -32,23 +34,25 @@
                                 </div>
                                 <div class="col-md-6">
                                     <div class="form-group">
-                                        <label for="example-text-input" class="form-control-label">Numri i të ftuarve*</label>
-                                        <input id="numberOfGuests" class="bug-text-input" type="number" name="number_of_guests" required>
+                                        <label for="example-text-input" class="form-control-label">Numri i të
+                                            ftuarve*</label>
+                                        <input id="numberOfGuests" class="bug-text-input" type="number"
+                                            name="number_of_guests" required>
                                     </div>
                                 </div>
                                 <div class="col-md-12">
                                     <input type="hidden" name="venue_id" id="venueID">
                                     Sallat:
                                     <div class="row venue-items">
-                                        @foreach($venues as $venue)
-                                            <div class="col-md-4" >
-                                                <div data-venue="{{$venue->id}}" class="venue-item venue-id">
-                                                <span class="venue-name">
-                                                          {{$venue->name}},{{$venue->capacity}}
-                                                </span>
+                                        @foreach ($venues as $venue)
+                                            <div class="col-md-4">
+                                                <div data-venue="{{ $venue->id }}" class="venue-item venue-id">
+                                                    <span class="venue-name">
+                                                        {{ $venue->name }},{{ $venue->capacity }}
+                                                    </span>
                                                     <span class="venue-slots">
 
-                                                </span>
+                                                    </span>
                                                 </div>
 
                                             </div>
@@ -60,8 +64,9 @@
                                         <label for="example-text-input" class="form-control-label">Menu</label>
                                         <select id="menuId" class="bug-text-input" name="menu_id">
                                             <option value="">Selekto Menun</option>
-                                            @foreach($menus as $menu)
-                                                <option data-price="{{$menu->price}}" value="{{$menu->id}}">{{$menu->name}},{{$menu->price}}</option>
+                                            @foreach ($menus as $menu)
+                                                <option data-price="{{ $menu->price }}" value="{{ $menu->id }}">
+                                                    {{ $menu->name }},{{ $menu->price }}</option>
                                             @endforeach
                                         </select>
                                     </div>
@@ -69,13 +74,13 @@
                                 <div class="col-md-6">
                                     <div class="form-group">
                                         <label for="example-text-input" class="form-control-label">Qmimi i Menus</label>
-                                        <input id="menuPrice" class="bug-text-input" type="number" name="menu_price" >
+                                        <input id="menuPrice" class="bug-text-input" type="number" name="menu_price">
                                     </div>
                                 </div>
                                 <div class="col-md-12">
                                     <div class="form-group">
                                         <label for="example-text-input" class="form-control-label">Shenime</label>
-                                        <textarea class="bug-text-input" type="text" name="description" ></textarea>
+                                        <textarea class="bug-text-input" type="text" name="description"></textarea>
                                     </div>
                                 </div>
                                 <div class="col-md-12">
@@ -89,43 +94,45 @@
                                 <div class="col-md-6">
                                     <div class="form-group">
                                         <label for="example-text-input" class="form-control-label">Emri</label>
-                                        <input class="bug-text-input" type="text" name="client_name" >
+                                        <input class="bug-text-input" type="text" name="client_name">
                                     </div>
                                 </div>
                                 <div class="col-md-6">
                                     <div class="form-group">
                                         <label for="example-text-input" class="form-control-label">Emaili</label>
-                                        <input class="bug-text-input" type="text" name="client_email" >
+                                        <input class="bug-text-input" type="text" name="client_email">
                                     </div>
                                 </div>
                                 <div class="col-md-6">
                                     <div class="form-group">
                                         <label for="example-text-input" class="form-control-label">Telefoni</label>
-                                        <input class="bug-text-input" type="text" name="client_phone_number" >
+                                        <input class="bug-text-input" type="text" name="client_phone_number">
                                     </div>
                                 </div>
                                 <div class="col-md-6">
                                     <div class="form-group">
-                                        <label for="example-text-input" class="form-control-label">Telefoni Opsional</label>
-                                        <input class="bug-text-input" type="text" name="client_additional_phone_number" >
+                                        <label for="example-text-input" class="form-control-label">Telefoni
+                                            Opsional</label>
+                                        <input class="bug-text-input" type="text"
+                                            name="client_additional_phone_number">
                                     </div>
                                 </div>
                                 <div class="col-md-6">
                                     <div class="form-group">
                                         <label for="example-text-input" class="form-control-label">Data e Pagesës</label>
-                                        <input class="bug-text-input" type="date" name="payment_date" >
+                                        <input class="bug-text-input" type="date" name="payment_date">
                                     </div>
                                 </div>
                                 <div class="col-md-6">
                                     <div class="form-group">
                                         <label for="example-text-input" class="form-control-label">Vlera e Pagesës</label>
-                                        <input class="bug-text-input" type="number" name="initial_payment_value" >
+                                        <input class="bug-text-input" type="number" name="initial_payment_value">
                                     </div>
                                 </div>
                                 <div class="col-md-12">
                                     <div class="form-group">
                                         <label for="example-text-input" class="form-control-label">Shenime</label>
-                                        <textarea class="bug-text-input" type="text" name="payment_notes" ></textarea>
+                                        <textarea class="bug-text-input" type="text" name="payment_notes"></textarea>
                                     </div>
                                 </div>
                             </div>
@@ -140,7 +147,8 @@
                 </div>
             </div>
         </div>
-        <div class="modal fade" id="informationModal" tabindex="-1" role="dialog" aria-labelledby="reservationModalLabel" aria-hidden="true">
+        <div class="modal fade" id="informationModal" tabindex="-1" role="dialog"
+            aria-labelledby="reservationModalLabel" aria-hidden="true">
             <div class="modal-dialog" role="document">
                 <div class="modal-content">
                     <div class="modal-header">
@@ -150,45 +158,47 @@
                         </button>
                     </div>
                     <div id="informationModalContent" class="modal-body">
+
                         <table>
                             <thead>
-                            <tr>
-                                <th colspan="2">Informatat:</th>
-                            </tr>
+                                <tr>
+                                    <th colspan="2">Informatat:</th>
+                                    <th></th>
+                                </tr>
                             </thead>
                             <tbody>
-                            <tr>
-                                <td>Data</td>
-                                <td></td>
-                            </tr>
-                            <tr>
-                                <td>Salla</td>
-                                <td></td>
-                            </tr>
-                            <tr>
-                                <td>Numri i te ftuarve</td>
-                                <td></td>
-                            </tr>
-                            <tr>
-                                <td>Klienti</td>
-                                <td></td>
-                            </tr>
-                            <tr>
-                                <td>Koha:</td>
-                                <td></td>
-                            </tr>
-                            <tr>
-                                <td>Pagesa Momentale:</td>
-                                <td></td>
-                            </tr>
-                            <tr>
-                                <td>Pagesa E Mbetur:</td>
-                                <td></td>
-                            </tr>
-                            <tr>
-                                <td>Pagesa Totale:</td>
-                                <td></td>
-                            </tr>
+                                <tr>
+                                    <td>Data</td>
+                                    <td></td>
+                                </tr>
+                                <tr>
+                                    <td>Salla</td>
+                                    <td></td>
+                                </tr>
+                                <tr>
+                                    <td>Numri i te ftuarve</td>
+                                    <td></td>
+                                </tr>
+                                <tr>
+                                    <td>Klienti</td>
+                                    <td></td>
+                                </tr>
+                                <tr>
+                                    <td>Koha:</td>
+                                    <td></td>
+                                </tr>
+                                <tr>
+                                    <td>Pagesa Momentale:</td>
+                                    <td></td>
+                                </tr>
+                                <tr>
+                                    <td>Pagesa E Mbetur:</td>
+                                    <td></td>
+                                </tr>
+                                <tr>
+                                    <td>Pagesa Totale:</td>
+                                    <td></td>
+                                </tr>
                             </tbody>
                         </table>
                     </div>
@@ -226,45 +236,67 @@
                     <thead>
                         <tr>
                             <th colspan="2">Informatat:</th>
+                            <th>    
+                                <a class="bug-table-item-option" href="/reservations/${reservation.id}">
+                                    <i class="fa fa-eye"></i>
+                                </a>
+                            </th>
                         </tr>
                     </thead>
                     <tbody>
                         <tr>
                             <td>Data</td>
                             <td>${reservation.date}</td>
+                            <td></td>
+
                         </tr>
                         <tr>
                             <td>Salla</td>
                             <td>${reservation.venue.name}</td>
+                            <td></td>
+
                         </tr>
                         <tr>
                             <td>Numri i te ftuarve</td>
                             <td>${reservation.number_of_guests}</td>
+                            <td></td>
+
                         </tr>
                         <tr>
                             <td>Klienti</td>
                             <td>${reservation.client.name}</td>
+                            <td></td>
+
                         </tr>
                         <tr>
                             <td>Koha:</td>
                             <td>${reservation.reservation_type_name}</td>
+                            <td></td>
+
                         </tr>
                         <tr>
                             <td>Pagesa Momentale:</td>
                             <td>${reservation.current_payment}€</td>
+                            <td></td>
+
                         </tr>
                         <tr>
                             <td>Pagesa E Mbetur:</td>
                             <td>${reservation.total_payment - reservation.current_payment}€</td>
+                            <td></td>
+
                         </tr>
                         <tr>
                             <td>Pagesa Totale:</td>
                             <td>${reservation.total_payment}€</td>
+                            <td></td>
+
                         </tr>
                     </tbody>
                 `;
 
-                            document.getElementById('informationModalContent').innerHTML = `<table>${tableContent}</table>`;
+                            document.getElementById('informationModalContent').innerHTML =
+                                `<table>${tableContent}</table>`;
                         })
                         .catch(error => {
                             console.error('Error fetching event information:', error);
@@ -288,12 +320,11 @@
                 venue.classList.remove('partially-available');
                 venue.classList.remove('not-available');
 
-                if(availability.length == 3) {
+                if (availability.length == 3) {
                     venue.classList.add('available');
-                }else if(availability.length == 1 || availability.length == 2){
+                } else if (availability.length == 1 || availability.length == 2) {
                     venue.classList.add('partially-available');
-                }
-                else {
+                } else {
                     venue.classList.add('not-available');
                 }
                 const slotsContainer = venue.querySelector('.venue-slots');
@@ -313,7 +344,7 @@
                     input.setAttribute('value', `${venueId},${slot}`);
                     const label = document.createElement('label');
                     label.classList.add('form-control-label');
-                    label.textContent = labels[slot] ;
+                    label.textContent = labels[slot];
                     slotDiv.appendChild(input);
                     slotDiv.appendChild(label);
                     slotsContainer.appendChild(slotDiv);
@@ -344,20 +375,20 @@
                     })
                 )
                 fetch('/reservation/check-availability', {
-                    method: 'POST',
-                    headers: {
-                        'Content-Type': 'application/json',
-                        'X-CSRF-TOKEN': '{{ csrf_token() }}' // Include CSRF token for security
-                    },
-                    body: JSON.stringify({
-                        date: dateInput.value, // Y-m-d format
+                        method: 'POST',
+                        headers: {
+                            'Content-Type': 'application/json',
+                            'X-CSRF-TOKEN': '{{ csrf_token() }}' // Include CSRF token for security
+                        },
+                        body: JSON.stringify({
+                            date: dateInput.value, // Y-m-d format
+                        })
                     })
-                })
                     .then(response => response.json())
                     .then(res => {
                         console.log(res.data);
                         res.data.forEach(venue => {
-                            generateReservationTypeOptions(venue.id,venue.availability);
+                            generateReservationTypeOptions(venue.id, venue.availability);
                         });
 
                     })

@@ -79,7 +79,7 @@ class UsersService
             data_get($request, "sort_direction") ?? "desc"
         );
         $usersQuery->whereHas("roles", function ($query) {
-            $query->whereIn("name", ["admin","super-admin"]);
+            $query->whereIn("name", ["admin","-adminsuper"]);
         });
 
         $users = $usersQuery

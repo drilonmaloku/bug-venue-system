@@ -65,6 +65,17 @@
                                     <textarea class="bug-text-input" type="text" name="description" ></textarea>
                                 </div>
                             </div>
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label for="example-text-input" class="form-control-label">Selekto Menagjerin</label>
+                                    <select id="menuId" class="bug-text-input" name="menager_id">
+                                        <option value="">Selekto Menagjerin</option>
+                                        @foreach($users as $user)
+                                            <option  value="{{$user->id}}">{{$user->first_name}}</option>
+                                        @endforeach
+                                    </select>
+                                </div>
+                            </div>
                             <div class="col-md-12">
                                 <div class="form-group">
                                     <h5>Totali: <span id="totalPrice">0</span></h5>

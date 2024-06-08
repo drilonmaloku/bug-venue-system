@@ -26,6 +26,10 @@
                     </tr>
                     </thead>
                     <tbody>
+                        <tr>
+                            <td>User</td>
+                            <td>{{ $expense->user->first_name }}</td>
+                        </tr>
                     <tr>
                         <td>Data</td>
                         <td>{{ $expense->date }}</td>

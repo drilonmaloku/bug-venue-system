@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use App\Modules\Expenses\Models\Expense;
 use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\SoftDeletes;
@@ -17,6 +18,8 @@ class User extends Authenticatable
 
     const ROLE_ADMIN = "admin";
     const ROLE_SUPERAMDIN = "super-admin";
+    const ROLE_MANAGER = "manager";
+
 
     /**
      * The attributes that are mass assignable.
@@ -69,4 +72,10 @@ class User extends Authenticatable
     {
         $this->attributes['password'] = bcrypt($value);
     }
+
+    public function expenses()
+    {
+        return $this->hasMany(Expense::class);
+    }
+    
 }

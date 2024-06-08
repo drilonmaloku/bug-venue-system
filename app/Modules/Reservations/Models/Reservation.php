@@ -51,4 +51,10 @@ class Reservation extends Model
     {
         return $this->hasMany(PricingStatusTracking::class);
     }
+
+    public function user()
+    {
+        return $this->belongsTo(User::class);
+    }
+
 }

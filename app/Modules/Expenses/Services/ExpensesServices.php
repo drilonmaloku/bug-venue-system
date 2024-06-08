@@ -4,6 +4,7 @@ use App\Modules\Expenses\Models\Expense;
 use Illuminate\Http\Request;
 use App\Modules\Logs\Models\Log;
 use App\Modules\Logs\Services\LogService;
+use Illuminate\Support\Facades\DB;
 
 class ExpensesServices
 {
@@ -25,14 +26,20 @@ class ExpensesServices
 
         if ($request && $request->has("search") && $request->input("search") != '') {
             $searchTerm = '%' . $request->input("search") . '%';
-
+        
             $query->where(function ($subquery) use ($searchTerm) {
                 $subquery->where('description', 'LIKE', $searchTerm)
-                    ->orWhere('amount', 'LIKE', $searchTerm);
+                    ->orWhere('amount', 'LIKE', $searchTerm)
+                    ->orWhereHas('user', function ($q) use ($searchTerm) {
+                        $q->where(function ($innerQuery) use ($searchTerm) {
+                            $innerQuery->where('first_name', 'LIKE', $searchTerm)
+                                       ->orWhere('last_name', 'LIKE', $searchTerm)
+                                       ->orWhere(DB::raw("CONCAT(first_name, ' ', last_name)"), 'LIKE', $searchTerm);
+                        });
+                    });
             });
-
-          
         }
+        
 
        // Handle date filter
        if ($request->has('date') && $request->input('date') != '') {

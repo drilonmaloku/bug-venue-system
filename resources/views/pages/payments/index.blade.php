@@ -58,8 +58,13 @@
                             </td>
                             <td>
                                 <div class="bug-table-item-options">
+
+                                    
                                     <a class="bug-table-item-option" href="{{route('payments.view',['id'=>$payment->id])}}">
                                         <i class="fa fa-eye"></i>
+                                    </a>
+                                    <a class="bug-table-item-option" href="{{route('payments.edit',['id'=>$payment->id])}}">
+                                        <i class="fa fa-edit"></i>
                                     </a>
                                 </div>
                             </td>
