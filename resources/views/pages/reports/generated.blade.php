@@ -15,7 +15,7 @@
                     </thead>
                     <tbody>
                         <tr>
-                            <td>Numri i diteve:</td>
+                            <td>Numri i ditëve:</td>
                             <td>{{ $reportsData['days_count'] }}</td>
                         </tr>
                         <tr>
@@ -27,7 +27,7 @@
                             <td>{{ $reportsData['reservations_count'] }}</td>
                         </tr>
                         <tr>
-                            <td>Numri I pagesave:</td>
+                            <td>Numri i pagesave:</td>
                             <td>{{ $reportsData['payments_count'] }}</td>
                         </tr>
                         <tr>
@@ -39,8 +39,12 @@
                             <td>{{ $reportsData['venues_with_reservations_count'] }}/{{ $reportsData['total_venues'] }}</td>
                         </tr>
                         <tr>
-                            <td>Shpenzimet:</td>
+                            <td>Shpenzimet Gjenerale:</td>
                             <td>{{ $reportsData['expenses_sum'] }}€</td>
+                        </tr>
+                        <tr>
+                            <td>Shpenzimet për staf:</td>
+                            <td>{{ $reportsData['staff_expenses'] }}€</td>
                         </tr>
                     </tbody>
                 </table>
@@ -54,7 +58,8 @@
                             Numri i Rezervimeve: {{$venueData['reservations_count']}}<br>
                             Pagesa të perfunduara: {{$venueData['current_payment_sum']}}€<br>
                             Pagesa në pritje: {{$venueData['payments_due']}}€<br>
-                            Totali I pagesave: {{$venueData['total_payment_sum']}}€
+                            Shpenzimet e staffit: {{$venueData['staff_expenses']}}€<br>
+                            Totali i pagesave: {{$venueData['total_payment_sum']}}€
                         </p>
                     </div>
                 @endforeach

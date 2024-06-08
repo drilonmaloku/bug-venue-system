@@ -83,9 +83,6 @@ class ReservationsController extends Controller
         ]);
     }
 
-
-
-
     public function checkVenueAvailability(Request $request)
     {
         $date = Carbon::createFromFormat('Y-m-d', $request->input('date'))->format('d-m-Y');
@@ -133,6 +130,7 @@ class ReservationsController extends Controller
 
         return response()->json(['data' => $venues]);
     }
+
     public function view($id)
     {
         $reservation = $this->reservationsService->getByID($id);
@@ -161,8 +159,6 @@ class ReservationsController extends Controller
         ]]);
     }
 
-
-
     public function store(Request $request) {
         $clientData = [
             'name' => $request->input('client_name'),
@@ -179,7 +175,6 @@ class ReservationsController extends Controller
         }
         return redirect()->to('reservations')->withSuccessMessage('Rezervimi u krijua me sukses');
     }
-
 
     public function storePayment(Request $request, $reservationID)
     {
@@ -203,7 +198,6 @@ class ReservationsController extends Controller
         return redirect()->route('reservations.view', ['id' => $reservationID])
                          ->with('success', 'Payment added successfully.');
     }
-
 
     public function edit($id)
     {
@@ -238,22 +232,16 @@ class ReservationsController extends Controller
             if($reservationUpdated) {
                 return redirect()->route('reservations.view', ['id' => $reservation->id]);
             }
-    
-            return response()->json([
-                "message" => "Failed to update the reservation."
-            ], JsonResponse::HTTP_BAD_REQUEST);
+
+            return redirect()->route('reservations.view', ['id' => $reservation->id])->withSuccessMessage('Rezervimi u be update me sukses');
     
         } catch (ValidationException $e) {
-            return response()->json([
-                'message' => 'Validation error',
-                'errors' => $e->validator->errors()->all()
-            ], JsonResponse::HTTP_BAD_REQUEST);
+            return redirect()->route('reservations.view', ['id' => $reservation->id])->withErrorMessage('Rezervimi nuk u be update');
         } catch (\Exception $e) {
-            return response()->json([
-                'message' => 'Internal Server Error'
-            ], 500);
+            return redirect()->route('reservations.view', ['id' => $reservation->id])->withErrorMessage('Rezervimi nuk u be update');
         }
     }
+
     public function delete($id){
         $reservation = $this->reservationsService->getByID($id);
         if(is_null($reservation)) {
@@ -292,11 +280,6 @@ class ReservationsController extends Controller
 
         return $reservations->isEmpty();
     }
-
-
-
-
-
       
     public function storeComment(Request $request,$id) {
         $reservation = $this->reservationsService->getByID($id);
@@ -335,8 +318,6 @@ class ReservationsController extends Controller
         }
     }
 
-
-
     public function deleteComment($id)
     {
         $comment = ReservationComment::find($id);
@@ -352,6 +333,5 @@ class ReservationsController extends Controller
             return response()->json(['message' => 'Internal Server Error'], JsonResponse::HTTP_INTERNAL_SERVER_ERROR);
         }
     }
-
 
 }

@@ -1,28 +1,32 @@
-filterOptions = {
-    init : function () {
-        $('.filter_options_btn').on('click', function () {
-            var _self = $(this);
-            var filterOptionsMain = _self.parent().closest('.filter_wrapper').find('.filter_options');
-            var filterOptionsWrapper = _self.parent().closest('.filter_wrapper').find('.filter_options_wrapper');
-            if(_self.hasClass('active')){
-                _self.removeClass('active');
-                filterOptionsWrapper.css('max-height','');
-            }else{
-                _self.addClass('active');
-                filterOptionsWrapper.css('max-height',(filterOptionsMain.outerHeight()+ 15)+'px');            }
-        });
-    },
-    openOptions : function(filterBtn,filterOptions,filterOptionsWrapper){
+var menuOptions = {
+    init: function () {
+        var hamburgerMenu = document.querySelector('.hamburger-menu');
+        var navbarLinks = document.querySelector('.hubers-navbar-links');
 
-    },
-    closeOptions : function(filterBtn,filterOptions,filterOptionsWrapper){
-
+        if (hamburgerMenu && navbarLinks) {
+            hamburgerMenu.addEventListener('click', function () {
+                this.classList.toggle('active');
+                navbarLinks.classList.toggle('active');
+            });
+        }
     }
-}
+};
 
+var filterOptions = {
+    init: function () {
+        var filterBtn = document.querySelector('.huber-filter-btn');
+        var filterOptions = document.querySelector('.hubers-filter-options');
 
+        if (filterBtn && filterOptions) {
+            filterBtn.addEventListener('click', function () {
+                filterBtn.classList.toggle('active');
+                filterOptions.classList.toggle('active');
+            });
+        }
+    }
+};
 
-jQuery(document).ready(function ($) {
-    console.log('test');
+document.addEventListener('DOMContentLoaded', function () {
+    menuOptions.init();
+    filterOptions.init();
 });
-

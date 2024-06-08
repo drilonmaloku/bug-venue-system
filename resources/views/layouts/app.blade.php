@@ -24,6 +24,7 @@
     <link href="http://127.0.0.1:8000/assets/css/sass/main.css" rel="stylesheet" />
     <script src='https://cdn.jsdelivr.net/npm/fullcalendar/index.global.min.js'></script>
     <script src="assets/js/core/scripts.min.js"></script>
+    <script src="{{ asset('/assets/js/scripts.js') }}"></script>
     <script src="{{ asset('../resources/js/app.js') }}"></script>
     
 </head>
@@ -35,40 +36,58 @@
 @endguest
 
 @auth
-    <div class="hubers-layout">
-        <div class="hubers-navbar">
+    <div class="vms-layout">
+        <div class="vms-navbar">
             <div>
-                <div class="hubers-navbar-logo">
-                    <a href="https://bugagency.tech" target="_blank">
-                        <img style="height: 40px;text-align: center;" src="https://bugagency.tech/wp-content/uploads/assets/logo_main.png" alt="" />
-                        VMS
-                    </a>
+                <div class="hubers-navbar-logo-items">
+                    <div class="hubers-navbar-logo">
+                        <a href="/">
+                            <img style="height: 40px;text-align: center;" src="https://bugagency.tech/wp-content/uploads/assets/logo_main.png" alt="" />
+                            VMS
+                        </a>
+                    </div>
+                    <div class="hubers-navbar-hamburger-notifications">
+                        <div class="hamburger-menu">
+                            <span></span>
+                            <span></span>
+                            <span></span>
+                        </div>
+                    </div>
                 </div>
+
                 <div class="hubers-navbar-links">
                     <ul>
-                        <li><a href="{{route('dashboard.index')}}">Dashboard</a></li>
-                        <li><a href="{{route('reservations.index')}}">Rezervimet</a></li>
-                        <li><a href="{{route('expenses.index')}}">Shpenzimet</a></li>
-
-                        <li><a href="{{route('payments.index')}}">Pagesat</a></li>
-                        <li><a href="{{route('menus.index')}}">Menut</a></li>
-                        <li><a href="{{route('clients.index')}}">Klientat</a></li>
-                        <li><a href="{{route('users.index')}}">Perdoruesit</a></li>
+                        <li><a class="{{ Request::is(['dashboard']) ? 'active' : '' }}" href="{{route('dashboard.index')}}">Dashboard</a></li>
+                        <li><a class="{{ Request::is(['reservations','reservations/*']) ? 'active' : '' }}" href="{{route('reservations.index')}}">Rezervimet</a></li>
+                        <li><a class="{{ Request::is(['expenses','expenses/*']) ? 'active' : '' }}" href="{{route('expenses.index')}}">Shpenzimet</a></li>
+                        <li><a class="{{ Request::is(['payments','payments/*']) ? 'active' : '' }}" href="{{route('payments.index')}}">Pagesat</a></li>
+                        <li><a class="{{ Request::is(['menus','menus/*']) ? 'active' : '' }}" href="{{route('menus.index')}}">Menut</a></li>
+                        <li><a class="{{ Request::is(['clients','clients/*']) ? 'active' : '' }}" href="{{route('clients.index')}}">Klientat</a></li>
+                        <li><a class="{{ Request::is(['users','users/*']) ? 'active' : '' }}" href="{{route('users.index')}}">Përdoruesit</a></li>
+                        <li><a class="{{ Request::is(['venues','venues/*']) ? 'active' : '' }}" href="{{route('venues.index')}}">Sallat</a></li>
                         @role('super-admin')
-                        <li><a href="{{route('reports.index')}}">Raportet</a></li>
+                            <li><a class="{{ Request::is(['reports','reports-generated']) ? 'active' : '' }}" href="{{route('reports.index')}}">Raportet</a></li>
+                            <li><a class="{{ Request::is(['logs','logs/*']) ? 'active' : '' }}" href="{{route('logs.index')}}">Aktiviteti</a></li>
                         @endrole
-                        <li><a href="{{route('venues.index')}}">Sallat</a></li>
-                        @role('super-admin')
-                        <li><a href="{{route('logs.index')}}">Aktiviteti</a></li>
-                        @endrole
-                        <li><a href="{{route('profile')}}">Profili</a></li>
+                        <li><a class="{{ Request::is(['profile']) ? 'active' : '' }}" href="{{route('profile')}}">Profili</a></li>
                     </ul>
+                    <div class="hubers-navbar-logout">
+                        <form action="{{ route('logout') }}" method="POST">
+                            @csrf
+                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-log-out"><path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"/><polyline points="16 17 21 12 16 7"/><line x1="21" y1="12" x2="9" y2="12"/></svg>
+                            <button type="submit">
+                                Log Out
+                            </button>
+                        </form>
+
+
+                    </div>
                 </div>
             </div>
             <div class="hubers-navbar-logout">
-                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-log-out"><path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"/><polyline points="16 17 21 12 16 7"/><line x1="21" y1="12" x2="9" y2="12"/></svg>
                 <form action="{{ route('logout') }}" method="POST">
                     @csrf
+                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-log-out"><path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"/><polyline points="16 17 21 12 16 7"/><line x1="21" y1="12" x2="9" y2="12"/></svg>
                     <button type="submit">
                         Log Out
                     </button>

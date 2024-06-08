@@ -202,14 +202,11 @@
 
 
 
-
-
-
-.huber-filter-search-excel {
-  display: flex;
+.filter-items {
+  margin-bottom: 16px;
 }
 .huber-filter-btn {
-  display: flex;
+  display: inline-flex;
   align-items: center;
   margin-right: 8px;
   background: #F8FBFC;
@@ -222,6 +219,7 @@
   cursor: pointer;
   p {
     margin-left: 8px;
+    margin-bottom: 0;
   }
   .huber-filter-btn-arrow {
     position: absolute;
@@ -251,6 +249,7 @@
   padding: 12px;
   border-radius: 4px;
   width: 100%;
+  display: none;
   .hubers-filter-list-options {
     display: flex;
     align-items: center;
@@ -264,6 +263,10 @@
   }
   .multiselect {
     min-width: 180px;
+  }
+
+  &.active {
+    display: block;
   }
 }
 

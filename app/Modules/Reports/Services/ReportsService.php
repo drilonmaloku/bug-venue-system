@@ -50,12 +50,14 @@ class ReportsService
             $reservationsCount = $reservations->count();
             $currentPaymentSum = $reservations->sum('current_payment');
             $totalPaymentSum = $reservations->sum('total_payment');
+            $staffExpenses = $reservations->sum('staff_expenses');
             $paymentsDue = $totalPaymentSum - $currentPaymentSum;
             return [
                 'name' => $venue->name,
                 'reservations_count' => $reservationsCount,
                 'current_payment_sum' => $currentPaymentSum,
                 'total_payment_sum' => $totalPaymentSum,
+                'staff_expenses' => $staffExpenses,
                 'payments_due' => $paymentsDue,
             ];
         })
@@ -68,6 +70,7 @@ class ReportsService
 
         // Sum the total payments due across all venues
         $totalPaymentsDue = collect($venues)->sum('payments_due');
+        $staffExpenses = collect($venues)->sum('staff_expenses');
 
         // Prepare the report data
         $reportData = [
@@ -81,7 +84,8 @@ class ReportsService
             'total_venues' => $allVenues->count(),
             'venues_with_reservations_count' => $venuesWithReservationsCount,
             'total_payments_due' => $totalPaymentsDue,
-            'expenses_sum' => $expensesSum
+            'expenses_sum' => $expensesSum,
+            'staff_expenses' => $staffExpenses
         ];
 
         // Return or process the report data as needed
