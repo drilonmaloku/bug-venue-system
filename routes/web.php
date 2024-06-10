@@ -39,6 +39,8 @@ Route::get('/change-password', [ChangePassword::class, 'show'])->middleware('gue
 Route::post('/change-password', [ChangePassword::class, 'update'])->middleware('guest')->name('change.perform');
 
 Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard.index')->middleware('auth');
+Route::get('/dashboard/events', [DashboardController::class, 'fetchEvents'])->name('dashboard.events');
+
 Route::post('/login-v2', [LoginController::class, 'login'])->name('loginv2');
 
 Route::group(['middleware' => 'auth'], function () {

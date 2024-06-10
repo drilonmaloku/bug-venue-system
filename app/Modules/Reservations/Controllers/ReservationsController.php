@@ -238,7 +238,9 @@ class ReservationsController extends Controller
         }
         return view('pages/reservations/edit',[
             'reservation'=>$reservation,
-            'users'=> $this->userService->getAll(request(),false)
+            'users'=> $this->userService->getAll(request(),false),
+            'venues' => $this->venuesService->getVenues(),
+
 
         ]);
     }

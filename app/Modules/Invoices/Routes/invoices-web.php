@@ -3,6 +3,7 @@
 declare(strict_types=1);
 
 use App\Modules\Invoices\Controllers\InvoicesController;
+use App\Modules\Reservations\Controllers\ReservationsController;
 use Illuminate\Support\Facades\Route;
 
 
