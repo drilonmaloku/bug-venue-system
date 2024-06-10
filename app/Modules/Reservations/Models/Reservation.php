@@ -3,6 +3,7 @@
 
 use App\Models\User;
 use App\Modules\Clients\Models\Client;
+use App\Modules\Invoices\Models\Invoice;
 use App\Modules\Payments\Models\Payment;
 use App\Modules\Venues\Models\Venue;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
@@ -41,6 +42,11 @@ class Reservation extends Model
     public function payments()
     {
         return $this->hasMany(Payment::class); 
+    }
+
+    public function invoices()
+    {
+        return $this->hasMany(Invoice::class); 
     }
     public function comments()
     {

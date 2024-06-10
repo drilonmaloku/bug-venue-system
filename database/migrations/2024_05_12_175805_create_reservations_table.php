@@ -20,7 +20,7 @@ return new class extends Migration
             $table->longText('menu_contents')->nullable();
             $table->double('menu_price')->nullable();
             $table->double('number_of_guests')->nullable();
-            $table->string('date')->nullable();
+            $table->date('date')->nullable();
             $table->integer('reservation_type')->nullable();
             $table->string('description')->nullable();
             $table->double('current_payment')->nullable();

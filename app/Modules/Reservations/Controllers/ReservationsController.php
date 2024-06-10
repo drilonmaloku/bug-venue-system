@@ -19,6 +19,7 @@ use Maatwebsite\Excel\Facades\Excel;
 use App\Http\Controllers\Controller;
 use App\Modules\Logs\Services\LogService;
 use App\Modules\Clients\Resources\ClientListResource;
+use App\Modules\Invoices\Services\InvoicesServices;
 use App\Modules\Reservations\Models\ReservationComment;
 use App\Modules\Reservations\Requests\AddCommentRequest;
 use App\Modules\Reservations\Resources\ReservationListCommentResource;
@@ -34,6 +35,8 @@ class ReservationsController extends Controller
     private $clientsService;
     private $menuService;
     private $paymentsService;
+    private $invoiceService;
+
     private $commentReservationService;
     private $userService;
 
@@ -46,7 +49,8 @@ class ReservationsController extends Controller
         MenuService $menuService,
         PaymentsService $paymentsService,
         ReservationCommentServices $commentReservationService,
-        UsersService $userService
+        UsersService $userService,
+        InvoicesServices $invoiceService
 
     )
     {
@@ -57,6 +61,8 @@ class ReservationsController extends Controller
         $this->paymentsService = $paymentsService;
         $this->commentReservationService = $commentReservationService;
         $this->userService = $userService;
+        $this->invoiceService = $invoiceService;
+
 
 
     }
@@ -199,6 +205,31 @@ class ReservationsController extends Controller
                          ->with('success', 'Payment added successfully.');
     }
 
+
+
+    public function storeInvoice(Request $request, $reservationID)
+    {
+        $reservation = $this->reservationsService->getByID($reservationID);
+        if (!$reservation) {
+            return redirect()->back()->withErrors(['error' => 'Reservation not found.']);
+        }
+    
+        $validatedData = $request->validate([
+            'invoice_amount' => 'nullable|numeric',
+            'invoice_description' => 'nullable|string',
+            'invoice_date' => 'nullable|date',
+        ]);
+    
+   
+    
+        // Call the invoice service
+        $this->invoiceService->storeInvoice($validatedData, $reservationID);
+    
+        return redirect()->route('reservations.view', ['id' => $reservationID])
+                         ->with('success', 'Invoice added successfully.');
+    }
+
+
     public function edit($id)
     {
         $reservation = $this->reservationsService->getByID($id);
@@ -211,6 +242,51 @@ class ReservationsController extends Controller
 
         ]);
     }
+
+    public function editInvoice($id)
+    {
+        $reservation = $this->reservationsService->getByID($id);
+
+        $invoice = $this->invoiceService->getByID($id);
+        if(is_null($invoice)) {
+            return abort(404);
+        }
+        return view('pages/reservations/edit-invoice',[
+            'invoice'=>$invoice,
+        ]);
+    }
+
+
+
+    public function updateInvoice(Request $request, $id)
+    {
+        $invoice = $this->invoiceService->getByID($id);
+
+        if (is_null($invoice)) {
+            return response()->json([
+                'message' => 'Invoice Not Found'
+            ], JsonResponse::HTTP_NOT_FOUND);
+        }
+
+        
+        try {
+
+            $invoice = $this->invoiceService->update($request, $invoice);
+            return redirect()->route('reservations.view', ['id' => 53])
+                         ->with('success', 'Invoice added successfully.');
+
+            return response()->json([
+                "message" => "Failed to update existing Payment."
+            ], JsonResponse::HTTP_BAD_REQUEST);
+        } catch (\Exception $e) {
+            return response()->json([
+                'message' => 'Internal Server Error'
+            ], 500);
+        }
+    }
+
+
+
 
     public function update(Request $request, $id) {
         $reservation = $this->reservationsService->getByID($id);
@@ -270,6 +346,36 @@ class ReservationsController extends Controller
 
 
 
+    }
+
+
+
+
+    public function deleteInvoice($id)
+    {
+        $invoice = $this->invoiceService->getByID($id);
+        if (is_null($invoice)) {
+            return response()->json([
+                'message' => 'Payment Not Found'
+            ], JsonResponse::HTTP_NOT_FOUND);
+        }
+
+        try {
+
+            $invoiceDeleted = $this->invoiceService->delete($invoice);
+
+            if ($invoiceDeleted) {
+                return  redirect()->to('reservations')->withSuccessMessage('Sherbimi u fshi me sukses');
+            }
+
+            return response()->json([
+                "message" => "Failed to delete existing Invoice."
+            ], JsonResponse::HTTP_BAD_REQUEST);
+        } catch (\Exception $e) {
+            return response()->json([
+                'message' => 'Internal Server Error'
+            ], 500);
+        }
     }
 
     public function checkAvailability($date)

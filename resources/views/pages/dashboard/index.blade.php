@@ -196,7 +196,7 @@
                                     <td></td>
                                 </tr>
                                 <tr>
-                                    <td>Pagesa Totale:</td>
+                                    <td>Shuma Totale :</td>
                                     <td></td>
                                 </tr>
                             </tbody>
@@ -287,7 +287,7 @@
 
                         </tr>
                         <tr>
-                            <td>Pagesa Totale:</td>
+                            <td>Shuma Totale :</td>
                             <td>${reservation.total_payment}€</td>
                             <td></td>
 

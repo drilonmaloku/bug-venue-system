@@ -35,6 +35,19 @@ class ReservationsService
                     ->orWhere('current_payment', 'LIKE', $searchTerm);
             });
         }
+
+           // Handle date filter
+           if ($request->has('date') && $request->input('date') != '') {
+            $date = $request->input('date');
+            $formattedDate = \Carbon\Carbon::createFromFormat('Y-m-d', $date)->format('d-m-Y');
+            $query->where('date', $formattedDate); // Use the 'date' column for filtering
+        }
+        // Handle created_at filter
+        if ($request->has('created_at') && $request->input('created_at') != '') {
+            $createdAt = $request->input('created_at');
+            $query->whereDate('created_at', $createdAt);
+        }
+        
         $query->orderBy('created_at', 'desc');
         return $query->paginate($perPage);
 
