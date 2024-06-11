@@ -53,7 +53,6 @@
                                 </div>
                             </div>
                             <div class="col-md-12">
-                                <input type="hidden" name="venue_id" id="venueID" value="{{ $reservation->venue_id }}">
                                 Sallat:
                                 <div class="row venue-items">
                                     @foreach($venues as $venue)
@@ -69,6 +68,7 @@
                                 </div>
                             </div>
                         </div>
+                        <input type="hidden" name="venue_id" id="venueID" value="{{ $reservation->venue_id }}">
                         <input type="hidden" name="selected_venue_slot" id="selectedVenueSlot" value="{{ $reservation->venue_id }},{{ $reservation->slot }}">
                         <button type="submit" class="hubers-btn">Ruaj</button>
                     </form>
@@ -78,11 +78,6 @@
     </div>
     <script>
         document.addEventListener('DOMContentLoaded', function() {
-            const menuSelect = document.getElementById('menuId');
-            const menuPriceInput = document.getElementById('menuPrice');
-            const numberOfGuestsInput = document.getElementById('numberOfGuests');
-            const totalPriceDisplay = document.getElementById('totalPrice');
-            const dateInput = document.getElementById('dateInput');
             const selectedVenueSlotInput = document.getElementById('selectedVenueSlot');
             const venueIDInput = document.getElementById('venueID');
             const selectedVenueSlot = selectedVenueSlotInput.value.split(',');
@@ -91,6 +86,7 @@
                 const venue = document.querySelector(`[data-venue="${venueId}"]`);
                 venue.classList.remove('available', 'partially-available', 'not-available');
 
+                // Determine availability classes and populate slots
                 if (availability.length === 3) {
                     venue.classList.add('available');
                 } else if (availability.length === 1 || availability.length === 2) {
@@ -100,7 +96,7 @@
                 }
 
                 const slotsContainer = venue.querySelector('.venue-slots');
-                slotsContainer.innerHTML = ''; // Clear the slots container before populating with new slots
+                slotsContainer.innerHTML = '';
                 const labels = {
                     1: 'Ditë e Plotë',
                     2: 'Mëngjes',
@@ -116,11 +112,11 @@
                     input.setAttribute('name', 'reservation');
                     input.setAttribute('value', `${venueId},${slot}`);
                     if (venueId == selectedVenueSlot[0] && slot == selectedVenueSlot[1]) {
-                        input.checked = true; // Preselect the venue and slot
+                        input.checked = true;
                     }
                     input.addEventListener('change', () => {
-                        selectedVenueSlotInput.value = `${venueId},${slot}`; // Update hidden input when selection changes
-                        venueIDInput.value = venueId; // Update hidden input for venue ID
+                        selectedVenueSlotInput.value = `${venueId},${slot}`;
+                        venueIDInput.value = venueId;
                     });
                     const label = document.createElement('label');
                     label.classList.add('form-control-label');
@@ -131,29 +127,15 @@
                 });
             }
 
-            function updateMenuPrice() {
-                const selectedOption = menuSelect.options[menuSelect.selectedIndex];
-                const menuPrice = parseFloat(selectedOption.getAttribute('data-price')) || 0;
-                menuPriceInput.value = menuPrice;
-                updateTotalPrice();
-            }
-
-            function updateTotalPrice() {
-                const menuPrice = parseFloat(menuPriceInput.value) || 0;
-                const numberOfGuests = parseInt(numberOfGuestsInput.value) || 0;
-                const totalPrice = menuPrice * numberOfGuests;
-                totalPriceDisplay.textContent = `${totalPrice.toFixed(2)}`;
-            }
-
             function checkAvailabilityAndUpdateTotal() {
                 fetch('/reservation/check-availability', {
                     method: 'POST',
                     headers: {
                         'Content-Type': 'application/json',
-                        'X-CSRF-TOKEN': '{{ csrf_token() }}' // Include CSRF token for security
+                        'X-CSRF-TOKEN': '{{ csrf_token() }}'
                     },
                     body: JSON.stringify({
-                        date: dateInput.value, // Y-m-d format
+                        date: dateInput.value,
                     })
                 })
                 .then(response => response.json())
@@ -164,16 +146,11 @@
                 })
                 .catch(error => {
                     console.error('Error:', error);
-                    totalPriceDisplay.textContent = 'Error checking availability.';
                 });
             }
 
-            menuSelect.addEventListener('change', updateMenuPrice);
             dateInput.addEventListener('input', checkAvailabilityAndUpdateTotal);
-            menuPriceInput.addEventListener('input', updateTotalPrice);
-            numberOfGuestsInput.addEventListener('input', updateTotalPrice);
 
-            // Initial call to populate venues and slots based on the current date
             checkAvailabilityAndUpdateTotal();
         });
 

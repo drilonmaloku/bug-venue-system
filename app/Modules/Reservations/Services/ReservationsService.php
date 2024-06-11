@@ -115,23 +115,25 @@ class ReservationsService
         $reservation->menager_id = $request->input('menager_id');
         $reservation->staff_expenses = $request->input('staff_expenses');
         $reservation->date = $request->input('date');
-
         $reservation->discount = $request->input('discount');
-
-        $reservation->venue_id;
-
+    
+        // Update venue_id and reservation_type
+        $reservation->venue_id = $request->input('venue_id');
+        $reservation->reservation_type = $request->input('reservation_type');
+    
+        // Calculate total payment
         $numberOfGuests = intval($request->input('number_of_guests'));
         $menuPrice = doubleval($request->input('menu_price'));
         $totalPayment = $numberOfGuests * $menuPrice;
-        // Save the updated reservation
         $reservation->total_payment = $totalPayment;
-
-        if($reservation->discount){
-            $reservation->total_payment = $reservation->total_payment -  $reservation->discount;
+    
+        if ($reservation->discount) {
+            $reservation->total_payment = $reservation->total_payment - $reservation->discount;
         }
+    
         $reservationSaved = $reservation->save();
     
-        if($reservationSaved) {
+        if ($reservationSaved) {
             $this->logService->log([
                 'message' => 'Rezervimi u përditësua me sukses',
                 'context' => Log::LOG_CONTEXT_RESERVATIONS,
@@ -141,7 +143,7 @@ class ReservationsService
     
         return $reservationSaved;
     }
-
+    
     /**
      * Deletes existing venue
      **/

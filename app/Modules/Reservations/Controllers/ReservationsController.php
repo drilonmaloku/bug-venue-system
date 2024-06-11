@@ -298,12 +298,18 @@ class ReservationsController extends Controller
                 'message' => 'Rezervimi nuk u gjet '
             ], JsonResponse::HTTP_NOT_FOUND);
         }
-    
         try {
             $this->validate($request, [
-                'number_of_guests' => 'required|integer|min:1',
-                'menu_price' => 'nullable',
-            ]);
+            'number_of_guests' => 'required|integer|min:1',
+            'menu_price' => 'nullable|numeric',
+            'staff_expenses' => 'nullable|numeric',
+            'discount' => 'nullable|numeric',
+            'date' => 'required|date',
+            'venue_id' => 'required|integer',
+            'reservation_type' => 'required|integer|in:1,2,3', // Assuming only 1, 2, 3 are valid types
+        ]);
+
+
     
             $reservationUpdated = $this->reservationsService->update($request, $reservation);
     
