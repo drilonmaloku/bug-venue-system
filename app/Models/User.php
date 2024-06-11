@@ -13,7 +13,7 @@ use Spatie\Permission\Traits\HasRoles;
 
 class User extends Authenticatable
 {
-    use HasApiTokens, HasFactory, Notifiable, HasRoles,SoftDeletes;
+    use  HasFactory, Notifiable, HasRoles,SoftDeletes;
 
 
     const ROLE_ADMIN = "admin";
@@ -62,16 +62,6 @@ class User extends Authenticatable
      */
     protected $dates = ['deleted_at']; // Add deleted_at to dates
 
-    /**
-     * Always encrypt the password when it is updated.
-     *
-     * @param $value
-    * @return string
-    */
-    public function setPasswordAttribute($value)
-    {
-        $this->attributes['password'] = bcrypt($value);
-    }
 
     public function expenses()
     {

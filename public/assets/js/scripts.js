@@ -25,8 +25,23 @@ var filterOptions = {
         }
     }
 };
+var passwordToggle = {
+    init: function () {
+        var toggleIcon = document.querySelector('.password-input-toggle-icon');
+        var passwordField = document.querySelector('#password');
+
+        if (toggleIcon && passwordField) {
+            toggleIcon.addEventListener('click', function () {
+                var type = passwordField.getAttribute('type') === 'password' ? 'text' : 'password';
+                passwordField.setAttribute('type', type);
+                this.innerHTML = type === 'password' ? '<i class="fa fa-eye"></i>' : '<i class="fa fa-eye-slash"></i>';
+            });
+        }
+    }
+};
 
 document.addEventListener('DOMContentLoaded', function () {
     menuOptions.init();
     filterOptions.init();
+    passwordToggle.init();
 });

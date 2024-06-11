@@ -35,8 +35,8 @@ class ProductionSeeder extends Seeder
             'username' => 'admin',
             'first_name' => 'Admin',
             'last_name' => 'Admin',
-            'email' => 'admin@admin.com',
-            'password' => bcrypt('test')
+            'email' => 'drilon.maloku13@gmail.com',
+            'password' => bcrypt('loniloni13')
         ]);
         $user->assignRole(User::ROLE_SUPERAMDIN);
     }

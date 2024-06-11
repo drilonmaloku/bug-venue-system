@@ -44,7 +44,11 @@
                             <div class="col-md-12">
                                 <div class="form-group">
                                     <label for="example-text-input" class="bug-label">Password</label>
-                                    <input class="bug-text-input" type="password" name="password">
+                                    <div class="password-input-toggle">
+                                        <input id="password" type="password" class="bug-text-input " name="password" required >
+                                        <span class="password-input-toggle-icon"><i class="fa fa-eye"></i></span>
+                                    </div>
+
                                 </div>
                             </div>
                             <div class="col-md-12">

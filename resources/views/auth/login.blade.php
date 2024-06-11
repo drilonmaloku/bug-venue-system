@@ -1,8 +1,16 @@
 @extends('layouts.app')
 
 @section('content')
+    @if ($errors->any())
+        <div class="alert alert-danger">
+            <p class="text-center mb-0"><strong>Kredencialet janë gabim.</strong></p>
+        </div>
+    @endif
     <div class="vms-login-view">
         <div class="container">
+            @foreach($errors as $error)
+                test
+            @endforeach
             <div class="row justify-content-center">
                 <div class="col-md-6">
                     <div class="vms_panel">
@@ -11,7 +19,7 @@
                             Venue Managment Solution by BugAgency
                         </a>
                         <hr>
-                        <form method="POST" action="{{ route('loginv2') }}">
+                        <form method="POST" action="{{ route('login') }}">
                             @csrf
                             <div class="form-group">
                                 <label for="email" class="bug-label">Email*</label>
@@ -19,7 +27,11 @@
                             </div>
                             <div class="form-group">
                                 <label for="password" class="bug-label">Password*</label>
-                                <input id="password" type="password" class="bug-text-input @error('password') is-invalid @enderror" name="password" required autocomplete="current-password">
+                                <div class="password-input-toggle">
+                                    <input id="password" type="password" class="bug-text-input @error('password') is-invalid @enderror" name="password" required autocomplete="current-password">
+                                    <span class="password-input-toggle-icon"><i class="fa fa-eye"></i></span>
+
+                                </div>
                                 @error('password')
                                 <span class="invalid-feedback" role="alert">
                                         <strong>{{ $message }}</strong>
@@ -46,5 +58,4 @@
             </div>
         </div>
     </div>
-
 @endsection

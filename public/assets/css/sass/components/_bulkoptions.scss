@@ -287,3 +287,15 @@
     line-height: 18px;
   }
 }
+
+
+.password-input-toggle {
+  position: relative;
+  .password-input-toggle-icon {
+    cursor: pointer;
+    position: absolute;
+    top: 50%;
+    right: 16px;
+    transform: translateY(-50%);
+  }
+}
