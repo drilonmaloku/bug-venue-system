@@ -26,6 +26,15 @@
                         <label>Search:</label>
                         <input placeholder="Search" class="hubers-text-input white medium" type="text" name="search" value="{{ request('search') }}">
                     </div>
+                    <div class="hubers-filter-group">
+                        <label>Data:</label>
+                        <input placeholder="Search" class="hubers-text-input white medium" type="date" name="date" value="{{old('date',app('request')->input('date'))}}">
+                    </div>
+
+                    <div class="hubers-filter-group">
+                        <label>Data e krijimit:</label>
+                        <input placeholder="Search" class="hubers-text-input white medium" type="date" name="created_at" value="{{ old('created_at', app('request')->input('created_at')) }}">
+                    </div>
                 </div>
                 <div class="hubers-filter-list-actions">
                     <button type="submit" class="hubers-btn mr-2">Filtro</button>
@@ -50,6 +59,9 @@
                         <th class="text-uppercase text-secondary text-sm font-weight-bolder opacity-7">
                             Klienti
                         </th>
+                        <th class="text-uppercase text-secondary text-sm font-weight-bolder opacity-7">
+                            Data e krijimit te Rezervimit
+                        </th>
                         <th width="40" class="text-uppercase text-secondary text-sm font-weight-bolder opacity-7">
                         </th>
                     </tr>
@@ -73,6 +85,9 @@
                        
                              <td>
                                 <a class="hubers-link" href="{{route('clients.view',['id'=>$reservation->client->id])}}"> {{$reservation->client->name}} </a>
+                             </td>
+                             <td>
+                                {{$reservation->created_at}}
                              </td>
                             <td>
                                 <div class="bug-table-item-options">

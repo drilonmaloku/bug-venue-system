@@ -82,7 +82,7 @@ class PaymentsService
             "client_id" => $client_id,
             "value" => data_get($data, "initial_payment_value"),
             "notes" => data_get($data, "payment_notes"),
-            "date" => Carbon::createFromFormat('Y-m-d', data_get($data, "payment_date"))->format('d-m-Y'),
+            "date" => data_get($data, "payment_date"),
         ]);
 
         if ($payment) {

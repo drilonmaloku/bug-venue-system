@@ -35,6 +35,19 @@ class ReservationsService
                     ->orWhere('current_payment', 'LIKE', $searchTerm);
             });
         }
+
+           // Handle date filter
+           if ($request->has('date') && $request->input('date') != '') {
+            $date = $request->input('date');
+            $formattedDate = \Carbon\Carbon::createFromFormat('Y-m-d', $date)->format('d-m-Y');
+            $query->where('date', $formattedDate); // Use the 'date' column for filtering
+        }
+        // Handle created_at filter
+        if ($request->has('created_at') && $request->input('created_at') != '') {
+            $createdAt = $request->input('created_at');
+            $query->whereDate('created_at', $createdAt);
+        }
+        
         $query->orderBy('created_at', 'desc');
         return $query->paginate($perPage);
 
@@ -64,7 +77,7 @@ class ReservationsService
         $numberOfGuests = intval($request->input('number_of_guests'));
         $menuPrice = doubleval($request->input('menu_price'));
         $totalPayment = $numberOfGuests * $menuPrice;
-        $date = Carbon::createFromFormat('Y-m-d', $request->input('date'))->format('d-m-Y');
+        $date =  $request->input('date');
         $venueData = explode(",", $request->input('reservation'));
         $reservation = Reservation::create([
             "client_id" => $clientId,
@@ -101,14 +114,21 @@ class ReservationsService
         $reservation->menu_price = $request->input('menu_price');
         $reservation->menager_id = $request->input('menager_id');
         $reservation->staff_expenses = $request->input('staff_expenses');
+        $reservation->date = $request->input('date');
 
+        $reservation->discount = $request->input('discount');
 
+        $reservation->venue_id;
 
         $numberOfGuests = intval($request->input('number_of_guests'));
         $menuPrice = doubleval($request->input('menu_price'));
         $totalPayment = $numberOfGuests * $menuPrice;
         // Save the updated reservation
         $reservation->total_payment = $totalPayment;
+
+        if($reservation->discount){
+            $reservation->total_payment = $reservation->total_payment -  $reservation->discount;
+        }
         $reservationSaved = $reservation->save();
     
         if($reservationSaved) {

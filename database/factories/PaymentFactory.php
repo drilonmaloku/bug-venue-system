@@ -19,7 +19,7 @@ class PaymentFactory extends Factory
             'client_id' => fake()->numberBetween(1,50),
             'value' => fake()->numberBetween(50,200),
             'notes' => fake()->text(40),
-            'date' => $this->faker->dateTimeBetween('first day of this month', 'last day of this month')->format('d-m-Y'),
+            'date' => fake()->date(),
 
         ];
     }

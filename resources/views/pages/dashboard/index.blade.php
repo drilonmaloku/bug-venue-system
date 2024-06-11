@@ -196,7 +196,7 @@
                                     <td></td>
                                 </tr>
                                 <tr>
-                                    <td>Pagesa Totale:</td>
+                                    <td>Shuma Totale :</td>
                                     <td></td>
                                 </tr>
                             </tbody>
@@ -213,10 +213,16 @@
     <script>
         document.addEventListener('DOMContentLoaded', function() {
             var calendarEl = document.getElementById('calendar');
-            var events = {!! json_encode($events) !!};
+            var events = @json($events); 
+
+            console.log(events);
             var calendar = new FullCalendar.Calendar(calendarEl, {
                 initialView: 'dayGridMonth',
-                events: events,
+                events: {
+                     url:'/dashboard/events',
+                     method: 'GET',
+                     
+                },
                 dateClick: function(info) {
                     // Check if the date has an event
                     $('#dateInput').val(info.dateStr);
@@ -287,7 +293,7 @@
 
                         </tr>
                         <tr>
-                            <td>Pagesa Totale:</td>
+                            <td>Shuma Totale :</td>
                             <td>${reservation.total_payment}€</td>
                             <td></td>
 

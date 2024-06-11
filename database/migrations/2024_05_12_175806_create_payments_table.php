@@ -15,7 +15,7 @@ return new class extends Migration
             $table->id();
             $table->unsignedBigInteger('reservation_id');
             $table->unsignedBigInteger('client_id');
-            $table->string('date');
+            $table->date('date');
             $table->double('value');
             $table->string('notes')->nullable();
             $table->timestamps();
