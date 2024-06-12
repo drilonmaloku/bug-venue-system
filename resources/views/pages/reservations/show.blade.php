@@ -293,13 +293,13 @@
                                 <td>
                                     <div class="bug-table-item-options">
                                         <a class="bug-table-item-option"
-                                            href="{{ route('reservations.invoice.edit', ['id' => $invoice->id]) }}">
+                                            href="{{ route('reservations.invoice.edit', ['id' => $reservation->id, 'invoiceId' => $invoice->id])  }}">
                                             <i class="fa fa-edit"></i>
                                         </a>
                                     </div>
                                 </td>
                                 <td>
-                                    <form action="{{ route('reservations.invoice.destroy', ['id' => $invoice->id]) }}"
+                                    <form action="{{ route('reservations.invoice.destroy',  ['id' => $reservation->id, 'invoiceId' => $invoice->id]) }}"
                                         method="POST" style="display:inline;">
                                         @csrf
                                         @method('DELETE')
@@ -324,6 +324,164 @@
         @endif
     </div>
     {{-- Sherbimet   end --}}
+
+
+
+
+       {{-- Zbritja --}}
+       <div class="modal fade" id="reservationModalDiscount" tabindex="-1" role="dialog"
+       aria-labelledby="reservationModalLabel" aria-hidden="true">
+       <div class="modal-dialog" role="document">
+           <div class="modal-content">
+               <div class="modal-header">
+                   <h5 class="modal-title" id="reservationModalLabel">Krijo Zbritje</h5>
+                   <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                       <span aria-hidden="true">&times;</span>
+                   </button>
+               </div>
+
+
+               <form role="form" method="POST"
+                   action="{{ route('reservations.discount.store', ['id' => $reservation->id]) }}"
+                   enctype="multipart/form-data">
+                   @csrf
+                   <div class="modal-body">
+                       <input type="hidden" name="reservation_id" value="{{ $reservation->id }}">
+
+                       <div class="row">
+                           <div class="col-md-6">
+                               <div class="form-group">
+                                   <label for="discount_date" class="form-control-label">Data e Zbritjes</label>
+                                   <input id="discount_date" class="bug-text-input" type="date" name="discount_date">
+                               </div>
+                           </div>
+                           <div class="col-md-6">
+                               <div class="form-group">
+                                   <label for="discount_amount" class="form-control-label">Vlera e Zbritjes</label>
+                                   <input id="discount_amount" class="bug-text-input" type="number"
+                                       name="discount_amount">
+                               </div>
+                           </div>
+                           <div class="col-md-12">
+                               <div class="form-group">
+                                   <label for="discount_description" class="form-control-label">Shenime</label>
+                                   <textarea id="discount_description" class="bug-text-input" name="discount_description"></textarea>
+                               </div>
+                           </div>
+                       </div>
+                   </div>
+                   <div class="modal-footer">
+                       <button type="submit" class="btn btn-primary">Ruaj</button>
+                       <button type="button" class="btn btn-secondary" data-dismiss="modal">Mbyll</button>
+                   </div>
+               </form>
+
+           </div>
+       </div>
+   </div>
+
+   <div class="vms_panel">
+       <div class="d-flex justify-content-end mb-2">
+           <a class="btn hubers-btn" data-toggle="modal" data-target="#reservationModalDiscount">Shto zbritje per kete
+               rezervim</a>
+       </div>
+       <h5>Zbritjet:</h5>
+       @if (count($reservation->discounts) > 0)
+           <div class="table-responsive ">
+               <table class="bug-table">
+                   <thead>
+                       <tr>
+                           <th>ID</th>
+
+                           <th>Vlera</th>
+                           <th class="text-uppercase text-secondary text-sm font-weight-bolder opacity-7">
+                               Data</th>
+                           <th class="text-uppercase text-secondary text-sm font-weight-bolder opacity-7">
+                               Pershkrimi</th>
+                           <th width="40" class="text-uppercase text-secondary text-sm font-weight-bolder opacity-7">
+                           </th>
+                           <th width="40" class="text-uppercase text-secondary text-sm font-weight-bolder opacity-7">
+                           </th>
+
+                       </tr>
+                   </thead>
+                   <tbody>
+                       @foreach ($reservation->discounts as $discount)
+                           <tr>
+                               <td>
+                                   {{ $discount->id }}
+                               </td>
+                               <td>
+                                   {{ $discount->discount }}€
+                               </td>
+                               <td>
+                                   {{ $discount->date }}
+                               </td>
+                               <td>
+                                   {{ $discount->description }}
+                               </td>
+                               <td>
+                                   <div class="bug-table-item-options">
+                                       <a class="bug-table-item-option"
+                                           href="{{ route('reservations.discount.edit', ['id' => $reservation->id, 'discountId' => $discount->id])  }}">
+                                           <i class="fa fa-edit"></i>
+                                       </a>
+                                   </div>
+                               </td>
+                               <td>
+                                   <form action="{{route('reservations.discount.destroy', ['id' => $reservation->id, 'discountId' => $discount->id])}}"
+
+                                    
+                                       method="POST" style="display:inline;">
+                                       @csrf
+                                       @method('DELETE')
+                                       <div class="bug-table-item-options">
+                                           <button type="submit" class="bug-table-item-option"
+                                               style="background:none;border:none;color:inherit;">
+                                               <i class="fa fa-trash"></i>
+                                           </button>
+                                           <div>
+                                   </form>
+
+                               </td>
+                           </tr>
+                       @endforeach
+                   </tbody>
+               </table>
+           </div>
+       @else
+           <div class="hubers-empty-tab">
+               <h5 class="text-center">Nuk ka zbritje ekstra për këte rezervim.</h5>
+           </div>
+       @endif
+   </div>
+   {{-- Zbritja   end --}}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
     <div class="vms_panel">
 

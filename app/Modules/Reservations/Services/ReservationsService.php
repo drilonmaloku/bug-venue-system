@@ -115,7 +115,6 @@ class ReservationsService
         $reservation->menager_id = $request->input('menager_id');
         $reservation->staff_expenses = $request->input('staff_expenses');
         $reservation->date = $request->input('date');
-        $reservation->discount = $request->input('discount');
     
         // Update venue_id and reservation_type
         $reservation->venue_id = $request->input('venue_id');
@@ -127,9 +126,7 @@ class ReservationsService
         $totalPayment = $numberOfGuests * $menuPrice;
         $reservation->total_payment = $totalPayment;
     
-        if ($reservation->discount) {
-            $reservation->total_payment = $reservation->total_payment - $reservation->discount;
-        }
+    
     
         $reservationSaved = $reservation->save();
     

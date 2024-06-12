@@ -40,12 +40,7 @@
                                     <input id="staffExpenses" class="bug-text-input" type="number" name="staff_expenses" value="{{$reservation->staff_expenses}}" >
                                 </div>
                             </div>
-                            <div class="col-md-6">
-                                <div class="form-group">
-                                    <label for="example-text-input" class="form-control-label">Zbritje*</label>
-                                    <input id="discount" class="bug-text-input" type="number" name="discount" value="{{$reservation->discount}}" >
-                                </div>
-                            </div>
+                         
                             <div class="col-md-6">
                                 <div class="form-group">
                                     <label for="example-text-input" class="form-control-label">Data*</label>

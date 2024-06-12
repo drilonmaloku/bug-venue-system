@@ -1,4 +1,6 @@
-<?php namespace App\Modules\Reservations\Controllers;
+<?php
+
+namespace App\Modules\Reservations\Controllers;
 
 
 
@@ -23,6 +25,7 @@ use App\Modules\Invoices\Services\InvoicesServices;
 use App\Modules\Reservations\Models\ReservationComment;
 use App\Modules\Reservations\Requests\AddCommentRequest;
 use App\Modules\Reservations\Resources\ReservationListCommentResource;
+use App\Modules\Reservations\Services\DiscountReservationsServices;
 use App\Modules\Reservations\Services\ReservationCommentServices;
 use App\Modules\Users\Services\UsersService;
 use Illuminate\Validation\ValidationException;
@@ -39,6 +42,8 @@ class ReservationsController extends Controller
 
     private $commentReservationService;
     private $userService;
+    private $discountService;
+
 
 
 
@@ -50,10 +55,10 @@ class ReservationsController extends Controller
         PaymentsService $paymentsService,
         ReservationCommentServices $commentReservationService,
         UsersService $userService,
-        InvoicesServices $invoiceService
+        InvoicesServices $invoiceService,
+        DiscountReservationsServices $discountService,
 
-    )
-    {
+    ) {
         $this->venuesService = $venuesService;
         $this->reservationsService = $reservationsService;
         $this->clientsService = $clientsService;
@@ -62,30 +67,27 @@ class ReservationsController extends Controller
         $this->commentReservationService = $commentReservationService;
         $this->userService = $userService;
         $this->invoiceService = $invoiceService;
-
-
-
+        $this->discountService = $discountService;
     }
 
     public function index(Request $request)
     {
         $reservations = $this->reservationsService->getAll($request);
-        if(session('success_message')){
+        if (session('success_message')) {
             Alert::success('Success!', session('success_message'));
         }
-        return view('pages/reservations/index',[
-            'reservations'=>$reservations,
-            'is_on_search'=>count($request->all())
+        return view('pages/reservations/index', [
+            'reservations' => $reservations,
+            'is_on_search' => count($request->all())
         ]);
-
     }
 
     public function create()
     {
         return view('pages/reservations/create', [
             'venues' => $this->venuesService->getVenues(),
-            'menus' => $this->menuService->getAll(request(),false),
-            'users'=> $this->userService->getAll(request(),false)
+            'menus' => $this->menuService->getAll(request(), false),
+            'users' => $this->userService->getAll(request(), false)
         ]);
     }
 
@@ -103,7 +105,7 @@ class ReservationsController extends Controller
             ];
         });
 
-        if(!$reservations->isEmpty()){
+        if (!$reservations->isEmpty()) {
             // If there are reservations, map venues with conditional availability
             $venues = Venue::all()->map(function ($venue) use ($reservations) {
                 $venueReservations = $reservations->where('venue_id', $venue->id);
@@ -115,11 +117,11 @@ class ReservationsController extends Controller
                     $availability = [1, 2, 3]; // Start with the default availability
 
                     if ($venueReservations->where('reservation_type', 2)->isNotEmpty()) {
-                        $availability = array_diff($availability, [1,2]);
+                        $availability = array_diff($availability, [1, 2]);
                     }
 
                     if ($venueReservations->where('reservation_type', 3)->isNotEmpty()) {
-                        $availability = array_diff($availability, [1,3]);
+                        $availability = array_diff($availability, [1, 3]);
                     }
                 }
 
@@ -140,11 +142,11 @@ class ReservationsController extends Controller
     public function view($id)
     {
         $reservation = $this->reservationsService->getByID($id);
-        if(is_null($reservation)) {
+        if (is_null($reservation)) {
             return abort(404);
         }
-        return view('pages/reservations/show',[
-            'reservation'=>$reservation,
+        return view('pages/reservations/show', [
+            'reservation' => $reservation,
 
 
         ]);
@@ -154,7 +156,7 @@ class ReservationsController extends Controller
     {
 
         $reservation = $this->reservationsService->getByID($id);
-        if(is_null($reservation)) {
+        if (is_null($reservation)) {
             return abort(404);
         }
 
@@ -165,7 +167,8 @@ class ReservationsController extends Controller
         ]]);
     }
 
-    public function store(Request $request) {
+    public function store(Request $request)
+    {
         $clientData = [
             'name' => $request->input('client_name'),
             'email' => $request->input('client_email'),
@@ -175,9 +178,9 @@ class ReservationsController extends Controller
 
         $client = $this->clientsService->store($clientData);
 
-        $reservation = $this->reservationsService->store($request,$client->id);
-        if($reservation && $request->input('initial_payment_value')  && $request->input('initial_payment_value')) {
-            $this->paymentsService->store($request,$reservation->id,$client->id);
+        $reservation = $this->reservationsService->store($request, $client->id);
+        if ($reservation && $request->input('initial_payment_value')  && $request->input('initial_payment_value')) {
+            $this->paymentsService->store($request, $reservation->id, $client->id);
         }
         return redirect()->to('reservations')->withSuccessMessage('Rezervimi u krijua me sukses');
     }
@@ -188,21 +191,21 @@ class ReservationsController extends Controller
         if (!$reservation) {
             return redirect()->back()->withErrors(['error' => 'Reservation not found.']);
         }
-    
+
         $validatedData = $request->validate([
             'payment_date' => 'required|date',
             'initial_payment_value' => 'required|numeric',
             'payment_notes' => 'nullable|string',
         ]);
-    
+
         // Assuming $reservation has a 'client_id' property or method to get client ID
         $clientID = $reservation->client_id;
-    
+
         // Call the payment service
         $this->paymentsService->storePayment($validatedData, $reservationID, $clientID);
-    
+
         return redirect()->route('reservations.view', ['id' => $reservationID])
-                         ->with('success', 'Payment added successfully.');
+            ->with('success', 'Payment added successfully.');
     }
 
 
@@ -213,112 +216,230 @@ class ReservationsController extends Controller
         if (!$reservation) {
             return redirect()->back()->withErrors(['error' => 'Reservation not found.']);
         }
-    
+
         $validatedData = $request->validate([
             'invoice_amount' => 'nullable|numeric',
             'invoice_description' => 'nullable|string',
             'invoice_date' => 'nullable|date',
         ]);
-    
-   
-    
+
+
+
         // Call the invoice service
         $this->invoiceService->storeInvoice($validatedData, $reservationID);
-    
+
         return redirect()->route('reservations.view', ['id' => $reservationID])
-                         ->with('success', 'Invoice added successfully.');
+            ->with('success', 'Invoice added successfully.');
     }
+
+
+    //Discount
+
+    public function storeDiscount(Request $request, $reservationID)
+    {
+        $reservation = $this->reservationsService->getByID($reservationID);
+        if (!$reservation) {
+            return redirect()->back()->withErrors(['error' => 'Reservation not found.']);
+        }
+
+        $validatedData = $request->validate([
+            'discount_amount' => 'nullable|numeric',
+            'discount_description' => 'nullable|string',
+            'discount_date' => 'nullable|date',
+        ]);
+
+        // Call the discount service
+        $this->discountService->storeDiscount($validatedData, $reservationID);
+
+        return redirect()->route('reservations.view', ['id' => $reservationID])
+            ->with('success', 'Discount added successfully.');
+    }
+
+
+
+    public function editDiscount($id, $discountId)
+    {
+        $reservation = $this->reservationsService->getByID($id);
+        if (is_null($reservation)) {
+            return abort(404, 'Reservation Not Found');
+        }
+
+        $discount = $this->discountService->getByID($discountId);
+        if (is_null($discount)) {
+            return abort(404, 'Discount Not Found');
+        }
+
+        return view('pages/reservations/edit-discount', [
+            'discount' => $discount,
+            'reservation' => $reservation
+        ]);
+    }
+
+
+
+    public function updateDiscount(Request $request, $id, $discountId)
+    {
+        $reservation = $this->reservationsService->getByID($id);
+
+        if (is_null($reservation)) {
+            return response()->json([
+                'message' => 'Reservation Not Found'
+            ], JsonResponse::HTTP_NOT_FOUND);
+        }
+
+        $discount = $this->discountService->getByID($discountId);
+        if (is_null($discount)) {
+            return response()->json([
+                'message' => 'Discount Not Found'
+            ], JsonResponse::HTTP_NOT_FOUND);
+        }
+
+        try {
+            $discount = $this->discountService->update($request, $discount);
+
+            return redirect()->route('reservations.view', ['id' => $id])
+                ->with('success', 'Discount updated successfully.');
+        } catch (\Exception $e) {
+            return response()->json([
+                'message' => 'Internal Server Error'
+            ], JsonResponse::HTTP_INTERNAL_SERVER_ERROR);
+        }
+    }
+
+
+
+    public function deleteDiscount($id, $discountId)
+    {
+        $reservation = $this->reservationsService->getByID($id);
+        if (is_null($reservation)) {
+            return response()->json([
+                'message' => 'Reservation Not Found'
+            ], JsonResponse::HTTP_NOT_FOUND);
+        }
+
+        $discount = $this->discountService->getByID($discountId);
+        if (is_null($discount)) {
+            return response()->json([
+                'message' => 'Discount Not Found'
+            ], JsonResponse::HTTP_NOT_FOUND);
+        }
+
+        try {
+            $discountDeleted = $this->discountService->delete($discount);
+
+            if ($discountDeleted) {
+                return redirect()->route('reservations.view', ['id' => $id])
+                    ->with('success', 'Discount deleted successfully.');
+            }
+
+            return response()->json([
+                'message' => 'Failed to delete the discount.'
+            ], JsonResponse::HTTP_BAD_REQUEST);
+        } catch (\Exception $e) {
+            return response()->json([
+                'message' => 'Internal Server Error'
+            ], JsonResponse::HTTP_INTERNAL_SERVER_ERROR);
+        }
+    }
+    //Discount end
 
 
     public function edit($id)
     {
         $reservation = $this->reservationsService->getByID($id);
-        if(is_null($reservation)) {
+        if (is_null($reservation)) {
             return abort(404);
         }
-        return view('pages/reservations/edit',[
-            'reservation'=>$reservation,
-            'users'=> $this->userService->getAll(request(),false),
+        return view('pages/reservations/edit', [
+            'reservation' => $reservation,
+            'users' => $this->userService->getAll(request(), false),
             'venues' => $this->venuesService->getVenues(),
 
 
         ]);
     }
 
-    public function editInvoice($id)
+    public function editInvoice($id, $invoiceId)
     {
         $reservation = $this->reservationsService->getByID($id);
-
-        $invoice = $this->invoiceService->getByID($id);
-        if(is_null($invoice)) {
-            return abort(404);
+        if (is_null($reservation)) {
+            return abort(404, 'Reservation Not Found');
         }
-        return view('pages/reservations/edit-invoice',[
-            'invoice'=>$invoice,
+
+        $invoice = $this->invoiceService->getByID($invoiceId);
+        if (is_null($invoice)) {
+            return abort(404, 'Discount Not Found');
+        }
+
+        return view('pages/reservations/edit-invoice', [
+            'invoice' => $invoice,
+            'reservation' => $reservation
         ]);
     }
 
 
 
-    public function updateInvoice(Request $request, $id)
+    public function updateInvoice(Request $request, $id, $invoiceId)
     {
-        $invoice = $this->invoiceService->getByID($id);
+        $reservation = $this->reservationsService->getByID($id);
 
+        if (is_null($reservation)) {
+            return response()->json([
+                'message' => 'Reservation Not Found'
+            ], JsonResponse::HTTP_NOT_FOUND);
+        }
+
+        $invoice = $this->invoiceService->getByID($invoiceId);
         if (is_null($invoice)) {
             return response()->json([
                 'message' => 'Invoice Not Found'
             ], JsonResponse::HTTP_NOT_FOUND);
         }
 
-        
         try {
+            $updatedInvoice = $this->invoiceService->update($request, $invoice);
 
-            $invoice = $this->invoiceService->update($request, $invoice);
-            return redirect()->route('reservations.view', ['id' => 53])
-                         ->with('success', 'Invoice added successfully.');
-
-            return response()->json([
-                "message" => "Failed to update existing Payment."
-            ], JsonResponse::HTTP_BAD_REQUEST);
+            return redirect()->route('reservations.view', ['id' => $id])
+                ->with('success', 'Invoice updated successfully.');
         } catch (\Exception $e) {
             return response()->json([
                 'message' => 'Internal Server Error'
-            ], 500);
+            ], JsonResponse::HTTP_INTERNAL_SERVER_ERROR);
         }
     }
 
 
 
 
-    public function update(Request $request, $id) {
+
+    public function update(Request $request, $id)
+    {
         $reservation = $this->reservationsService->getByID($id);
-    
-        if(is_null($reservation)) {
+
+        if (is_null($reservation)) {
             return response()->json([
                 'message' => 'Rezervimi nuk u gjet '
             ], JsonResponse::HTTP_NOT_FOUND);
         }
         try {
             $this->validate($request, [
-            'number_of_guests' => 'required|integer|min:1',
-            'menu_price' => 'nullable|numeric',
-            'staff_expenses' => 'nullable|numeric',
-            'discount' => 'nullable|numeric',
-            'date' => 'required|date',
-            'venue_id' => 'required|integer',
-            'reservation_type' => 'required|integer|in:1,2,3', // Assuming only 1, 2, 3 are valid types
-        ]);
+                'number_of_guests' => 'required|integer|min:1',
+                'menu_price' => 'nullable|numeric',
+                'staff_expenses' => 'nullable|numeric',
+                'date' => 'required|date',
+                'venue_id' => 'required|integer',
+                'reservation_type' => 'required|integer|in:1,2,3', // Assuming only 1, 2, 3 are valid types
+            ]);
 
 
-    
+
             $reservationUpdated = $this->reservationsService->update($request, $reservation);
-    
-            if($reservationUpdated) {
+
+            if ($reservationUpdated) {
                 return redirect()->route('reservations.view', ['id' => $reservation->id]);
             }
 
             return redirect()->route('reservations.view', ['id' => $reservation->id])->withSuccessMessage('Rezervimi u be update me sukses');
-    
         } catch (ValidationException $e) {
             return redirect()->route('reservations.view', ['id' => $reservation->id])->withErrorMessage('Rezervimi nuk u be update');
         } catch (\Exception $e) {
@@ -326,9 +447,10 @@ class ReservationsController extends Controller
         }
     }
 
-    public function delete($id){
+    public function delete($id)
+    {
         $reservation = $this->reservationsService->getByID($id);
-        if(is_null($reservation)) {
+        if (is_null($reservation)) {
             return response()->json([
                 'message' => 'Reservation Not Found'
             ], JsonResponse::HTTP_NOT_FOUND);
@@ -338,51 +460,55 @@ class ReservationsController extends Controller
 
             $reservationDeleted = $this->reservationsService->delete($reservation);
 
-            if($reservationDeleted) {
+            if ($reservationDeleted) {
                 return redirect()->to('reservations')->withSuccessMessage('Rezervimi u fshi me sukses');
             }
 
             return response()->json([
                 "message" => "Failed to delete existing client."
             ], JsonResponse::HTTP_BAD_REQUEST);
-
         } catch (\Exception $e) {
             return response()->json([
                 'message' => 'Internal Server Error'
             ], 500);
         }
-
-
-
     }
 
 
 
 
-    public function deleteInvoice($id)
+    public function deleteInvoice($id, $invoiceId)
     {
-        $invoice = $this->invoiceService->getByID($id);
+
+        $reservation = $this->reservationsService->getByID($id);
+        if (is_null($reservation)) {
+            return response()->json([
+                'message' => 'Reservation Not Found'
+            ], JsonResponse::HTTP_NOT_FOUND);
+        }
+
+        $invoice = $this->invoiceService->getByID($invoiceId);
         if (is_null($invoice)) {
             return response()->json([
-                'message' => 'Payment Not Found'
+                'message' => 'Invoice Not Found'
             ], JsonResponse::HTTP_NOT_FOUND);
         }
 
         try {
-
             $invoiceDeleted = $this->invoiceService->delete($invoice);
 
             if ($invoiceDeleted) {
-                return  redirect()->to('reservations')->withSuccessMessage('Sherbimi u fshi me sukses');
+                return redirect()->route('reservations.view', ['id' => $id])
+                    ->with('success', 'Discount deleted successfully.');
             }
 
             return response()->json([
-                "message" => "Failed to delete existing Invoice."
+                'message' => 'Failed to delete the discount.'
             ], JsonResponse::HTTP_BAD_REQUEST);
         } catch (\Exception $e) {
             return response()->json([
                 'message' => 'Internal Server Error'
-            ], 500);
+            ], JsonResponse::HTTP_INTERNAL_SERVER_ERROR);
         }
     }
 
@@ -394,11 +520,12 @@ class ReservationsController extends Controller
 
         return $reservations->isEmpty();
     }
-      
-    public function storeComment(Request $request,$id) {
+
+    public function storeComment(Request $request, $id)
+    {
         $reservation = $this->reservationsService->getByID($id);
-        $reservationComment = $this->commentReservationService->storeComment($request,$reservation);
-        if($reservationComment) {
+        $reservationComment = $this->commentReservationService->storeComment($request, $reservation);
+        if ($reservationComment) {
 
             return redirect()->back()->withSuccessMessage('Komenti per rezervim u shtua me sukses');
         }
@@ -408,12 +535,12 @@ class ReservationsController extends Controller
         ], JsonResponse::HTTP_BAD_REQUEST);
 
 
-   
 
-        try {  
+
+        try {
             $reservation = $this->reservationsService->getByID($id);
-            $reservationComment = $this->commentReservationService->storeComment($request,$reservation);
-            if($reservationComment) {
+            $reservationComment = $this->commentReservationService->storeComment($request, $reservation);
+            if ($reservationComment) {
 
                 return response()->json([
                     'message' => 'Comment was created successfully',
@@ -424,7 +551,6 @@ class ReservationsController extends Controller
             return response()->json([
                 "message" => "Failed to create new Comment."
             ], JsonResponse::HTTP_BAD_REQUEST);
-
         } catch (\Exception $e) {
             return response()->json([
                 'message' => 'Internal Server Error'
@@ -447,5 +573,4 @@ class ReservationsController extends Controller
             return response()->json(['message' => 'Internal Server Error'], JsonResponse::HTTP_INTERNAL_SERVER_ERROR);
         }
     }
-
 }

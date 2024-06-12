@@ -48,6 +48,11 @@ class Reservation extends Model
     {
         return $this->hasMany(Invoice::class); 
     }
+
+    public function discounts()
+    {
+        return $this->hasMany(Discount::class); 
+    }
     public function comments()
     {
         return $this->hasMany(ReservationComment::class);
