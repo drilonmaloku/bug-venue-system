@@ -18,9 +18,16 @@ Route::group(['middleware' => 'auth'], function () {
     Route::delete('/reservations/comment/{id}', [ReservationsController::class, 'deleteComment'])->name('reservations.comment.delete');
     Route::post('/reservations/{id}/payments', [ReservationsController::class, 'storePayment'])->name('reservations.payment.store');
     Route::post('/reservations/{id}/invoices', [ReservationsController::class, 'storeInvoice'])->name('reservations.invoice.store');
-    Route::get('/reservations/{id}/edit-invoice', [ReservationsController::class, 'editInvoice'])->name('reservations.invoice.edit');
-    Route::put('/reservations/{id}/invoices-update', [ReservationsController::class, 'updateInvoice'])->name('reservations.invoice.update');
-    Route::delete('/reservations/{id}/invoices-delete', [ReservationsController::class, 'deleteInvoice'])->name('reservations.invoice.destroy');
+    Route::get('/reservations/{id}/edit-invoice/{invoiceId}', [ReservationsController::class, 'editInvoice'])->name('reservations.invoice.edit');
+    Route::put('/reservations/{id}/invoices-update/{invoiceId}', [ReservationsController::class, 'updateInvoice'])->name('reservations.invoice.update');
+    Route::delete('/reservations/{id}/invoices-delete/{invoiceId}', [ReservationsController::class, 'deleteInvoice'])->name('reservations.invoice.destroy');
+
+    //Discount
+
+    Route::post('/reservations/{id}/discount', [ReservationsController::class, 'storeDiscount'])->name('reservations.discount.store');
+    Route::get('/reservations/{id}/edit-discount/{discountId}', [ReservationsController::class, 'editDiscount'])->name('reservations.discount.edit');
+    Route::put('/reservations/{id}/discount-update/{discountId}', [ReservationsController::class, 'updateDiscount'])->name('reservations.discount.update');
+    Route::delete('/reservations/{id}/discount-delete/{discountId}', [ReservationsController::class, 'deleteDiscount'])->name('reservations.discount.destroy');
 
 
     Route::get('/reservations/{id}/edit', [ReservationsController::class, 'edit'])->name('reservation.edit');

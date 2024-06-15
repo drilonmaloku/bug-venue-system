@@ -26,7 +26,6 @@ return new class extends Migration
             $table->double('current_payment')->nullable();
             $table->double('total_payment')->nullable();
             $table->double('staff_expenses')->nullable();
-            $table->double('discount')->nullable();
 
 
             $table->timestamps();
