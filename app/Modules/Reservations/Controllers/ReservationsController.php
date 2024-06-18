@@ -142,11 +142,20 @@ class ReservationsController extends Controller
     public function view($id)
     {
         $reservation = $this->reservationsService->getByID($id);
+        $totalDiscount = $reservation->total_discount;
+        $totalInvoiceAmount = $reservation->total_invoice_amount;
+
+        $totalAmount = ($reservation->menu_price * $reservation->number_of_guests) + $totalInvoiceAmount - $totalDiscount;
+
         if (is_null($reservation)) {
             return abort(404);
         }
         return view('pages/reservations/show', [
             'reservation' => $reservation,
+            'totalDiscount'=>$totalDiscount,
+            'totalInvoiceAmount'=>$totalInvoiceAmount,
+            'totalAmount'=>$totalAmount
+
 
 
         ]);
@@ -415,7 +424,6 @@ class ReservationsController extends Controller
     public function update(Request $request, $id)
     {
         $reservation = $this->reservationsService->getByID($id);
-
         if (is_null($reservation)) {
             return response()->json([
                 'message' => 'Rezervimi nuk u gjet '
@@ -428,7 +436,7 @@ class ReservationsController extends Controller
                 'staff_expenses' => 'nullable|numeric',
                 'date' => 'required|date',
                 'venue_id' => 'required|integer',
-                'reservation_type' => 'required|integer|in:1,2,3', // Assuming only 1, 2, 3 are valid types
+                'reservation_type' => 'required|integer|in:1,2,3', 
             ]);
 
 

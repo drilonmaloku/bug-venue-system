@@ -68,12 +68,23 @@
                                 <td>{{ $reservation->current_payment }}€</td>
                             </tr>
                             <tr>
+                                <td>Sherbimi Totali:</td>
+                                <td>{{$totalInvoiceAmount}}€</td>
+                            </tr>
+
+                            <tr>
+                                <td>Zbritja Totali:</td>
+                                <td>{{$totalDiscount}}</td>
+
+
+                            </tr>
+                            <tr>
                                 <td>Pagesa E Mbetur:</td>
                                 <td>{{ $reservation->total_payment - $reservation->current_payment }}€</td>
                             </tr>
                             <tr>
                                 <td>Shuma Totale :</td>
-                                <td>{{ $reservation->total_payment }}€</td>
+                                <td>{{ $totalAmount }}€</td>
                             </tr>
                             <tr>
                                 <td>Shpenzimet e Stafit:</td>
@@ -251,11 +262,15 @@
     </div>
 
     <div class="vms_panel">
-        <div class="d-flex justify-content-end mb-2">
+        <div class="d-flex items-center justify-between">
+            <h5>Sherbimet:</h5>
             <a class="btn hubers-btn" data-toggle="modal" data-target="#reservationModalInvoice">Shto sherbim per kete
                 rezervim</a>
         </div>
-        <h5>Sherbimet:</h5>
+        <div class="d-flex justify-content-end mb-2">
+
+        </div>
+   
         @if (count($reservation->invoices) > 0)
             <div class="table-responsive ">
                 <table class="bug-table">

@@ -68,4 +68,17 @@ class Reservation extends Model
         return $this->belongsTo(User::class);
     }
 
+
+ // Calculate total amount of invoices
+ public function getTotalInvoiceAmountAttribute()
+ {
+     return $this->invoices->sum('amount');
+ }
+
+ // Calculate total discount
+ public function getTotalDiscountAttribute()
+ {
+     return $this->discounts->sum('discount');
+ }
+
 }

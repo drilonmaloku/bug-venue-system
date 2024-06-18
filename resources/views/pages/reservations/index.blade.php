@@ -60,6 +60,14 @@
                             Klienti
                         </th>
                         <th class="text-uppercase text-secondary text-sm font-weight-bolder opacity-7">
+                            Sherbimi Totali
+                        </th>
+
+                        <th class="text-uppercase text-secondary text-sm font-weight-bolder opacity-7">
+                            Zbritja Totali
+                        </th>
+
+                        <th class="text-uppercase text-secondary text-sm font-weight-bolder opacity-7">
                             Data e krijimit te Rezervimit
                         </th>
                         <th width="40" class="text-uppercase text-secondary text-sm font-weight-bolder opacity-7">
@@ -82,9 +90,22 @@
                             <td>
                                 {{$reservation->current_payment}}€ / {{$reservation->total_payment}}€
                             </td>
+
+                            
                        
                              <td>
                                 <a class="hubers-link" href="{{route('clients.view',['id'=>$reservation->client->id])}}"> {{$reservation->client->name}} </a>
+                             </td>
+
+
+                             <td>
+                                {{$reservation->getTotalInvoiceAmountAttribute()}}
+                             </td>
+
+
+
+                             <td>
+                                {{$reservation->getTotalDiscountAttribute()}}
                              </td>
                              <td>
                                 {{$reservation->created_at}}
