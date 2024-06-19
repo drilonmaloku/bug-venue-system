@@ -58,13 +58,13 @@ class DiscountReservationsServices
     {
         $discount = Discount::create([
             "reservation_id" => $reservation_id,
-            "discount" => data_get($data, "discount_amount"),
+            "amount" => data_get($data, "discount_amount"),
             "description" => data_get($data, "discount_description"),
             "date" => data_get($data, "discount_date"),
         ]);
         $reservation = Reservation::findOrFail($reservation_id);
 
-        $updated_momental_payment = $reservation->total_payment - $discount->discount;
+        $updated_momental_payment = $reservation->total_payment - $discount->amount;
 
         $reservation->update(['total_payment' => $updated_momental_payment]);
         if ($discount) {
