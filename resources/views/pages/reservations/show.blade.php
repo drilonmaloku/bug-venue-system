@@ -68,12 +68,23 @@
                                 <td>{{ $reservation->current_payment }}€</td>
                             </tr>
                             <tr>
+                                <td>Sherbimi Totali:</td>
+                                <td>{{$totalInvoiceAmount}}€</td>
+                            </tr>
+
+                            <tr>
+                                <td>Zbritja Totali:</td>
+                                <td>{{$totalDiscount}}</td>
+
+
+                            </tr>
+                            <tr>
                                 <td>Pagesa E Mbetur:</td>
                                 <td>{{ $reservation->total_payment - $reservation->current_payment }}€</td>
                             </tr>
                             <tr>
                                 <td>Shuma Totale :</td>
-                                <td>{{ $reservation->total_payment }}€</td>
+                                <td>{{ $totalAmount }}€</td>
                             </tr>
                             <tr>
                                 <td>Shpenzimet e Stafit:</td>
@@ -137,12 +148,14 @@
         </div>
     </div>
     <div class="vms_panel">
-        <div class="d-flex justify-content-end mb-2">
+
+        <div class="d-flex align-items-center justify-content-between">
+            <h5>Pagesat:</h5>
             <a class="btn hubers-btn" data-toggle="modal" data-target="#reservationModal">Shto pagese per kete rezervim</a>
         </div>
-        <h5>Pagesat:</h5>
+     
         @if (count($reservation->payments) > 0)
-            <div class="table-responsive ">
+            <div class="table-responsive mt-3 ">
                 <table class="bug-table">
                     <thead>
                         <tr>
@@ -251,13 +264,15 @@
     </div>
 
     <div class="vms_panel">
-        <div class="d-flex justify-content-end mb-2">
+        <div class="d-flex align-items-center justify-content-between">
+            <h5>Sherbimet:</h5>
             <a class="btn hubers-btn" data-toggle="modal" data-target="#reservationModalInvoice">Shto sherbim per kete
                 rezervim</a>
         </div>
-        <h5>Sherbimet:</h5>
+   
+   
         @if (count($reservation->invoices) > 0)
-            <div class="table-responsive ">
+            <div class="table-responsive mt-3">
                 <table class="bug-table">
                     <thead>
                         <tr>
@@ -305,7 +320,7 @@
                                         @method('DELETE')
                                         <div class="bug-table-item-options">
                                             <button type="submit" class="bug-table-item-option"
-                                                style="background:none;border:none;color:inherit;">
+                                            style="border:none;">
                                                 <i class="fa fa-trash"></i>
                                             </button>
                                             <div>
@@ -381,13 +396,14 @@
    </div>
 
    <div class="vms_panel">
-       <div class="d-flex justify-content-end mb-2">
-           <a class="btn hubers-btn" data-toggle="modal" data-target="#reservationModalDiscount">Shto zbritje per kete
-               rezervim</a>
-       </div>
-       <h5>Zbritjet:</h5>
+ 
+       <div class="d-flex align-items-center justify-content-between">
+        <h5>Zbritjet:</h5>
+        <a class="btn hubers-btn" data-toggle="modal" data-target="#reservationModalDiscount">Shto zbritje per kete
+            rezervim</a>
+    </div>
        @if (count($reservation->discounts) > 0)
-           <div class="table-responsive ">
+           <div class="table-responsive mt-3">
                <table class="bug-table">
                    <thead>
                        <tr>
@@ -412,7 +428,7 @@
                                    {{ $discount->id }}
                                </td>
                                <td>
-                                   {{ $discount->discount }}€
+                                   {{ $discount->amount }}€
                                </td>
                                <td>
                                    {{ $discount->date }}
@@ -437,7 +453,7 @@
                                        @method('DELETE')
                                        <div class="bug-table-item-options">
                                            <button type="submit" class="bug-table-item-option"
-                                               style="background:none;border:none;color:inherit;">
+                                               style="border:none;">
                                                <i class="fa fa-trash"></i>
                                            </button>
                                            <div>
@@ -459,30 +475,6 @@
 
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
     <div class="vms_panel">
 
         <h5>Pricing Tracking for Reservation:</h5>
@@ -499,6 +491,12 @@
                                 Cmimi total</th>
                             <th class="text-uppercase text-secondary text-sm font-weight-bolder opacity-7">
                                 Cmimi i menus
+                            </th>
+                            <th class="text-uppercase text-secondary text-sm font-weight-bolder opacity-7">
+                                Zbritja
+                            </th>
+                            <th class="text-uppercase text-secondary text-sm font-weight-bolder opacity-7">
+                                Sherbimi
                             </th>
 
                         </tr>
@@ -517,6 +515,12 @@
                                 </td>
                                 <td>
                                     {{ $tracking->menu_price }}
+                                </td>
+                                <td>
+                                    {{ $tracking->total_discount_price }}
+                                </td>
+                                <td>
+                                    {{ $tracking->total_invoice_price }}
                                 </td>
 
 

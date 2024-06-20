@@ -17,6 +17,8 @@ return new class extends Migration
             $table->integer('number_of_guests')->nullable();
             $table->integer('total_price')->nullable();
             $table->integer('menu_price')->nullable();
+            $table->integer('total_discount_price')->nullable()->default(0);
+            $table->integer('total_invoice_price')->nullable()->default(0);
             $table->unsignedBigInteger("reservation_id");
             $table->unsignedBigInteger("user_id");
             $table->timestamps();

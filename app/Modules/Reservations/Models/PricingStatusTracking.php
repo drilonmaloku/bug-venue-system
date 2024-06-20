@@ -17,6 +17,8 @@ class PricingStatusTracking extends Model
         'menu_price',
         'reservation_id',
         'user_id',
+        'total_discount_price',
+        'total_invoice_price'
     ];
 
     // Define relationships if needed
