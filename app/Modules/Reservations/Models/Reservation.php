@@ -69,16 +69,18 @@ class Reservation extends Model
     }
 
 
- // Calculate total amount of invoices
- public function getTotalInvoiceAmountAttribute()
- {
-     return $this->invoices->sum('amount');
- }
+     // Calculate total amount of invoices
+     public function getTotalInvoiceAmountAttribute()
+     {
+         return $this->invoices->sum('amount');
+     }
 
- // Calculate total discount
- public function getTotalDiscountAttribute()
- {
-     return $this->discounts->sum('discount');
- }
+     // Calculate total discount
+     public function getTotalDiscountAttribute()
+     {
+         return $this->discounts->sum('discount');
+     }
+
+
 
 }

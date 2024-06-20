@@ -106,7 +106,7 @@ class ReservationsService
     }
 
     /**
-     * Updates existing Venue
+     * Updates existing Reservation
      **/
     public function update($request, Reservation $reservation) {
         // Update the reservation with the new data from the request
@@ -115,10 +115,10 @@ class ReservationsService
         $reservation->menager_id = $request->input('menager_id');
         $reservation->staff_expenses = $request->input('staff_expenses');
         $reservation->date = $request->input('date');
-    
-        // Update venue_id and reservation_type
-        $reservation->venue_id = $request->input('venue_id');
-        $reservation->reservation_type = $request->input('reservation_type');
+
+        $venueData = explode(",", $request->input('reservation'));
+        $reservation->venue_id = $venueData[0];
+        $reservation->reservation_type = $venueData[1];
     
         // Calculate total payment
         $numberOfGuests = intval($request->input('number_of_guests'));
@@ -142,7 +142,7 @@ class ReservationsService
     }
     
     /**
-     * Deletes existing venue
+     * Deletes existing Reservation
      **/
     public function delete(Reservation $reservation) {
         $previousData = $reservation->attributesToArray();
@@ -161,6 +161,21 @@ class ReservationsService
 
 
 
+    public function recalculatePrice(Reservation $reservation) {
+//        $reservationTotalMenuPrice = $reservation->number_of_guests * $reservation->menu_price;
+//        $previousData = $reservation->attributesToArray();
+//        $reservationDeleted = $reservation->delete();
+//
+//
+//        if($reservationDeleted){
+//            $this->logService->log([
+//                'message' => 'Rezervimi është fshirë me sukses',
+//                'context' => Log::LOG_CONTEXT_CLIENTS,
+//                'ttl'=> Log::LOG_TTL_THREE_MONTHS,
+//            ]);
+//        }
+//        return $reservationDeleted;
+    }
 
    public function storePricingTracking(Reservation $reservation, $numberOfGuests,$newMenuPrice,$totalInvoiceSum,$totalDiscountSum)
    {

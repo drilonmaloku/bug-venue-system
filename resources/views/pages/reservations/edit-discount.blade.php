@@ -14,8 +14,7 @@
                             <div class="col-md-12">
                                 <div class="form-group">
                                     <label for="example-text-input" class="bug-label">Zbritja*</label>
-                                    <input class="bug-text-input" type="number" name="discount" value="{{$discount->discount}}">
-                                    
+                                    <input class="bug-text-input" type="number" name="discount" value="{{$discount->amount}}">
                                 </div>
                             </div>
                             <div class="col-md-12">

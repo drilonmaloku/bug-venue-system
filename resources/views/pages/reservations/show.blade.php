@@ -56,16 +56,11 @@
                             </tr>
                             <tr>
                                 <td>Data e krijimit te Rezervimit</td>
-
                                 <td>{{ $reservation->created_at }}</td>
                             </tr>
                             <tr>
                                 <td>Koha:</td>
                                 <td>{{ $reservation->reservation_type_name }}</td>
-                            </tr>
-                            <tr>
-                                <td>Pagesa Momentale:</td>
-                                <td>{{ $reservation->current_payment }}€</td>
                             </tr>
                             <tr>
                                 <td>Sherbimi Totali:</td>
@@ -74,9 +69,11 @@
 
                             <tr>
                                 <td>Zbritja Totali:</td>
-                                <td>{{$totalDiscount}}</td>
-
-
+                                <td>{{$totalDiscount}}€</td>
+                            </tr>
+                            <tr>
+                                <td>Pagesa E Kryer:</td>
+                                <td>{{ $reservation->current_payment }}€</td>
                             </tr>
                             <tr>
                                 <td>Pagesa E Mbetur:</td>
@@ -151,7 +148,7 @@
 
         <div class="d-flex align-items-center justify-content-between">
             <h5>Pagesat:</h5>
-            <a class="btn hubers-btn" data-toggle="modal" data-target="#reservationModal">Shto pagese per kete rezervim</a>
+            <a class="btn hubers-btn" data-toggle="modal" data-target="#reservationModal">Shto pages</a>
         </div>
      
         @if (count($reservation->payments) > 0)
@@ -217,7 +214,7 @@
         <div class="modal-dialog" role="document">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h5 class="modal-title" id="reservationModalLabel">Krijo Sherbim</h5>
+                    <h5 class="modal-title" id="reservationModalLabel">Shto Shërbim</h5>
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                         <span aria-hidden="true">&times;</span>
                     </button>
@@ -240,14 +237,13 @@
                             </div>
                             <div class="col-md-6">
                                 <div class="form-group">
-                                    <label for="invoice_amount" class="form-control-label">Vlera e Pagesës</label>
-                                    <input id="invoice_amount" class="bug-text-input" type="number"
-                                        name="invoice_amount">
+                                    <label for="invoice_amount" class="form-control-label">Vlera e Shërbimit</label>
+                                    <input id="invoice_amount" class="bug-text-input" type="number" name="invoice_amount">
                                 </div>
                             </div>
                             <div class="col-md-12">
                                 <div class="form-group">
-                                    <label for="invoice_description" class="form-control-label">Shenime</label>
+                                    <label for="invoice_description" class="form-control-label">Shënime</label>
                                     <textarea id="invoice_description" class="bug-text-input" name="invoice_description"></textarea>
                                 </div>
                             </div>
@@ -265,9 +261,8 @@
 
     <div class="vms_panel">
         <div class="d-flex align-items-center justify-content-between">
-            <h5>Sherbimet:</h5>
-            <a class="btn hubers-btn" data-toggle="modal" data-target="#reservationModalInvoice">Shto sherbim per kete
-                rezervim</a>
+            <h5>Shërbimet:</h5>
+            <a class="btn hubers-btn" data-toggle="modal" data-target="#reservationModalInvoice">Shto shërbim</a>
         </div>
    
    
@@ -277,17 +272,13 @@
                     <thead>
                         <tr>
                             <th>ID</th>
-
                             <th>Vlera</th>
                             <th class="text-uppercase text-secondary text-sm font-weight-bolder opacity-7">
                                 Data</th>
                             <th class="text-uppercase text-secondary text-sm font-weight-bolder opacity-7">
-                                Pershkrimi</th>
+                                Përshkrimi</th>
                             <th width="40" class="text-uppercase text-secondary text-sm font-weight-bolder opacity-7">
                             </th>
-                            <th width="40" class="text-uppercase text-secondary text-sm font-weight-bolder opacity-7">
-                            </th>
-
                         </tr>
                     </thead>
                     <tbody>
@@ -311,22 +302,18 @@
                                             href="{{ route('reservations.invoice.edit', ['id' => $reservation->id, 'invoiceId' => $invoice->id])  }}">
                                             <i class="fa fa-edit"></i>
                                         </a>
+                                        <form class="bug-table-item-option" action="{{ route('reservations.invoice.destroy',  ['id' => $reservation->id, 'invoiceId' => $invoice->id]) }}"
+                                              method="POST">
+                                            @csrf
+                                            @method('DELETE')
+                                                <button type="submit" class="bug-table-item-option"
+                                                        >
+                                                    <i class="fa fa-trash"></i>
+                                                </button>
+                                        </form>
                                     </div>
                                 </td>
-                                <td>
-                                    <form action="{{ route('reservations.invoice.destroy',  ['id' => $reservation->id, 'invoiceId' => $invoice->id]) }}"
-                                        method="POST" style="display:inline;">
-                                        @csrf
-                                        @method('DELETE')
-                                        <div class="bug-table-item-options">
-                                            <button type="submit" class="bug-table-item-option"
-                                            style="border:none;">
-                                                <i class="fa fa-trash"></i>
-                                            </button>
-                                            <div>
-                                    </form>
 
-                                </td>
                             </tr>
                         @endforeach
                     </tbody>
@@ -338,12 +325,6 @@
             </div>
         @endif
     </div>
-    {{-- Sherbimet   end --}}
-
-
-
-
-       {{-- Zbritja --}}
        <div class="modal fade" id="reservationModalDiscount" tabindex="-1" role="dialog"
        aria-labelledby="reservationModalLabel" aria-hidden="true">
        <div class="modal-dialog" role="document">
@@ -395,12 +376,11 @@
        </div>
    </div>
 
-   <div class="vms_panel">
+    <div class="vms_panel">
  
        <div class="d-flex align-items-center justify-content-between">
         <h5>Zbritjet:</h5>
-        <a class="btn hubers-btn" data-toggle="modal" data-target="#reservationModalDiscount">Shto zbritje per kete
-            rezervim</a>
+        <a class="btn hubers-btn" data-toggle="modal" data-target="#reservationModalDiscount">Shto zbritje</a>
     </div>
        @if (count($reservation->discounts) > 0)
            <div class="table-responsive mt-3">
@@ -414,11 +394,8 @@
                                Data</th>
                            <th class="text-uppercase text-secondary text-sm font-weight-bolder opacity-7">
                                Pershkrimi</th>
-                           <th width="40" class="text-uppercase text-secondary text-sm font-weight-bolder opacity-7">
+                           <th width="60">
                            </th>
-                           <th width="40" class="text-uppercase text-secondary text-sm font-weight-bolder opacity-7">
-                           </th>
-
                        </tr>
                    </thead>
                    <tbody>
@@ -442,23 +419,17 @@
                                            href="{{ route('reservations.discount.edit', ['id' => $reservation->id, 'discountId' => $discount->id])  }}">
                                            <i class="fa fa-edit"></i>
                                        </a>
-                                   </div>
-                               </td>
-                               <td>
-                                   <form action="{{route('reservations.discount.destroy', ['id' => $reservation->id, 'discountId' => $discount->id])}}"
+                                       <form class="bug-table-item-option" action="{{route('reservations.discount.destroy', ['id' => $reservation->id, 'discountId' => $discount->id])}}" method="POST" style="display:inline;">
+                                           @csrf
+                                           @method('DELETE')
 
-                                    
-                                       method="POST" style="display:inline;">
-                                       @csrf
-                                       @method('DELETE')
-                                       <div class="bug-table-item-options">
                                            <button type="submit" class="bug-table-item-option"
-                                               style="border:none;">
+                                                   style="border:none;">
                                                <i class="fa fa-trash"></i>
                                            </button>
-                                           <div>
-                                   </form>
 
+                                       </form>
+                                   </div>
                                </td>
                            </tr>
                        @endforeach
@@ -471,10 +442,6 @@
            </div>
        @endif
    </div>
-   {{-- Zbritja   end --}}
-
-
-
     <div class="vms_panel">
 
         <h5>Pricing Tracking for Reservation:</h5>
@@ -535,10 +502,6 @@
             </div>
         @endif
     </div>
-
-
-
-
     <div class="vms_panel">
         <div id="commentForm" class="hubers-panel-bordered" style="display: block;">
             <form action="{{ route('reservations.comment.store', ['id' => $reservation->id]) }}" method="POST">

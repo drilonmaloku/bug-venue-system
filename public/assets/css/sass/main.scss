@@ -12,7 +12,6 @@
 @import "general/general";
 @import "general/external_navbar";
 
-@import "components/avatar_cropper";
 @import "components/form_inputs/phone_number_input";
 
 
@@ -105,6 +104,12 @@
 .bug-checkbox-input {
   width: 18px;
   height: 18px;
+}
+.bug-checkbox-input-pre-date {
+  padding: 4px 8px 4px 8px;
+  background: #F8FBFC;
+  border: 1px solid #D1DBDF;
+  border-radius: 4px;
 }
 .vms_checkbox_options {
   display: flex;

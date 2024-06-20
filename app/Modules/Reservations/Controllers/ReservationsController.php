@@ -4,9 +4,6 @@ namespace App\Modules\Reservations\Controllers;
 
 
 
-use App\Modules\Clients\Resources\ClientViewResource;
-
-
 use App\Modules\Clients\Services\ClientsService;
 use App\Modules\Menus\Services\MenuService;
 use App\Modules\Payments\Services\PaymentsService;
@@ -19,11 +16,8 @@ use Illuminate\Http\JsonResponse;
 use Illuminate\Support\Carbon;
 use Maatwebsite\Excel\Facades\Excel;
 use App\Http\Controllers\Controller;
-use App\Modules\Logs\Services\LogService;
-use App\Modules\Clients\Resources\ClientListResource;
 use App\Modules\Invoices\Services\InvoicesServices;
 use App\Modules\Reservations\Models\ReservationComment;
-use App\Modules\Reservations\Requests\AddCommentRequest;
 use App\Modules\Reservations\Resources\ReservationListCommentResource;
 use App\Modules\Reservations\Services\DiscountReservationsServices;
 use App\Modules\Reservations\Services\ReservationCommentServices;
@@ -39,7 +33,6 @@ class ReservationsController extends Controller
     private $menuService;
     private $paymentsService;
     private $invoiceService;
-
     private $commentReservationService;
     private $userService;
     private $discountService;
@@ -56,8 +49,7 @@ class ReservationsController extends Controller
         ReservationCommentServices $commentReservationService,
         UsersService $userService,
         InvoicesServices $invoiceService,
-        DiscountReservationsServices $discountService,
-
+        DiscountReservationsServices $discountService
     ) {
         $this->venuesService = $venuesService;
         $this->reservationsService = $reservationsService;
@@ -155,9 +147,6 @@ class ReservationsController extends Controller
             'totalDiscount'=>$totalDiscount,
             'totalInvoiceAmount'=>$totalInvoiceAmount,
             'totalAmount'=>$totalAmount
-
-
-
         ]);
     }
 
@@ -361,9 +350,9 @@ class ReservationsController extends Controller
         }
         return view('pages/reservations/edit', [
             'reservation' => $reservation,
-            'users' => $this->userService->getAll(request(), false),
+            'users' => $this->userService->getAll(request(), true),
             'venues' => $this->venuesService->getVenues(),
-
+            'menus' => $this->menuService->getAll(request(), false),
 
         ]);
     }
@@ -430,14 +419,14 @@ class ReservationsController extends Controller
             ], JsonResponse::HTTP_NOT_FOUND);
         }
         try {
-            $this->validate($request, [
-                'number_of_guests' => 'required|integer|min:1',
-                'menu_price' => 'nullable|numeric',
-                'staff_expenses' => 'nullable|numeric',
-                'date' => 'required|date',
-                'venue_id' => 'required|integer',
-                'reservation_type' => 'required|integer|in:1,2,3', 
-            ]);
+//            $this->validate($request, [
+//                'number_of_guests' => 'required|integer|min:1',
+//                'menu_price' => 'nullable|numeric',
+//                'staff_expenses' => 'nullable|numeric',
+//                'date' => 'required|date',
+//                'venue_id' => 'required|integer',
+//                'reservation_type' => 'required|integer|in:1,2,3',
+//            ]);
 
 
 

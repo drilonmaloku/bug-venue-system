@@ -16,7 +16,7 @@ return new class extends Migration
             $table->integer('amount')->nullable();
             $table->unsignedBigInteger("reservation_id");
             $table->date('date');
-            $table->text('description');
+            $table->text('description')->nullable();
             $table->timestamps();
 
 
