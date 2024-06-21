@@ -88,6 +88,9 @@ class InvoicesServices
         $invoiceSaved = $invoice->save();
 
         if ($invoiceSaved) {
+
+        $invoice->reservation->updateReservationTracking($invoice->reservation);
+            
             $this->logService->log([
                 'message' => 'Sherbimi u përditësua me sukses',
                 'context' => Log::LOG_CONTEXT_INVOICE,
@@ -108,10 +111,14 @@ class InvoicesServices
 
 
         if ($invoiceDeleted) {
+
+        $invoice->reservation->updateReservationTracking($invoice->reservation);
+
             $this->logService->log([
                 'message' => 'Sherbimi është fshirë me sukses',
                 'context' => Log::LOG_CONTEXT_INVOICE,
                 'ttl' => Log::LOG_TTL_THREE_MONTHS,
+                'previous_data' => json_encode($previousData),
             ]);
         }
         return $invoiceDeleted;
