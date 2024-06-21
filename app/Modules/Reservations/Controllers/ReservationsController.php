@@ -277,13 +277,7 @@ class ReservationsController extends Controller
 
     public function updateDiscount(Request $request, $id, $discountId)
     {
-        $reservation = $this->reservationsService->getByID($id);
-
-        if (is_null($reservation)) {
-            return response()->json([
-                'message' => 'Reservation Not Found'
-            ], JsonResponse::HTTP_NOT_FOUND);
-        }
+      
 
         $discount = $this->discountService->getByID($discountId);
         if (is_null($discount)) {
@@ -291,9 +285,12 @@ class ReservationsController extends Controller
                 'message' => 'Discount Not Found'
             ], JsonResponse::HTTP_NOT_FOUND);
         }
+        $discount = $this->discountService->update($request, $discount);
+
+        return redirect()->route('reservations.view', ['id' => $id])
+            ->with('success', 'Discount updated successfully.');
 
         try {
-            $discount = $this->discountService->update($request, $discount);
 
             return redirect()->route('reservations.view', ['id' => $id])
                 ->with('success', 'Discount updated successfully.');

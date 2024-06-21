@@ -66,13 +66,13 @@
                             <div class="col-md-12">
                                 <div class="form-group">
                                     <label for="example-text-input" class="form-control-label">Shenime</label>
-                                    <textarea class="bug-text-input" type="text" name="description" ></textarea>
+                                    <textarea class="bug-text-input" type="text" name="description"  value="{{$reservation->description}}">{{$reservation->description}}</textarea>
                                 </div>
                             </div>
                             <div class="col-md-6">
                                 <div class="form-group">
                                     <label for="example-text-input" class="form-control-label">Selekto Menagjerin</label>
-                                    <select id="menuId" class="bug-text-input" name="menager_id">
+                                    <select id="menuId" class="bug-text-input" name="menager_id" >
                                         <option value="">Selekto Menagjerin</option>
                                         @foreach($users as $user)
                                             <option  value="{{$user->id}}">{{$user->first_name}}</option>
@@ -97,25 +97,25 @@
                             <div class="col-md-6">
                                 <div class="form-group">
                                     <label for="example-text-input" class="form-control-label">Emri</label>
-                                    <input class="bug-text-input" type="text" name="client_name" >
+                                    <input class="bug-text-input" type="text" name="name" value="{{$reservation->client->name}}">
                                 </div>
                             </div>
                             <div class="col-md-6">
                                 <div class="form-group">
                                     <label for="example-text-input" class="form-control-label">Emaili</label>
-                                    <input class="bug-text-input" type="text" name="client_email" >
+                                    <input class="bug-text-input" type="text" name="email" value="{{$reservation->client->email}}">
                                 </div>
                             </div>
                             <div class="col-md-6">
                                 <div class="form-group">
                                     <label for="example-text-input" class="form-control-label">Telefoni</label>
-                                    <input class="bug-text-input" type="text" name="client_phone_number" >
+                                    <input class="bug-text-input" type="text" name="phone_number" value="{{$reservation->client->phone_number}}">
                                 </div>
                             </div>
                             <div class="col-md-6">
                                 <div class="form-group">
                                     <label for="example-text-input" class="form-control-label">Telefoni Opsional</label>
-                                    <input class="bug-text-input" type="text" name="client_additional_phone_number" >
+                                    <input class="bug-text-input" type="text" name="additional_phone_number" value="{{$reservation->client->additional_phone_number}}">
                                 </div>
                             </div>
                         </div>

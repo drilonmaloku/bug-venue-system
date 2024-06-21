@@ -1,4 +1,6 @@
-<?php namespace App\Modules\Reservations\Models;
+<?php
+
+namespace App\Modules\Reservations\Models;
 
 
 use App\Models\User;
@@ -13,7 +15,7 @@ class Reservation extends Model
 {
     use HasFactory;
 
-    protected $guarded =[];
+    protected $guarded = [];
 
     const RESERVATION_TYPES = [
         1 => 'Ditë e Plotë',
@@ -41,17 +43,17 @@ class Reservation extends Model
 
     public function payments()
     {
-        return $this->hasMany(Payment::class); 
+        return $this->hasMany(Payment::class);
     }
 
     public function invoices()
     {
-        return $this->hasMany(Invoice::class); 
+        return $this->hasMany(Invoice::class);
     }
 
     public function discounts()
     {
-        return $this->hasMany(Discount::class); 
+        return $this->hasMany(Discount::class);
     }
     public function comments()
     {
@@ -69,18 +71,34 @@ class Reservation extends Model
     }
 
 
-     // Calculate total amount of invoices
-     public function getTotalInvoiceAmountAttribute()
-     {
-         return $this->invoices->sum('amount');
-     }
+    // Calculate total amount of invoices
+    public function getTotalInvoiceAmountAttribute()
+    {
+        return $this->invoices->sum('amount');
+    }
 
-     // Calculate total discount
-     public function getTotalDiscountAttribute()
-     {
-         return $this->discounts->sum('discount');
-     }
+    // Calculate total discount
+    public function getTotalDiscountAttribute()
+    {
+        return $this->discounts->sum('discount');
+    }
 
 
 
+    public function updateReservationTracking($reservation)
+    {
+        $totalInvoiceSum = $reservation->invoices->sum('amount');
+        $totalDiscountSum = $reservation->discounts->sum('amount');
+        $numberOfGuests = $reservation->number_of_guests;
+        return PricingStatusTracking::create([
+            'user_id' => auth()->user()->id,
+            'number_of_guests' => $numberOfGuests,
+            'menu_price' => $reservation->menu_price,
+            'price' => $reservation->menu_price,
+            'total_price' => ($numberOfGuests * $reservation->menu_price) + $totalInvoiceSum - $totalDiscountSum,
+            'total_invoice_price'=>$totalInvoiceSum,
+            'total_discount_price'=>$totalDiscountSum,
+            'reservation_id' => $reservation->id,
+        ]);
+    }
 }

@@ -67,6 +67,7 @@ class DiscountReservationsServices
         $updated_momental_payment = $reservation->total_payment - $discount->amount;
 
         $reservation->update(['total_payment' => $updated_momental_payment]);
+      
         if ($discount) {
             $this->logService->log([
                 'message' => 'Zbritja është krijuar me sukses',
@@ -84,11 +85,11 @@ class DiscountReservationsServices
     public function update($request, Discount $discount)
     {
         $previousData = $discount->attributesToArray();
-        $discount->discount = $request->input('discount');
+        $discount->amount = $request->input('discount');
         $discount->date = $request->input('date');
         $discount->description = $request->input('description');
         $discountSaved = $discount->save();
-    
+        $discount->reservation->updateReservationTracking($discount->reservation);
         if ($discountSaved) {
             $this->logService->log([
                 'message' => 'Zbritja u përditësua me sukses',
@@ -113,6 +114,8 @@ class DiscountReservationsServices
 
 
         if ($discountDeleted) {
+        $discount->reservation->updateReservationTracking($discount->reservation);
+
             $this->logService->log([
                 'message' => 'Zbritja është fshirë me sukses',
                 'context' => Log::LOG_CONTEXT_INVOICE,

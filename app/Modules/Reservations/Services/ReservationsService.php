@@ -1,6 +1,7 @@
 <?php namespace App\Modules\Reservations\Services;
 
 use App\Modules\Clients\Models\Client;
+use App\Modules\Clients\Services\ClientsService;
 use App\Modules\Reservations\Models\Reservation;
 use App\Modules\Venues\Models\Venue;
 use Illuminate\Http\Request;
@@ -13,10 +14,12 @@ use Illuminate\Support\Facades\DB;
 class ReservationsService
 {
     private $logService;
-
+    private $clientService;
     public function __construct()
     {
         $this->logService = new LogService();
+        $this->clientService = new ClientsService();
+
     }
 
     /**
@@ -115,6 +118,11 @@ class ReservationsService
         $reservation->menager_id = $request->input('menager_id');
         $reservation->staff_expenses = $request->input('staff_expenses');
         $reservation->date = $request->input('date');
+        $reservation->description = $request->input('description');
+
+
+        $client = $this->clientService->getByID($reservation->client->id);
+        $this->clientService->update($request, $client);
 
         $venueData = explode(",", $request->input('reservation'));
         $reservation->venue_id = $venueData[0];
