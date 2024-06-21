@@ -81,7 +81,7 @@
                             </tr>
                             <tr>
                                 <td>Shuma Totale :</td>
-                                <td>{{ $totalAmount }}€</td>
+                                <td>{{$totalAmount}}€</td>
                             </tr>
                             <tr>
                                 <td>Shpenzimet e Stafit:</td>

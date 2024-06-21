@@ -64,9 +64,13 @@ class DiscountReservationsServices
         ]);
         $reservation = Reservation::findOrFail($reservation_id);
 
-        $updated_momental_payment = $reservation->total_payment - $discount->amount;
+        $updated_total_payment = $reservation->total_payment - $discount->amount;
 
-        $reservation->update(['total_payment' => $updated_momental_payment]);
+
+
+        $reservation->update(['total_payment' => $updated_total_payment]);
+
+
       
         if ($discount) {
             $this->logService->log([
@@ -114,12 +118,11 @@ class DiscountReservationsServices
 
 
         if ($discountDeleted) {
-        $discount->reservation->updateReservationTracking($discount->reservation);
-
             $this->logService->log([
                 'message' => 'Zbritja është fshirë me sukses',
-                'context' => Log::LOG_CONTEXT_INVOICE,
+                'context' => Log::LOG_CONTEXT_DSCOUNT,
                 'ttl' => Log::LOG_TTL_THREE_MONTHS,
+                'previous_data' => json_encode($previousData),
             ]);
         }
         return $discountDeleted;

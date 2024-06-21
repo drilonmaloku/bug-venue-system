@@ -12,6 +12,8 @@ class Log extends Model
     const LOG_CONTEXT_USERS = 5;
     const LOG_CONTEXT_REPORTS = 6;
     const LOG_CONTEXT_INVOICE = 8;
+    const LOG_CONTEXT_DSCOUNT = 9;
+
 
     const LOG_CONTEXT_COMMON = 99;
 
@@ -69,6 +71,9 @@ class Log extends Model
         }
         else if($log->context == 8) {
             return 'Sherbimet';
+        }
+        else if($log->context == 9) {
+            return 'Zbritja';
         }
     }
 

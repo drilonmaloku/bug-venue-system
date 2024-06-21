@@ -134,10 +134,10 @@ class ReservationsController extends Controller
     public function view($id)
     {
         $reservation = $this->reservationsService->getByID($id);
-        $totalDiscount = $reservation->total_discount;
-        $totalInvoiceAmount = $reservation->total_invoice_amount;
-
+        $totalDiscount = $reservation->discounts->sum('amount');
+        $totalInvoiceAmount = $reservation->invoices->sum('amount');
         $totalAmount = ($reservation->menu_price * $reservation->number_of_guests) + $totalInvoiceAmount - $totalDiscount;
+
 
         if (is_null($reservation)) {
             return abort(404);
