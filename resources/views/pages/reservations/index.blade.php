@@ -90,22 +90,15 @@
                             <td>
                                 {{$reservation->current_payment}}€ / {{$reservation->total_payment}}€
                             </td>
-
-                            
-                       
                              <td>
                                 <a class="hubers-link" href="{{route('clients.view',['id'=>$reservation->client->id])}}"> {{$reservation->client->name}} </a>
                              </td>
-
-
                              <td>
-                                {{$reservation->getTotalInvoiceAmountAttribute()}}
+                                {{$reservation->totalInvoiceAmount}}
                              </td>
 
-
-
                              <td>
-                                {{$reservation->getTotalDiscountAttribute()}}
+                                {{$reservation->totalDiscountAmount}}
                              </td>
                              <td>
                                 {{$reservation->created_at}}

@@ -2,12 +2,11 @@
 
 namespace App\Modules\Reservations\Controllers;
 
-
-
 use App\Modules\Clients\Services\ClientsService;
 use App\Modules\Menus\Services\MenuService;
 use App\Modules\Payments\Services\PaymentsService;
 use App\Modules\Reservations\Models\Reservation;
+use App\Modules\Reservations\Services\InvoicesServices;
 use App\Modules\Reservations\Services\ReservationsService;
 use App\Modules\Venues\Models\Venue;
 use App\Modules\Venues\Services\VenuesService;
@@ -16,7 +15,6 @@ use Illuminate\Http\JsonResponse;
 use Illuminate\Support\Carbon;
 use Maatwebsite\Excel\Facades\Excel;
 use App\Http\Controllers\Controller;
-use App\Modules\Invoices\Services\InvoicesServices;
 use App\Modules\Reservations\Models\ReservationComment;
 use App\Modules\Reservations\Resources\ReservationListCommentResource;
 use App\Modules\Reservations\Services\DiscountReservationsServices;
@@ -183,162 +181,6 @@ class ReservationsController extends Controller
         return redirect()->to('reservations')->withSuccessMessage('Rezervimi u krijua me sukses');
     }
 
-    public function storePayment(Request $request, $reservationID)
-    {
-        $reservation = $this->reservationsService->getByID($reservationID);
-        if (!$reservation) {
-            return redirect()->back()->withErrors(['error' => 'Reservation not found.']);
-        }
-
-        $validatedData = $request->validate([
-            'payment_date' => 'required|date',
-            'initial_payment_value' => 'required|numeric',
-            'payment_notes' => 'nullable|string',
-        ]);
-
-        // Assuming $reservation has a 'client_id' property or method to get client ID
-        $clientID = $reservation->client_id;
-
-        // Call the payment service
-        $this->paymentsService->storePayment($validatedData, $reservationID, $clientID);
-
-        return redirect()->route('reservations.view', ['id' => $reservationID])
-            ->with('success', 'Payment added successfully.');
-    }
-
-
-
-    public function storeInvoice(Request $request, $reservationID)
-    {
-        $reservation = $this->reservationsService->getByID($reservationID);
-        if (!$reservation) {
-            return redirect()->back()->withErrors(['error' => 'Reservation not found.']);
-        }
-
-        $validatedData = $request->validate([
-            'invoice_amount' => 'nullable|numeric',
-            'invoice_description' => 'nullable|string',
-            'invoice_date' => 'nullable|date',
-        ]);
-
-
-
-        // Call the invoice service
-        $this->invoiceService->storeInvoice($validatedData, $reservationID);
-
-        return redirect()->route('reservations.view', ['id' => $reservationID])
-            ->with('success', 'Invoice added successfully.');
-    }
-
-
-    //Discount
-
-    public function storeDiscount(Request $request, $reservationID)
-    {
-        $reservation = $this->reservationsService->getByID($reservationID);
-        if (!$reservation) {
-            return redirect()->back()->withErrors(['error' => 'Reservation not found.']);
-        }
-
-        $validatedData = $request->validate([
-            'discount_amount' => 'nullable|numeric',
-            'discount_description' => 'nullable|string',
-            'discount_date' => 'nullable|date',
-        ]);
-
-        // Call the discount service
-        $this->discountService->storeDiscount($validatedData, $reservationID);
-
-        return redirect()->route('reservations.view', ['id' => $reservationID])
-            ->with('success', 'Discount added successfully.');
-    }
-
-
-
-    public function editDiscount($id, $discountId)
-    {
-        $reservation = $this->reservationsService->getByID($id);
-        if (is_null($reservation)) {
-            return abort(404, 'Reservation Not Found');
-        }
-
-        $discount = $this->discountService->getByID($discountId);
-        if (is_null($discount)) {
-            return abort(404, 'Discount Not Found');
-        }
-
-        return view('pages/reservations/edit-discount', [
-            'discount' => $discount,
-            'reservation' => $reservation
-        ]);
-    }
-
-
-
-    public function updateDiscount(Request $request, $id, $discountId)
-    {
-      
-
-        $discount = $this->discountService->getByID($discountId);
-        if (is_null($discount)) {
-            return response()->json([
-                'message' => 'Discount Not Found'
-            ], JsonResponse::HTTP_NOT_FOUND);
-        }
-        $discount = $this->discountService->update($request, $discount);
-
-        return redirect()->route('reservations.view', ['id' => $id])
-            ->with('success', 'Discount updated successfully.');
-
-        try {
-
-            return redirect()->route('reservations.view', ['id' => $id])
-                ->with('success', 'Discount updated successfully.');
-        } catch (\Exception $e) {
-            return response()->json([
-                'message' => 'Internal Server Error'
-            ], JsonResponse::HTTP_INTERNAL_SERVER_ERROR);
-        }
-    }
-
-
-
-    public function deleteDiscount($id, $discountId)
-    {
-        $reservation = $this->reservationsService->getByID($id);
-        if (is_null($reservation)) {
-            return response()->json([
-                'message' => 'Reservation Not Found'
-            ], JsonResponse::HTTP_NOT_FOUND);
-        }
-
-        $discount = $this->discountService->getByID($discountId);
-        if (is_null($discount)) {
-            return response()->json([
-                'message' => 'Discount Not Found'
-            ], JsonResponse::HTTP_NOT_FOUND);
-        }
-
-        try {
-            $discountDeleted = $this->discountService->delete($discount);
-
-            if ($discountDeleted) {
-                return redirect()->route('reservations.view', ['id' => $id])
-                    ->with('success', 'Discount deleted successfully.');
-            }
-
-            return response()->json([
-                'message' => 'Failed to delete the discount.'
-            ], JsonResponse::HTTP_BAD_REQUEST);
-        } catch (\Exception $e) {
-            return response()->json([
-                'message' => 'Internal Server Error'
-            ], JsonResponse::HTTP_INTERNAL_SERVER_ERROR);
-        }
-    }
-    //Discount end
-
-
     public function edit($id)
     {
         $reservation = $this->reservationsService->getByID($id);
@@ -353,59 +195,6 @@ class ReservationsController extends Controller
 
         ]);
     }
-
-    public function editInvoice($id, $invoiceId)
-    {
-        $reservation = $this->reservationsService->getByID($id);
-        if (is_null($reservation)) {
-            return abort(404, 'Reservation Not Found');
-        }
-
-        $invoice = $this->invoiceService->getByID($invoiceId);
-        if (is_null($invoice)) {
-            return abort(404, 'Discount Not Found');
-        }
-
-        return view('pages/reservations/edit-invoice', [
-            'invoice' => $invoice,
-            'reservation' => $reservation
-        ]);
-    }
-
-
-
-    public function updateInvoice(Request $request, $id, $invoiceId)
-    {
-        $reservation = $this->reservationsService->getByID($id);
-
-        if (is_null($reservation)) {
-            return response()->json([
-                'message' => 'Reservation Not Found'
-            ], JsonResponse::HTTP_NOT_FOUND);
-        }
-
-        $invoice = $this->invoiceService->getByID($invoiceId);
-        if (is_null($invoice)) {
-            return response()->json([
-                'message' => 'Invoice Not Found'
-            ], JsonResponse::HTTP_NOT_FOUND);
-        }
-
-        try {
-            $updatedInvoice = $this->invoiceService->update($request, $invoice);
-
-            return redirect()->route('reservations.view', ['id' => $id])
-                ->with('success', 'Invoice updated successfully.');
-        } catch (\Exception $e) {
-            return response()->json([
-                'message' => 'Internal Server Error'
-            ], JsonResponse::HTTP_INTERNAL_SERVER_ERROR);
-        }
-    }
-
-
-
-
 
     public function update(Request $request, $id)
     {
@@ -468,8 +257,203 @@ class ReservationsController extends Controller
         }
     }
 
+    public function checkAvailability($date)
+    {
+
+        $reservations = Reservation::where('date', $date)
+            ->get();
+
+        return $reservations->isEmpty();
+    }
 
 
+    public function storePayment(Request $request, $reservationID)
+    {
+        $reservation = $this->reservationsService->getByID($reservationID);
+        if (!$reservation) {
+            return redirect()->back()->withErrors(['error' => 'Reservation not found.']);
+        }
+
+        $validatedData = $request->validate([
+            'payment_date' => 'required|date',
+            'initial_payment_value' => 'required|numeric',
+            'payment_notes' => 'nullable|string',
+        ]);
+
+        // Assuming $reservation has a 'client_id' property or method to get client ID
+        $clientID = $reservation->client_id;
+
+        // Call the payment service
+        $this->paymentsService->storePayment($validatedData, $reservationID, $clientID);
+
+        return redirect()->route('reservations.view', ['id' => $reservationID])
+            ->with('success', 'Payment added successfully.');
+    }
+
+
+
+    public function storeDiscount(Request $request, $reservationID)
+    {
+        $reservation = $this->reservationsService->getByID($reservationID);
+        if (!$reservation) {
+            return redirect()->back()->withErrors(['error' => 'Reservation not found.']);
+        }
+
+        $validatedData = $request->validate([
+            'discount_amount' => 'nullable|numeric',
+            'discount_description' => 'nullable|string',
+            'discount_date' => 'nullable|date',
+        ]);
+
+        // Call the discount service
+        $discountStored = $this->discountService->store($validatedData, $reservationID);
+        if($discountStored) {
+            $reservation->updateTotalData();
+        }
+
+        return redirect()->route('reservations.view', ['id' => $reservationID])
+            ->with('success', 'Discount added successfully.');
+    }
+
+    public function editDiscount($id, $discountId)
+    {
+        $reservation = $this->reservationsService->getByID($id);
+        if (is_null($reservation)) {
+            return abort(404, 'Reservation Not Found');
+        }
+
+        $discount = $this->discountService->getByID($discountId);
+        if (is_null($discount)) {
+            return abort(404, 'Discount Not Found');
+        }
+
+        return view('pages/reservations/edit-discount', [
+            'discount' => $discount,
+            'reservation' => $reservation
+        ]);
+    }
+
+    public function updateDiscount(Request $request, $id, $discountId)
+    {
+      
+
+        $discount = $this->discountService->getByID($discountId);
+        if (is_null($discount)) {
+            return response()->json([
+                'message' => 'Discount Not Found'
+            ], JsonResponse::HTTP_NOT_FOUND);
+        }
+        $discountUpdated = $this->discountService->update($request, $discount);
+        if($discountUpdated) {
+            $discount->reservation->updateTotalData();
+        }
+
+        return redirect()->route('reservations.view', ['id' => $id])
+            ->with('success', 'Discount updated successfully.');
+
+    }
+
+    public function deleteDiscount($id, $discountId)
+    {
+        $reservation = $this->reservationsService->getByID($id);
+        if (is_null($reservation)) {
+            return response()->json([
+                'message' => 'Reservation Not Found'
+            ], JsonResponse::HTTP_NOT_FOUND);
+        }
+
+        $discount = $this->discountService->getByID($discountId);
+        if (is_null($discount)) {
+            return response()->json([
+                'message' => 'Discount Not Found'
+            ], JsonResponse::HTTP_NOT_FOUND);
+        }
+
+        try {
+            $discountDeleted = $this->discountService->delete($discount);
+
+            if ($discountDeleted) {
+                $discount->reservation->updateTotalData();
+                return redirect()->route('reservations.view', ['id' => $id])
+                    ->with('success', 'Discount deleted successfully.');
+            }
+
+            return response()->json([
+                'message' => 'Failed to delete the discount.'
+            ], JsonResponse::HTTP_BAD_REQUEST);
+        } catch (\Exception $e) {
+            return response()->json([
+                'message' => 'Internal Server Error'
+            ], JsonResponse::HTTP_INTERNAL_SERVER_ERROR);
+        }
+    }
+
+
+    public function storeInvoice(Request $request, $reservationID)
+    {
+        $reservation = $this->reservationsService->getByID($reservationID);
+        if (!$reservation) {
+            return redirect()->back()->withErrors(['error' => 'Reservation not found.']);
+        }
+
+        $validatedData = $request->validate([
+            'invoice_amount' => 'nullable|numeric',
+            'invoice_description' => 'nullable|string',
+            'invoice_date' => 'nullable|date',
+        ]);
+
+        $invoiceStored = $this->invoiceService->store($validatedData, $reservationID);
+        if($invoiceStored) {
+            $reservation->updateTotalData();
+        }
+        return redirect()->route('reservations.view', ['id' => $reservationID])
+            ->with('success', 'Invoice added successfully.');
+    }
+
+    public function editInvoice($id, $invoiceId)
+    {
+        $reservation = $this->reservationsService->getByID($id);
+        if (is_null($reservation)) {
+            return abort(404, 'Reservation Not Found');
+        }
+
+        $invoice = $this->invoiceService->getByID($invoiceId);
+        if (is_null($invoice)) {
+            return abort(404, 'Discount Not Found');
+        }
+
+        return view('pages/reservations/edit-invoice', [
+            'invoice' => $invoice,
+            'reservation' => $reservation
+        ]);
+    }
+
+    public function updateInvoice(Request $request, $id, $invoiceId)
+    {
+        $reservation = $this->reservationsService->getByID($id);
+
+        if (is_null($reservation)) {
+            return abort(404,'Reservation not found');
+        }
+
+        $invoice = $this->invoiceService->getByID($invoiceId);
+        if (is_null($invoice)) {
+            return response()->json([
+                'message' => 'Invoice Not Found'
+            ], JsonResponse::HTTP_NOT_FOUND);
+        }
+
+        try {
+            $updatedInvoice = $this->invoiceService->update($request, $invoice);
+
+            return redirect()->route('reservations.view', ['id' => $id])
+                ->with('success', 'Invoice updated successfully.');
+        } catch (\Exception $e) {
+            return response()->json([
+                'message' => 'Internal Server Error'
+            ], JsonResponse::HTTP_INTERNAL_SERVER_ERROR);
+        }
+    }
 
     public function deleteInvoice($id, $invoiceId)
     {
@@ -506,14 +490,7 @@ class ReservationsController extends Controller
         }
     }
 
-    public function checkAvailability($date)
-    {
 
-        $reservations = Reservation::where('date', $date)
-            ->get();
-
-        return $reservations->isEmpty();
-    }
 
     public function storeComment(Request $request, $id)
     {

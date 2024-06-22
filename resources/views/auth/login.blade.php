@@ -30,7 +30,6 @@
                                 <div class="password-input-toggle">
                                     <input id="password" type="password" class="bug-text-input @error('password') is-invalid @enderror" name="password" required autocomplete="current-password">
                                     <span class="password-input-toggle-icon"><i class="fa fa-eye"></i></span>
-
                                 </div>
                                 @error('password')
                                 <span class="invalid-feedback" role="alert">

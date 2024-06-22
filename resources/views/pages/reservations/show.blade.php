@@ -22,74 +22,88 @@
                             Perditeso</button>
                     </a>
                 </div>
-                <div class="bug-table-item-options">
-                    <table>
-                        <thead>
-                            <tr>
-                                <th colspan="2">Informatat:</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            <tr>
-                                <td>Data</td>
-                                <td>{{ $reservation->date }}</td>
-                            </tr>
-                            <tr>
-                                <td>Salla</td>
-                                <td> <a class="hubers-link"
-                                        href="{{ route('venues.view', ['id' => $reservation->venue->id]) }}">
-                                        {{ $reservation->venue->name }} </a>
-                                </td>
-                            </tr>
-                            <tr>
-                                <td>Numri i te ftuarve</td>
-                                <td>{{ $reservation->number_of_guests }}</td>
+                <table>
+                    <thead>
+                    <tr>
+                        <th colspan="2">Informatat Gjenerale:</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <tr>
+                        <td>Data</td>
+                        <td>{{ $reservation->date }}</td>
+                    </tr>
+                    <tr>
+                        <td>Salla</td>
+                        <td> <a class="hubers-link"
+                                href="{{ route('venues.view', ['id' => $reservation->venue->id]) }}">
+                                {{ $reservation->venue->name }} </a>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>Numri i te ftuarve</td>
+                        <td>{{ $reservation->number_of_guests }}</td>
+                    </tr>
+                    <tr>
+                        <td>Klienti</td>
+                        <td>
+                            <a class="hubers-link"
+                               href="{{ route('clients.view', ['id' => $reservation->client->id]) }}">
+                                {{ $reservation->client->name }} </a>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>Data e krijimit te Rezervimit</td>
+                        <td>{{ $reservation->created_at }}</td>
+                    </tr>
+                    <tr>
+                        <td>Koha:</td>
+                        <td>{{ $reservation->reservation_type_name }}</td>
+                    </tr>
+                    </tbody>
+                </table>
+                <table>
+                    <thead>
+                    <tr>
+                        <th colspan="2">Informatat E qmimit:</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <tr>
+                        <td>Qmimi i Menus:</td>
+                        <td>{{ $reservation->menu_price }}</td>
+                    </tr>
+                    <tr>
+                        <td>Qmimi total per Menu:</td>
+                        <td>{{ $reservation->number_of_guests * $reservation->menu_price }}</td>
+                    </tr>
+                    <tr>
+                        <td>Sherbimi Totali:</td>
+                        <td>{{$totalInvoiceAmount}}€</td>
+                    </tr>
 
-                            </tr>
-                            <tr>
-                                <td>Klienti</td>
-                                <td>
-                                    <a class="hubers-link"
-                                        href="{{ route('clients.view', ['id' => $reservation->client->id]) }}">
-                                        {{ $reservation->client->name }} </a>
-                                </td>
-                            </tr>
-                            <tr>
-                                <td>Data e krijimit te Rezervimit</td>
-                                <td>{{ $reservation->created_at }}</td>
-                            </tr>
-                            <tr>
-                                <td>Koha:</td>
-                                <td>{{ $reservation->reservation_type_name }}</td>
-                            </tr>
-                            <tr>
-                                <td>Sherbimi Totali:</td>
-                                <td>{{$totalInvoiceAmount}}€</td>
-                            </tr>
-
-                            <tr>
-                                <td>Zbritja Totali:</td>
-                                <td>{{$totalDiscount}}€</td>
-                            </tr>
-                            <tr>
-                                <td>Pagesa E Kryer:</td>
-                                <td>{{ $reservation->current_payment }}€</td>
-                            </tr>
-                            <tr>
-                                <td>Pagesa E Mbetur:</td>
-                                <td>{{ $reservation->total_payment - $reservation->current_payment }}€</td>
-                            </tr>
-                            <tr>
-                                <td>Shuma Totale :</td>
-                                <td>{{$totalAmount}}€</td>
-                            </tr>
-                            <tr>
-                                <td>Shpenzimet e Stafit:</td>
-                                <td>{{ $reservation->staff_expenses }}€</td>
-                            </tr>
-                        </tbody>
-                    </table>
-                </div>
+                    <tr>
+                        <td>Zbritja Totali:</td>
+                        <td>{{$totalDiscount}}€</td>
+                    </tr>
+                    <tr>
+                        <td>Pagesa E Kryer:</td>
+                        <td>{{ $reservation->current_payment }}€</td>
+                    </tr>
+                    <tr>
+                        <td>Pagesa E Mbetur:</td>
+                        <td>{{ $reservation->total_payment - $reservation->current_payment }}€</td>
+                    </tr>
+                    <tr>
+                        <td>Shuma Totale :</td>
+                        <td>{{$totalAmount}}€</td>
+                    </tr>
+                    <tr>
+                        <td>Shpenzimet e Stafit:</td>
+                        <td>{{ $reservation->staff_expenses }}€</td>
+                    </tr>
+                    </tbody>
+                </table>
             </div>
         </div>
     </div>

@@ -1,15 +1,9 @@
 <?php namespace App\Modules\Reservations\Services;
 
-use App\Modules\Clients\Models\Client;
-use App\Modules\Reservations\Models\Reservation;
-use App\Modules\Venues\Models\Venue;
-use Illuminate\Http\Request;
+
 use App\Modules\Logs\Models\Log;
 use App\Modules\Logs\Services\LogService;
 use App\Modules\Reservations\Models\Discount;
-use App\Modules\Reservations\Models\PricingStatusTracking;
-use Illuminate\Support\Carbon;
-use Illuminate\Support\Facades\DB;
 
 class DiscountReservationsServices
 {
@@ -20,41 +14,11 @@ class DiscountReservationsServices
         $this->logService = new LogService();
     }
 
-    /**
-     * Gets the list of venues
-     **/
-    public function getAll(Request $request){
-        $query = Discount::query();
-
-
-      
-        return $query;
-
-    }
-
-    /**
-     * Get Venue by ID
-     * @param int|array $id
-     **/
     public function getByID($id){
         return Discount::find($id);
     }
 
-    /**
-     * Get Clients by ID
-     * @param int|array $id
-     **/
-    public function getByIds($ids){
-        return Discount::whereIn('id', $ids)->get();
-    }
-
-    /**
-     * Stores new Discount
-     **/
-
-         //Discount
-
-    public function storeDiscount($data, $reservation_id)
+    public function store($data, $reservation_id)
     {
         $discount = Discount::create([
             "reservation_id" => $reservation_id,
@@ -62,16 +26,6 @@ class DiscountReservationsServices
             "description" => data_get($data, "discount_description"),
             "date" => data_get($data, "discount_date"),
         ]);
-        $reservation = Reservation::findOrFail($reservation_id);
-
-        $updated_total_payment = $reservation->total_payment - $discount->amount;
-
-
-
-        $reservation->update(['total_payment' => $updated_total_payment]);
-
-
-      
         if ($discount) {
             $this->logService->log([
                 'message' => 'Zbritja është krijuar me sukses',
@@ -82,9 +36,6 @@ class DiscountReservationsServices
 
         return $discount;
     }
-
-
-
 
     public function update($request, Discount $discount)
     {
@@ -106,11 +57,7 @@ class DiscountReservationsServices
     
         return $discountSaved;
     }
-    
 
-
-
-    
     public function delete(Discount $discount)
     {
         $previousData = $discount->attributesToArray();

@@ -5,7 +5,6 @@ namespace App\Modules\Reservations\Models;
 
 use App\Models\User;
 use App\Modules\Clients\Models\Client;
-use App\Modules\Invoices\Models\Invoice;
 use App\Modules\Payments\Models\Payment;
 use App\Modules\Venues\Models\Venue;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
@@ -22,7 +21,7 @@ class Reservation extends Model
         2 => 'Mëngjes',
         3 => 'Mbrëmje',
     ];
-    // Add a custom accessor for human-readable reservation type
+
     public function getReservationTypeNameAttribute()
     {
         return self::RESERVATION_TYPES[$this->reservation_type] ?? 'Unknown';
@@ -78,11 +77,10 @@ class Reservation extends Model
     }
 
     // Calculate total discount
-    public function getTotalDiscountAttribute()
+    public function getTotalDiscountAmountAttribute()
     {
-        return $this->discounts->sum('discount');
+        return $this->discounts->sum('amount');
     }
-
 
 
     public function updateReservationTracking($reservation)
@@ -100,5 +98,19 @@ class Reservation extends Model
             'total_discount_price'=>$totalDiscountSum,
             'reservation_id' => $reservation->id,
         ]);
+    }
+
+    public function updateTotalData()
+    {
+        $currentReservation = $this;
+        $totalInvoiceSum = $currentReservation->invoices->sum('amount');
+        $totalDiscountSum = $currentReservation->discounts->sum('amount');
+
+        return $currentReservation->update(
+            [
+                'total_payment' => ($currentReservation->number_of_guests * $currentReservation->menu_price) + ($totalInvoiceSum - $totalDiscountSum)
+            ]
+        );
+
     }
 }
