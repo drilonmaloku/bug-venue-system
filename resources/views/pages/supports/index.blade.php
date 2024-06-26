@@ -27,7 +27,7 @@
                     @foreach($supportTickets as $tickets)
                         <tr>
                             <td>
-                                {{$tickets->user_id}}
+                                {{$tickets->user->username}}
                             </td>
                             <td>
                                 {{$tickets->resolver_id}}

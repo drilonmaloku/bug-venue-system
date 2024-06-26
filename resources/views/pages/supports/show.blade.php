@@ -30,11 +30,11 @@
                     <tbody>
                         <tr>
                             <td>User</td>
-                            <td>{{ $ticket->user_id }}</td>
+                            <td>{{ $ticket->user->username }}</td>
                         </tr>
                         <tr>
                             <td>Resolver</td>
-                            <td>{{ $ticket->user_id }}</td>
+                            <td>{{ $ticket->user->username }}</td>
 
                         </tr>
                         <tr>
