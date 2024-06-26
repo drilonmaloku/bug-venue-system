@@ -145,6 +145,12 @@ class PaymentsService
         return $paymentSaved;
     }
 
+    public function getByReservationID($reservationId)
+{
+    return Payment::where('reservation_id', $reservationId)->get();
+}
+
+
     public function delete(Payment $payment)
     {
         $previousData = $payment->attributesToArray();
