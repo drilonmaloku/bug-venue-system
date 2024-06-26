@@ -16,6 +16,7 @@ use Maatwebsite\Excel\Facades\Excel;
 use App\Http\Controllers\Controller;
 use App\Modules\Logs\Services\LogService;
 use App\Modules\Clients\Resources\ClientListResource;
+use App\Modules\Logs\Models\Log;
 use RealRashid\SweetAlert\Facades\Alert;
 
 class PaymentsController extends Controller
@@ -140,9 +141,23 @@ class PaymentsController extends Controller
 
         try {
 
-            $paymentDeleted = $this->paymentsService->delete($payment);
+            $reservation = $payment->reservation;
 
+            $paymentDeleted = $this->paymentsService->delete($payment);
+            $previousData = $payment->attributesToArray();
             if ($paymentDeleted) {
+
+                $newCurrentPayment = $reservation->payments()->sum('value');
+
+                $reservation->current_payment = $newCurrentPayment;
+                $reservation->save();
+
+                $this->logService->log([
+                    'message' => 'Pagesa është fshire me sukses',
+                    'context' => Log::LOG_CONTEXT_PAYMENTS,
+                    'ttl'=> Log::LOG_TTL_THREE_MONTHS,
+                    'previous_data'=> json_encode($previousData)
+                ]);
                 return  redirect()->to('payments')->withSuccessMessage('Pagesa u fshi me sukses');
             }
 
