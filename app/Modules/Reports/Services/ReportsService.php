@@ -4,6 +4,8 @@
 use App\Modules\Clients\Models\Client;
 use App\Modules\Expenses\Models\Expense;
 use App\Modules\Payments\Models\Payment;
+use App\Modules\Reservations\Models\Discount;
+use App\Modules\Reservations\Models\Invoice;
 use App\Modules\Reservations\Models\Reservation;
 use App\Modules\Venues\Models\Venue;
 use Illuminate\Support\Carbon;
@@ -42,6 +44,10 @@ class ReportsService
         $allVenues = Venue::all();
 
         $expensesSum = Expense::whereBetween('date', [$startDate->format('Y-m-d'), $endDate->format('Y-m-d')])->sum('amount');
+
+
+        $discountSum = Discount::whereBetween('date', [$startDate->format('Y-m-d'), $endDate->format('Y-m-d')])->sum('amount');
+        $servicesSum = Invoice::whereBetween('date', [$startDate->format('Y-m-d'), $endDate->format('Y-m-d')])->sum('amount');
 
 
         // Get the venues with the number of reservations and total value of reservations
@@ -85,6 +91,8 @@ class ReportsService
             'venues_with_reservations_count' => $venuesWithReservationsCount,
             'total_payments_due' => $totalPaymentsDue,
             'expenses_sum' => $expensesSum,
+            'discount_sum'=>$discountSum,
+            'service_sum'=>$servicesSum,
             'staff_expenses' => $staffExpenses
         ];
 

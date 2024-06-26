@@ -10,6 +10,7 @@ use Database\Factories\LogsFactory;
 use Database\Factories\MenuFactory;
 use Database\Factories\PaymentFactory;
 use Database\Factories\ReservationFactory;
+use Database\Factories\SupportTicketsFactory;
 use Database\Factories\UserFactory;
 use Database\Factories\VenueFactory;
 use Illuminate\Database\Seeder;
@@ -34,6 +35,7 @@ class DatabaseSeeder extends Seeder
         $this->seedClients();
         $this->seedUsers();
         $this->seedReservations();
+        $this->seedTickets();
         $this->seedPayments();
         $this->seedExpenses();
 
@@ -75,6 +77,14 @@ class DatabaseSeeder extends Seeder
  
     }
 
+    public function seedTickets() {
+        Reservation::withoutEvents(function () {
+            (new SupportTicketsFactory())->count(50)->create();
+        });
+ 
+    }
+
+    
     public function seedPayments() {
         (new PaymentFactory())->count(50)->create();
     }

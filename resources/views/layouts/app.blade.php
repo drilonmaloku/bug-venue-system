@@ -69,6 +69,8 @@
                             <li><a class="{{ Request::is(['reports','reports-generated']) ? 'active' : '' }}" href="{{route('reports.index')}}">Raportet</a></li>
                             <li><a class="{{ Request::is(['logs','logs/*']) ? 'active' : '' }}" href="{{route('logs.index')}}">Aktiviteti</a></li>
                         @endrole
+                        <li><a class="{{ Request::is(['supports-tickets','supports-tickets/*']) ? 'active' : '' }}" href="{{route('support-tickets.index')}}">Support Tickets</a></li>
+
                         <li><a class="{{ Request::is(['profile']) ? 'active' : '' }}" href="{{route('profile')}}">Profili</a></li>
                     </ul>
                     <div class="hubers-navbar-logout">

@@ -102,6 +102,10 @@
                         <td>Shpenzimet e Stafit:</td>
                         <td>{{ $reservation->staff_expenses }}€</td>
                     </tr>
+                            <tr>
+                                <td>Menagjeri:</td>
+                                <td>{{$reservation->user->username }}</td>
+                            </tr>
                     </tbody>
                 </table>
             </div>
@@ -205,9 +209,16 @@
                                 <td>
                                     <div class="bug-table-item-options">
                                         <a class="bug-table-item-option"
+                                            {{-- href="{{ route('payments.view', ['id' => $payment->id]) }}"> --}}
                                             href="{{ route('payments.view', ['id' => $payment->id]) }}">
                                             <i class="fa fa-eye"></i>
                                         </a>
+
+                                        <a class="bug-table-item-option"
+                                        href="{{ route('reservations.payment.edit', ['id' => $reservation->id, 'paymentId' => $payment->id])  }}">
+
+                                        <i class="fa fa-edit"></i>
+                                    </a>
                                     </div>
                                 </td>
                             </tr>
