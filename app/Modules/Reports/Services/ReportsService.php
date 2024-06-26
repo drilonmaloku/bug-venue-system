@@ -25,18 +25,18 @@ class ReportsService
         $clientsCount = Client::whereBetween('created_at', [$startDate, $endDate])->count();
 
         // Count the number of reservations created during the period
-        $reservationsCount = Reservation::whereBetween('date', [$startDate->format('d-m-Y'), $endDate->format('d-m-Y')])->count();
+        $reservationsCount = Reservation::whereBetween('date', [$startDate, $endDate])->count();
 
         // Get reservation details along with their associated venues
         $reservations = Reservation::with('venue')
-            ->whereBetween('date', [$startDate->format('d-m-Y'), $endDate->format('d-m-Y')])
+            ->whereBetween('date', [$startDate, $endDate])
             ->get();
 
         // Count the number of payments created during the period
-        $paymentsCount = Payment::whereBetween('date', [$startDate->format('d-m-Y'), $endDate->format('d-m-Y')])->count();
+        $paymentsCount = Payment::whereBetween('date', [$startDate, $endDate])->count();
 
         // Sum the value of payments created during the period
-        $paymentsSum = Payment::whereBetween('date', [$startDate->format('d-m-Y'), $endDate->format('d-m-Y')])->sum('value');
+        $paymentsSum = Payment::whereBetween('date', [$startDate, $endDate])->sum('value');
 
         // Get all venues
         $allVenues = Venue::all();
@@ -46,7 +46,7 @@ class ReportsService
 
         // Get the venues with the number of reservations and total value of reservations
         $venues = $allVenues->map(function ($venue) use ($startDate, $endDate) {
-            $reservations = $venue->reservations()->whereBetween('date', [$startDate->format('d-m-Y'), $endDate->format('d-m-Y')])->get();
+            $reservations = $venue->reservations()->whereBetween('date', [$startDate, $endDate])->get();
             $reservationsCount = $reservations->count();
             $currentPaymentSum = $reservations->sum('current_payment');
             $totalPaymentSum = $reservations->sum('total_payment');
