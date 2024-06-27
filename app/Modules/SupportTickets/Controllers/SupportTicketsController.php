@@ -82,8 +82,13 @@ class SupportTicketsController extends Controller
         if(is_null($ticket)) {
             return abort(404);
         }
+        $attachment = json_decode($ticket->attachment, true);
+        $filePath = $attachment['file_path'] ?? null;
+    
         return view('pages/supports/show',[
-            'ticket'=>$ticket
+            'ticket'=>$ticket,
+            'filePath'=>$filePath,
+
         ]);
     }
 
@@ -126,4 +131,56 @@ class SupportTicketsController extends Controller
         }
     }
 
+
+
+ 
+    public function updateStatus(Request $request, $id)
+    {
+        $ticket = $this->supportTicketsService->getByID($id);
+
+        if (is_null($ticket)) {
+            return abort(404);
+        }
+
+        try {
+            $ticketStatus = $this->supportTicketsService->update($request, $ticket);
+            if ($ticketStatus) {
+                return redirect()->back()->withSuccessMessage('Statusi u ndryshua me sukses');
+            }
+
+            return response()->json([
+                "message" => "Failed to update status."
+            ], JsonResponse::HTTP_BAD_REQUEST);
+        } catch (\Exception $e) {
+            return response()->json([
+                'message' => 'Internal Server Error'
+            ], 500);
+        }
+    }
+
+
+
+    public function updateStatusOpen(Request $request, $id)
+    {
+        $ticket = $this->supportTicketsService->getByID($id);
+
+        if (is_null($ticket)) {
+            return abort(404);
+        }
+
+        try {
+            $ticketStatus = $this->supportTicketsService->updateStatusOpen($request, $ticket);
+            if ($ticketStatus) {
+                return redirect()->back()->withSuccessMessage('Statusi u ndryshua me sukses');
+            }
+
+            return response()->json([
+                "message" => "Failed to update status."
+            ], JsonResponse::HTTP_BAD_REQUEST);
+        } catch (\Exception $e) {
+            return response()->json([
+                'message' => 'Internal Server Error'
+            ], 500);
+        }
+    }
 }
