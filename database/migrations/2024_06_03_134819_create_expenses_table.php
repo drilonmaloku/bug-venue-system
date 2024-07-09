@@ -17,6 +17,8 @@ return new class extends Migration
             $table->date('date');
             $table->text('description');
             $table->double('amount');
+            $table->unsignedBigInteger('location_id');
+
             $table->timestamps(); 
           
    
@@ -26,6 +28,11 @@ return new class extends Migration
             ->on("users")
             ->onDelete("cascade")
             ->required();
+
+            $table->foreign('location_id')
+            ->references('id')
+            ->on('locations')
+            ->onDelete("cascade");
         });
     }
 

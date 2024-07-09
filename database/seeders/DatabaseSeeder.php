@@ -64,7 +64,7 @@ class DatabaseSeeder extends Seeder
             'email' => 'drilon.maloku13@gmail.com',
             'password' => bcrypt('loniloni13')
         ]);
-        $user->assignRole(User::ROLE_SUPERAMDIN);
+        $user->assignRole(User::SYSTEM_ADMIN);
     }
 
     public function seedMenus() {
@@ -107,6 +107,9 @@ class DatabaseSeeder extends Seeder
         ]);
         Role::firstOrCreate([
             "name" => User::ROLE_MANAGER
+        ]);
+        Role::firstOrCreate([
+            "name" => User::SYSTEM_ADMIN
         ]);
     }
 

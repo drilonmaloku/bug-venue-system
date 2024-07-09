@@ -21,6 +21,8 @@ return new class extends Migration
             $table->integer('total_invoice_price')->nullable()->default(0);
             $table->unsignedBigInteger("reservation_id");
             $table->unsignedBigInteger("user_id");
+            $table->unsignedBigInteger('location_id');
+
             $table->timestamps();
 
             $table->foreign("user_id")
@@ -34,6 +36,12 @@ return new class extends Migration
             ->on("reservations")
             ->onDelete("cascade")
             ->required();
+
+            $table->foreign('location_id')
+            ->references('id')
+            ->on('locations')
+            ->onDelete("cascade");
+ 
 
         });
     }
