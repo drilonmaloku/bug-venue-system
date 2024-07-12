@@ -55,6 +55,7 @@ class VenuesService
     public function store($request)
     {
         $venue = Venue::create([
+            "location_id" => auth()->user()->getCurrentLocationId(),
             "name" => data_get($request, "name"),
             "description" => data_get($request, "description"),
             "capacity" => data_get($request, "capacity"),

@@ -7,6 +7,7 @@ use App\Models\User;
 use App\Modules\Clients\Models\Client;
 use App\Modules\Payments\Models\Payment;
 use App\Modules\Venues\Models\Venue;
+use App\Scopes\CurrentLocationScope;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
@@ -29,6 +30,12 @@ class Reservation extends Model
 
     // Append custom attribute to model's array and JSON representations
     protected $appends = ['reservation_type_name'];
+
+
+    protected static function booted()
+    {
+        static::addGlobalScope(new CurrentLocationScope);
+    }
 
     public function venue()
     {

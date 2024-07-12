@@ -17,7 +17,14 @@ return new class extends Migration
             $table->string('email')->nullable();
             $table->string('phone_number')->nullable();
             $table->string('additional_phone_number')->nullable();
+            $table->unsignedBigInteger('location_id');
             $table->timestamps();
+
+
+            $table->foreign('location_id')
+                ->references('id')
+                ->on('locations')
+                ->onDelete("cascade");
         });
     }
 

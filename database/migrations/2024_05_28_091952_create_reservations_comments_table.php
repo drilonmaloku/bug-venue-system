@@ -15,10 +15,8 @@ return new class extends Migration
             $table->id();
             $table->unsignedBigInteger("reservation_id");
             $table->unsignedBigInteger("user_id");
-
             $table->text('comment');
             $table->unsignedBigInteger('location_id');
-
             $table->timestamps();
 
 

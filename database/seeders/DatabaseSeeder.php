@@ -57,14 +57,14 @@ class DatabaseSeeder extends Seeder
             $user->assignRole(User::ROLE_ADMIN);
         });
 
-        $user = User::create([
-            'username' => 'admin',
-            'first_name' => 'Admin',
-            'last_name' => 'Admin',
-            'email' => 'drilon.maloku13@gmail.com',
-            'password' => bcrypt('loniloni13')
-        ]);
-        $user->assignRole(User::SYSTEM_ADMIN);
+//        $user = User::create([
+//            'username' => 'admin',
+//            'first_name' => 'Admin',
+//            'last_name' => 'Admin',
+//            'email' => 'drilon.maloku13@gmail.com',
+//            'password' => bcrypt('loniloni13')
+//        ]);
+//        $user->assignRole(User::SYSTEM_ADMIN);
     }
 
     public function seedMenus() {
@@ -101,7 +101,6 @@ class DatabaseSeeder extends Seeder
         Role::firstOrCreate([
             "name" => User::ROLE_SUPERAMDIN
         ]);
-
         Role::firstOrCreate([
             "name" => User::ROLE_ADMIN
         ]);

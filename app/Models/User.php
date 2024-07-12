@@ -3,6 +3,9 @@
 namespace App\Models;
 
 use App\Modules\Expenses\Models\Expense;
+use App\Modules\Location\Models\Location;
+use App\Modules\Users\Models\LocationUser;
+use App\Scopes\CurrentLocationScope;
 use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\SoftDeletes;
@@ -65,9 +68,36 @@ class User extends Authenticatable
     protected $dates = ['deleted_at']; // Add deleted_at to dates
 
 
+
+
     public function expenses()
     {
         return $this->hasMany(Expense::class);
+    }
+
+    /**
+     * Get the current location for the user.
+     *
+     * @return id|null
+     */
+    public function getCurrentLocationId()
+    {
+        $locationUser = $this->locationUsers->first();
+        return $locationUser ? $locationUser->location_id : null;
+    }
+
+    /**
+     * Define a many-to-many relationship with LocationUser.
+     *
+     */
+    public function locationUsers()
+    {
+        return $this->hasMany(LocationUser::class, 'user_id');
+    }
+
+    public function locations()
+    {
+        return $this->belongsToMany(Location::class, 'locations_users', 'user_id', 'location_id');
     }
     
 }

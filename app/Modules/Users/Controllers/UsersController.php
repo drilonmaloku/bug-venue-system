@@ -3,6 +3,7 @@
 declare(strict_types=1);
 
 namespace App\Modules\Users\Controllers;
+use App\Modules\Users\Models\LocationUser;
 use Inertia\Inertia;
 
 use App\Models\User;
@@ -104,11 +105,19 @@ class UsersController extends Controller
         $user = $this->usersService->store($request);
 
         if($user) {
+            if(auth()->user()->getCurrentLocationId()) {
+                $locationUserData = [
+                    'user_id' => $user->id,
+                    'location_id' => auth()->user()->getCurrentLocationId()
+                ];
+                LocationUser::create($locationUserData);
+
+            }
              $this->logService->log([
-            'message' => 'Klienti i ri është krijuar me ID: '.$user->id,
-            'context' => Log::LOG_CONTEXT_CLIENTS,
-            'ttl'=> Log::LOG_TTL_SIX_MONTHS
-       ]);
+                'message' => 'Klienti i ri është krijuar me ID: '.$user->id,
+                'context' => Log::LOG_CONTEXT_CLIENTS,
+                'ttl'=> Log::LOG_TTL_SIX_MONTHS
+            ]);
         }
         return redirect()->to('users')->withSuccessMessage('Perduruesi u krijua me sukses');
     }

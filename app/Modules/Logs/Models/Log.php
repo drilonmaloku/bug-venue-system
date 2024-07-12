@@ -1,6 +1,7 @@
 <?php namespace App\Modules\Logs\Models;
 
 use App\Models\User;
+use App\Scopes\CurrentLocationScope;
 use Illuminate\Database\Eloquent\Model;
 
 class Log extends Model
@@ -13,8 +14,6 @@ class Log extends Model
     const LOG_CONTEXT_REPORTS = 6;
     const LOG_CONTEXT_INVOICE = 8;
     const LOG_CONTEXT_DSCOUNT = 9;
-
-
     const LOG_CONTEXT_COMMON = 99;
 
 
@@ -41,6 +40,11 @@ class Log extends Model
     ];
 
     protected $guarded = [];
+
+    protected static function booted()
+    {
+        static::addGlobalScope(new CurrentLocationScope);
+    }
 
     public function user()
     {

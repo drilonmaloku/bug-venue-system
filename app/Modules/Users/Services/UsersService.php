@@ -29,6 +29,8 @@ class UsersService
      */
     public function getAll($request,$withoutPagination = false){
         $query = User::query();
+
+
         if ($request && $request->has("search") && $request->input("search") != '') {
             $searchTerm = '%' . $request->input("search") . '%';
 
@@ -46,7 +48,15 @@ class UsersService
                 $subquery->where('name', $role);
             });
         }
-    
+
+        $locationId = auth()->user()->getCurrentLocationId();
+
+        if ($locationId) {
+            $query->whereHas('locations', function ($subquery) use ($locationId) {
+                $subquery->where('location_id', $locationId);
+            });
+        }
+
         if($withoutPagination) {
             return $query->get();
         }

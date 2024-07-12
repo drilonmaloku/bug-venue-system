@@ -4,6 +4,7 @@ namespace App\Modules\Reservations\Models;
 
 use App\Models\User;
 use App\Modules\Reservations\Models\Reservation;
+use App\Scopes\CurrentLocationScope;
 use Illuminate\Database\Eloquent\Model;
 
 class PricingStatusTracking extends Model
@@ -21,7 +22,11 @@ class PricingStatusTracking extends Model
         'total_invoice_price'
     ];
 
-    // Define relationships if needed
+    protected static function booted()
+    {
+        static::addGlobalScope(new CurrentLocationScope);
+    }
+
     public function reservation()
     {
         return $this->belongsTo(Reservation::class);

@@ -1,28 +1,21 @@
 <?php namespace App\Modules\Location\Controllers;
 
-
+use App\Modules\Users\Models\LocationUser;
 use Illuminate\Http\Request;
-
 use App\Http\Controllers\Controller;
-use App\Modules\Expenses\Models\Expense;
 use App\Modules\Logs\Services\LogService;
-
-use App\Modules\Expenses\Services\ExpensesServices;
 use App\Modules\Location\Services\LocationServices;
 use App\Modules\Logs\Models\Log;
 use App\Modules\Users\Requests\CreateUserRequest;
 use App\Modules\Users\Services\UsersService;
-use Illuminate\Support\Facades\Hash;
 use RealRashid\SweetAlert\Facades\Alert;
-use Stringable;
-use Symfony\Polyfill\Uuid\Uuid;
 use Illuminate\Support\Str;
+
 class LocationController extends Controller
 {
     private $locationServices;
     private $logService;
     private $usersService;
-
 
     public function __construct(
         LocationServices $locationServices,
@@ -32,7 +25,6 @@ class LocationController extends Controller
     {
         $this->locationServices = $locationServices;
         $this->usersService = $usersService;
-
         $this->logService = $logService;
     }
 
@@ -61,8 +53,6 @@ class LocationController extends Controller
         ]);
     }
 
-
-
     public function create()
     {
         return view('pages/locations/create');
@@ -75,7 +65,7 @@ class LocationController extends Controller
             "last_name" => $request->input("last_name"),
             "email" => $request->input("email"),
             "phone" => $request->input("phone"),
-            "password" => Hash::make($request->input("password")),
+            "password" => $request->input("password"),
             "role" => $request->input("role")
         ];
     
@@ -94,13 +84,21 @@ class LocationController extends Controller
                 'uuid'=>  Str::uuid(),
             ];
     
-           $this->locationServices->store($locationData);
-    
+           $location = $this->locationServices->store($locationData);
+            if ($location) {
+                $locationUserData = [
+                    'user_id' => $user->id,
+                    'location_id' => $location->id,
+                ];
+
+                LocationUser::create($locationUserData);
+            }
             return redirect()->to('locations')->withSuccessMessage('Location u krijua me sukses');
         }
     
         return redirect()->back()->withErrorMessage('Ndodhi një gabim gjatë krijimit të përdoruesit.');
     }
+
     public function edit($id)
     {
         $location = $this->locationServices->getByID($id);
@@ -131,26 +129,5 @@ class LocationController extends Controller
             ], 500);
         }
     }
-
-    // /**
-    //  * Destroy (delete) a user.
-    //  *
-    //  * @param User $user
-    //  * @param Request $request
-    //  * @return JsonResponse
-    //  */
-    // public function destroy($id)
-    // {
-    //     $expense = $this->expenseServices->getByID($id);
-    //     $expenseDeleted = $this->expenseServices->destroy($expense);
-
-    //     if ($expenseDeleted) {
-    //         return redirect()->to('expenses')->withSuccessMessage('Perduruesi u fshi me sukses');
-    //     } else {
-    //         return response()->json([
-    //             'message' => 'Failed to delete user'
-    //         ], 500);
-    //     }
-    // }
 
 }
