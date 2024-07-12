@@ -3,7 +3,6 @@
 
 use App\Modules\Clients\Models\Client;
 use App\Modules\Reservations\Models\Reservation;
-use App\Modules\Venues\Models\Venue;
 use App\Scopes\CurrentLocationScope;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;

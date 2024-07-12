@@ -60,7 +60,6 @@ class ExpensesServices
         return Expense::find($id);
     }
 
-    
     /**
      * Get Client
      **/
@@ -138,11 +137,6 @@ class ExpensesServices
 
         return $client;
     }
-
-
-
-
-
 
        /**
      * Delete a user and log the action.

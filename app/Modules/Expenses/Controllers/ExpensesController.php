@@ -4,9 +4,7 @@
 use Illuminate\Http\Request;
 
 use App\Http\Controllers\Controller;
-use App\Modules\Expenses\Models\Expense;
 use App\Modules\Logs\Services\LogService;
-
 use App\Modules\Expenses\Services\ExpensesServices;
 use RealRashid\SweetAlert\Facades\Alert;
 
@@ -49,13 +47,10 @@ class ExpensesController extends Controller
         ]);
     }
 
-
-
     public function create()
     {
         return view('pages/expenses/create');
     }
-
 
     public function store(Request $request) {
         $expenseData = [
@@ -70,13 +65,6 @@ class ExpensesController extends Controller
      
         return redirect()->to('expenses')->withSuccessMessage('Shpenzimi u krijua me sukses');
     }
-
-
-
-
-
-
-
 
     public function edit($id)
     {
@@ -109,24 +97,13 @@ class ExpensesController extends Controller
         }
     }
 
-
-
-
-    
-    /**
-     * Destroy (delete) a user.
-     *
-     * @param User $user
-     * @param Request $request
-     * @return JsonResponse
-     */
     public function destroy($id)
     {
         $expense = $this->expenseServices->getByID($id);
         $expenseDeleted = $this->expenseServices->destroy($expense);
 
         if ($expenseDeleted) {
-            return redirect()->to('expenses')->withSuccessMessage('Perduruesi u fshi me sukses');
+            return redirect()->to('expenses')->withSuccessMessage('Shpenzimi u fshi me sukses');
         } else {
             return response()->json([
                 'message' => 'Failed to delete user'

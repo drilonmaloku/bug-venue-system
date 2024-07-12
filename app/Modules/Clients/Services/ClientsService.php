@@ -4,7 +4,6 @@ use App\Modules\Clients\Models\Client;
 use Illuminate\Http\Request;
 use App\Modules\Logs\Models\Log;
 use App\Modules\Logs\Services\LogService;
-use Illuminate\Support\Facades\DB;
 
 class ClientsService
 {

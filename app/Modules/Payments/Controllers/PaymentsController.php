@@ -2,20 +2,13 @@
 
 namespace App\Modules\Payments\Controllers;
 
-
-
-use App\Modules\Clients\Resources\ClientViewResource;
-
-
 use App\Modules\Clients\Services\ClientsService;
 use App\Modules\Payments\Services\PaymentsService;
 use App\Modules\Venues\Services\VenuesService;
 use Illuminate\Http\Request;
 use Illuminate\Http\JsonResponse;
-use Maatwebsite\Excel\Facades\Excel;
 use App\Http\Controllers\Controller;
 use App\Modules\Logs\Services\LogService;
-use App\Modules\Clients\Resources\ClientListResource;
 use App\Modules\Logs\Models\Log;
 use RealRashid\SweetAlert\Facades\Alert;
 

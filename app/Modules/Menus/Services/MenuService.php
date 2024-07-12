@@ -48,7 +48,6 @@ class MenuService
         return Menu::find($id);
     }
 
-    
     /**
      * Get Client
      **/
@@ -65,11 +64,12 @@ class MenuService
     }
 
     /**
-     * Stores new Client
+     * Stores new Menu
      **/
     public function store($request)
     {
         $menu = Menu::create([
+            "location_id" => auth()->user()->getCurrentLocationID(),
             "name" => $request->input('name'),
             "price" => $request->input('price'),
             "description" => $request->input('description'),
@@ -87,7 +87,7 @@ class MenuService
     }
 
     /**
-     * Updates existing client
+     * Updates existing menu
      **/
     public function update($request, Menu $menu) {
         $menu->name = $request->input('name');
@@ -120,6 +120,7 @@ class MenuService
                 'message' => 'Menuja është fshirë me sukses',
                 'context' => Log::LOG_CONTEXT_CLIENTS,
                 'ttl'=> Log::LOG_TTL_THREE_MONTHS,
+                'previous_data' => $previousData
             ]);
         }
         return $menuDeleted;

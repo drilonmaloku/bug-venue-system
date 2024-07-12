@@ -1,20 +1,9 @@
 <?php namespace App\Modules\Venues\Controllers;
 
-use App\Modules\Clients\Exports\ClientsExport;
-use App\Modules\Clients\Requests\UpdateClientContactPersonRequest;
-use App\Modules\Clients\Requests\UpdateClientRequest;
-use App\Modules\Clients\Requests\UpdateVenueRequest;
-use App\Modules\Clients\Resources\ClientViewResource;
-
-
-use App\Modules\Venues\Requests\AddVenueRequest;
 use App\Modules\Venues\Services\VenuesService;
 use Illuminate\Http\Request;
-use Illuminate\Http\JsonResponse;
-use Maatwebsite\Excel\Facades\Excel;
 use App\Http\Controllers\Controller;
 use App\Modules\Logs\Services\LogService;
-use App\Modules\Clients\Resources\ClientListResource;
 use RealRashid\SweetAlert\Facades\Alert;
 
 class VenuesController extends Controller
@@ -61,11 +50,10 @@ class VenuesController extends Controller
     }
 
     public function store(Request $request) {
-        $venue = $this->venuesService->store($request);
-
-        return redirect()->to('venues')->withSuccessMessage('Salla u krijua me sukses');
         try {
+            $venue = $this->venuesService->store($request);
 
+            return redirect()->to('venues')->withSuccessMessage('Salla u krijua me sukses');
 
         } catch (\Exception $e) {
             return response()->json([

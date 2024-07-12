@@ -3,6 +3,7 @@
 declare(strict_types=1);
 
 namespace App\Modules\Users\Controllers;
+
 use App\Modules\Users\Models\LocationUser;
 use Inertia\Inertia;
 
@@ -122,40 +123,6 @@ class UsersController extends Controller
         return redirect()->to('users')->withSuccessMessage('Perduruesi u krijua me sukses');
     }
 
-    /**
-     * Display the specified user.
-     *
-     * @param int $id The ID of the user to display.
-     * @return Response The rendered view displaying the user and related data.
-     */
-    public function show($id)
-    {
-        $user = $this->usersService->getByID($id);
-
-        if(is_null($user)) {
-            return abort(404);
-        }
-
-        $groups = $this->groupsService->getAllGroupsForUser($user->id);
-        $activeGroups = [];
-        $archivedGroups = [];
-
-        foreach ($groups as $group) {
-            if($group->trashed()) {
-                array_push($archivedGroups,$group);
-            }else {
-                array_push($activeGroups,$group);
-            }
-        }
-
-
-        return Inertia::render('Users/Single', [
-            'user' => UserListResource::make($user),
-            'active_groups' => GroupsListResource::collection($activeGroups),
-            'archived_groups' => GroupsListResource::collection($archivedGroups),
-            'logs' => LogListResource::collection($user->logs()->latest()->take(25)->get())
-        ]);
-    }
 
 
     public function profile()
@@ -241,7 +208,6 @@ class UsersController extends Controller
      * @param User $user
      * @return JsonResponse
      */
-
      public function update(Request $request,$id) {
         $client = $this->usersService->getByID($id);
 
@@ -260,20 +226,6 @@ class UsersController extends Controller
                 'message' => 'Internal Server Error'
             ], 500);
         }
-    }
-    /**
-     * Export users to Excel.
-     *
-     * @param Request $request
-     * @return \Symfony\Component\HttpFoundation\BinaryFileResponse
-     */
-    public function exportExcel(Request $request) {
-        $users = null;
-        if($request->has('ids')) {
-            $users = explode(',', $request->input('ids'));
-        }
-
-        return Excel::download(new UsersExport($users), "users-export.xlsx");
     }
 
     /**
@@ -371,9 +323,6 @@ class UsersController extends Controller
             ], 500);
         }
     }
-
-
-
 
     public function updatePassword(Request $request, $id)
     {

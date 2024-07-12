@@ -1,11 +1,9 @@
-<?php 
-
-
+<?php
 namespace App\Modules\SupportTickets\Controllers;
-use Illuminate\Http\Request;
 
+
+use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
-use App\Modules\Logs\Services\LogService;
 use App\Modules\SupportTickets\Resources\SupportTicketsListCommentResource;
 use App\Modules\SupportTickets\Services\FileService;
 use App\Modules\SupportTickets\Services\SupportTicketsCommentServices;
@@ -38,14 +36,10 @@ class SupportTicketsController extends Controller
         ]);
     }
 
-
-
     public function create()
     {
         return view('pages/supports/create');
     }
-
-
 
     public function store(Request $request) {
         $fileService = app(FileService::class);
@@ -74,8 +68,6 @@ class SupportTicketsController extends Controller
         return redirect()->to('supports-tickets')->withSuccessMessage('Tiketa u krijua me sukses');
     }
 
-
-
     public function view($id)
     {
         $ticket = $this->supportTicketsService->getByID($id);
@@ -91,8 +83,6 @@ class SupportTicketsController extends Controller
 
         ]);
     }
-
-
 
     public function storeComment(Request $request, $id)
     {
@@ -131,9 +121,6 @@ class SupportTicketsController extends Controller
         }
     }
 
-
-
- 
     public function updateStatus(Request $request, $id)
     {
         $ticket = $this->supportTicketsService->getByID($id);
@@ -157,8 +144,6 @@ class SupportTicketsController extends Controller
             ], 500);
         }
     }
-
-
 
     public function updateStatusOpen(Request $request, $id)
     {

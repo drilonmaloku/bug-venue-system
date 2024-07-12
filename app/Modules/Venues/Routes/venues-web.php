@@ -5,8 +5,6 @@ declare(strict_types=1);
 use App\Modules\Venues\Controllers\VenuesController;
 use Illuminate\Support\Facades\Route;
 
-
-// Venues
 Route::group(['middleware' => 'auth'], function () {
     Route::get('/venues', [VenuesController::class, 'index'])->name('venues.index');
     Route::get('/venues/{id}/edit', [VenuesController::class, 'edit'])->name('venues.edit');

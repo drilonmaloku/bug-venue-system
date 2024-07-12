@@ -2,8 +2,6 @@
 
 use Illuminate\Http\Request;
 use App\Modules\Logs\Models\Log;
-use Illuminate\Support\Facades\DB;
-use App\Modules\Logs\Resources\LogResource;
 
 class LogService
 {
@@ -158,18 +156,6 @@ class LogService
                 return null;
                 break;
         }
-    }
-
-    /**
-     * Get a single log resource.
-     *
-     * @param Log $log
-     * @return LogResource
-     */
-    public function getSingleLog(Log $log) {
-        $logResource = new LogResource($log);
-
-        return $logResource;
     }
 
     /**

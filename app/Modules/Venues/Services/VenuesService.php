@@ -5,7 +5,6 @@ use App\Modules\Venues\Models\Venue;
 use Illuminate\Http\Request;
 use App\Modules\Logs\Models\Log;
 use App\Modules\Logs\Services\LogService;
-use Illuminate\Support\Facades\DB;
 
 class VenuesService
 {
@@ -30,7 +29,6 @@ class VenuesService
         return Venue::all();
     }
 
-
     /**
      * Get Venue by ID
      * @param int|array $id
@@ -39,10 +37,8 @@ class VenuesService
         return Venue::find($id);
     }
 
-
-
     /**
-     * Get Clients by ID
+     * Get Venues by IDs
      * @param int|array $id
      **/
     public function getByIds($ids){
