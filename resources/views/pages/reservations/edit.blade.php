@@ -72,14 +72,15 @@
                             <div class="col-md-6">
                                 <div class="form-group">
                                     <label for="example-text-input" class="form-control-label">Selekto Menagjerin</label>
-                                    <select id="menuId" class="bug-text-input" name="menager_id" >
+                                    <select id="menuId" class="bug-text-input" name="menager_id">
                                         <option value="">Selekto Menagjerin</option>
                                         @foreach($users as $user)
-                                            <option  value="{{$user->id}}">{{$user->first_name}}</option>
+                                            <option value="{{ $user->id }}" {{ $user->id == $reservation->menager_id ? 'selected' : '' }}>{{ $user->first_name }}</option>
                                         @endforeach
                                     </select>
                                 </div>
                             </div>
+                            
                             <div class="col-md-6">
                                 <div class="form-group">
                                     <label for="example-text-input" class="form-control-label">Shpenzimet e Stafit*</label>

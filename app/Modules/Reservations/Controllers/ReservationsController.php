@@ -455,6 +455,65 @@ class ReservationsController extends Controller
         }
     }
 
+    
+    public function editpayment($id, $paymentId)
+    {
+        $reservation = $this->reservationsService->getByID($id);
+        if (is_null($reservation)) {
+            return abort(404, 'Reservation Not Found');
+        }
+
+        $payment = $this->paymentsService->getByID($paymentId);
+        if (is_null($payment)) {
+            return abort(404, 'Discount Not Found');
+        }
+
+        return view('pages/reservations/edit-payment', [
+            'payment' => $payment,
+            'reservation' => $reservation
+        ]);
+    }
+
+
+
+    public function  updatePayment(Request $request, $id, $paymentId)
+    {
+        $reservation = $this->reservationsService->getByID($id);
+
+        if (is_null($reservation)) {
+            return response()->json([
+                'message' => 'Reservation Not Found'
+            ], JsonResponse::HTTP_NOT_FOUND);
+        }
+
+        $payment = $this->paymentsService->getByID($paymentId);
+        if (is_null($payment)) {
+            return response()->json([
+                'message' => 'Payment Not Found'
+            ], JsonResponse::HTTP_NOT_FOUND);
+        }
+
+        try {
+         
+       $this->paymentsService->update($request, $payment);
+        $allPayments = $this->paymentsService->getByReservationID($id);
+
+        $totalPayment = $allPayments->sum('value');
+
+        $reservation->current_payment = $totalPayment;
+        $reservation->save();
+
+            return redirect()->route('reservations.view', ['id' => $id])
+                ->with('success', 'Payment updated successfully.');
+        } catch (\Exception $e) {
+            return response()->json([
+                'message' => 'Internal Server Error'
+            ], JsonResponse::HTTP_INTERNAL_SERVER_ERROR);
+        }
+    }
+
+
+
     public function deleteInvoice($id, $invoiceId)
     {
 

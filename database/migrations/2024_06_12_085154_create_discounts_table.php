@@ -17,6 +17,8 @@ return new class extends Migration
             $table->unsignedBigInteger("reservation_id");
             $table->date('date');
             $table->text('description')->nullable();
+            $table->unsignedBigInteger('location_id');
+
             $table->timestamps();
 
 
@@ -25,6 +27,11 @@ return new class extends Migration
             ->on("reservations")
             ->onDelete("cascade")
             ->required();
+
+            $table->foreign('location_id')
+            ->references('id')
+            ->on('locations')
+            ->onDelete("cascade");
         });
     }
 

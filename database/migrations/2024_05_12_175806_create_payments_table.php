@@ -18,6 +18,8 @@ return new class extends Migration
             $table->date('date');
             $table->double('value');
             $table->string('notes')->nullable();
+            $table->unsignedBigInteger('location_id');
+
             $table->timestamps();
 
             $table->foreign('reservation_id')
@@ -27,6 +29,11 @@ return new class extends Migration
             $table->foreign('client_id')
                 ->references('id')
                 ->on('clients')
+                ->onDelete("cascade");
+            
+            $table->foreign('location_id')
+                ->references('id')
+                ->on('locations')
                 ->onDelete("cascade");
         });
     }

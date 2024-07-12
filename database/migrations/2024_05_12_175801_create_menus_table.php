@@ -16,7 +16,15 @@ return new class extends Migration
             $table->string('name');
             $table->string('description')->nullable();
             $table->double('price')->nullable();
+            $table->unsignedBigInteger('location_id');
             $table->timestamps();
+
+
+
+            $table->foreign('location_id')
+            ->references('id')
+            ->on('locations')
+            ->onDelete("cascade");
         });
     }
 

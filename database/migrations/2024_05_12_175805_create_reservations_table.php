@@ -26,6 +26,7 @@ return new class extends Migration
             $table->double('current_payment')->nullable();
             $table->double('total_payment')->nullable();
             $table->double('staff_expenses')->nullable();
+            $table->unsignedBigInteger('location_id');
 
 
             $table->timestamps();
@@ -48,6 +49,11 @@ return new class extends Migration
             $table->foreign('menu_id')
                 ->references('id')
                 ->on('menus')
+                ->onDelete("cascade");
+                
+            $table->foreign('location_id')
+                ->references('id')
+                ->on('locations')
                 ->onDelete("cascade");
         });
     }

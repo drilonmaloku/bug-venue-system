@@ -46,6 +46,15 @@
                             <td>Shpenzimet për staf:</td>
                             <td>{{ $reportsData['staff_expenses'] }}€</td>
                         </tr>
+                        <tr>
+                            <td>Totali Zbritja:</td>
+                            <td>{{ $reportsData['discount_sum'] }}€</td>
+                        </tr>
+
+                        <tr>
+                            <td>Totali Sherbimi:</td>
+                            <td>{{ $reportsData['service_sum'] }}€</td>
+                        </tr>
                     </tbody>
                 </table>
                 <hr>
@@ -60,6 +69,8 @@
                             Pagesa në pritje: {{$venueData['payments_due']}}€<br>
                             Shpenzimet e staffit: {{$venueData['staff_expenses']}}€<br>
                             Totali i pagesave: {{$venueData['total_payment_sum']}}€
+
+
                         </p>
                     </div>
                 @endforeach
