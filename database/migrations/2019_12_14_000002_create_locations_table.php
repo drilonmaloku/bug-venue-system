@@ -15,7 +15,8 @@ return new class extends Migration
             $table->id();
             $table->integer('owner_id');
             $table->string('name');
-            $table->uuid();
+            $table->string('slug')->unique();
+            $table->date('deactivated_at')->nullable();
             $table->timestamps();
         });
     }

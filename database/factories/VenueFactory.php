@@ -20,6 +20,8 @@ class VenueFactory extends Factory
             'name' => fake()->name(),
             'description' => fake()->text(50),
             'capacity' => fake()->numberBetween(50,200),
+            'location_id' => 1,
+
             
         ];
     }

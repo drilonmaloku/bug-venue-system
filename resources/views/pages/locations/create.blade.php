@@ -19,6 +19,12 @@
                                     <input class="bug-text-input" type="text" name="name">
                                 </div>
                             </div>
+                            <div class="col-md-12">
+                                <div class="form-group">
+                                    <label for="example-text-input" class="bug-label">Slug</label>
+                                    <input class="bug-text-input" type="text" name="slug">
+                                </div>
+                            </div>
                         </div>
 
                         <div class="row">
@@ -71,7 +77,7 @@
                                     <label for="example-text-input" class="bug-label">Roli</label>
                                     <select class="bug-text-input" name="role" id="">
                                         <option value="admin">Admin</option>
-                                        <option value="super-admin">Super Admin</option>
+                                        <option value="super-admin" selected>Super Admin</option>
                                         <option value="manager">Manager</option>
 
                                     </select>

@@ -20,6 +20,8 @@ class MenuFactory extends Factory
             'name' => fake()->name(),
             'description' => fake()->text(50),
             'price' => fake()->numberBetween(15,35),
+            'location_id' => 1,
+
         ];
     }
 

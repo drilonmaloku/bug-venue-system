@@ -25,7 +25,15 @@ return new class extends Migration
             $table->integer('ttl');
             $table->boolean('keep_alive');
             $table->timestamp('deletes_at')->nullable();
+            $table->unsignedBigInteger('location_id')->nullable();
+
             $table->timestamps();
+
+
+            $table->foreign('location_id')
+            ->references('id')
+            ->on('locations')
+            ->onDelete("cascade");
         });
     }
 

@@ -14,10 +14,8 @@
                     <thead>
                     <tr>
                         <th>Id</th>
-                        <th>UUID</th>
                         <th>Name</th>
                         <th>Owner</th>
-                        {{-- <th></th> --}}
                         <th></th>
                     </tr>
                     </thead>
@@ -26,9 +24,6 @@
                         <tr>
                             <td>
                                 {{$location->id }}
-                            </td>
-                            <td>
-                                {{$location->uuid}}
                             </td>
                             <td>
                                 {{$location->name}}

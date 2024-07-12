@@ -22,6 +22,7 @@ class InvoicesServices
     public function store($data, $reservation_id)
     {
         $invoice = Invoice::create([
+            "location_id" => auth()->user()->getCurrentLocationID(),
             "reservation_id" => $reservation_id,
             "amount" => data_get($data, "invoice_amount"),
             "description" => data_get($data, "invoice_description"),

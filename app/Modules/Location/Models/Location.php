@@ -15,4 +15,9 @@ class Location extends Model
     {
         return $this->belongsTo(User::class, 'owner_id');
     }
+
+    public function users()
+    {
+        return $this->belongsToMany(User::class, 'locations_users', 'location_id', 'user_id');
+    }
 }

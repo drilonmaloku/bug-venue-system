@@ -19,6 +19,8 @@ return new class extends Migration
             $table->text('description')->nullable();
             $table->string('attachment')->nullable();
             $table->integer('status')->default(1);
+            $table->unsignedBigInteger('location_id')->nullable();
+
             $table->timestamps();
 
 
@@ -32,6 +34,10 @@ return new class extends Migration
             $table->foreign('resolver_id')
             ->references('id')
             ->on('users')
+            ->onDelete("cascade");
+            $table->foreign('location_id')
+            ->references('id')
+            ->on('locations')
             ->onDelete("cascade");
         });
     }

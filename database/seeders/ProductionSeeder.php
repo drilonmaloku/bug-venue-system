@@ -51,7 +51,10 @@ class ProductionSeeder extends Seeder
         Role::firstOrCreate([
             "name" => User::SYSTEM_ADMIN
         ]);
+        Role::firstOrCreate([
+            "name" => User::ROLE_STAFF
+        ]);
     }
 
-
+    
 }

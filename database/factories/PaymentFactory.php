@@ -20,6 +20,8 @@ class PaymentFactory extends Factory
             'value' => fake()->numberBetween(50,200),
             'notes' => fake()->text(40),
             'date' => fake()->date(),
+            'location_id' => 1,
+
 
         ];
     }

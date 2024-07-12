@@ -45,6 +45,7 @@ class LocationController extends Controller
     public function view($id)
     {
         $location = $this->locationServices->getByID($id);
+     
         if(is_null($location)) {
             return abort(404);
         }
@@ -60,7 +61,7 @@ class LocationController extends Controller
 
     public function store(Request $request) {
         $userData = [
-            "username" => $request->input("username"),
+            "username" => $request->input("slug"). "_". $request->input("username"),
             "first_name" => $request->input("first_name"),
             "last_name" => $request->input("last_name"),
             "email" => $request->input("email"),
@@ -81,7 +82,7 @@ class LocationController extends Controller
             $locationData = [
                 'name' => $request->input('name'),
                 'owner_id' => $user->id,
-                'uuid'=>  Str::uuid(),
+                'slug'=>  $request->input('slug'),
             ];
     
            $location = $this->locationServices->store($locationData);
@@ -130,4 +131,23 @@ class LocationController extends Controller
         }
     }
 
+    public function deactive(Request $request,$id) {
+        $location = $this->locationServices->getByID($id);
+
+        if(is_null($location)) {
+            return abort(404);
+        }
+
+        try {
+
+            $client = $this->locationServices->deactive($request,$location);
+
+            return redirect()->to('locations')->withSuccessMessage('Location u deaktivizua me sukses');
+
+        } catch (\Exception $e) {
+            return response()->json([
+                'message' => 'Internal Server Error'
+            ], 500);
+        }
+    }
 }

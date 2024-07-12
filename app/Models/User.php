@@ -23,6 +23,8 @@ class User extends Authenticatable
     const ROLE_SUPERAMDIN = "super-admin";
     const ROLE_MANAGER = "manager";
     const SYSTEM_ADMIN = "system-admin";
+    const ROLE_STAFF = "staff";
+
 
 
 
@@ -98,6 +100,14 @@ class User extends Authenticatable
     public function locations()
     {
         return $this->belongsToMany(Location::class, 'locations_users', 'user_id', 'location_id');
+    }
+
+
+
+    public function getCurrentLocationSlug()
+    {
+        $locationUser = $this->locationUsers->first();
+        return $locationUser ? Location::find($locationUser->location_id)->slug : null;
     }
     
 }

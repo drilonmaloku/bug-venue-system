@@ -190,6 +190,7 @@ class ReservationsService
 
        try {
            return PricingStatusTracking::create([
+               "location_id" => auth()->user()->getCurrentLocationID(),
                'user_id' => auth()->user()->id,
                'number_of_guests' => $numberOfGuests,
                'menu_price' => $newMenuPrice,

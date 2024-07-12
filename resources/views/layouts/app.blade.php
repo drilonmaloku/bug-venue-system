@@ -65,10 +65,14 @@
                         <li><a class="{{ Request::is(['clients','clients/*']) ? 'active' : '' }}" href="{{route('clients.index')}}">Klientat</a></li>
                         <li><a class="{{ Request::is(['users','users/*']) ? 'active' : '' }}" href="{{route('users.index')}}">Përdoruesit</a></li>
                         <li><a class="{{ Request::is(['venues','venues/*']) ? 'active' : '' }}" href="{{route('venues.index')}}">Sallat</a></li>
-                        @role('super-admin')
+                        @role('super-admin') 
                             <li><a class="{{ Request::is(['reports','reports-generated']) ? 'active' : '' }}" href="{{route('reports.index')}}">Raportet</a></li>
                             <li><a class="{{ Request::is(['logs','logs/*']) ? 'active' : '' }}" href="{{route('logs.index')}}">Aktiviteti</a></li>
                         @endrole
+
+                        @role('system-admin')
+                        <li><a class="{{ Request::is(['locations','locations/*']) ? 'active' : '' }}" href="{{route('locations.index')}}">Locations</a></li>
+                    @endrole
                         <li><a class="{{ Request::is(['supports-tickets','supports-tickets/*']) ? 'active' : '' }}" href="{{route('support-tickets.index')}}">Support Tickets</a></li>
 
                         <li><a class="{{ Request::is(['profile']) ? 'active' : '' }}" href="{{route('profile')}}">Profili</a></li>

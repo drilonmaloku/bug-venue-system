@@ -81,8 +81,8 @@ class ExpensesServices
     public function store($data)
     {
         $client = Expense::create([
+            "location_id" => auth()->user()->getCurrentLocationID(),
             "user_id" => data_get($data, "user_id"),
-
             "date" => data_get($data, "date"),
             "description" => data_get($data, "description"),
             "amount" => data_get($data, "amount"),

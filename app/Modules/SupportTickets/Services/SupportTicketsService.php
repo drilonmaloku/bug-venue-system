@@ -5,7 +5,7 @@ namespace App\Modules\SupportTickets\Services;
 use App\Modules\Logs\Models\Log;
 use App\Modules\Logs\Services\LogService;
 
-use App\Modules\SupportTickets\Models\Support;
+use App\Modules\SupportTickets\Models\SupportTicket;
 
 class SupportTicketsService
 {
@@ -22,7 +22,7 @@ class SupportTicketsService
      **/
     public function getAll()
     {
-        return Support::all();
+        return SupportTicket::all();
     }
 
     /**
@@ -31,7 +31,7 @@ class SupportTicketsService
      **/
     public function getByID($id)
     {
-        return Support::find($id);
+        return SupportTicket::find($id);
     }
 
     /**
@@ -40,7 +40,7 @@ class SupportTicketsService
      **/
     public function getByIds($ids)
     {
-        return Support::whereIn('id', $ids)->get();
+        return SupportTicket::whereIn('id', $ids)->get();
     }
 
 
@@ -49,7 +49,8 @@ class SupportTicketsService
 
     public function store($data)
     {
-        $ticket = Support::create([
+        $ticket = SupportTicket::create([
+            "location_id" => auth()->user()->getCurrentLocationID(),
             "user_id" => data_get($data, "user_id"),
             "title" => data_get($data, "title"),
             "description" => data_get($data, "description"),
@@ -70,7 +71,7 @@ class SupportTicketsService
 
 
     
-    public function update($request, Support $ticket)
+    public function update($request, SupportTicket $ticket)
     {
         $ticket->status = 3;  // Assuming 3 is the status code for "closed"
         $ticketSaved = $ticket->save();
@@ -88,7 +89,7 @@ class SupportTicketsService
 
 
 
-    public function updateStatusOpen($request, Support $ticket)
+    public function updateStatusOpen($request, SupportTicket $ticket)
     {
         $ticket->status = 2;  // Assuming 3 is the status code for "closed"
         $ticketSaved = $ticket->save();

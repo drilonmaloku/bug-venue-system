@@ -167,6 +167,7 @@ class LogService
     public function log($data)
     {
         return (new Log)->create([
+            "location_id" => auth()->user()->getCurrentLocationId(),
             "user_id" => auth()->user()->id,
             "message" => $data['message'],
             "context" => $data['context'],
@@ -175,6 +176,8 @@ class LogService
             "ttl" => $data['ttl'],
             "keep_alive" => $data['keep_alive'] ?? false,
             "deletes_at" => $this->getLogExpiryTime($data['ttl']),
+
+
         ]);
     }
 }

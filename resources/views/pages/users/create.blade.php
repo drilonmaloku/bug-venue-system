@@ -13,7 +13,14 @@
                             <div class="col-md-12">
                                 <div class="form-group">
                                     <label for="example-text-input" class="bug-label">Username*</label>
-                                    <input class="bug-text-input" type="text" name="username" >
+                                    <div>
+                                        @if(auth()->user()->getCurrentLocationId())
+                                            <span>{{auth()->user()->getCurrentLocationSlug()}}_</span>
+                                        @endif
+                                    
+                                        <input class="bug-text-input" type="text" name="username" >
+                                    </div>
+                               
                                 </div>
                             </div>
                             <div class="col-md-12">

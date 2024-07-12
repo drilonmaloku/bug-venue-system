@@ -6,6 +6,7 @@ use App\Models\User;
 use App\Modules\Reservations\Models\Reservation;
 use Database\Factories\ClientFactory;
 use Database\Factories\ExpenseFactory;
+use Database\Factories\LocationFactory;
 use Database\Factories\LogsFactory;
 use Database\Factories\MenuFactory;
 use Database\Factories\PaymentFactory;
@@ -30,10 +31,12 @@ class DatabaseSeeder extends Seeder
     {
 
         $this->seedRoles();
+        $this->seedUsers();
+        $this->seedLocation();
         $this->seedVenues();
         $this->seedMenus();
         $this->seedClients();
-        $this->seedUsers();
+       
         $this->seedReservations();
         $this->seedTickets();
         $this->seedPayments();
@@ -41,11 +44,13 @@ class DatabaseSeeder extends Seeder
 
         $this->seedLogs();
     }
-
+    
     public function seedVenues() {
         (new VenueFactory)->count(10)->create();
     }
-
+    public function seedLocation() {
+        (new LocationFactory())->count(10)->create();
+    }
     public function seedClients() {
         (new ClientFactory())->count(50)->create();
     }
@@ -110,7 +115,10 @@ class DatabaseSeeder extends Seeder
         Role::firstOrCreate([
             "name" => User::SYSTEM_ADMIN
         ]);
+        Role::firstOrCreate([
+            "name" => User::ROLE_STAFF
+        ]);
     }
-
+    
 
 }

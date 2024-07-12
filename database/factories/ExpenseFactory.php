@@ -18,7 +18,9 @@ class ExpenseFactory extends Factory
             'user_id' => 1,
             'date' => fake()->date(),
             'description' => fake()->text(40),
-            'amount' => fake()->numberBetween(30,500)
+            'amount' => fake()->numberBetween(30,500),
+            'location_id' => 1,
+
 
         ];
     }

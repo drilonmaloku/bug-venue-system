@@ -2,7 +2,7 @@
 
 namespace Database\Factories;
 
-use App\Modules\SupportTickets\Models\Support;
+use App\Modules\SupportTickets\Models\SupportTicket;
 
 use Illuminate\Database\Eloquent\Factories\Factory;
 
@@ -13,7 +13,7 @@ use Illuminate\Database\Eloquent\Factories\Factory;
 class SupportTicketsFactory extends Factory
 {
 
-    protected $model = Support::class;
+    protected $model = SupportTicket::class;
 
     public function definition(): array
     {

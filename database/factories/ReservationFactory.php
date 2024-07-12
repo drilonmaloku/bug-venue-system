@@ -30,6 +30,8 @@ class ReservationFactory extends Factory
             'number_of_guests' => fake()->numberBetween(50,200),
             'current_payment' => fake()->numberBetween(50,200),
             'total_payment' => fake()->numberBetween(50,200),
+            'location_id' => 1,
+
         ];
     }
 

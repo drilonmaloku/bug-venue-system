@@ -184,8 +184,10 @@ class UsersService
      * @return User|null The newly created user instance, or null if creation fails.
      */
     public function store($request) {
+        $username = auth()->user()->getCurrentLocationId() ? auth()->user()->getCurrentLocationSlug().'_'.$request->input("username") : $request->input("username");
+                                    
         $user = User::create([
-            "username" => $request->input("username"),
+            "username" => $username,
             "first_name" => $request->input("first_name"),
             "last_name" => $request->input("last_name"),
             "email" => $request->input("email"),
