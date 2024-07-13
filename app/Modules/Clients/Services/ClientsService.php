@@ -66,7 +66,7 @@ class ClientsService
     public function store($data)
     {
         $client = Client::create([
-            "location_id" => auth()->user()->getCurrentLocationID(),
+            "location_id" => auth()->user()->getCurrentLocationId(),
             "name" => data_get($data, "name"),
             "email" => data_get($data, "email"),
             "phone_number" => data_get($data, "phone_number"),

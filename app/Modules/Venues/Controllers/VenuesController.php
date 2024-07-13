@@ -50,10 +50,12 @@ class VenuesController extends Controller
     }
 
     public function store(Request $request) {
-        try {
-            $venue = $this->venuesService->store($request);
+        $venue = $this->venuesService->store($request);
 
-            return redirect()->to('venues')->withSuccessMessage('Salla u krijua me sukses');
+        return redirect()->to('venues')->withSuccessMessage('Salla u krijua me sukses');
+
+        try {
+
 
         } catch (\Exception $e) {
             return response()->json([

@@ -83,6 +83,7 @@ class ReservationsService
         $date =  $request->input('date');
         $venueData = explode(",", $request->input('reservation'));
         $reservation = Reservation::create([
+            "location_id" => auth()->user()->getCurrentLocationId(),
             "client_id" => $clientId,
             "venue_id" => $venueData[0],
             "menu_id" => $request->input("menu_id"),
@@ -190,7 +191,7 @@ class ReservationsService
 
        try {
            return PricingStatusTracking::create([
-               "location_id" => auth()->user()->getCurrentLocationID(),
+               "location_id" => auth()->user()->getCurrentLocationId(),
                'user_id' => auth()->user()->id,
                'number_of_guests' => $numberOfGuests,
                'menu_price' => $newMenuPrice,
@@ -201,8 +202,6 @@ class ReservationsService
                'reservation_id' => $reservation->id,
            ]);
        } catch (\Exception $e) {
-           
-           Log::error('Failed to store pricing tracking: ' . $e->getMessage());
            return null; 
        }
    }

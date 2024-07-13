@@ -50,7 +50,7 @@ class SupportTicketsService
     public function store($data)
     {
         $ticket = SupportTicket::create([
-            "location_id" => auth()->user()->getCurrentLocationID(),
+            "location_id" => auth()->user()->getCurrentLocationId(),
             "user_id" => data_get($data, "user_id"),
             "title" => data_get($data, "title"),
             "description" => data_get($data, "description"),

@@ -78,6 +78,7 @@ class PaymentsService
     public function store($data, $reservation_id, $client_id)
     {
         $payment = Payment::create([
+            "location_id" => auth()->user()->getCurrentLocationId(),
             "reservation_id" => $reservation_id,
             "client_id" => $client_id,
             "value" => data_get($data, "initial_payment_value"),
@@ -99,6 +100,7 @@ class PaymentsService
     public function storePayment($data, $reservation_id, $client_id)
     {
         $payment = Payment::create([
+            "location_id" => auth()->user()->getCurrentLocationId(),
             "reservation_id" => $reservation_id,
             "client_id" => $client_id,
             "value" => data_get($data, "initial_payment_value"),

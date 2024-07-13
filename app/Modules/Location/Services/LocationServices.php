@@ -77,6 +77,7 @@ class LocationServices
      **/
     public function update($request, Location $location) {
         $location->name = $request->input('name');
+        $location->slug = $request->input('slug');
 
         $locationSaved = $location->save();
 

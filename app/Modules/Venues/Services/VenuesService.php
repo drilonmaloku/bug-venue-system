@@ -60,7 +60,7 @@ class VenuesService
         if($venue){
             $this->logService->log([
                 'message' => 'Salla është krijuar me sukses',
-                'context' => Log::LOG_CONTEXT_CLIENTS,
+                'context' => Log::LOG_CONTEXT_VENUES,
                 'ttl'=> Log::LOG_TTL_THREE_MONTHS,
             ]);
         }
@@ -80,7 +80,7 @@ class VenuesService
         if($venueSaved){
             $this->logService->log([
                 'message' => 'Salla u përditësua me sukses',
-                'context' => Log::LOG_CONTEXT_CLIENTS,
+                'context' => Log::LOG_CONTEXT_VENUES,
                 'ttl'=> Log::LOG_TTL_THREE_MONTHS,
             ]);
         }
@@ -101,7 +101,7 @@ class VenuesService
          if($venueDeleted){
             $this->logService->log([
                 'message' => 'Salla u fshi me sukses',
-                'context' => Log::LOG_CONTEXT_CLIENTS,
+                'context' => Log::LOG_CONTEXT_VENUES,
                 'ttl'=> Log::LOG_TTL_THREE_MONTHS,
                 'previous_data'=> json_encode($previousData)
             ]);

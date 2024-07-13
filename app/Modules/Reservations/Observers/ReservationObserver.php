@@ -33,6 +33,7 @@ class ReservationObserver
 
 
         $pricingStatusTracking = new PricingStatusTracking();
+        $pricingStatusTracking->location_id = auth()->user()->getCurrentLocationId();
         $pricingStatusTracking->price = $price;
         $pricingStatusTracking->number_of_guests = $numberOfGuests;
         $pricingStatusTracking->total_price = intval($numberOfGuests) * doubleval($menuPrice);

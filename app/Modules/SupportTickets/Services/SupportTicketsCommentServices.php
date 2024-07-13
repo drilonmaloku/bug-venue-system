@@ -37,7 +37,7 @@ class SupportTicketsCommentServices
     public function storeComment($request,$ticket)
     {
         return (new SupportComment())->create([
-            "location_id" => auth()->user()->getCurrentLocationID(),
+            "location_id" => auth()->user()->getCurrentLocationId(),
             "comment" => data_get($request, "comment"),
             "ticket_id" => $ticket->id,
             "user_id" => auth()->user()->id,

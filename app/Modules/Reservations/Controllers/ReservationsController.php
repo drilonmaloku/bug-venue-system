@@ -36,8 +36,6 @@ class ReservationsController extends Controller
     private $discountService;
 
 
-
-
     public function __construct(
         VenuesService $venuesService,
         ReservationsService $reservationsService,
@@ -83,7 +81,7 @@ class ReservationsController extends Controller
 
     public function checkVenueAvailability(Request $request)
     {
-        $date = Carbon::createFromFormat('Y-m-d', $request->input('date'))->format('d-m-Y');
+        $date = Carbon::createFromFormat('Y-m-d', $request->input('date'))->format('Y-m-d');
 
         $reservations = Reservation::where('date', $date)
             ->get();

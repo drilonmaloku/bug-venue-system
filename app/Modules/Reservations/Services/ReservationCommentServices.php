@@ -37,7 +37,7 @@ class ReservationCommentServices
     public function storeComment($request,$reservation)
     {
         return (new ReservationComment())->create([
-            "location_id" => auth()->user()->getCurrentLocationID(),
+            "location_id" => auth()->user()->getCurrentLocationId(),
             "comment" => data_get($request, "comment"),
             "reservation_id" => $reservation->id,
             "user_id" => auth()->user()->id,

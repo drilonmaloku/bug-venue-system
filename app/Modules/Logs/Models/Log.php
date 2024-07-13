@@ -29,6 +29,7 @@ class Log extends Model
 
 
     protected $fillable = [
+        "location_id",
         "user_id",
         "message",
         "context",

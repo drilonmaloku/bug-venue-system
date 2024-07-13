@@ -1,9 +1,3 @@
-
-
-
-
-
-
 @extends('layouts.app')
 
 @section('header')
@@ -24,6 +18,12 @@ Përditso location: {{$location->name}}
                                 <div class="form-group">
                                     <label for="example-text-input" class="bug-label">Name</label>
                                     <input class="bug-text-input" type="text" name="name" value="{{$location->name}}">
+                                </div>
+                            </div>
+                            <div class="col-md-12">
+                                <div class="form-group">
+                                    <label for="example-text-input" class="bug-label">Slug</label>
+                                    <input class="bug-text-input" type="text" name="slug" value="{{$location->slug}}">
                                 </div>
                             </div>
                         </div>

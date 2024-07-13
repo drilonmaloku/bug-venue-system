@@ -69,7 +69,7 @@ class MenuService
     public function store($request)
     {
         $menu = Menu::create([
-            "location_id" => auth()->user()->getCurrentLocationID(),
+            "location_id" => auth()->user()->getCurrentLocationId(),
             "name" => $request->input('name'),
             "price" => $request->input('price'),
             "description" => $request->input('description'),

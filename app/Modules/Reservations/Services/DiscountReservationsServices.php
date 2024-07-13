@@ -21,7 +21,7 @@ class DiscountReservationsServices
     public function store($data, $reservation_id)
     {
         $discount = Discount::create([
-            "location_id" => auth()->user()->getCurrentLocationID(),
+            "location_id" => auth()->user()->getCurrentLocationId(),
             "reservation_id" => $reservation_id,
             "amount" => data_get($data, "discount_amount"),
             "description" => data_get($data, "discount_description"),

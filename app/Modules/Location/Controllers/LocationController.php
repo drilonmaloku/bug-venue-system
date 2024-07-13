@@ -9,7 +9,6 @@ use App\Modules\Logs\Models\Log;
 use App\Modules\Users\Requests\CreateUserRequest;
 use App\Modules\Users\Services\UsersService;
 use RealRashid\SweetAlert\Facades\Alert;
-use Illuminate\Support\Str;
 
 class LocationController extends Controller
 {
