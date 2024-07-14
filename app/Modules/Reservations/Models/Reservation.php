@@ -76,7 +76,6 @@ class Reservation extends Model
         return $this->belongsTo(User::class,'menager_id');
     }
 
-
     // Calculate total amount of invoices
     public function getTotalInvoiceAmountAttribute()
     {

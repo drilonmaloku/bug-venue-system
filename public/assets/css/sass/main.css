@@ -2198,6 +2198,20 @@ body {
     display: none;
   }
 }
+.username-input {
+  display: flex;
+}
+.username-input .location_slug {
+  padding: 12px 16px 12px 16px;
+  background: #bac2c4;
+  border: 1px solid #D1DBDF;
+  font-weight: 500;
+}
+.username-input .bug-text-input {
+  border-top-left-radius: 0;
+  border-bottom-left-radius: 0;
+}
+
 .vue-tel-input {
   background: #F8FBFC !important;
 }

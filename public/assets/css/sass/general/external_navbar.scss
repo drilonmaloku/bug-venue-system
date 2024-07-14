@@ -275,3 +275,20 @@
   }
 
 }
+
+
+.username-input {
+  display: flex;
+
+  .location_slug {
+    padding: 12px 16px 12px 16px;
+    background: #bac2c4;
+    border:1px solid #D1DBDF;
+    font-weight:500;
+  }
+  .bug-text-input {
+    border-top-left-radius: 0;
+    border-bottom-left-radius: 0;
+  }
+
+}

@@ -6,10 +6,8 @@
 
 @section('content')
     <div class="vms_panel">
-        <div class="container-fluid">
             <div class="row">
                 <div class="col-md-8">
-                    
                     <form role="form" method="POST"   action="{{ route('support-tickets.store') }}"  enctype="multipart/form-data" onsubmit="return disableSubmitButton()">
                         @csrf
                         <div class="row">
@@ -38,7 +36,6 @@
                     </form>
                 </div>
             </div>
-        </div>
     </div>
 
     <script>

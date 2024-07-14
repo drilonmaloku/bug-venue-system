@@ -104,7 +104,7 @@
                     </tr>
                             <tr>
                                 <td>Menagjeri:</td>
-                                <td>{{$reservation->user->username }}</td>
+                                <td>{{$reservation->user ? $reservation->user->username : '' }}</td>
                             </tr>
                     </tbody>
                 </table>
