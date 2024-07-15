@@ -48,7 +48,7 @@
                             </div>
                             <div class="col-md-6">
                                 <div class="form-group">
-                                    <label for="example-text-input" class="form-control-label">Menu</label>
+                                    <label for="example-text-input" class="form-control-label">Menu*</label>
                                     <select id="menuId" class="bug-text-input" name="menu_id">
                                         <option value="">Selekto Menun</option>
                                         @foreach($menus as $menu)
@@ -59,7 +59,7 @@
                             </div>
                             <div class="col-md-6">
                                 <div class="form-group">
-                                    <label for="example-text-input" class="form-control-label">Qmimi i Menus</label>
+                                    <label for="example-text-input" class="form-control-label">Qmimi i Menus*</label>
                                     <input id="menuPrice" class="bug-text-input" type="number" name="menu_price" value="{{$reservation->menu_price}}" >
                                 </div>
                             </div>
@@ -71,7 +71,7 @@
                             </div>
                             <div class="col-md-6">
                                 <div class="form-group">
-                                    <label for="example-text-input" class="form-control-label">Selekto Menagjerin</label>
+                                    <label for="example-text-input" class="form-control-label">Selekto Menagjerin*</label>
                                     <select id="menuId" class="bug-text-input" name="menager_id">
                                         <option value="">Selekto Menagjerin</option>
                                         @foreach($users as $user)
@@ -97,13 +97,13 @@
                         <div class="row">
                             <div class="col-md-6">
                                 <div class="form-group">
-                                    <label for="example-text-input" class="form-control-label">Emri</label>
+                                    <label for="example-text-input" class="form-control-label">Emri*</label>
                                     <input class="bug-text-input" type="text" name="name" value="{{$reservation->client->name}}">
                                 </div>
                             </div>
                             <div class="col-md-6">
                                 <div class="form-group">
-                                    <label for="example-text-input" class="form-control-label">Emaili</label>
+                                    <label for="example-text-input" class="form-control-label">Emaili*</label>
                                     <input class="bug-text-input" type="text" name="email" value="{{$reservation->client->email}}">
                                 </div>
                             </div>

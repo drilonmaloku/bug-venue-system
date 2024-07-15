@@ -20,25 +20,25 @@
                             <div class="col-md-12">
                                 <div class="form-group">
                                     <label for="example-text-input" class="bug-label">Emri*</label>
-                                    <input class="bug-text-input" type="text" name="first_name" value="{{$user->first_name}}">
+                                    <input class="bug-text-input" type="text" placeholder="Emri" name="first_name" value="{{$user->first_name}}">
                                 </div>
                             </div>
                             <div class="col-md-12">
                                 <div class="form-group">
                                     <label for="example-text-input" class="bug-label">Mbiemri</label>
-                                    <input class="bug-text-input" type="text" name="last_name" value="{{$user->last_name}}">
+                                    <input class="bug-text-input" type="text" placeholder="Mbiemri" name="last_name" value="{{$user->last_name}}">
                                 </div>
                             </div>
                             <div class="col-md-12">
                                 <div class="form-group">
-                                    <label for="example-text-input" class="bug-label">Emaili</label>
-                                    <input class="bug-text-input" type="text" name="email" value="{{$user->email}}">
+                                    <label for="example-text-input" class="bug-label">Emaili*</label>
+                                    <input class="bug-text-input" type="text" placeholder="Emaili" name="email" value="{{$user->email}}">
                                 </div>
                             </div>
                             <div class="col-md-12">
                                 <div class="form-group">
                                     <label for="example-text-input" class="bug-label">Telefoni</label>
-                                    <input class="bug-text-input" type="text" name="phone" value="{{$user->phone}}">
+                                    <input class="bug-text-input" placeholder="Telefoni" type="text" name="phone" value="{{$user->phone}}">
                                 </div>
                             </div>
                         

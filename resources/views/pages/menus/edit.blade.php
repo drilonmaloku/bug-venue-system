@@ -14,19 +14,19 @@
                             <div class="col-md-12">
                                 <div class="form-group">
                                     <label for="example-text-input" class="bug-label">Emri*</label>
-                                    <input class="bug-text-input" type="text" name="name" value="{{$menu->name}}">
+                                    <input class="bug-text-input" placeholder="Emri*" type="text" name="name" value="{{$menu->name}}">
                                 </div>
                             </div>
                             <div class="col-md-12">
                                 <div class="form-group">
                                     <label for="example-text-input" class="bug-label">Qmimi*</label>
-                                    <input type="number" class="bug-text-input" name="price" required value="{{$menu->price}}">
+                                    <input type="number" placeholder="Qmimi" class="bug-text-input" name="price" required value="{{$menu->price}}">
                                 </div>
                             </div>
                             <div class="col-md-12">
                                 <div class="form-group">
                                     <label for="example-text-input" class="bug-label">Pershkrimi</label>
-                                    <input class="bug-text-input" type="text" name="description" value="{{$menu->description}}">
+                                    <input class="bug-text-input" placeholder="Pershkrimi" type="text" name="description" value="{{$menu->description}}">
                                 </div>
                             </div>
                         </div>

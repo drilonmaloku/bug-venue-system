@@ -24,33 +24,33 @@
                         <div class="col-md-12">
                             <div class="form-group">
                                 <label for="example-text-input" class="bug-label">Emri*</label>
-                                <input class="bug-text-input" type="text" name="first_name" >
+                                <input class="bug-text-input" placeholder="Emri" type="text" name="first_name" >
                             </div>
                         </div>
                         <div class="col-md-12">
                             <div class="form-group">
                                 <label for="example-text-input" class="bug-label">Mbiemri</label>
-                                <input class="bug-text-input" type="text" name="last_name" >
+                                <input class="bug-text-input" placeholder="Mbiemri" type="text" name="last_name" >
 
                             </div>
                         </div>
                         <div class="col-md-12">
                             <div class="form-group">
-                                <label for="example-text-input" class="bug-label">Emaili</label>
-                                <input class="bug-text-input" type="text" name="email">
+                                <label for="example-text-input" class="bug-label">Emaili*</label>
+                                <input class="bug-text-input" placeholder="Emaili*" type="text" name="email">
                             </div>
                         </div>
                         <div class="col-md-12">
                             <div class="form-group">
                                 <label for="example-text-input" class="bug-label">Telefoni</label>
-                                <input class="bug-text-input" type="text" name="phone">
+                                <input class="bug-text-input" placeholder="Telefoni" type="text" name="phone">
                             </div>
                         </div>
                         <div class="col-md-12">
                             <div class="form-group">
-                                <label for="example-text-input" class="bug-label">Password</label>
+                                <label for="example-text-input" class="bug-label">Password(</label>
                                 <div class="password-input-toggle">
-                                    <input id="password" type="password" class="bug-text-input " name="password" required >
+                                    <input id="password" type="password" class="bug-text-input " placeholder="Password" name="password" required >
                                     <span class="password-input-toggle-icon"><i class="fa fa-eye"></i></span>
                                 </div>
 
@@ -58,7 +58,7 @@
                         </div>
                         <div class="col-md-12">
                             <div class="form-group">
-                                <label for="example-text-input" class="bug-label">Roli</label>
+                                <label for="example-text-input" class="bug-label">Roli*</label>
                                 <select class="bug-text-input" name="role" id="">
                                     <option value="admin">Admin</option>
                                     <option value="super-admin">Super Admin</option>

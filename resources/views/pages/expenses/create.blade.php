@@ -19,14 +19,14 @@
                     </div>
                         <div class="col-md-12">
                             <div class="form-group">
-                                <label for="example-text-input" class="bug-label">Përshkrimi</label>
-                                <textarea class="bug-text-input" rows="4" name="description"></textarea>
+                                <label for="example-text-input" class="bug-label">Përshkrimi*</label>
+                                <textarea class="bug-text-input" rows="4" name="description" placeholder="Pershkrimi*"></textarea>
                             </div>
                         </div>
                         <div class="col-md-12">
                             <div class="form-group">
-                                <label for="example-text-input" class="bug-label">Shuma</label>
-                                <input class="bug-text-input" type="number" name="amount">
+                                <label for="example-text-input" class="bug-label">Shuma*</label>
+                                <input class="bug-text-input" type="number" name="amount" placeholder="Shuma*">
                             </div>
                         </div>
                     </div>

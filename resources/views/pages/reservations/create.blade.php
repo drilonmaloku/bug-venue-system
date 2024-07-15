@@ -20,7 +20,7 @@
                             <div class="col-md-6">
                                 <div class="form-group">
                                     <label for="example-text-input" class="form-control-label">Numri i të ftuarve*</label>
-                                    <input id="numberOfGuests" class="bug-text-input" type="number" name="number_of_guests" required>
+                                    <input id="numberOfGuests" class="bug-text-input" type="number" placeholder="Numri i te ftuarve" name="number_of_guests" required>
                                 </div>
                             </div>
                             <div class="col-md-12">
@@ -44,7 +44,7 @@
                             </div>
                             <div class="col-md-6">
                                 <div class="form-group">
-                                    <label for="example-text-input" class="form-control-label">Menu</label>
+                                    <label for="example-text-input" class="form-control-label">Menu*</label>
                                     <select id="menuId" class="bug-text-input" name="menu_id">
                                         <option value="">Selekto Menun</option>
                                         @foreach($menus as $menu)
@@ -55,7 +55,7 @@
                             </div>
                             <div class="col-md-6">
                                 <div class="form-group">
-                                    <label for="example-text-input" class="form-control-label">Qmimi i Menus</label>
+                                    <label for="example-text-input" class="form-control-label">Qmimi i Menus*</label>
                                     <input id="menuPrice" class="bug-text-input" type="number" name="menu_price" >
                                 </div>
                             </div>
@@ -67,7 +67,7 @@
                             </div>
                             <div class="col-md-6">
                                 <div class="form-group">
-                                    <label for="example-text-input" class="form-control-label">Selekto Menagjerin</label>
+                                    <label for="example-text-input" class="form-control-label">Selekto Menagjerin*</label>
                                     <select id="menuId" class="bug-text-input" name="menager_id">
                                         <option value="">Selekto Menagjerin</option>
                                         @foreach($users as $user)
@@ -86,13 +86,13 @@
                         <div class="row">
                             <div class="col-md-6">
                                 <div class="form-group">
-                                    <label for="example-text-input" class="form-control-label">Emri</label>
+                                    <label for="example-text-input" class="form-control-label">Emri*</label>
                                     <input class="bug-text-input" type="text" name="client_name" >
                                 </div>
                             </div>
                             <div class="col-md-6">
                                 <div class="form-group">
-                                    <label for="example-text-input" class="form-control-label">Emaili</label>
+                                    <label for="example-text-input" class="form-control-label">Emaili*</label>
                                     <input class="bug-text-input" type="text" name="client_email" >
                                 </div>
                             </div>
@@ -110,13 +110,13 @@
                             </div>
                             <div class="col-md-6">
                                 <div class="form-group">
-                                    <label for="example-text-input" class="form-control-label">Data e Pagesës</label>
+                                    <label for="example-text-input" class="form-control-label">Data e Pagesës*</label>
                                     <input class="bug-text-input" type="date" name="payment_date" >
                                 </div>
                             </div>
                             <div class="col-md-6">
                                 <div class="form-group">
-                                    <label for="example-text-input" class="form-control-label">Vlera e Pagesës</label>
+                                    <label for="example-text-input" class="form-control-label">Vlera e Pagesës*</label>
                                     <input class="bug-text-input" type="number" name="initial_payment_value" >
                                 </div>
                             </div>
