@@ -35,6 +35,7 @@ Route::group(['middleware' => 'auth'], function () {
 
     Route::get('/reservations/{id}/edit', [ReservationsController::class, 'edit'])->name('reservation.edit');
     Route::put('/reservations/{id}/update', [ReservationsController::class, 'update'])->name('reservations.update');
+    Route::get('reservations/{id}/print-contract', [ReservationsController::class, 'printContract'])->name('reservations.printContract');
 
 });
 

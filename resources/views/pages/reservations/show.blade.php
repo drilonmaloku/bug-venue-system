@@ -21,6 +21,12 @@
                         <button class="btn btn-success btn-sm ms-auto mb-0 ml-2" type="submit"><i class="fa fa-edit"></i>
                             Perditeso</button>
                     </a>
+
+                    <a href="{{ route('reservations.printContract', ['id' => $reservation->id]) }}">
+
+                        <button class="btn btn-info btn-sm ms-auto mb-0 ml-2" type="submit"><i class="fa fa-print"></i>
+                            Printo Kontraten</button>
+                    </a>
                 </div>
                 <table>
                     <thead>
@@ -104,7 +110,7 @@
                     </tr>
                             <tr>
                                 <td>Menagjeri:</td>
-                                <td>{{$reservation->user ? $reservation->user->username : '' }}</td>
+                                {{-- <td>{{$reservation->user->username }}</td> --}}
                             </tr>
                     </tbody>
                 </table>
@@ -532,6 +538,7 @@
             <form action="{{ route('reservations.comment.store', ['id' => $reservation->id]) }}" method="POST">
                 @csrf
                 <div class="commentArea">
+
                     <h5 for="comment">Shto koment per rezervim:</h5>
                     <textarea name="comment" id="comment" required placeholder="Shto komentin per rezervim ketu"></textarea>
                 </div>

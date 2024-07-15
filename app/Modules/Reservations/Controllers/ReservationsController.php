@@ -20,7 +20,10 @@ use App\Modules\Reservations\Resources\ReservationListCommentResource;
 use App\Modules\Reservations\Services\DiscountReservationsServices;
 use App\Modules\Reservations\Services\ReservationCommentServices;
 use App\Modules\Users\Services\UsersService;
+use Barryvdh\DomPDF\Facade\Pdf as FacadePdf;
+use Barryvdh\DomPDF\PDF;
 use Illuminate\Validation\ValidationException;
+use PhpOffice\PhpWord\PhpWord;
 use RealRashid\SweetAlert\Facades\Alert;
 
 class ReservationsController extends Controller
@@ -601,4 +604,51 @@ class ReservationsController extends Controller
             return response()->json(['message' => 'Internal Server Error'], JsonResponse::HTTP_INTERNAL_SERVER_ERROR);
         }
     }
+
+
+
+    // public function printContract($id)
+    // {
+    //     $reservation = $this->reservationsService->getByID($id);
+    //     if (is_null($reservation)) {
+    //         return abort(404, 'Reservation Not Found');
+    //     }
+
+    //     $pdf = FacadePdf::loadView('pages/reservations/contract', compact('reservation'));
+
+    //     // return $pdf->stream('reservation_contract_' . $reservation->id . '.pdf');
+
+    //     return $pdf->stream('reservation_contract_' . $reservation->id . '.pdf', [
+    //         'Content-Type' => 'application/pdf',
+    //         'Content-Disposition' => 'inline; filename="reservation_contract_' . $reservation->id . '.pdf"'
+    //     ]);
+    // }
+
+
+    public function printContract($id)
+{
+    $reservation = $this->reservationsService->getByID($id);
+    if (is_null($reservation)) {
+        return abort(404, 'Reservation Not Found');
+    }
+
+    // Create a new PHPWord instance
+    $phpWord = new PhpWord();
+
+    // Add a section to the document
+    $section = $phpWord->addSection();
+
+    // Add content to the section (example)
+    $section->addText('Reservation Contract');
+    $section->addText('Reservation ID: ' . $reservation->id);
+    // Add more content as needed
+
+    // Save the document to a temporary file
+    $tempFilePath = tempnam(sys_get_temp_dir(), 'contract');
+    $phpWord->save($tempFilePath, 'Word2007');
+
+    // Set headers to force download
+    return response()->download($tempFilePath, 'reservation_contract_' . $reservation->id . '.docx')->deleteFileAfterSend(true);
+}
+
 }
