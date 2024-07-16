@@ -223,6 +223,9 @@
                      method: 'GET',
                      
                 },
+
+                height: "auto",
+
                 dateClick: function(info) {
                     // Check if the date has an event
                     $('#dateInput').val(info.dateStr);
