@@ -8,18 +8,14 @@
 @section('content')
     <div class="vms_panel">
         @if(count($venues) > 0)
-            <div class="bug-table-wrapper">
+            <div class="table-responsive p-0">
                 <table class="bug-table">
                     <thead>
                     <tr>
-                        <th class="text-uppercase text-secondary text-sm font-weight-bolder opacity-7">
-                            Emri</th>
-                        <th class="text-uppercase text-secondary text-sm font-weight-bolder opacity-7">
-                            Përshkrimi</th>
-                        <th class="text-uppercase text-secondary text-sm font-weight-bolder opacity-7">
-                            Kapaciteti</th>
-                        <th width="40" class="text-uppercase text-secondary text-sm font-weight-bolder opacity-7">
-                        </th>
+                        <th>Emri</th>
+                        <th>Përshkrimi</th>
+                        <th>Kapaciteti</th>
+                        <th width="40"></th>
                     </tr>
                     </thead>
                     <tbody>
@@ -38,7 +34,6 @@
                                     <a class="bug-table-item-option" href="{{route('venues.view',['id'=>$venue->id])}}">
                                         <i class="fa fa-eye"></i>
                                     </a>
-
                                 </div>
                             </td>
                         </tr>

@@ -87,12 +87,12 @@
                             <div class="col-md-6">
                                 <div class="form-group">
                                     <label for="example-text-input" class="form-control-label">Emri*</label>
-                                    <input class="bug-text-input" type="text" name="client_name" >
+                                    <input class="bug-text-input" type="text" name="client_name" required >
                                 </div>
                             </div>
                             <div class="col-md-6">
                                 <div class="form-group">
-                                    <label for="example-text-input" class="form-control-label">Emaili*</label>
+                                    <label for="example-text-input" class="form-control-label">Emaili</label>
                                     <input class="bug-text-input" type="text" name="client_email" >
                                 </div>
                             </div>
@@ -111,18 +111,18 @@
                             <div class="col-md-6">
                                 <div class="form-group">
                                     <label for="example-text-input" class="form-control-label">Data e Pagesës*</label>
-                                    <input class="bug-text-input" type="date" name="payment_date" >
+                                    <input class="bug-text-input" type="date" name="payment_date">
                                 </div>
                             </div>
                             <div class="col-md-6">
                                 <div class="form-group">
                                     <label for="example-text-input" class="form-control-label">Vlera e Pagesës*</label>
-                                    <input class="bug-text-input" type="number" name="initial_payment_value" >
+                                    <input class="bug-text-input" type="number" name="initial_payment_value">
                                 </div>
                             </div>
                             <div class="col-md-12">
                                 <div class="form-group">
-                                    <label for="example-text-input" class="form-control-label">Shenime</label>
+                                    <label for="example-text-input" class="form-control-label">Shënime</label>
                                     <textarea class="bug-text-input" type="text" name="payment_notes" ></textarea>
                                 </div>
                             </div>
