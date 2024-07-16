@@ -20,7 +20,7 @@
                             <div class="col-md-6">
                                 <div class="form-group">
                                     <label for="example-text-input" class="form-control-label">Numri i të ftuarve*</label>
-                                    <input id="numberOfGuests" class="bug-text-input" type="number" placeholder="Numri i te ftuarve" name="number_of_guests" required>
+                                    <input id="numberOfGuests" class="bug-text-input" type="number" required placeholder="Numri i te ftuarve" name="number_of_guests" required>
                                 </div>
                             </div>
                             <div class="col-md-12">
@@ -45,10 +45,10 @@
                             <div class="col-md-6">
                                 <div class="form-group">
                                     <label for="example-text-input" class="form-control-label">Menu*</label>
-                                    <select id="menuId" class="bug-text-input" name="menu_id">
+                                    <select required id="menuId" class="bug-text-input" name="menu_id">
                                         <option value="">Selekto Menun</option>
                                         @foreach($menus as $menu)
-                                            <option data-price="{{$menu->price}}" value="{{$menu->id}}">{{$menu->name}},{{$menu->price}}</option>
+                                            <option  data-price="{{$menu->price}}" value="{{$menu->id}}">{{$menu->name}},{{$menu->price}}</option>
                                         @endforeach
                                     </select>
                                 </div>
@@ -56,22 +56,22 @@
                             <div class="col-md-6">
                                 <div class="form-group">
                                     <label for="example-text-input" class="form-control-label">Qmimi i Menus*</label>
-                                    <input id="menuPrice" class="bug-text-input" type="number" name="menu_price" >
+                                    <input id="menuPrice" class="bug-text-input" required type="number" name="menu_price" >
                                 </div>
                             </div>
                             <div class="col-md-12">
                                 <div class="form-group">
                                     <label for="example-text-input" class="form-control-label">Shenime</label>
-                                    <textarea class="bug-text-input" type="text" name="description" ></textarea>
+                                    <textarea class="bug-text-input" type="text" required  name="description" ></textarea>
                                 </div>
                             </div>
                             <div class="col-md-6">
                                 <div class="form-group">
                                     <label for="example-text-input" class="form-control-label">Selekto Menagjerin*</label>
-                                    <select id="menuId" class="bug-text-input" name="menager_id">
+                                    <select required id="menuId" class="bug-text-input" name="menager_id">
                                         <option value="">Selekto Menagjerin</option>
                                         @foreach($users as $user)
-                                            <option  value="{{$user->id}}">{{$user->first_name}}</option>
+                                            <option   value="{{$user->id}}">{{$user->first_name}}</option>
                                         @endforeach
                                     </select>
                                 </div>
@@ -87,43 +87,43 @@
                             <div class="col-md-6">
                                 <div class="form-group">
                                     <label for="example-text-input" class="form-control-label">Emri*</label>
-                                    <input class="bug-text-input" type="text" name="client_name" required >
+                                    <input class="bug-text-input" type="text" required name="client_name" required >
                                 </div>
                             </div>
                             <div class="col-md-6">
                                 <div class="form-group">
                                     <label for="example-text-input" class="form-control-label">Emaili</label>
-                                    <input class="bug-text-input" type="text" name="client_email" >
+                                    <input class="bug-text-input" type="text" required name="client_email" >
                                 </div>
                             </div>
                             <div class="col-md-6">
                                 <div class="form-group">
-                                    <label for="example-text-input" class="form-control-label">Telefoni</label>
-                                    <input class="bug-text-input" type="text" name="client_phone_number" >
+                                    <label for="example-text-input" class="form-control-label">Telefoni*</label>
+                                    <input class="bug-text-input" type="text" required name="client_phone_number" >
                                 </div>
                             </div>
                             <div class="col-md-6">
                                 <div class="form-group">
                                     <label for="example-text-input" class="form-control-label">Telefoni Opsional</label>
-                                    <input class="bug-text-input" type="text" name="client_additional_phone_number" >
+                                    <input class="bug-text-input" type="text"  name="client_additional_phone_number" >
                                 </div>
                             </div>
                             <div class="col-md-6">
                                 <div class="form-group">
                                     <label for="example-text-input" class="form-control-label">Data e Pagesës*</label>
-                                    <input class="bug-text-input" type="date" name="payment_date">
+                                    <input class="bug-text-input" type="date" required name="payment_date">
                                 </div>
                             </div>
                             <div class="col-md-6">
                                 <div class="form-group">
                                     <label for="example-text-input" class="form-control-label">Vlera e Pagesës*</label>
-                                    <input class="bug-text-input" type="number" name="initial_payment_value">
+                                    <input class="bug-text-input" type="number" required name="initial_payment_value">
                                 </div>
                             </div>
                             <div class="col-md-12">
                                 <div class="form-group">
                                     <label for="example-text-input" class="form-control-label">Shënime</label>
-                                    <textarea class="bug-text-input" type="text" name="payment_notes" ></textarea>
+                                    <textarea class="bug-text-input" type="text"  name="payment_notes" ></textarea>
                                 </div>
                             </div>
                         </div>

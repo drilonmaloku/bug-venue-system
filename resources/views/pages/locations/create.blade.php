@@ -34,32 +34,32 @@
                             <div class="col-md-12">
                                 <div class="form-group">
                                     <label for="example-text-input" class="bug-label">Username*</label>
-                                    <input class="bug-text-input" type="text" name="username" >
+                                    <input class="bug-text-input" required type="text" name="username" >
                                 </div>
                             </div>
                             <div class="col-md-12">
                                 <div class="form-group">
                                     <label for="example-text-input" class="bug-label">Emri*</label>
-                                    <input class="bug-text-input" type="text" name="first_name" >
+                                    <input class="bug-text-input" required type="text" name="first_name" >
                                 </div>
                             </div>
                             <div class="col-md-12">
                                 <div class="form-group">
                                     <label for="example-text-input" class="bug-label">Mbiemri</label>
-                                    <input class="bug-text-input" type="text" name="last_name" >
+                                    <input class="bug-text-input" required type="text" name="last_name" >
 
                                 </div>
                             </div>
                             <div class="col-md-12">
                                 <div class="form-group">
                                     <label for="example-text-input" class="bug-label">Emaili</label>
-                                    <input class="bug-text-input" type="text" name="email">
+                                    <input class="bug-text-input" required type="text" name="email">
                                 </div>
                             </div>
                             <div class="col-md-12">
                                 <div class="form-group">
                                     <label for="example-text-input" class="bug-label">Telefoni</label>
-                                    <input class="bug-text-input" type="text" name="phone">
+                                    <input class="bug-text-input" required type="text" name="phone">
                                 </div>
                             </div>
                             <div class="col-md-12">
@@ -75,7 +75,7 @@
                             <div class="col-md-12">
                                 <div class="form-group">
                                     <label for="example-text-input" class="bug-label">Roli</label>
-                                    <select class="bug-text-input" name="role" id="">
+                                    <select required class="bug-text-input" name="role" id="">
                                         <option value="admin">Admin</option>
                                         <option value="super-admin" selected>Super Admin</option>
                                         <option value="manager">Manager</option>

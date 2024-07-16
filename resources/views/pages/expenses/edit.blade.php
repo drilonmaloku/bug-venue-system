@@ -29,13 +29,13 @@ Përditso Shpenzimin: {{$expense->id}}
                             <div class="col-md-12">
                                 <div class="form-group">
                                     <label for="example-text-input" class="bug-label">Përshkrimi*</label>
-                                    <input class="bug-text-input" placeholder="Pershkrimi*"  name="description" required value="{{$expense->description}}"></input>
+                                    <input class="bug-text-input" placeholder="Pershkrimi*"   name="description" required value="{{$expense->description}}"></input>
                                 </div>
                             </div>
                             <div class="col-md-12">
                                 <div class="form-group">
                                     <label for="example-text-input" class="bug-label">Shuma*</label>
-                                    <input class="bug-text-input" placeholder="Shuma*" type="number" name="amount" value="{{$expense->amount}}">
+                                    <input class="bug-text-input" placeholder="Shuma*" required type="number" name="amount" value="{{$expense->amount}}">
                                 </div>
                             </div>
                         </div>

@@ -26,7 +26,10 @@
                     </tr>
                     <tr>
                         <td>Rezervimi</td>
-                        <td>{{ $payment->reservation->description}}</td>
+
+                        <td>
+                            <a class="hubers-link" href="{{route('reservations.view',['id'=>$payment->reservation->id])}}"> {{$payment->reservation->description}} </a>
+                         </td>
                     </tr>
                     <tr>
                         <td>Vlera</td>

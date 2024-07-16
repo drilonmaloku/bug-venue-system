@@ -36,7 +36,7 @@
                                     <div class="form-group">
                                         <label for="example-text-input" class="form-control-label">Numri i të
                                             ftuarve*</label>
-                                        <input id="numberOfGuests" class="bug-text-input" type="number"
+                                        <input id="numberOfGuests" class="bug-text-input" required type="number"
                                             name="number_of_guests" required>
                                     </div>
                                 </div>
@@ -62,7 +62,7 @@
                                 <div class="col-md-6">
                                     <div class="form-group">
                                         <label for="example-text-input" class="form-control-label">Menu</label>
-                                        <select id="menuId" class="bug-text-input" name="menu_id">
+                                        <select required id="menuId" class="bug-text-input" name="menu_id">
                                             <option value="">Selekto Menun</option>
                                             @foreach ($menus as $menu)
                                                 <option data-price="{{ $menu->price }}" value="{{ $menu->id }}">
@@ -74,13 +74,13 @@
                                 <div class="col-md-6">
                                     <div class="form-group">
                                         <label for="example-text-input" class="form-control-label">Qmimi i Menus</label>
-                                        <input id="menuPrice" class="bug-text-input" type="number" name="menu_price">
+                                        <input required id="menuPrice" class="bug-text-input" type="number" name="menu_price">
                                     </div>
                                 </div>
                                 <div class="col-md-12">
                                     <div class="form-group">
                                         <label for="example-text-input" class="form-control-label">Shenime</label>
-                                        <textarea class="bug-text-input" type="text" name="description"></textarea>
+                                        <textarea required class="bug-text-input" type="text" name="description"></textarea>
                                     </div>
                                 </div>
                                 <div class="col-md-12">
@@ -94,19 +94,19 @@
                                 <div class="col-md-6">
                                     <div class="form-group">
                                         <label for="example-text-input" class="form-control-label">Emri</label>
-                                        <input class="bug-text-input" type="text" name="client_name">
+                                        <input required class="bug-text-input" type="text" name="client_name">
                                     </div>
                                 </div>
                                 <div class="col-md-6">
                                     <div class="form-group">
                                         <label for="example-text-input" class="form-control-label">Emaili</label>
-                                        <input class="bug-text-input" type="text" name="client_email">
+                                        <input required class="bug-text-input" type="text" name="client_email">
                                     </div>
                                 </div>
                                 <div class="col-md-6">
                                     <div class="form-group">
                                         <label for="example-text-input" class="form-control-label">Telefoni</label>
-                                        <input class="bug-text-input" type="text" name="client_phone_number">
+                                        <input required class="bug-text-input" type="text" name="client_phone_number">
                                     </div>
                                 </div>
                                 <div class="col-md-6">
@@ -120,7 +120,7 @@
                                 <div class="col-md-6">
                                     <div class="form-group">
                                         <label for="example-text-input" class="form-control-label">Data e Pagesës</label>
-                                        <input class="bug-text-input" type="date" name="payment_date">
+                                        <input required class="bug-text-input" type="date" name="payment_date">
                                     </div>
                                 </div>
                                 <div class="col-md-6">
@@ -214,7 +214,8 @@
         document.addEventListener('DOMContentLoaded', function() {
             var calendarEl = document.getElementById('calendar');
             var events = @json($events); 
-
+            var menusCount = @json(count($menus));
+            var venuesCount = @json(count($venues));
             console.log(events);
             var calendar = new FullCalendar.Calendar(calendarEl, {
                 initialView: 'dayGridMonth',
@@ -230,7 +231,11 @@
                     // Check if the date has an event
                     $('#dateInput').val(info.dateStr);
                     checkAvailabilityAndUpdateTotal();
-                    $('#reservationModal').modal('show');
+                    if(venuesCount> 0 && menusCount > 0){
+                        $('#reservationModal').modal('show');
+                    }else {
+                    alert('Duhet te keni nje menu te pakten dhe nje salle per ta krijuar nje rezervim');
+                }
 
                 },
                 eventClick: function(info) {

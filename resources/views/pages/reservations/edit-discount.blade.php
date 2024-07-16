@@ -14,19 +14,19 @@
                             <div class="col-md-12">
                                 <div class="form-group">
                                     <label for="example-text-input" class="bug-label">Zbritja*</label>
-                                    <input class="bug-text-input" type="number" name="discount" value="{{$discount->amount}}">
+                                    <input class="bug-text-input" required type="number" name="discount" value="{{$discount->amount}}">
                                 </div>
                             </div>
                             <div class="col-md-12">
                                 <div class="form-group">
                                     <label for="example-text-input" class="bug-label">Data*</label>
-                                <input class="bug-text-input" type="date" name="date" required id="dateInput" value="{{$discount->date}}">
+                                <input class="bug-text-input"  type="date" name="date" required id="dateInput" value="{{$discount->date}}">
                                 </div>
                             </div>
                             <div class="col-md-12">
                                 <div class="form-group">
                                     <label for="example-text-input" class="bug-label">Pershkrimi</label>
-                                    <input class="bug-text-input" type="text" name="description" value="{{$discount->description}}">
+                                    <input class="bug-text-input" required type="text" name="description" value="{{$discount->description}}">
                                 </div>
                             </div>
                         </div>

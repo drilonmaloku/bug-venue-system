@@ -14,19 +14,19 @@
                             <div class="col-md-12">
                                 <div class="form-group">
                                     <label for="example-text-input" class="bug-label">Emri*</label>
-                                    <input class="bug-text-input" type="text" placeholder="Emri*" name="name">
+                                    <input class="bug-text-input" type="text" placeholder="Emri*" required name="name">
                                 </div>
                             </div>
                             <div class="col-md-12">
                                 <div class="form-group">
                                     <label for="example-text-input" class="bug-label">Përshkrimi</label>
-                                    <textarea class="bug-text-input" placeholder="Pershkrimki" rows="4" name="description"></textarea>
+                                    <textarea class="bug-text-input" placeholder="Pershkrimki" required  rows="4" name="description"></textarea>
                                 </div>
                             </div>
                             <div class="col-md-12">
                                 <div class="form-group">
                                     <label for="example-text-input" class="bug-label">Qmimi</label>
-                                    <input class="bug-text-input" placeholder="Qmimi" type="number" name="price">
+                                    <input class="bug-text-input" placeholder="Qmimi" required type="number" name="price">
                                 </div>
                             </div>
                         </div>

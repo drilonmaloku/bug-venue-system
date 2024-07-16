@@ -24,26 +24,26 @@
                         <div class="col-md-12">
                             <div class="form-group">
                                 <label for="example-text-input" class="bug-label">Emri*</label>
-                                <input class="bug-text-input" placeholder="Emri" type="text" name="first_name" >
+                                <input class="bug-text-input" required placeholder="Emri" type="text" name="first_name" >
                             </div>
                         </div>
                         <div class="col-md-12">
                             <div class="form-group">
-                                <label for="example-text-input" class="bug-label">Mbiemri</label>
-                                <input class="bug-text-input" placeholder="Mbiemri" type="text" name="last_name" >
+                                <label for="example-text-input" class="bug-label">Mbiemri*</label>
+                                <input class="bug-text-input" required placeholder="Mbiemri" type="text" name="last_name" >
 
                             </div>
                         </div>
                         <div class="col-md-12">
                             <div class="form-group">
                                 <label for="example-text-input" class="bug-label">Emaili*</label>
-                                <input class="bug-text-input" placeholder="Emaili*" type="text" name="email">
+                                <input class="bug-text-input" required placeholder="Emaili*" type="text" name="email">
                             </div>
                         </div>
                         <div class="col-md-12">
                             <div class="form-group">
-                                <label for="example-text-input" class="bug-label">Telefoni</label>
-                                <input class="bug-text-input" placeholder="Telefoni" type="text" name="phone">
+                                <label for="example-text-input" class="bug-label">Telefoni*</label>
+                                <input class="bug-text-input" required placeholder="Telefoni" type="text" name="phone">
                             </div>
                         </div>
                         <div class="col-md-12">

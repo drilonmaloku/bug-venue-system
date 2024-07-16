@@ -14,7 +14,7 @@
                             <div class="col-md-12">
                                 <div class="form-group">
                                     <label for="example-text-input" class="bug-label">Vlera*</label>
-                                    <input class="bug-text-input" type="number" name="amount" value="{{$invoice->amount}}">
+                                    <input class="bug-text-input" required type="number" name="amount" value="{{$invoice->amount}}">
                                     
                                 </div>
                             </div>
@@ -27,7 +27,7 @@
                             <div class="col-md-12">
                                 <div class="form-group">
                                     <label for="example-text-input" class="bug-label">Pershkrimi</label>
-                                    <input class="bug-text-input" type="text" name="description" value="{{$invoice->description}}">
+                                    <input class="bug-text-input" required type="text" name="description" value="{{$invoice->description}}">
                                 </div>
                             </div>
                         </div>

@@ -3,7 +3,9 @@
     Rezervimet
 @endsection
 @section('header-actions')
-    <a class="hubers-btn" href="{{route('reservations.create')}}">Krijo</a>
+@if(count($menus) > 0 && count($venues) > 0)
+<a class="hubers-btn" href="{{route('reservations.create')}}">Krijo</a>
+@endif
 @endsection
 @section('content')
     <div class="vms_panel">

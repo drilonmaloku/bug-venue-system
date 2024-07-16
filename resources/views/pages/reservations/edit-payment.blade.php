@@ -14,7 +14,7 @@
                             <div class="col-md-12">
                                 <div class="form-group">
                                     <label for="example-text-input" class="bug-label">Vlera*</label>
-                                    <input class="bug-text-input" type="number" name="value" value="{{$payment->value}}">
+                                    <input class="bug-text-input" required type="number" name="value" value="{{$payment->value}}">
                                     
                                 </div>
                             </div>
@@ -27,7 +27,7 @@
                             <div class="col-md-12">
                                 <div class="form-group">
                                     <label for="example-text-input" class="bug-label">Pershkrimi</label>
-                                    <input class="bug-text-input" type="text" name="notes" value="{{$payment->notes}}">
+                                    <input class="bug-text-input" required type="text" name="notes" value="{{$payment->notes}}">
                                 </div>
                             </div>
                         </div>

@@ -52,7 +52,7 @@
                                     <select id="menuId" class="bug-text-input" name="menu_id">
                                         <option value="">Selekto Menun</option>
                                         @foreach($menus as $menu)
-                                            <option data-price="{{$menu->price}}" value="{{$menu->id}}">{{$menu->name}},{{$menu->price}}</option>
+                                            <option value="{{ $menu->id }}" {{ $menu->id == $reservation->menu_id ? 'selected' : '' }}>{{$menu->name}},{{$menu->price}}</option>
                                         @endforeach
                                     </select>
                                 </div>
@@ -72,7 +72,7 @@
                             <div class="col-md-6">
                                 <div class="form-group">
                                     <label for="example-text-input" class="form-control-label">Selekto Menagjerin*</label>
-                                    <select id="menuId" class="bug-text-input" name="menager_id">
+                                    <select  class="bug-text-input" name="menager_id">
                                         <option value="">Selekto Menagjerin</option>
                                         @foreach($users as $user)
                                             <option value="{{ $user->id }}" {{ $user->id == $reservation->menager_id ? 'selected' : '' }}>{{ $user->first_name }}</option>

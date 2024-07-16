@@ -14,19 +14,19 @@
                             <div class="col-md-12">
                                 <div class="form-group">
                                     <label for="example-text-input" class="bug-label">Emri*</label>
-                                    <input class="bug-text-input" type="text" name="name" value="{{$client->name}}">
+                                    <input class="bug-text-input" required type="text" name="name" value="{{$client->name}}">
                                 </div>
                             </div>
                             <div class="col-md-12">
                                 <div class="form-group">
                                     <label for="example-text-input" class="bug-label">Email</label>
-                                    <textarea class="bug-text-input" rows="4" name="email" >{{$client->email}}</textarea>
+                                    <textarea class="bug-text-input" required rows="4" name="email" >{{$client->email}}</textarea>
                                 </div>
                             </div>
                             <div class="col-md-12">
                                 <div class="form-group">
                                     <label for="example-text-input" class="bug-label">Telefoni</label>
-                                    <input class="bug-text-input" type="text" name="phone_number" value="{{$client->phone_number}}">
+                                    <input class="bug-text-input" required type="text" name="phone_number" value="{{$client->phone_number}}">
                                 </div>
                             </div>
                             <div class="col-md-12">

@@ -63,13 +63,17 @@ class ReservationsController extends Controller
 
     public function index(Request $request)
     {
+
+        
         $reservations = $this->reservationsService->getAll($request);
         if (session('success_message')) {
             Alert::success('Success!', session('success_message'));
         }
         return view('pages/reservations/index', [
             'reservations' => $reservations,
-            'is_on_search' => count($request->all())
+            'is_on_search' => count($request->all()),
+            'venues' => $this->venuesService->getVenues(),
+            'menus' => $this->menuService->getAll(request(), false),
         ]);
     }
 
@@ -225,8 +229,6 @@ class ReservationsController extends Controller
 
             return redirect()->route('reservations.view', ['id' => $reservation->id])->withSuccessMessage('Rezervimi u be update me sukses');
         } catch (ValidationException $e) {
-            return redirect()->route('reservations.view', ['id' => $reservation->id])->withErrorMessage('Rezervimi nuk u be update');
-        } catch (\Exception $e) {
             return redirect()->route('reservations.view', ['id' => $reservation->id])->withErrorMessage('Rezervimi nuk u be update');
         }
     }

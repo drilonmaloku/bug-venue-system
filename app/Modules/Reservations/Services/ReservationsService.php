@@ -113,6 +113,8 @@ class ReservationsService
      * Updates existing Reservation
      **/
     public function update($request, Reservation $reservation) {
+
+        // dd($request);
         // Update the reservation with the new data from the request
         $reservation->number_of_guests = $request->input('number_of_guests');
         $reservation->menu_price = $request->input('menu_price');

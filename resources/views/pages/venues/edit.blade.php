@@ -14,19 +14,19 @@
                             <div class="col-md-12">
                                 <div class="form-group">
                                     <label for="example-text-input" class="bug-label">Emri*</label>
-                                    <input class="bug-text-input" type="text" name="name" value="{{$venue->name}}">
+                                    <input class="bug-text-input" type="text" required name="name" value="{{$venue->name}}">
                                 </div>
                             </div>
                             <div class="col-md-12">
                                 <div class="form-group">
                                     <label for="example-text-input" class="bug-label">Përshkrimi</label>
-                                    <textarea class="bug-text-input" rows="4" name="description" >{{$venue->description}}</textarea>
+                                    <textarea class="bug-text-input" rows="4" required name="description" >{{$venue->description}}</textarea>
                                 </div>
                             </div>
                             <div class="col-md-12">
                                 <div class="form-group">
                                     <label for="example-text-input" class="bug-label">Kapaciteti</label>
-                                    <input class="bug-text-input" type="number" name="capacity" value="{{$venue->capacity}}">
+                                    <input class="bug-text-input" type="number" required name="capacity" value="{{$venue->capacity}}">
                                 </div>
                             </div>
                         </div>
