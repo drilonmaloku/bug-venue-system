@@ -120,6 +120,9 @@
   .hubers-empty-tab {
     padding: 24px 16px;
   }
+  .hubers-empty-tab h4, .hubers-empty-tab h5 {
+    font-size: 1rem;
+  }
 }
 
 .hubers-title-btn-options {
@@ -2210,6 +2213,10 @@ body {
 .username-input .bug-text-input {
   border-top-left-radius: 0;
   border-bottom-left-radius: 0;
+}
+
+.dashboard_panel {
+  min-height: 500px;
 }
 
 .vue-tel-input {

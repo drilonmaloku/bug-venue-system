@@ -3,7 +3,7 @@
     Dashboard
 @endsection
 @section('content')
-    <div class="vms_panel">
+    <div class="vms_panel dashboard_panel">
         <div id='calendar'></div>
         <script>
             document.addEventListener('DOMContentLoaded', function() {
