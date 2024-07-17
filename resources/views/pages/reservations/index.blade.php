@@ -37,6 +37,27 @@
                         <label>Data e krijimit:</label>
                         <input placeholder="Search" class="hubers-text-input white medium" type="date" name="created_at" value="{{ old('created_at', app('request')->input('created_at')) }}">
                     </div>
+
+
+                    <div class="hubers-filter-group">
+                        <label>Selekto Sallën:</label>
+                        <select class="hubers-select-input white medium" name="venue" id="">
+                            <option value="">Selekto Sallën</option>
+                            @foreach($venues as $venue)
+                            <option value="{{$venue->id}}" @if($venue->id == app('request')->input('venue')) selected @endif>{{$venue->name}}</option>
+                            @endforeach
+                        </select>
+                    </div>
+
+                    <div class="hubers-filter-group">
+                        <label>Selekto Menunë:</label>
+                        <select class="hubers-select-input white medium" name="menu" id="">
+                            <option value="">Selekto Menunë</option>
+                            @foreach($menus as $menu)
+                            <option value="{{$menu->id}}" @if($menu->id == app('request')->input('menu')) selected @endif>{{$menu->name}}</option>
+                            @endforeach
+                        </select>
+                    </div>
                 </div>
                 <div class="hubers-filter-list-actions">
                     <button type="submit" class="hubers-btn mr-2">Filtro</button>

@@ -52,6 +52,17 @@ class ReservationsService
             $createdAt = $request->input('created_at');
             $query->whereDate('created_at', $createdAt);
         }
+
+         // Venue filter
+    if ($request->has('venue') && $request->input('venue') != '') {
+        $venueId = $request->input('venue');
+        $query->where('venue_id', $venueId); // Adjust 'venue_id' according to your actual column name
+    }
+
+    if ($request->has('menu') && $request->input('menu') != '') {
+        $menuId = $request->input('menu');
+        $query->where('menu_id', $menuId); // Adjust 'venue_id' according to your actual column name
+    }
         
         $query->orderBy('created_at', 'desc');
         return $query->paginate($perPage);

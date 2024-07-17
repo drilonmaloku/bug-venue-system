@@ -107,6 +107,24 @@ class LocationServices
         return $location;
     }
 
+
+
+    public function active($request, Location $location) {
+        $location->deactivated_at = null;
+
+        $locationSaved = $location->save();
+
+        if($locationSaved){
+            $this->logService->log([
+                'message' => 'Location u aktivizua me sukses',
+                'context' => Log::LOG_CONTEXT_CLIENTS,
+                'ttl'=> Log::LOG_TTL_THREE_MONTHS,
+            ]);
+        }
+
+        return $location;
+    }
+
     /**
      * Deletes existing client
      **/

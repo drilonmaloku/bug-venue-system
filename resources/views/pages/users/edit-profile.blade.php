@@ -20,13 +20,13 @@
                             <div class="col-md-12">
                                 <div class="form-group">
                                     <label for="example-text-input" class="bug-label">Emri*</label>
-                                    <input class="bug-text-input" type="text" name="first_name" value="{{$user->first_name}}">
+                                    <input class="bug-text-input" required type="text" name="first_name" value="{{$user->first_name}}">
                                 </div>
                             </div>
                             <div class="col-md-12">
                                 <div class="form-group">
                                     <label for="example-text-input" class="bug-label">Mbiemri</label>
-                                    <input class="bug-text-input" type="text" name="last_name" value="{{$user->last_name}}">
+                                    <input class="bug-text-input" required type="text" name="last_name" value="{{$user->last_name}}">
                                 </div>
                             </div>
                             <div class="col-md-12">

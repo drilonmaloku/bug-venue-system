@@ -149,4 +149,27 @@ class LocationController extends Controller
             ], 500);
         }
     }
+
+
+
+
+    public function active(Request $request,$id) {
+        $location = $this->locationServices->getByID($id);
+
+        if(is_null($location)) {
+            return abort(404);
+        }
+
+        try {
+
+            $client = $this->locationServices->active($request,$location);
+
+            return redirect()->to('locations')->withSuccessMessage('Location u aktivizua me sukses');
+
+        } catch (\Exception $e) {
+            return response()->json([
+                'message' => 'Internal Server Error'
+            ], 500);
+        }
+    }
 }

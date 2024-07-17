@@ -14,7 +14,7 @@
                             <div class="col-md-12">
                                 <div class="form-group">
                                     <label for="example-text-input" class="bug-label">Titulli</label>
-                                    <input class="bug-text-input"  name="title"></input>
+                                    <input class="bug-text-input" required name="title"></input>
                                 </div>
                             </div>
                             <div class="col-md-12">
