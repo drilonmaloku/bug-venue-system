@@ -20,14 +20,14 @@
                             <div class="col-md-12">
                                 <div class="form-group">
                                     <label for="example-text-input" class="bug-label">Pershkrimi</label>
-                                    <textarea class="bug-text-input" placeholder="Pershkrimki" type="text" required  rows="4" name="description" value="{{$menu->description}}">{{$menu->description}}</textarea>
+                                    <textarea class="bug-text-input" placeholder="Pershkrimki" type="text"  rows="4" name="description" value="{{$menu->description}}">{{$menu->description}}</textarea>
 
                                 </div>
                             </div>
                             <div class="col-md-12">
                                 <div class="form-group">
                                     <label for="example-text-input" class="bug-label">Qmimi*</label>
-                                    <input type="number" placeholder="Qmimi" class="bug-text-input" required  name="price" required value="{{$menu->price}}">
+                                    <input type="number" placeholder="Qmimi" class="bug-text-input"  name="price" required value="{{$menu->price}}">
                                 </div>
                             </div>
                        

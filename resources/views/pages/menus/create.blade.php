@@ -20,7 +20,7 @@
                             <div class="col-md-12">
                                 <div class="form-group">
                                     <label for="example-text-input" class="bug-label">Përshkrimi</label>
-                                    <textarea class="bug-text-input" placeholder="Pershkrimki" required  rows="4" name="description"></textarea>
+                                    <textarea class="bug-text-input" placeholder="Pershkrimki"  rows="4" name="description"></textarea>
                                 </div>
                             </div>
                             <div class="col-md-12">

@@ -92,7 +92,9 @@
                 </table>
             </div>
         @else
-            <h6 class="text-center">There are no reservations currently</h6>
+            <div class="hubers-empty-tab">
+                <h5 class="text-center">Nuk ka rezervime momentalisht</h5>
+            </div>
         @endif
     </div>
 @endsection

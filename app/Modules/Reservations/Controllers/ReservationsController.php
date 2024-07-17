@@ -51,7 +51,6 @@ class ReservationsController extends Controller
         PaymentsService $paymentsService,
         ReservationCommentServices $commentReservationService,
         ReservationStaffServices $staffServices,
-
         UsersService $userService,
         InvoicesServices $invoiceService,
         DiscountReservationsServices $discountService
@@ -666,7 +665,7 @@ class ReservationsController extends Controller
 
 
     
-   public function addMember($reservation,Request $request,)
+   public function addMember($reservation,Request $request)
    {
        $member = ReservationStaff::create([
            "user_id" =>  $request->input('user_id'),
