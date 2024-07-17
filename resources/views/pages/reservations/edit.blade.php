@@ -167,6 +167,7 @@
                     input.setAttribute('type', 'radio');
                     input.setAttribute('name', `reservation`);
                     input.setAttribute('value', `${venueId},${slot}`);
+                    console.log('intl',initialDate.value);
                     if(initialReservationData.value == `${venueId},${slot}` && dateInput.value == initialDate.value ){
                         slotDiv.classList.add('bug-checkbox-input-pre-date');
                         input.setAttribute('checked', `checked`);
@@ -198,7 +199,7 @@
             }
 
             function checkAvailabilityAndUpdateTotal() {
-
+                console.log('ts',dateInput.value)
                 fetch('/reservation/check-availability', {
                     method: 'POST',
                     headers: {
@@ -206,6 +207,7 @@
                         'X-CSRF-TOKEN': '{{ csrf_token() }}' // Include CSRF token for security
                     },
                     body: JSON.stringify({
+                        current_date: initialDate.value, // Y-m-d format
                         date: dateInput.value, // Y-m-d format
                     })
                 })

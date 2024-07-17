@@ -31,8 +31,6 @@
                             </div>
                         </div>
                         <button type="submit" class="hubers-btn">Ruaj</button>
-
-
                     </form>
                 </div>
             </div>

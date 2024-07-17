@@ -48,7 +48,7 @@
                         </div>
                         <div class="col-md-12">
                             <div class="form-group">
-                                <label for="example-text-input" class="bug-label">Password(</label>
+                                <label for="example-text-input" class="bug-label">Password</label>
                                 <div class="password-input-toggle">
                                     <input id="password" type="password" class="bug-text-input " placeholder="Password" name="password" required >
                                     <span class="password-input-toggle-icon"><i class="fa fa-eye"></i></span>
