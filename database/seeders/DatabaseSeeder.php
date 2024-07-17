@@ -7,6 +7,7 @@ use App\Modules\Reservations\Models\Reservation;
 use Database\Factories\ClientFactory;
 use Database\Factories\ExpenseFactory;
 use Database\Factories\LocationFactory;
+use Database\Factories\LocationUserFactory;
 use Database\Factories\LogsFactory;
 use Database\Factories\MenuFactory;
 use Database\Factories\PaymentFactory;
@@ -33,23 +34,26 @@ class DatabaseSeeder extends Seeder
         $this->seedRoles();
         $this->seedUsers();
         $this->seedLocation();
+        $this->seedLocationUser();
         $this->seedVenues();
         $this->seedMenus();
         $this->seedClients();
-       
         $this->seedReservations();
         $this->seedTickets();
         $this->seedPayments();
         $this->seedExpenses();
-
         $this->seedLogs();
     }
     
     public function seedVenues() {
         (new VenueFactory)->count(10)->create();
     }
+    
     public function seedLocation() {
         (new LocationFactory())->count(10)->create();
+    }
+    public function seedLocationUser() {
+        (new LocationUserFactory())->count(10)->create();
     }
     public function seedClients() {
         (new ClientFactory())->count(50)->create();
@@ -62,14 +66,14 @@ class DatabaseSeeder extends Seeder
             $user->assignRole(User::ROLE_ADMIN);
         });
 
-//        $user = User::create([
-//            'username' => 'admin',
-//            'first_name' => 'Admin',
-//            'last_name' => 'Admin',
-//            'email' => 'drilon.maloku13@gmail.com',
-//            'password' => bcrypt('loniloni13')
-//        ]);
-//        $user->assignRole(User::SYSTEM_ADMIN);
+       $user = User::create([
+           'username' => 'admin',
+           'first_name' => 'Admin',
+           'last_name' => 'Admin',
+           'email' => 'drilon.maloku13@gmail.com',
+           'password' => bcrypt('loniloni13')
+       ]);
+       $user->assignRole(User::SYSTEM_ADMIN);
     }
 
     public function seedMenus() {

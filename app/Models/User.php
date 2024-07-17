@@ -8,6 +8,7 @@ use App\Modules\Users\Models\LocationUser;
 use App\Scopes\CurrentLocationScope;
 use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
@@ -108,6 +109,28 @@ class User extends Authenticatable
     {
         $locationUser = $this->locationUsers->first();
         return $locationUser ? Location::find($locationUser->location_id)->slug : null;
+    }
+
+
+
+    public function isLocationEnabled()
+    {
+        if(auth()->user()->hasRole('system-admin')) {
+            return true;
+        }
+        $locationId = $this->getCurrentLocationId();
+
+        if (!$locationId) {
+            return false; 
+        }
+
+
+        try {
+            $location = Location::findOrFail($locationId);
+            return $location->deactivated_at === null; // Assuming 'disabled_at' is your column name
+        } catch (ModelNotFoundException $e) {
+            return false; // Location not found
+        }
     }
     
 }

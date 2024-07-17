@@ -37,5 +37,11 @@ Route::group(['middleware' => 'auth'], function () {
     Route::put('/reservations/{id}/update', [ReservationsController::class, 'update'])->name('reservations.update');
     Route::get('reservations/{id}/print-contract', [ReservationsController::class, 'printContract'])->name('reservations.printContract');
 
+
+    Route::post('/reservations/{reservationId}/add-member', [ReservationsController::class, 'addMember'])->name('reservations.addMember');
+    Route::delete('/reservations/staff/{id}', [ReservationsController::class, 'deleteStaff'])->name('reservations.staff.delete');
+
+
+
 });
 

@@ -119,4 +119,11 @@ class Reservation extends Model
         );
 
     }
+
+
+
+    public function reservationStaff()
+    {
+        return $this->hasMany(ReservationStaff::class, 'reservation_id');
+    }
 }

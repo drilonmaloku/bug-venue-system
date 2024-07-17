@@ -1,5 +1,6 @@
 <?php namespace App\Modules\Reservations\Services;
 
+use App\Models\User;
 use App\Modules\Clients\Models\Client;
 use App\Modules\Clients\Services\ClientsService;
 use App\Modules\Reservations\Models\Reservation;
@@ -8,6 +9,7 @@ use Illuminate\Http\Request;
 use App\Modules\Logs\Models\Log;
 use App\Modules\Logs\Services\LogService;
 use App\Modules\Reservations\Models\PricingStatusTracking;
+use App\Modules\Reservations\Models\ReservationStaff;
 use Illuminate\Support\Carbon;
 use Illuminate\Support\Facades\DB;
 
@@ -208,4 +210,5 @@ class ReservationsService
        }
    }
 
+   
 }

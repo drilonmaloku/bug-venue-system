@@ -16,9 +16,11 @@ use Illuminate\Support\Carbon;
 use Maatwebsite\Excel\Facades\Excel;
 use App\Http\Controllers\Controller;
 use App\Modules\Reservations\Models\ReservationComment;
+use App\Modules\Reservations\Models\ReservationStaff;
 use App\Modules\Reservations\Resources\ReservationListCommentResource;
 use App\Modules\Reservations\Services\DiscountReservationsServices;
 use App\Modules\Reservations\Services\ReservationCommentServices;
+use App\Modules\Reservations\Services\ReservationStaffServices;
 use App\Modules\Users\Services\UsersService;
 use Barryvdh\DomPDF\Facade\Pdf as FacadePdf;
 use Barryvdh\DomPDF\PDF;
@@ -37,6 +39,8 @@ class ReservationsController extends Controller
     private $commentReservationService;
     private $userService;
     private $discountService;
+    private $staffServices;
+
 
 
     public function __construct(
@@ -46,6 +50,8 @@ class ReservationsController extends Controller
         MenuService $menuService,
         PaymentsService $paymentsService,
         ReservationCommentServices $commentReservationService,
+        ReservationStaffServices $staffServices,
+
         UsersService $userService,
         InvoicesServices $invoiceService,
         DiscountReservationsServices $discountService
@@ -59,6 +65,8 @@ class ReservationsController extends Controller
         $this->userService = $userService;
         $this->invoiceService = $invoiceService;
         $this->discountService = $discountService;
+        $this->staffServices = $staffServices;
+
     }
 
     public function index(Request $request)
@@ -140,7 +148,7 @@ class ReservationsController extends Controller
         $totalDiscount = $reservation->discounts->sum('amount');
         $totalInvoiceAmount = $reservation->invoices->sum('amount');
         $totalAmount = ($reservation->menu_price * $reservation->number_of_guests) + $totalInvoiceAmount - $totalDiscount;
-
+        
 
         if (is_null($reservation)) {
             return abort(404);
@@ -149,7 +157,8 @@ class ReservationsController extends Controller
             'reservation' => $reservation,
             'totalDiscount'=>$totalDiscount,
             'totalInvoiceAmount'=>$totalInvoiceAmount,
-            'totalAmount'=>$totalAmount
+            'totalAmount'=>$totalAmount,
+            'users' => $this->userService->getStaffUsers()
         ]);
     }
 
@@ -653,4 +662,34 @@ class ReservationsController extends Controller
         return response()->download($tempFilePath, 'reservation_contract_' . $reservation->id . '.docx')->deleteFileAfterSend(true);
     }
 
+
+
+
+    
+   public function addMember($reservation,Request $request,)
+   {
+       $member = ReservationStaff::create([
+           "user_id" =>  $request->input('user_id'),
+           "reservation_id" => $reservation,
+       ]);
+   
+      return redirect()->back()->withSuccessMessage('Staffi eshte shtuar me sukses');;
+   }
+
+
+   public function deleteStaff($id)
+    {
+        $staff = ReservationStaff::find($id);
+
+        if (is_null($staff)) {
+            return response()->json(['message' => 'Staff Not Found'], JsonResponse::HTTP_NOT_FOUND);
+        }
+
+        try {
+            $this->staffServices->deleteStaff($staff);
+            return redirect()->back()->withSuccessMessage('Stafi eshte fshire me sukses');
+        } catch (\Exception $e) {
+            return response()->json(['message' => 'Internal Server Error'], JsonResponse::HTTP_INTERNAL_SERVER_ERROR);
+        }
+    }
 }

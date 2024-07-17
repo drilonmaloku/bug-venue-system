@@ -328,4 +328,11 @@ class UsersService
         return $user->save();
     }
 
+    public static function getStaffUsers()
+    {
+        return User::whereHas('roles', function ($query) {
+            $query->where('name', 'staff');
+        })->get();
+    }
+
 }
