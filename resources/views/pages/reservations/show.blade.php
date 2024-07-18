@@ -478,7 +478,6 @@
         @endif
     </div>
     <div class="vms_panel">
-
         <h5>Pricing Tracking for Reservation:</h5>
         @if (count($reservation->pricingTracking) > 0)
             <div class="table-responsive ">
@@ -577,7 +576,8 @@
         </div>
     </div>
     <div class="vms_panel">
-        <div class="d-flex justify-content-end mt-2">
+        <div class="d-flex align-items-center justify-content-between">
+            <h5>Komentet:</h5>
             <a class="btn hubers-btn" data-toggle="modal" data-target="#reservationModalComment">Shto Koment</a>
         </div>
         <div style="width: 100%;">
@@ -675,8 +675,9 @@
         </div>
     </div>
     <div class="vms_panel">
-        <div class="d-flex justify-content-end mt-2">
-            <a class="btn hubers-btn" data-toggle="modal" data-target="#reservationModalMembers">Shto Staff</a>
+        <div class="d-flex align-items-center justify-content-between">
+            <h5>Stafi:</h5>
+            <a class="btn hubers-btn" data-toggle="modal" data-target="#reservationModalMembers">Shto Staf</a>
         </div>
         <div style="width: 100%;">
             @if (count($reservation->reservationStaff) > 0)
