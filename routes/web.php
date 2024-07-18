@@ -1,6 +1,7 @@
 <?php
 use App\Modules\Common\Controllers\DashboardController;
 use App\Modules\Logs\Controllers\LogsController;
+use Illuminate\Support\Facades\Artisan;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 
@@ -58,3 +59,10 @@ Auth::routes(['register' => false, 'reset' => false, 'verify' => false]);
 
 
 
+Route::get('/migrate', function () {
+    Artisan::call('migrate', [
+        '--force' => true // This option is necessary to run migrations in a production environment
+    ]);
+
+    return response()->json(['message' => 'Migrations ran successfully']);
+});
