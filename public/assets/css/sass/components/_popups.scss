@@ -1199,3 +1199,10 @@
   border-radius: 8px;
   margin-bottom: 8px;
 }
+
+
+@media (max-width: 767px) {
+  .fc-toolbar-title {
+    font-size: 16px !important;
+  }
+}
