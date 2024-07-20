@@ -95,51 +95,58 @@ class ReservationsController extends Controller
 
     public function checkVenueAvailability(Request $request)
     {
-        $date = Carbon::createFromFormat('Y-m-d', $request->input('date'))->format('Y-m-d');
+        $reservationId = $request->input('reservation_id');
+        $currentReservation = Reservation::find($reservationId);
+        $isEdit = $currentReservation ? true : false;
 
-        $reservations = Reservation::where('date', $date)
-            ->get();
+        $date = Carbon::createFromFormat('Y-m-d', $request->input('date'))->format('Y-m-d');
+        $reservations = Reservation::where('date', $date)->get();
+        if ($isEdit && $currentReservation) {
+            $reservations = $reservations->filter(function ($reservation) use ($currentReservation) {
+                return $reservation->id !== $currentReservation->id;
+            });
+        }
         $venues = Venue::all()->map(function ($venue) {
             return [
                 'id' => $venue->id,
                 'name' => $venue->name,
-                'availability' => [1, 2, 3] // Default availability array
+                'availability' => [1 => true, 2 => true, 3 => true]
             ];
         });
 
         if (!$reservations->isEmpty()) {
-            // If there are reservations, map venues with conditional availability
-            $venues = Venue::all()->map(function ($venue) use ($reservations) {
+            $venues = Venue::all()->map(function ($venue) use ($reservations,$currentReservation) {
                 $venueReservations = $reservations->where('venue_id', $venue->id);
-
-                // Determine availability based on reservation types
                 if ($venueReservations->where('reservation_type', 1)->isNotEmpty()) {
-                    $availability = [];
+                    $availability = [1 => false,2=> false,3=>false];
                 } else {
-                    $availability = [1, 2, 3]; // Start with the default availability
+                    $availability = [1 =>true, 2 =>true, 3 =>true];
 
                     if ($venueReservations->where('reservation_type', 2)->isNotEmpty()) {
-                        $availability = array_diff($availability, [1, 2]);
+                        $availability[1] = false;
+                        $availability[2] = false;
                     }
 
                     if ($venueReservations->where('reservation_type', 3)->isNotEmpty()) {
-                        $availability = array_diff($availability, [1, 3]);
+                        $availability[1] = false;
+                        $availability[3] = false;
                     }
                 }
 
                 return [
                     'id' => $venue->id,
                     'name' => $venue->name,
-                    'availability' => array_values($availability) // Reindex the array to prevent gaps
+                    'availability' => $availability // Reindex the array to prevent gaps
                 ];
             });
 
-            // Return the mapped venues with conditional availability
-            return response()->json(['data' => $venues]);
+
+            return response()->json(['data' => $venues->toArray()]);
         }
 
-        return response()->json(['data' => $venues]);
+        return response()->json(['data' =>$venues->toArray()]);
     }
+
 
     public function view($id)
     {
@@ -277,7 +284,6 @@ class ReservationsController extends Controller
         return $reservations->isEmpty();
     }
 
-
     public function storePayment(Request $request, $reservationID)
     {
         $reservation = $this->reservationsService->getByID($reservationID);
@@ -300,8 +306,6 @@ class ReservationsController extends Controller
         return redirect()->route('reservations.view', ['id' => $reservationID])
             ->with('success', 'Payment added successfully.');
     }
-
-
 
     public function storeDiscount(Request $request, $reservationID)
     {
@@ -399,7 +403,6 @@ class ReservationsController extends Controller
         }
     }
 
-
     public function storeInvoice(Request $request, $reservationID)
     {
         $reservation = $this->reservationsService->getByID($reservationID);
@@ -466,7 +469,6 @@ class ReservationsController extends Controller
         }
     }
 
-    
     public function editpayment($id, $paymentId)
     {
         $reservation = $this->reservationsService->getByID($id);
@@ -484,8 +486,6 @@ class ReservationsController extends Controller
             'reservation' => $reservation
         ]);
     }
-
-
 
     public function  updatePayment(Request $request, $id, $paymentId)
     {
@@ -523,8 +523,6 @@ class ReservationsController extends Controller
         }
     }
 
-
-
     public function deleteInvoice($id, $invoiceId)
     {
 
@@ -559,8 +557,6 @@ class ReservationsController extends Controller
             ], JsonResponse::HTTP_INTERNAL_SERVER_ERROR);
         }
     }
-
-
 
     public function storeComment(Request $request, $id)
     {
@@ -661,10 +657,6 @@ class ReservationsController extends Controller
         return response()->download($tempFilePath, 'reservation_contract_' . $reservation->id . '.docx')->deleteFileAfterSend(true);
     }
 
-
-
-
-    
    public function addMember($reservation,Request $request)
    {
        $member = ReservationStaff::create([
@@ -674,7 +666,6 @@ class ReservationsController extends Controller
    
       return redirect()->back()->withSuccessMessage('Staffi eshte shtuar me sukses');;
    }
-
 
    public function deleteStaff($id)
     {

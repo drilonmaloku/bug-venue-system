@@ -61,7 +61,7 @@
                                 </div>
                                 <div class="col-md-6">
                                     <div class="form-group">
-                                        <label for="example-text-input" class="form-control-label">Menu</label>
+                                        <label for="example-text-input" class="form-control-label">Menu*</label>
                                         <select required id="menuId" class="bug-text-input" name="menu_id">
                                             <option value="">Selekto Menun</option>
                                             @foreach ($menus as $menu)
@@ -73,14 +73,14 @@
                                 </div>
                                 <div class="col-md-6">
                                     <div class="form-group">
-                                        <label for="example-text-input" class="form-control-label">Qmimi i Menus</label>
+                                        <label for="example-text-input" class="form-control-label">Qmimi i Menus*</label>
                                         <input required id="menuPrice" class="bug-text-input" type="number" name="menu_price">
                                     </div>
                                 </div>
                                 <div class="col-md-12">
                                     <div class="form-group">
                                         <label for="example-text-input" class="form-control-label">Shenime</label>
-                                        <textarea required class="bug-text-input" type="text" name="description"></textarea>
+                                        <textarea class="bug-text-input" type="text" name="description"></textarea>
                                     </div>
                                 </div>
                                 <div class="col-md-12">
@@ -100,12 +100,12 @@
                                 <div class="col-md-6">
                                     <div class="form-group">
                                         <label for="example-text-input" class="form-control-label">Emaili</label>
-                                        <input required class="bug-text-input" type="text" name="client_email">
+                                        <input class="bug-text-input" type="text" name="client_email">
                                     </div>
                                 </div>
                                 <div class="col-md-6">
                                     <div class="form-group">
-                                        <label for="example-text-input" class="form-control-label">Telefoni</label>
+                                        <label for="example-text-input" class="form-control-label">Telefoni*</label>
                                         <input required class="bug-text-input" type="text" name="client_phone_number">
                                     </div>
                                 </div>
@@ -113,8 +113,7 @@
                                     <div class="form-group">
                                         <label for="example-text-input" class="form-control-label">Telefoni
                                             Opsional</label>
-                                        <input class="bug-text-input" type="text"
-                                            name="client_additional_phone_number">
+                                        <input class="bug-text-input" type="text" name="client_additional_phone_number">
                                     </div>
                                 </div>
                                 <div class="col-md-6">
@@ -333,10 +332,17 @@
                 venue.classList.remove('available');
                 venue.classList.remove('partially-available');
                 venue.classList.remove('not-available');
-
-                if (availability.length == 3) {
+                let availableCount = 0;
+                const keyValuePairs = [];
+                for (const availabilityItem of Object.entries(availability)) {
+                    keyValuePairs.push({ key: availabilityItem[0], value: availabilityItem[1] });
+                    if (availabilityItem[1] === true) {
+                        availableCount++;
+                    }
+                }
+                if (availableCount == 3) {
                     venue.classList.add('available');
-                } else if (availability.length == 1 || availability.length == 2) {
+                } else if (availableCount == 1 || availableCount == 2) {
                     venue.classList.add('partially-available');
                 } else {
                     venue.classList.add('not-available');
@@ -348,20 +354,22 @@
                     2: 'Mëngjes',
                     3: 'Mbrëmje'
                 };
-                availability.forEach(slot => {
-                    const slotDiv = document.createElement('div');
-                    slotDiv.classList.add('slot');
-                    const input = document.createElement('input');
-                    input.classList.add('bug-checkbox-input');
-                    input.setAttribute('type', 'radio');
-                    input.setAttribute('name', `reservation`);
-                    input.setAttribute('value', `${venueId},${slot}`);
-                    const label = document.createElement('label');
-                    label.classList.add('form-control-label');
-                    label.textContent = labels[slot];
-                    slotDiv.appendChild(input);
-                    slotDiv.appendChild(label);
-                    slotsContainer.appendChild(slotDiv);
+                keyValuePairs.forEach(slot => {
+                    if(slot['value']) {
+                        const slotDiv = document.createElement('div');
+                        slotDiv.classList.add('slot');
+                        const input = document.createElement('input');
+                        input.classList.add('bug-checkbox-input');
+                        input.setAttribute('type', 'radio');
+                        input.setAttribute('name', `reservation`);
+                        input.setAttribute('value', `${venueId},${slot['key']}`);
+                        const label = document.createElement('label');
+                        label.classList.add('form-control-label');
+                        label.textContent = labels[slot['key']];
+                        slotDiv.appendChild(input);
+                        slotDiv.appendChild(label);
+                        slotsContainer.appendChild(slotDiv);
+                    }
                 });
             }
 
@@ -400,7 +408,7 @@
                     })
                     .then(response => response.json())
                     .then(res => {
-                        console.log(res.data);
+                        console.log('dtz',res.data);
                         res.data.forEach(venue => {
                             generateReservationTypeOptions(venue.id, venue.availability);
                         });

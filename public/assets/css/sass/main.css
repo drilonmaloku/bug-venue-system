@@ -1307,6 +1307,17 @@
   justify-content: center;
   position: relative;
   font-weight: bold;
+  margin-bottom: 16px;
+}
+.file-uploader label {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 0;
+}
+.file-uploader label .file-name {
+  margin-bottom: 0;
 }
 .file-uploader input {
   position: absolute;
@@ -1320,6 +1331,12 @@
   position: absolute;
   top: 8px;
   right: 8px;
+  display: none;
+  z-index: 2;
+  cursor: pointer;
+}
+.file-uploader .remove-file.active {
+  display: block;
 }
 
 .file-uploader-multi .file-uploader-multi-add {

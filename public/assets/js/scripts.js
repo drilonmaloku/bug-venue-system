@@ -11,7 +11,6 @@ var menuOptions = {
         }
     }
 };
-
 var filterOptions = {
     init: function () {
         var filterBtn = document.querySelector('.huber-filter-btn');
@@ -39,9 +38,31 @@ var passwordToggle = {
         }
     }
 };
+var filterInputOptions = {
+    init: function () {
+        document.querySelectorAll('.file-uploader').forEach(function(uploader) {
+            const input = uploader.querySelector('.form-input-attachment');
+            const fileNameDisplay = uploader.querySelector('.file-name');
+            const removeButton = uploader.querySelector('.remove-file');
 
+            input.addEventListener('change', function(event) {
+                var fileName = event.target.files[0] ? event.target.files[0].name : "Upload File";
+                fileNameDisplay.textContent = fileName;
+                removeButton.style.display = 'inline-block';
+            });
+
+            removeButton.addEventListener('click', function(event) {
+                event.stopPropagation();
+                input.value = '';
+                fileNameDisplay.textContent = 'Upload File';
+                removeButton.style.display = 'none';
+            });
+        });
+    }
+}
 document.addEventListener('DOMContentLoaded', function () {
     menuOptions.init();
     filterOptions.init();
     passwordToggle.init();
+    filterInputOptions.init();
 });

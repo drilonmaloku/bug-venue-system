@@ -87,13 +87,13 @@
                             <div class="col-md-6">
                                 <div class="form-group">
                                     <label for="example-text-input" class="form-control-label">Emri*</label>
-                                    <input class="bug-text-input" type="text" required name="client_name" required >
+                                    <input class="bug-text-input" type="text" name="client_name" required >
                                 </div>
                             </div>
                             <div class="col-md-6">
                                 <div class="form-group">
                                     <label for="example-text-input" class="form-control-label">Emaili</label>
-                                    <input class="bug-text-input" type="text" required name="client_email" >
+                                    <input class="bug-text-input" type="text" name="client_email" >
                                 </div>
                             </div>
                             <div class="col-md-6">
@@ -105,7 +105,7 @@
                             <div class="col-md-6">
                                 <div class="form-group">
                                     <label for="example-text-input" class="form-control-label">Telefoni Opsional</label>
-                                    <input class="bug-text-input" type="text"  name="client_additional_phone_number" >
+                                    <input class="bug-text-input" type="text" name="client_additional_phone_number" >
                                 </div>
                             </div>
                             <div class="col-md-6">
@@ -147,13 +147,19 @@
                 venue.classList.remove('available');
                 venue.classList.remove('partially-available');
                 venue.classList.remove('not-available');
-
-                if(availability.length == 3) {
-                    venue.classList.add('available');
-                }else if(availability.length == 1 || availability.length == 2){
-                    venue.classList.add('partially-available');
+                let availableCount = 0;
+                const keyValuePairs = [];
+                for (const availabilityItem of Object.entries(availability)) {
+                    keyValuePairs.push({ key: availabilityItem[0], value: availabilityItem[1] });
+                    if (availabilityItem[1] === true) {
+                        availableCount++;
+                    }
                 }
-                else {
+                if (availableCount == 3) {
+                    venue.classList.add('available');
+                } else if (availableCount == 1 || availableCount == 2) {
+                    venue.classList.add('partially-available');
+                } else {
                     venue.classList.add('not-available');
                 }
                 const slotsContainer = venue.querySelector('.venue-slots');
@@ -163,21 +169,22 @@
                     2: 'Mëngjes',
                     3: 'Mbrëmje'
                 };
-                availability.forEach(slot => {
-                    console.log(slot);
-                    const slotDiv = document.createElement('div');
-                    slotDiv.classList.add('slot');
-                    const input = document.createElement('input');
-                    input.classList.add('bug-checkbox-input');
-                    input.setAttribute('type', 'radio');
-                    input.setAttribute('name', `reservation`);
-                    input.setAttribute('value', `${venueId},${slot}`);
-                    const label = document.createElement('label');
-                    label.classList.add('form-control-label');
-                    label.textContent = labels[slot] ;
-                    slotDiv.appendChild(input);
-                    slotDiv.appendChild(label);
-                    slotsContainer.appendChild(slotDiv);
+                keyValuePairs.forEach(slot => {
+                    if(slot['value']) {
+                        const slotDiv = document.createElement('div');
+                        slotDiv.classList.add('slot');
+                        const input = document.createElement('input');
+                        input.classList.add('bug-checkbox-input');
+                        input.setAttribute('type', 'radio');
+                        input.setAttribute('name', `reservation`);
+                        input.setAttribute('value', `${venueId},${slot['key']}`);
+                        const label = document.createElement('label');
+                        label.classList.add('form-control-label');
+                        label.textContent = labels[slot['key']];
+                        slotDiv.appendChild(input);
+                        slotDiv.appendChild(label);
+                        slotsContainer.appendChild(slotDiv);
+                    }
                 });
             }
 

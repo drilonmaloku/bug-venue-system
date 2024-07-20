@@ -203,22 +203,17 @@ class ReservationsService
 
    public function storePricingTracking(Reservation $reservation, $numberOfGuests,$newMenuPrice,$totalInvoiceSum,$totalDiscountSum)
    {
-
-       try {
-           return PricingStatusTracking::create([
-               "location_id" => auth()->user()->getCurrentLocationId(),
-               'user_id' => auth()->user()->id,
-               'number_of_guests' => $numberOfGuests,
-               'menu_price' => $newMenuPrice,
-               'price' => $newMenuPrice,
-               'total_price' => ($numberOfGuests * $newMenuPrice) + $totalInvoiceSum - $totalDiscountSum,
-               'total_invoice_price'=>$totalInvoiceSum,
-               'total_discount_price'=>$totalDiscountSum,
-               'reservation_id' => $reservation->id,
-           ]);
-       } catch (\Exception $e) {
-           return null; 
-       }
+       return PricingStatusTracking::create([
+           "location_id" => auth()->user()->getCurrentLocationId(),
+           'user_id' => auth()->user()->id,
+           'number_of_guests' => $numberOfGuests,
+           'menu_price' => $newMenuPrice,
+           'price' => $newMenuPrice,
+           'total_price' => ($numberOfGuests * $newMenuPrice) + $totalInvoiceSum - $totalDiscountSum,
+           'total_invoice_price'=>$totalInvoiceSum,
+           'total_discount_price'=>$totalDiscountSum,
+           'reservation_id' => $reservation->id,
+       ]);
    }
 
    
