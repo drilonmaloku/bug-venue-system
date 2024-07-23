@@ -15,25 +15,25 @@
                 <table>
                     <thead>
                     <tr>
-                        <th colspan="2">Informatat:</th>
+                        <th colspan="2">{{__('clients.table.information')}}:</th>
                     </tr>
                     </thead>
                     <tbody>
                     <tr>
-                        <td>Emri</td>
+                        <td>{{__('clients.table.name')}}</td>
                         <td>{{ $client->name }}</td>
                     </tr>
                     <tr>
-                        <td>Emaili</td>
+                        <td>{{__('clients.table.email')}}</td>
                         <td>{{ $client->email }}</td>
                     </tr>
                     <tr>
-                        <td>Telefoni</td>
+                        <td>{{__('clients.table.phone_number')}}</td>
                         <td>{{ $client->phone_number }}</td>
                     </tr>
 
                     <tr>
-                        <td>Telefoni Opsional</td>
+                        <td>{{__('clients.table.additional_phone_number')}}</td>
                         <td>{{ $client->additional_phone_number }}</td>
                     </tr>
                     </tbody>
@@ -90,7 +90,7 @@
 
             @else
             <div class="hubers-empty-tab">
-                    <h5 class="text-center">Nuk ka rezervime për këte klient.</h5>
+                <h5 class="text-center">{{__('clients.view.no_reservations_for_client')}}</h5>
             </div>
         @endif
     </div>
@@ -138,7 +138,7 @@
             </div>
             @else
             <div class="hubers-empty-tab">
-                    <h5 class="text-center">Nuk ka pagesa për këte klient.</h5>
+                <h5 class="text-center">{{__('clients.view.no_payments_for_client')}}</h5>
             </div>
         @endif
     </div>

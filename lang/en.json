@@ -34,7 +34,10 @@
   "clients.table.email": "Emaili",
   "clients.table.phone_number": "Telefoni",
   "clients.table.additional_phone_number": "Telefoni Opsional",
-
+  "clients.table.not_found_with_search": "Nuk ka klienta sipas search",
+  "clients.table.not_found_without_search": "Nuk ka klienta momentalisht",
+  "clients.view.no_reservations_for_client": "Nuk ka rezervime për këte klient.",
+  "clients.view.no_payments_for_client": "Nuk ka pagesa për këte klient.",
 
   "expenses.main.title": "Shpenzimet",
   "expenses.forms.create_title": "Krijo Shpenzim",

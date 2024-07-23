@@ -1,6 +1,6 @@
 @extends('layouts.app')
 @section('header')
-    Klientat
+    {{__('clients.main.title')}}
 @endsection
 @section('content')
     <div class="vms_panel">
@@ -44,10 +44,10 @@
                         <th width="40">
                             <input class="main-checkbox bug-checkbox-input" type="checkbox">
                         </th>
-                        <th>Emri</th>
-                        <th>Emaili</th>
-                        <th>Telefoni</th>
-                        <th>Telefoni Opsional</th>
+                        <th>{{__('clients.table.name')}}</th>
+                        <th>{{__('clients.table.email')}}</th>
+                        <th>{{__('clients.table.phone_number')}}</th>
+                        <th>{{__('clients.table.additional_phone_number')}}</th>
                         <th></th>
                     </tr>
                     </thead>
@@ -88,9 +88,9 @@
         @else
             <div class="hubers-empty-tab">
                 @if ($is_on_search)
-                    <h5 class="text-center">Nuk ka klienta sipas search</h5>
+                    <h5 class="text-center">{{__('clients.table.not_found_with_search')}}</h5>
                     @else
-                    <h5 class="text-center">Nuk ka klienta momentalisht</h5>
+                    <h5 class="text-center">{{__('clients.table.not_found_without_search')}}</h5>
                 @endif
             </div>
         @endif
