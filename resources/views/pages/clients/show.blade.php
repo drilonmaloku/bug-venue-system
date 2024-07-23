@@ -1,7 +1,7 @@
 @extends('layouts.app')
 
 @section('header')
-   Klienti : {{$client->name}}
+   {{__('clients.view.title')}} : {{$client->name}}
 @endsection
 @section('content')
     <div class="vms_panel">

@@ -31,8 +31,8 @@
                     </div>
                 </div>
                 <div class="hubers-filter-list-actions">
-                    <button type="submit" class="hubers-btn mr-2">Filtro</button>
-                    <a href="/clients" class="hubers-btn inverse">Reset</a>
+                    <button type="submit" class="hubers-btn mr-2">{{__('general.filter_btn')}}</button>
+                    <a href="/clients" class="hubers-btn inverse">{{__('general.filter_reset_btn')}}</a>
                 </div>
             </div>
         </form>

@@ -1,6 +1,8 @@
 {
   "general.create_btn": "Krijo",
   "general.save_btn": "Ruaj",
+  "general.filter_btn": "Filtro",
+  "general.filter_reset_btn": "Reset",
 
   "dashboard.dashboard": "Dashboard",
   "dashboard.reservations": "Rezervimet",
@@ -28,6 +30,7 @@
   "menus.table.description": "Përshkrimi",
 
   "clients.main.title": "Klientat",
+
   "clients.forms.update_title": "Përditso Klientin",
   "clients.table.information": "Informacioni",
   "clients.table.name": "Emri",
@@ -36,6 +39,7 @@
   "clients.table.additional_phone_number": "Telefoni Opsional",
   "clients.table.not_found_with_search": "Nuk ka klienta sipas search",
   "clients.table.not_found_without_search": "Nuk ka klienta momentalisht",
+  "clients.view.title": "Klienti",
   "clients.view.no_reservations_for_client": "Nuk ka rezervime për këte klient.",
   "clients.view.no_payments_for_client": "Nuk ka pagesa për këte klient.",
 
