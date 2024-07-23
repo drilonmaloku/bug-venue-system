@@ -42,7 +42,7 @@ class VenuesService
      * @param int|array $id
      **/
     public function getByIds($ids){
-        return Client::whereIn('id', $ids)->get();
+        return Venue::whereIn('id', $ids)->get();
     }
 
     /**

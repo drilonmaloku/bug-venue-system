@@ -6,6 +6,8 @@ use Maatwebsite\Excel\Facades\Excel;
 use App\Http\Controllers\Controller;
 use App\Modules\Logs\Services\LogService;
 use App\Modules\Clients\Services\VenuesService;
+use App\Modules\Logs\Models\Log;
+use App\Modules\Menus\Exports\MenusExport;
 use RealRashid\SweetAlert\Facades\Alert;
 
 class MenuController extends Controller
@@ -87,6 +89,22 @@ class MenuController extends Controller
         }
         $menuDeleted = $this->menuService->delete($menu);
         return redirect()->to('menus')->withSuccessMessage('Menyja u be delete');
+    }
+
+
+    public function export(Request $request)
+    {
+        $menus = null;
+
+        if($request->has('ids')) {
+            $menus = explode(',', $request->input('ids'));
+        }
+        $this->logService->log([
+            'message' => 'Menus are being exported to Excel',
+            'context' => Log::LOG_CONTEXT_MENU,
+            'ttl'=> Log::LOG_TTL_THREE_MONTHS,
+        ]);
+        return Excel::download(new MenusExport($menus), "menus-export.xlsx");
     }
 
 }

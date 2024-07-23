@@ -340,4 +340,21 @@ class UsersController extends Controller
         }
     }
 
+
+
+    public function export(Request $request)
+    {
+        $users = null;
+
+        if($request->has('ids')) {
+            $users = explode(',', $request->input('ids'));
+        }
+        $this->logService->log([
+            'message' => 'Users are being exported to Excel',
+            'context' => Log::LOG_CONTEXT_MENU,
+            'ttl'=> Log::LOG_TTL_THREE_MONTHS,
+        ]);
+        return Excel::download(new UsersExport($users), "users-export.xlsx");
+    }
+
 }

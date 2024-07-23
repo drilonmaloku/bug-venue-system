@@ -15,6 +15,7 @@ use Illuminate\Http\JsonResponse;
 use Illuminate\Support\Carbon;
 use Maatwebsite\Excel\Facades\Excel;
 use App\Http\Controllers\Controller;
+use App\Modules\Reservations\Exports\ReservationsExport;
 use App\Modules\Reservations\Models\ReservationComment;
 use App\Modules\Reservations\Models\ReservationStaff;
 use App\Modules\Reservations\Resources\ReservationListCommentResource;
@@ -681,5 +682,23 @@ class ReservationsController extends Controller
         } catch (\Exception $e) {
             return response()->json(['message' => 'Internal Server Error'], JsonResponse::HTTP_INTERNAL_SERVER_ERROR);
         }
+    }
+
+
+
+
+    public function export(Request $request)
+    {
+        $reservations = null;
+
+        if($request->has('ids')) {
+            $reservations = explode(',', $request->input('ids'));
+        }
+        // $this->logService->log([
+        //     'message' => 'Payments are being exported to Excel',
+        //     'context' => Log::LOG_CONTEXT_MENU,
+        //     'ttl'=> Log::LOG_TTL_THREE_MONTHS,
+        // ]);
+        return Excel::download(new ReservationsExport($reservations), "reservations-export.xlsx");
     }
 }

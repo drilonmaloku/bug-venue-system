@@ -1,6 +1,6 @@
 @extends('layouts.app')
 @section('header')
-    Përditso Passwordin: {{ $user->first_name }}
+{{__('users.forms.update_password_title')}}: {{ $user->first_name }}
 @endsection
 @section('content')
     <div class="vms_panel">
@@ -13,7 +13,7 @@
                         @method('PUT')
                         <div class="col-md-6">
 
-                            <label for="example-text-input" class="bug-label">Fjalëkailimi i vjetër</label>
+                            <label for="example-text-input" class="bug-label">{{__('users.forms.update_password_old')}}</label>
                             <div class="password-input-toggle">
                                 <input id="password" type="password"
                                     class="bug-text-input @error('password') is-invalid @enderror" name="password_old"
@@ -23,7 +23,7 @@
                         </div>
                         <div class="col-md-6">
 
-                            <label for="example-text-input" class="bug-label">Fjalëkailimi i ri</label>
+                            <label for="example-text-input" class="bug-label">{{__('users.forms.update_password_new')}}</label>
                             <div class="password-input-toggle">
                                 <input id="password" type="password"
                                     class="bug-text-input @error('password') is-invalid @enderror" name="password_new"
@@ -33,7 +33,7 @@
                         </div>
                         <div class="col-md-6">
 
-                            <label for="example-text-input" class="bug-label">Konfirmo fjalëkailimi e ri</label>
+                            <label for="example-text-input" class="bug-label">{{__('users.forms.update_password_new_confirm')}}</label>
                             <div class="password-input-toggle ">
 
                                 <input id="password" type="password"
@@ -43,7 +43,7 @@
                             </div>
                         </div>
                         <div class="col-md-12 mt-2">
-                            <button type="submit" class="hubers-btn">Ruaj</button>
+                            <button type="submit" class="hubers-btn">{{__('general.save_btn')}}</button>
                         </div>
                     </form>
                 </div>

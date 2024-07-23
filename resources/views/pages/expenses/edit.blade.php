@@ -7,7 +7,7 @@
 @extends('layouts.app')
 
 @section('header')
-Përditso Shpenzimin: {{$expense->id}}
+{{__('expenses.title.edit')}}: {{$expense->id}}
 @endsection
 
 @section('content')
@@ -22,24 +22,24 @@ Përditso Shpenzimin: {{$expense->id}}
                         <div class="row">
                         <div class="col-md-12">
                             <div class="form-group">
-                                <label for="example-text-input" class="bug-label">Data*</label>
+                                <label for="example-text-input" class="bug-label">{{__('expenses.table.date')}}*</label>
                                 <input class="bug-text-input" type="date" name="date" required id="dateInput" value="{{$expense->date}}">
                             </div>
                         </div>
                             <div class="col-md-12">
                                 <div class="form-group">
-                                    <label for="example-text-input" class="bug-label">Përshkrimi*</label>
+                                    <label for="example-text-input" class="bug-label">{{__('expenses.table.description')}}*</label>
                                     <input class="bug-text-input" placeholder="Pershkrimi*"   name="description" required value="{{$expense->description}}"></input>
                                 </div>
                             </div>
                             <div class="col-md-12">
                                 <div class="form-group">
-                                    <label for="example-text-input" class="bug-label">Shuma*</label>
+                                    <label for="example-text-input" class="bug-label">{{__('expenses.table.amount')}}*</label>
                                     <input class="bug-text-input" placeholder="Shuma*" required type="number" name="amount" value="{{$expense->amount}}">
                                 </div>
                             </div>
                         </div>
-                        <button id="submitBtn" type="submit" class="hubers-btn">Ruaj</button>
+                        <button id="submitBtn" type="submit" class="hubers-btn">{{__('expenses.table.save')}}</button>
                     </form>
                 </div>
             </div>

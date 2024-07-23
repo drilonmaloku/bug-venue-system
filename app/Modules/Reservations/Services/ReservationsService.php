@@ -82,7 +82,7 @@ class ReservationsService
      * @param int|array $id
      **/
     public function getByIds($ids){
-        return Client::whereIn('id', $ids)->get();
+        return Reservation::whereIn('id', $ids)->get();
     }
 
     /**

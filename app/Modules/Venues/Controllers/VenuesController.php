@@ -3,7 +3,10 @@
 use App\Modules\Venues\Services\VenuesService;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
+use App\Modules\Logs\Models\Log;
 use App\Modules\Logs\Services\LogService;
+use App\Modules\Venues\Exports\VenuesExport;
+use Maatwebsite\Excel\Facades\Excel;
 use RealRashid\SweetAlert\Facades\Alert;
 
 class VenuesController extends Controller
@@ -113,5 +116,20 @@ class VenuesController extends Controller
         }
     }
 
+
+    public function export(Request $request)
+    {
+        $venues = null;
+
+        if($request->has('ids')) {
+            $venues = explode(',', $request->input('ids'));
+        }
+        $this->logService->log([
+            'message' => 'Venues are being exported to Excel',
+            'context' => Log::LOG_CONTEXT_MENU,
+            'ttl'=> Log::LOG_TTL_THREE_MONTHS,
+        ]);
+        return Excel::download(new VenuesExport($venues), "venues-export.xlsx");
+    }
 
 }

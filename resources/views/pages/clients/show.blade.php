@@ -48,14 +48,14 @@
                 <table class="bug-venue-table">
                     <thead>
                     <tr>
-                        <th>Data</th>
+                        <th>{{__('clients.table.date')}}</th>
                         <th class="text-uppercase text-secondary text-sm font-weight-bolder opacity-7">
-                            Salla</th>
+                            {{__('clients.table.venue')}}</th>
                         <th class="text-uppercase text-secondary text-sm font-weight-bolder opacity-7">
-                            Pagesa
+                            {{__('clients.table.payment')}}    
                         </th>
                         <th class="text-uppercase text-secondary text-sm font-weight-bolder opacity-7">
-                            Pershkrimi</th>
+                            {{__('clients.table.description')}}   </th>
                         <th width="40" class="text-uppercase text-secondary text-sm font-weight-bolder opacity-7">
                         </th>
                     </tr>
@@ -95,18 +95,18 @@
         @endif
     </div>
     <div class="vms_panel">
-        <h5>Pagesat:</h5>
+        <h5>{{__('payments.main.title')}} </h5>
         @if(count($client->payments) > 0)
             <div class="table-responsive ">
                 <table class="bug-venue-table">
                     <thead>
                     <tr>
                         <th class="">
-                            Data</th>
+                            {{__('payments.table.date')}}</th>
                         <th class="text-uppercase text-secondary text-sm font-weight-bolder opacity-7">
-                            Shuma</th>
+                            {{__('expenses.table.amount')}}</th>
                         <th class="text-uppercase text-secondary text-sm font-weight-bolder opacity-7">
-                            Shenime</th>
+                            {{__('clients.table.notes')}}</th>
                         <th width="40" class="text-uppercase text-secondary text-sm font-weight-bolder opacity-7">
                         </th>
                     </tr>

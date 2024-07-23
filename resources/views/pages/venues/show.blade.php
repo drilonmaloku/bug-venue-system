@@ -1,7 +1,7 @@
 @extends('layouts.app')
 
 @section('header')
-    Salla: {{$venue->name}}
+{{__('venue.title.single1')}}: {{$venue->name}}
 @endsection
 @section('content')
     <div class="vms_panel">
@@ -17,20 +17,20 @@
                 <table>
                     <thead>
                     <tr>
-                        <th colspan="2">Informacioni:</th>
+                        <th colspan="2">{{__('venue.title.information')}}:</th>
                     </tr>
                     </thead>
                     <tbody>
                     <tr>
-                        <td>EMRI</td>
+                        <td>{{__('venues.table.name')}}</td>
                         <td>{{ $venue->name }}</td>
                     </tr>
                     <tr>
-                        <td>Përshkrimi</td>
+                        <td>{{__('venues.table.description')}}</td>
                         <td>{{ $venue->description }} </td>
                     </tr>
                     <tr>
-                        <td>Kapaciteti</td>
+                        <td>{{__('venues.table.capacity')}}</td>
                         <td>{{ $venue->capacity }}</td>
                     </tr>
                     </tbody>
@@ -39,23 +39,23 @@
         </div>
     </div>
     <div class="vms_panel">
-        <h5>Rezervimet:</h5>
+        <h5>{{__('venue.title.reservation')}}:</h5>
         @if(count($venue->reservations) > 0)
             <div class="table-responsive ">
                 <table class="bug-venue-table">
                     <thead>
                     <tr>
                         <th class="">
-                            Date</th>
+                            {{__('venue.title.reservation.date')}}</th>
                         <th class="text-uppercase text-secondary text-sm font-weight-bolder opacity-7">
-                            Venue</th>
+                            {{__('venue.title.reservation.venue')}}</th>
                         <th class="text-uppercase text-secondary text-sm font-weight-bolder opacity-7">
-                            Description</th>
+                            {{__('venue.title.reservation.description')}}</th>
                         <th class="text-uppercase text-secondary text-sm font-weight-bolder opacity-7">
-                            Payment
+                            {{__('venue.title.reservation.payment')}}
                         </th>
                         <th class="text-uppercase text-secondary text-sm font-weight-bolder opacity-7">
-                            Klienti
+                            {{__('venue.title.reservation.client')}}
                         </th>
                         <th width="40" class="text-uppercase text-secondary text-sm font-weight-bolder opacity-7">
                         </th>
@@ -93,7 +93,7 @@
             </div>
         @else
             <div class="hubers-empty-tab">
-                <h5 class="text-center">Nuk ka rezervime momentalisht</h5>
+                <h5 class="text-center"> {{__('venue.table.not_found_without_search.reservation')}}</h5>
             </div>
         @endif
     </div>

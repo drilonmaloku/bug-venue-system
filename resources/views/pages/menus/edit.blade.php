@@ -1,6 +1,6 @@
 @extends('layouts.app')
 @section('header')
-    Përditso Menun: {{$menu->name}}
+{{__('menu.title.update')}}: {{$menu->name}}
 @endsection
 @section('content')
     <div class="vms_panel">
@@ -13,26 +13,26 @@
                         <div class="row">
                             <div class="col-md-12">
                                 <div class="form-group">
-                                    <label for="example-text-input" class="bug-label">Emri*</label>
+                                    <label for="example-text-input" class="bug-label">{{__('menu.table.name')}}*</label>
                                     <input class="bug-text-input" placeholder="Emri*" type="text" required  name="name" value="{{$menu->name}}">
                                 </div>
                             </div>
                             <div class="col-md-12">
                                 <div class="form-group">
-                                    <label for="example-text-input" class="bug-label">Pershkrimi</label>
+                                    <label for="example-text-input" class="bug-label">{{__('menu.table.description')}}</label>
                                     <textarea class="bug-text-input" placeholder="Pershkrimki" type="text"  rows="4" name="description" value="{{$menu->description}}">{{$menu->description}}</textarea>
 
                                 </div>
                             </div>
                             <div class="col-md-12">
                                 <div class="form-group">
-                                    <label for="example-text-input" class="bug-label">Qmimi*</label>
+                                    <label for="example-text-input" class="bug-label">{{__('menu.table.price')}}*</label>
                                     <input type="number" placeholder="Qmimi" class="bug-text-input"  name="price" required value="{{$menu->price}}">
                                 </div>
                             </div>
                        
                         </div>
-                        <button type="submit" class="hubers-btn">Ruaj</button>
+                        <button type="submit" class="hubers-btn">{{__('general.save_btn')}}</button>
 
 
                     </form>

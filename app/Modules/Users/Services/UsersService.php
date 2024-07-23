@@ -17,10 +17,23 @@ class UsersService
 {
     public $logService;
 
-    public function __construct(LogService $logService)
+    public function __construct()
     {
-        $this->logService = $logService;
+        $this->logService = app()->make(LogService::class);
     }
+
+
+
+
+
+     /**
+     * Get Venues by IDs
+     * @param int|array $id
+     **/
+    public function getByIds($ids){
+        return User::whereIn('id', $ids)->get();
+    }
+
 
      /**
      * Retrieve all users with roles of 'admin' or 'super-admin'.
