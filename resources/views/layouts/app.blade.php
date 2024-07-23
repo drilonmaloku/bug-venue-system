@@ -58,7 +58,7 @@
                 <div class="hubers-navbar-links">
                     <ul>
                         <li><a class="{{ Request::is(['dashboard']) ? 'active' : '' }}" href="{{route('dashboard.index')}}">Dashboard</a></li>
-                        <li><a class="{{ Request::is(['reservations','reservations/*']) ? 'active' : '' }}" href="{{route('reservations.index')}}">Rezervimet</a></li>
+                        <li><a class="{{ Request::is(['reservations','reservations/*']) ? 'active' : '' }}" href="{{route('reservations.index')}}">{{__('dashboard.reservations')}}</a></li>
                         <li><a class="{{ Request::is(['expenses','expenses/*']) ? 'active' : '' }}" href="{{route('expenses.index')}}">Shpenzimet</a></li>
                         <li><a class="{{ Request::is(['payments','payments/*']) ? 'active' : '' }}" href="{{route('payments.index')}}">Pagesat</a></li>
                         <li><a class="{{ Request::is(['menus','menus/*']) ? 'active' : '' }}" href="{{route('menus.index')}}">Menut</a></li>
@@ -66,16 +66,13 @@
                         <li><a class="{{ Request::is(['users','users/*']) ? 'active' : '' }}" href="{{route('users.index')}}">Përdoruesit</a></li>
                         <li><a class="{{ Request::is(['venues','venues/*']) ? 'active' : '' }}" href="{{route('venues.index')}}">Sallat</a></li>
                         @role(['super-admin', 'system-admin'])
-                        <li><a class="{{ Request::is(['reports','reports-generated']) ? 'active' : '' }}" href="{{ route('reports.index') }}">Raportet</a></li>
-                        <li><a class="{{ Request::is(['logs','logs/*']) ? 'active' : '' }}" href="{{ route('logs.index') }}">Aktiviteti</a></li>
-                    @endrole
-                    
-
+                            <li><a class="{{ Request::is(['reports','reports-generated']) ? 'active' : '' }}" href="{{ route('reports.index') }}">Raportet</a></li>
+                            <li><a class="{{ Request::is(['logs','logs/*']) ? 'active' : '' }}" href="{{ route('logs.index') }}">Aktiviteti</a></li>
+                        @endrole
                         @role('system-admin' )
                             <li><a class="{{ Request::is(['locations','locations/*']) ? 'active' : '' }}" href="{{route('locations.index')}}">Locations</a></li>
                         @endrole
                         <li><a class="{{ Request::is(['supports-tickets','supports-tickets/*']) ? 'active' : '' }}" href="{{route('support-tickets.index')}}">Support Tickets</a></li>
-
                         <li><a class="{{ Request::is(['profile']) ? 'active' : '' }}" href="{{route('profile')}}">Profili</a></li>
                     </ul>
                     <div class="hubers-navbar-logout">
@@ -86,8 +83,6 @@
                                 Log Out
                             </button>
                         </form>
-
-
                     </div>
                 </div>
             </div>
@@ -99,8 +94,6 @@
                         Log Out
                     </button>
                 </form>
-
-
             </div>
         </div>
         <div class="hubers-body-content">
@@ -108,9 +101,7 @@
                 <h5 class="mb-0">@yield('header')</h5>
                 @yield('header-actions')
             </header>
-
-                @yield('content')
-
+            @yield('content')
         </div>
     </div>
 

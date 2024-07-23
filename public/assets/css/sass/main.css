@@ -1824,6 +1824,23 @@ td {
 .filter-items {
   margin-bottom: 16px;
 }
+.filter-items .filter-items-options {
+  display: flex;
+  align-items: center;
+}
+
+.export-options {
+  display: inline-flex;
+  align-items: center;
+  margin-right: 8px;
+  background: #F8FBFC;
+  border: 1px solid #EAF3F5;
+  flex: 0 1 auto;
+  padding: 12px;
+  border-radius: 4px;
+  position: relative;
+  cursor: pointer;
+}
 
 .huber-filter-btn {
   display: inline-flex;

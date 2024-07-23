@@ -60,9 +60,47 @@ var filterInputOptions = {
         });
     }
 }
+var checkboxOptions = {
+    init: function () {
+        var mainCheckbox = document.querySelector('.main-checkbox');
+        var checkboxes = document.querySelectorAll('.table-checkbox');
+
+        if (mainCheckbox) {
+            mainCheckbox.addEventListener('click', () => {
+                checkboxes.forEach(checkbox => checkbox.checked = mainCheckbox.checked);
+            });
+
+            checkboxes.forEach(checkbox => {
+                checkbox.addEventListener('click', () => {
+                    mainCheckbox.checked = Array.from(checkboxes).every(cb => cb.checked);
+                });
+            });
+        }
+    }
+}
+var exportOptions = {
+    export: function (baseUrl) {
+        const selectedCheckboxes = document.querySelectorAll('.table-checkbox:checked');
+        let selectedIds = [];
+        selectedCheckboxes.forEach(checkbox => {
+            selectedIds.push(checkbox.value);
+        });
+        if (selectedIds.length > 0) {
+            const link = document.createElement('a');
+            link.href = `${baseUrl}?ids=${selectedIds.join(',')}`;
+            link.download = 'clients_export.csv';  // Change the file name if necessary
+            document.body.appendChild(link);
+            link.click();
+            document.body.removeChild(link);
+        } else {
+            alert('Please select at least one client to export.');
+        }
+    }
+}
 document.addEventListener('DOMContentLoaded', function () {
     menuOptions.init();
     filterOptions.init();
     passwordToggle.init();
     filterInputOptions.init();
+    checkboxOptions.init();
 });

@@ -1,0 +1,41 @@
+{
+  "Rezervimet": "Rezervimet",
+  "Shpenzimet": "Shpenzimet",
+  "Pagesat": "Pagesat",
+  "Menut": "Menut",
+  "Klientat": "Klientat",
+  "Përdoruesit": "Përdoruesit",
+  "Sallat": "Sallat",
+  "Raportet": "Raportet",
+  "Aktiviteti": "Aktiviteti",
+  "Locations": "Locations",
+  "Support Tickets": "Support Tickets",
+
+
+  "menus.main.title": "Menut",
+  "menus.forms.create_btn": "Krijo",
+  "menus.forms.create_title": "Krijo Menu",
+  "menus.forms.update_title": "Përditso Menun",
+  "menus.table.information": "Informacioni",
+  "menus.table.name": "Emri",
+  "menus.table.price": "Qmimi",
+  "menus.table.description": "Përshkrimi",
+
+
+  "logs.main.title": "Aktiviteti",
+  "logs.table.information": "Informacioni",
+  "logs.table.user": "Përdoruesi",
+  "logs.table.date": "Data",
+  "logs.table.message": "Mesazhi",
+  "logs.table.context": "Konteksti",
+  "logs.table.previous_data": "Të dhënat paraprake",
+  "logs.table.updated_data": "Të dhënat e perditësuara",
+
+  "venues.forms.create_btn": "Krijo",
+  "venues.forms.create_title": "Krijo Sallë",
+  "venues.forms.save": "Ruaj",
+  "venues.table.information": "Informacioni",
+  "venues.table.name": "Emri",
+  "venues.table.description": "Përshkrimi",
+  "venues.table.capacity": "Kapaciteti"
+}

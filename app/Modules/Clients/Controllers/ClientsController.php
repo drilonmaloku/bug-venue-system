@@ -1,10 +1,13 @@
 <?php namespace App\Modules\Clients\Controllers;
 
 
+use App\Modules\Clients\Exports\ClientsExport;
 use App\Modules\Clients\Services\ClientsService;
+use App\Modules\Logs\Models\Log;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\Modules\Logs\Services\LogService;
+use Maatwebsite\Excel\Facades\Excel;
 use RealRashid\SweetAlert\Facades\Alert;
 
 class ClientsController extends Controller
@@ -75,6 +78,21 @@ class ClientsController extends Controller
                 'message' => 'Internal Server Error'
             ], 500);
         }
+    }
+
+    public function export(Request $request)
+    {
+        $clients = null;
+
+        if($request->has('ids')) {
+            $clients = explode(',', $request->input('ids'));
+        }
+        $this->logService->log([
+            'message' => 'Clients are being exported to Excel',
+            'context' => Log::LOG_CONTEXT_CLIENTS,
+            'ttl'=> Log::LOG_TTL_THREE_MONTHS,
+        ]);
+        return Excel::download(new ClientsExport($clients), "clients-export.xlsx");
     }
 
 }
