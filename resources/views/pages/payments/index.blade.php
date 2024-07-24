@@ -27,11 +27,33 @@
                         <label>{{__('payment.forms.search')}}:</label>
                         <input placeholder="Search" class="hubers-text-input white medium" type="text" name="search" value="{{ request('search') }}">
                     </div>
+                  
+
+
                     <div class="hubers-filter-group">
-                        <label>{{__('payment.table.date')}}:</label>
-                        <input placeholder="Search" class="hubers-text-input white medium" type="date" name="date" value="{{old('date',app('request')->input('date'))}}">
+                        <label>Start date:</label>
+                        <input
+                            id="start_date"
+                            name="start_date"
+                            type="date"
+                           class="hubers-text-input white medium"
+                          value="{{old('date',app('request')->input('start_date'))}}"
+                        />
+                    </div>
+                    <div class="hubers-filter-group">
+                        <label>End date:</label>
+                        <input
+                            id="end_date"
+                            name="end_date"
+                            type="date"
+                          class="hubers-text-input white medium"
+                          value="{{old('date',app('request')->input('end_date'))}}"
+
+                        />
                     </div>
                 </div>
+                
+
                 
                 <div class="hubers-filter-list-actions">
                     <button type="submit" class="hubers-btn mr-2">{{__('general.filter_btn')}}</button>
