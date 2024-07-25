@@ -76,31 +76,15 @@
                         <th width="40">
                             <input class="main-checkbox bug-checkbox-input" type="checkbox">
                         </th>
-                        <th class="">
-                            Data</th>
-                        <th class="text-uppercase text-secondary text-sm font-weight-bolder opacity-7">
-                            Salla</th>
-                        <th class="text-uppercase text-secondary text-sm font-weight-bolder opacity-7">
-                            Pershkrimi</th>
-                        <th class="text-uppercase text-secondary text-sm font-weight-bolder opacity-7">
-                            Pagesa
-                        </th>
-                        <th class="text-uppercase text-secondary text-sm font-weight-bolder opacity-7">
-                            Klienti
-                        </th>
-                        <th class="text-uppercase text-secondary text-sm font-weight-bolder opacity-7">
-                            Sherbimi Totali
-                        </th>
-
-                        <th class="text-uppercase text-secondary text-sm font-weight-bolder opacity-7">
-                            Zbritja Totali
-                        </th>
-
-                        <th class="text-uppercase text-secondary text-sm font-weight-bolder opacity-7">
-                            Data e krijimit te Rezervimit
-                        </th>
-                        <th width="40" class="text-uppercase text-secondary text-sm font-weight-bolder opacity-7">
-                        </th>
+                        <th>Data</th>
+                        <th>Salla</th>
+                        <th>Pershkrimi</th>
+                        <th>Pagesa</th>
+                        <th>Klienti</th>
+                        <th>Sherbimi Totali</th>
+                        <th>Zbritja Totali</th>
+                        <th>Data e krijimit te Rezervimit</th>
+                        <th width="40"></th>
                     </tr>
                     </thead>
                     <tbody>

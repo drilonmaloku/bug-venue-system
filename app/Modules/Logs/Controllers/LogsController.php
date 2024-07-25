@@ -3,6 +3,8 @@
 namespace App\Modules\Logs\Controllers;
 
 
+use App\Modules\Logs\Exports\LogsExport;
+use App\Modules\Logs\Models\Log;
 use App\Modules\Users\Services\UsersService;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
@@ -46,6 +48,21 @@ class LogsController extends Controller
         return view('pages/logs/show',[
             'log'=>$log
         ]);
+    }
+
+    public function export(Request $request)
+    {
+        $logs = null;
+
+        if($request->has('ids')) {
+            $logs = explode(',', $request->input('ids'));
+        }
+        $this->logService->log([
+            'message' => 'Logs are being exported to Excel',
+            'context' => Log::LOG_CONTEXT_COMMON,
+            'ttl'=> Log::LOG_TTL_THREE_MONTHS,
+        ]);
+        return Excel::download(new LogsExport($logs), "logs-export.xlsx");
     }
 
 }

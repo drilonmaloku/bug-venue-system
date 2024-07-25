@@ -48,6 +48,15 @@
                         </div>
                         <div class="col-md-12">
                             <div class="form-group">
+                                <label for="example-text-input" class="bug-label">{{__('users.table.language')}}</label>
+                                <select class="bug-text-input" name="default_language">
+                                    <option value="sq">{{__('users.table.language.sq')}}</option>
+                                    <option value="en">{{__('users.table.language.en')}}</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="col-md-12">
+                            <div class="form-group">
                                 <label for="example-text-input" class="bug-label">{{__('users.table.password')}}</label>
                                 <div class="password-input-toggle">
                                     <input id="password" type="password" class="bug-text-input " placeholder="Password" name="password" required >

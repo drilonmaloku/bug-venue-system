@@ -89,6 +89,14 @@ class LogService
     }
 
     /**
+     * Get Logs by IDs
+     * @param int|array $id
+     **/
+    public function getByIds($ids){
+        return Log::whereIn('id', $ids)->get();
+    }
+
+    /**
      * Store a new log entry.
      *
      * @param Request $request

@@ -205,6 +205,7 @@ class UsersService
             "last_name" => $request->input("last_name"),
             "email" => $request->input("email"),
             "phone" => $request->input("phone"),
+            "language" => $request->input("language"),
             "password" => Hash::make($request->input("password")),
             ]
         );
@@ -309,6 +310,7 @@ class UsersService
         $user->last_name = $request->input('last_name');
         $user->email = $request->input('email');
         $user->phone = $request->input('phone');
+        $user->language = $request->input('language');
 
         $clientSaved = $user->save();
 

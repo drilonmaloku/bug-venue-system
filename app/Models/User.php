@@ -35,6 +35,7 @@ class User extends Authenticatable
      * @var array<int, string>
      */
     protected $fillable = [
+        'language',
         'username',
         'first_name',
         'last_name',
@@ -63,7 +64,7 @@ class User extends Authenticatable
     ];
 
 
-      /**
+    /**
      * The attributes that should be mutated to dates.
      *
      * @var array
@@ -89,10 +90,6 @@ class User extends Authenticatable
         return $locationUser ? $locationUser->location_id : null;
     }
 
-    /**
-     * Define a many-to-many relationship with LocationUser.
-     *
-     */
     public function locationUsers()
     {
         return $this->hasMany(LocationUser::class, 'user_id');
@@ -103,15 +100,11 @@ class User extends Authenticatable
         return $this->belongsToMany(Location::class, 'locations_users', 'user_id', 'location_id');
     }
 
-
-
     public function getCurrentLocationSlug()
     {
         $locationUser = $this->locationUsers->first();
         return $locationUser ? Location::find($locationUser->location_id)->slug : null;
     }
-
-
 
     public function isLocationEnabled()
     {

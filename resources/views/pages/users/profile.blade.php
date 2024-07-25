@@ -43,6 +43,10 @@
                             <td>{{__('users.table.phone_number')}}</td>
                             <td>{{ $user->phone }}</td>
                         </tr>
+                        <tr>
+                            <td>{{__('users.table.language')}}</td>
+                            <td>{{ $user->language == 'sq' ? __('users.table.language.sq') : __('users.table.language.en') }}</td>
+                        </tr>
                     </tbody>
                 </table>
             </div>

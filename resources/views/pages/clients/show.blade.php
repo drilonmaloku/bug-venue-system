@@ -48,21 +48,27 @@
                 <table class="bug-venue-table">
                     <thead>
                     <tr>
+                        <th width="40">
+                            <input class="main-checkbox bug-checkbox-input" type="checkbox">
+                        </th>
                         <th>{{__('clients.table.date')}}</th>
-                        <th class="text-uppercase text-secondary text-sm font-weight-bolder opacity-7">
+                        <th>
                             {{__('clients.table.venue')}}</th>
-                        <th class="text-uppercase text-secondary text-sm font-weight-bolder opacity-7">
+                        <th>
                             {{__('clients.table.payment')}}    
                         </th>
-                        <th class="text-uppercase text-secondary text-sm font-weight-bolder opacity-7">
+                        <th>
                             {{__('clients.table.description')}}   </th>
-                        <th width="40" class="text-uppercase text-secondary text-sm font-weight-bolder opacity-7">
+                        <th width="40">
                         </th>
                     </tr>
                     </thead>
                     <tbody>
                     @foreach($client->reservations as $reservation)
                         <tr>
+                            <td>
+                                <input class="table-checkbox bug-checkbox-input" type="checkbox" value="{{$reservation->id}}">
+                            </td>
                             <td>
                                 {{$reservation->date}}
                             </td>
@@ -101,19 +107,25 @@
                 <table class="bug-venue-table">
                     <thead>
                     <tr>
+                        <th width="40">
+                            <input class="main-checkbox bug-checkbox-input" type="checkbox">
+                        </th>
                         <th class="">
                             {{__('payments.table.date')}}</th>
-                        <th class="text-uppercase text-secondary text-sm font-weight-bolder opacity-7">
+                        <th>
                             {{__('expenses.table.amount')}}</th>
-                        <th class="text-uppercase text-secondary text-sm font-weight-bolder opacity-7">
+                        <th>
                             {{__('clients.table.notes')}}</th>
-                        <th width="40" class="text-uppercase text-secondary text-sm font-weight-bolder opacity-7">
+                        <th width="40">
                         </th>
                     </tr>
                     </thead>
                     <tbody>
                     @foreach($client->payments as $payment)
                         <tr>
+                            <td>
+                                <input class="table-checkbox bug-checkbox-input" type="checkbox" value="{{$reservation->id}}">
+                            </td>
                             <td>
                                 {{$payment->date}}
                             </td>

@@ -1,6 +1,7 @@
 {
   "general.create_btn": "Krijo",
   "general.save_btn": "Ruaj",
+  "general.filter_title": "Filtro",
   "general.filter_btn": "Filtro",
   "general.filter_reset_btn": "Reset",
   "general.delete_btn": "Fshij",
@@ -74,9 +75,9 @@
   "users.forms.create_title": "Krijo Përdorues",
   "users.forms.update_title": "Përditso Profilin",
   "users.forms.update_password_title": "Përditso Passwordin",
-  "users.forms.update_password_old": "Fjalëkailimi i vjetër",
-  "users.forms.update_password_new": "Fjalëkailimi i ri",
-  "users.forms.update_password_new_confirm": "Konfirmo fjalëkailimi e ri",
+  "users.forms.update_password_old": "Fjalëkalimi i vjetër",
+  "users.forms.update_password_new": "Fjalëkalimi i ri",
+  "users.forms.update_password_new_confirm": "Konfirmo fjalëkalimin e ri",
 
 
   "users.table.information": "Informacioni",
@@ -87,6 +88,9 @@
   "users.table.phone_number": "Telefoni",
   "users.table.password": "Password",
   "users.table.role": "Roli",
+  "users.table.language": "Gjuha",
+  "users.table.language.en": "Anglisht",
+  "users.table.language.sq": "Shqip",
   "users.filter.search": "Search",
   "users.table.not_found_with_search": "Nuk ka perdorues sipas search",
   "users.table.not_found_without_search": "Nuk ka perdorues momentalisht",
@@ -114,7 +118,8 @@
   "logs.table.context": "Konteksti",
   "logs.table.previous_data": "Të dhënat paraprake",
   "logs.table.updated_data": "Të dhënat e perditësuara",
-
+  "logs.table.not_found_with_search": "Nuk ka aktivitet sipas search",
+  "logs.table.not_found_without_search": "Nuk ka aktivitet momentalisht",
 
   "venues.forms.create_btn": "Krijo",
   "venues.forms.create_title": "Krijo Sallë",
@@ -162,6 +167,20 @@
   "payment.table.not_found_without_search": "Nuk ka pagesa momentalisht",
   "payment.title.update": "Përditso Pagesën",
   "payment.title.single": "Pagesa",
-  "payment.title.information": "Informatat"
+  "payment.title.information": "Informatat",
+
+
+
+  "reservations.view.services": "Shërbimet",
+  "reservations.view.services.form.date": "Data e Sherbimit",
+  "reservations.view.services.form.value": "Vlera e shërbimit",
+  "reservations.view.services.form.notes": "Shënime",
+  "reservations.view.add_service": "Shto shërbim",
+  "reservations.view.no_services": "Nuk ka shërbime ekstra për këte rezervim.",
+  "reservations.view.discounts": "Zbritjet",
+  "reservations.view.add_discount": "Shto zbritje",
+  "reservations.view.no_discounts": "Nuk ka zbritje ekstra për këte rezervim.",
+  "reservations.view.comments": "Komentet",
+  "reservations.view.no_comments": "Nuk ka komente për këte rezervim."
 
 }

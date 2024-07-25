@@ -6,7 +6,6 @@ namespace App\Modules\Users\Controllers;
 
 use App\Modules\Users\Models\LocationUser;
 use Inertia\Inertia;
-
 use App\Models\User;
 use App\Modules\Logs\Models\Log;
 use App\Modules\Logs\Services\LogService;
@@ -18,19 +17,14 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\RedirectResponse;
 use App\Modules\Users\Exports\UsersExport;
 use App\Modules\Users\Services\UsersService;
-use App\Modules\Logs\Resources\LogListResource;
-use App\Modules\Users\Resources\UserListResource;
 use App\Modules\Users\Requests\UpdateUserRequest;
 use App\Modules\Users\Requests\CreateUserRequest;
 use App\Modules\Users\Requests\RegisterUserRequest;
-use App\Modules\Groups\Resources\GroupsListResource;
-use Illuminate\Support\Facades\Auth;
 use RealRashid\SweetAlert\Facades\Alert;
 
 class UsersController extends Controller
 {
     public $usersService;
-
     public $logService;
 
     public function __construct(
@@ -39,7 +33,6 @@ class UsersController extends Controller
     )
     {
         $this->usersService = $usersService;
-
         $this->logService = $logService;
     }
 
@@ -61,8 +54,6 @@ class UsersController extends Controller
             'users'=>$users
         ]);
     }
-
-
 
     public function view($id)
     {
@@ -86,13 +77,10 @@ class UsersController extends Controller
         ]);
     }
 
-
     public function create()
     {
         return view('pages/users/create');
     }
-
-
 
     /**
      * Store a new user.
@@ -122,8 +110,6 @@ class UsersController extends Controller
         }
         return redirect()->to('users')->withSuccessMessage('Perduruesi u krijua me sukses');
     }
-
-
 
     public function profile()
     {
@@ -209,17 +195,18 @@ class UsersController extends Controller
      * @return JsonResponse
      */
      public function update(Request $request,$id) {
-        $client = $this->usersService->getByID($id);
+        $user = $this->usersService->getByID($id);
+
+         $user = $this->usersService->update($request,$user);
+
+         return redirect()->to('users')->withSuccessMessage('Perduruesi u be update me sukses');
 
         if(is_null($client)) {
             return abort(404);
         }
-
         try {
 
-            $client = $this->usersService->update($request,$client);
 
-            return redirect()->to('users')->withSuccessMessage('Perduruesi u be update me sukses');
 
         } catch (\Exception $e) {
             return response()->json([
