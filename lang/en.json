@@ -1,6 +1,7 @@
 {
   "general.create_btn": "Krijo",
   "general.save_btn": "Ruaj",
+  "general.close_btn": "Mbyll",
   "general.filter_title": "Filtro",
   "general.filter_btn": "Filtro",
   "general.filter_reset_btn": "Reset",
@@ -171,16 +172,33 @@
 
 
 
+  "reservations.view.staff": "Stafi",
+  "reservations.view.no_staff": "Nuk ka Staf për këte rezervim.",
+  "reservations.view.add_staff": "Shto Staf",
+  "reservations.view.select_staff": "Selekto Staf",
+
   "reservations.view.services": "Shërbimet",
   "reservations.view.services.form.date": "Data e Sherbimit",
   "reservations.view.services.form.value": "Vlera e shërbimit",
   "reservations.view.services.form.notes": "Shënime",
   "reservations.view.add_service": "Shto shërbim",
   "reservations.view.no_services": "Nuk ka shërbime ekstra për këte rezervim.",
+
   "reservations.view.discounts": "Zbritjet",
   "reservations.view.add_discount": "Shto zbritje",
+  "reservations.view.discounts.form.date": "Data e Zbritjes",
+  "reservations.view.discounts.form.value": "Vlera e Zbritjes",
+  "reservations.view.discounts.form.notes": "Shënime",
   "reservations.view.no_discounts": "Nuk ka zbritje ekstra për këte rezervim.",
-  "reservations.view.comments": "Komentet",
-  "reservations.view.no_comments": "Nuk ka komente për këte rezervim."
 
+  "reservations.view.comments": "Komentet",
+  "reservations.view.no_comments": "Nuk ka komente për këte rezervim.",
+  "reservations.view.add_comment": "Shto koment",
+  "reservations.view.form.comment": "Komenti",
+
+
+  "services.edit.title": "Përditso Shërbimin",
+  "services.edit.form.date": "Data",
+  "services.edit.form.value": "Vlera",
+  "services.edit.notes": "Shënime"
 }

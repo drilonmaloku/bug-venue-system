@@ -45,7 +45,7 @@
         <h5>Rezervimet:</h5>
         @if(count($client->reservations) > 0)
             <div class="table-responsive ">
-                <table class="bug-venue-table">
+                <table class="bug-table">
                     <thead>
                     <tr>
                         <th width="40">
@@ -104,7 +104,7 @@
         <h5>{{__('payments.main.title')}} </h5>
         @if(count($client->payments) > 0)
             <div class="table-responsive ">
-                <table class="bug-venue-table">
+                <table class="bug-table">
                     <thead>
                     <tr>
                         <th width="40">

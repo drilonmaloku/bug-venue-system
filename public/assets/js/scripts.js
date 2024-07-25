@@ -62,24 +62,26 @@ var filterInputOptions = {
 }
 var checkboxOptions = {
     init: function () {
-        var mainCheckbox = document.querySelector('.main-checkbox');
-        var checkboxes = document.querySelectorAll('.table-checkbox');
+        document.querySelectorAll('.bug-table').forEach(table => {
+            var mainCheckbox = table.querySelector('.main-checkbox');
+            var checkboxes = table.querySelectorAll('.table-checkbox');
 
-        if (mainCheckbox) {
-            mainCheckbox.addEventListener('click', () => {
-                checkboxes.forEach(checkbox => checkbox.checked = mainCheckbox.checked);
-            });
-
-            checkboxes.forEach(checkbox => {
-                checkbox.addEventListener('click', () => {
-                    mainCheckbox.checked = Array.from(checkboxes).every(cb => cb.checked);
+            if (mainCheckbox) {
+                mainCheckbox.addEventListener('click', () => {
+                    checkboxes.forEach(checkbox => checkbox.checked = mainCheckbox.checked);
                 });
-            });
-        }
+
+                checkboxes.forEach(checkbox => {
+                    checkbox.addEventListener('click', () => {
+                        mainCheckbox.checked = Array.from(checkboxes).every(cb => cb.checked);
+                    });
+                });
+            }
+        });
     }
 }
 var exportOptions = {
-    export: function (baseUrl) {
+    export: function (baseUrl,filename) {
         const selectedCheckboxes = document.querySelectorAll('.table-checkbox:checked');
         let selectedIds = [];
         selectedCheckboxes.forEach(checkbox => {
@@ -88,7 +90,7 @@ var exportOptions = {
         if (selectedIds.length > 0) {
             const link = document.createElement('a');
             link.href = `${baseUrl}?ids=${selectedIds.join(',')}`;
-            link.download = 'clients_export.csv';  // Change the file name if necessary
+            link.download = filename;  // Change the file name if necessary
             document.body.appendChild(link);
             link.click();
             document.body.removeChild(link);
