@@ -41,6 +41,9 @@
   "clients.table.description": "Përshkrimi",
   "clients.table.notes": "Shënime",
 
+  "clients.alert.success": "Klienti u be update me sukses",
+  "clients.alert.error": "Klienti u be update me sukses",
+
 
   "expenses.main.title": "Shpenzimet",
   "expenses.forms.create_title": "Krijo Shpenzim",

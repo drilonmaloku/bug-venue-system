@@ -28,9 +28,9 @@ class ClientsController extends Controller
     {
         $clients = $this->clientsService->getAll($request);
 
-        if(session('success_message')){
-            Alert::success('Success!', session('success_message'));
-        }
+//        if(session('success_message')){
+//            Alert::success('Success!', session('success_message'));
+//        }
 
         return view('pages/clients/index',[
             'is_on_search'=>count($request->all()),
@@ -70,13 +70,12 @@ class ClientsController extends Controller
         try {
 
             $client = $this->clientsService->update($request,$client);
-
-            return redirect()->to('clients')->withSuccessMessage('Klienti u be update me sukses');
+            alert()->success(__('clients.alert.success'))->autoclose(2000);
+            return redirect()->to('clients');
 
         } catch (\Exception $e) {
-            return response()->json([
-                'message' => 'Internal Server Error'
-            ], 500);
+            alert()->success(__('clients.alert.error'))->autoclose(2000);
+            return redirect()->to('clients');
         }
     }
 
