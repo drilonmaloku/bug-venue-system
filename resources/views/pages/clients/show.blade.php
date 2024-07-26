@@ -42,10 +42,16 @@
         </div>
     </div>
     <div class="vms_panel">
-        <h5>Rezervimet:</h5>
+        <div class="d-flex justify-content-between items-center">
+            <h5 class="mb-0">{{__('reservations.title')}}:</h5>
+            <div class="export-options mb-2" onclick="exportOptions.export('/reservations/export','reservations-export.xlsx','clientReservationsTable')">
+                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-file-text"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/><polyline points="10 9 9 9 8 9"/></svg>
+            </div>
+        </div>
+
         @if(count($client->reservations) > 0)
-            <div class="table-responsive ">
-                <table class="bug-table">
+            <div class="table-responsive">
+                <table class="bug-table" id="clientReservationsTable">
                     <thead>
                     <tr>
                         <th width="40">
@@ -101,9 +107,15 @@
         @endif
     </div>
     <div class="vms_panel">
-        <h5>{{__('payments.main.title')}} </h5>
+        <div class="d-flex justify-content-between items-center">
+            <h5>{{__('payments.main.title')}} </h5>
+            <div class="export-options mb-2" onclick="exportOptions.export('/payments/export','payments-export.xlsx','clientPaymentsTable')">
+                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-file-text"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/><polyline points="10 9 9 9 8 9"/></svg>
+            </div>
+        </div>
+
         @if(count($client->payments) > 0)
-            <div class="table-responsive ">
+            <div class="table-responsive" id="clientPaymentsTable">
                 <table class="bug-table">
                     <thead>
                     <tr>

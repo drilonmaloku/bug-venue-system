@@ -81,12 +81,26 @@ var checkboxOptions = {
     }
 }
 var exportOptions = {
-    export: function (baseUrl,filename) {
-        const selectedCheckboxes = document.querySelectorAll('.table-checkbox:checked');
+    export: function (baseUrl, filename, targetTableId = null) {
+        let selectedCheckboxes;
+
+        if (targetTableId) {
+            const targetTable = document.getElementById(targetTableId);
+            if (targetTable) {
+                selectedCheckboxes = targetTable.querySelectorAll('.table-checkbox:checked');
+            } else {
+                alert('Target table not found.');
+                return;
+            }
+        } else {
+            selectedCheckboxes = document.querySelectorAll('.table-checkbox:checked');
+        }
+
         let selectedIds = [];
         selectedCheckboxes.forEach(checkbox => {
             selectedIds.push(checkbox.value);
         });
+
         if (selectedIds.length > 0) {
             const link = document.createElement('a');
             link.href = `${baseUrl}?ids=${selectedIds.join(',')}`;

@@ -10,7 +10,7 @@
             <div class="modal-dialog" role="document">
                 <div class="modal-content">
                     <div class="modal-header">
-                        <h5 class="modal-title" id="reservationModalLabel">Krijo Rezervim</h5>
+                        <h5 class="modal-title" id="reservationModalLabel">{{__('reservations.create.title')}}</h5>
                         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                             <span aria-hidden="true">&times;</span>
                         </button>
@@ -19,25 +19,23 @@
                         enctype="multipart/form-data">
                         @csrf
                         <div class="modal-body">
-                            <h6><strong>Informatat e Rezervimit</strong></h6>
+                            <h6><strong>{{__('reservations.create.reservation_information')}}</strong></h6>
                             <div class="row">
                                 <div class="col-md-6">
                                     <div class="form-group">
-                                        <label for="example-text-input" class="form-control-label">Data*</label>
+                                        <label for="example-text-input" class="form-control-label">{{__('reservations.create.date')}}*</label>
                                         <input class="bug-text-input" type="date" name="date" required id="dateInput">
                                     </div>
                                 </div>
                                 <div class="col-md-6">
                                     <div class="form-group">
-                                        <label for="example-text-input" class="form-control-label">Numri i të
-                                            ftuarve*</label>
-                                        <input id="numberOfGuests" class="bug-text-input" required type="number"
-                                            name="number_of_guests" required>
+                                        <label for="example-text-input" class="form-control-label">{{__('reservations.create.number_of_guests')}}*</label>
+                                        <input id="numberOfGuests" class="bug-text-input" required type="number" name="number_of_guests" >
                                     </div>
                                 </div>
                                 <div class="col-md-12">
                                     <input type="hidden" name="venue_id" id="venueID">
-                                    Sallat:
+                                    {{__('reservations.create.venues')}}:
                                     <div class="row venue-items">
                                         @foreach ($venues as $venue)
                                             <div class="col-md-4">
@@ -56,9 +54,9 @@
                                 </div>
                                 <div class="col-md-6">
                                     <div class="form-group">
-                                        <label for="example-text-input" class="form-control-label">Menu*</label>
+                                        <label for="example-text-input" class="form-control-label">{{__('reservations.create.menu')}}*</label>
                                         <select required id="menuId" class="bug-text-input" name="menu_id">
-                                            <option value="">Selekto Menun</option>
+                                            <option value="">{{__('reservations.create.select_menu')}}</option>
                                             @foreach ($menus as $menu)
                                                 <option data-price="{{ $menu->price }}" value="{{ $menu->id }}">
                                                     {{ $menu->name }},{{ $menu->price }}</option>
@@ -68,64 +66,63 @@
                                 </div>
                                 <div class="col-md-6">
                                     <div class="form-group">
-                                        <label for="example-text-input" class="form-control-label">Qmimi i Menus*</label>
+                                        <label for="example-text-input" class="form-control-label">{{__('reservations.create.menu_price')}}*</label>
                                         <input required id="menuPrice" class="bug-text-input" type="number" name="menu_price">
                                     </div>
                                 </div>
                                 <div class="col-md-12">
                                     <div class="form-group">
-                                        <label for="example-text-input" class="form-control-label">Shenime</label>
+                                        <label for="example-text-input" class="form-control-label">{{__('reservations.create.notes')}}</label>
                                         <textarea class="bug-text-input" type="text" name="description"></textarea>
                                     </div>
                                 </div>
                                 <div class="col-md-12">
                                     <div class="form-group">
-                                        <h5>Totali: <span id="totalPrice">0</span></h5>
+                                        <h5>{{__('reservations.create.total')}}: <span id="totalPrice">0</span></h5>
                                     </div>
                                 </div>
                             </div>
-                            <h6><strong>Informatat mbi klientin:</strong></h6>
+                            <h6><strong>{{__('reservations.create.client.information')}}:</strong></h6>
                             <div class="row">
                                 <div class="col-md-6">
                                     <div class="form-group">
-                                        <label for="example-text-input" class="form-control-label">Emri</label>
+                                        <label for="example-text-input" class="form-control-label">{{__('reservations.create.client.name')}}</label>
                                         <input required class="bug-text-input" type="text" name="client_name">
                                     </div>
                                 </div>
                                 <div class="col-md-6">
                                     <div class="form-group">
-                                        <label for="example-text-input" class="form-control-label">Emaili</label>
-                                        <input class="bug-text-input" type="text" name="client_email">
-                                    </div>
-                                </div>
-                                <div class="col-md-6">
-                                    <div class="form-group">
-                                        <label for="example-text-input" class="form-control-label">Telefoni*</label>
+                                        <label for="example-text-input" class="form-control-label">{{__('reservations.create.client.phone')}}*</label>
                                         <input required class="bug-text-input" type="text" name="client_phone_number">
                                     </div>
                                 </div>
                                 <div class="col-md-6">
                                     <div class="form-group">
-                                        <label for="example-text-input" class="form-control-label">Telefoni
-                                            Opsional</label>
+                                        <label for="example-text-input" class="form-control-label">{{__('reservations.create.client.email')}}</label>
+                                        <input class="bug-text-input" type="text" name="client_email">
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        <label for="example-text-input" class="form-control-label">{{__('reservations.create.client.additional_phone')}}</label>
                                         <input class="bug-text-input" type="text" name="client_additional_phone_number">
                                     </div>
                                 </div>
                                 <div class="col-md-6">
                                     <div class="form-group">
-                                        <label for="example-text-input" class="form-control-label">Data e Pagesës</label>
+                                        <label for="example-text-input" class="form-control-label">{{__('reservations.create.payment.date')}}</label>
                                         <input required class="bug-text-input" type="date" name="payment_date">
                                     </div>
                                 </div>
                                 <div class="col-md-6">
                                     <div class="form-group">
-                                        <label for="example-text-input" class="form-control-label">Vlera e Pagesës</label>
+                                        <label for="example-text-input" class="form-control-label">{{__('reservations.create.payment.amount')}}</label>
                                         <input class="bug-text-input" type="number" name="initial_payment_value">
                                     </div>
                                 </div>
                                 <div class="col-md-12">
                                     <div class="form-group">
-                                        <label for="example-text-input" class="form-control-label">Shenime</label>
+                                        <label for="example-text-input" class="form-control-label">{{__('reservations.create.payment.notes')}}</label>
                                         <textarea class="bug-text-input" type="text" name="payment_notes"></textarea>
                                     </div>
                                 </div>
@@ -133,8 +130,8 @@
 
                         </div>
                         <div class="modal-footer">
-                            <button type="submit" class="btn btn-primary">Ruaj</button>
-                            <button type="button" class="btn btn-secondary" data-dismiss="modal">Mbyll</button>
+                            <button type="submit" class="btn btn-primary">{{__('general.save_btn')}}</button>
+                            <button type="button" class="btn btn-secondary" data-dismiss="modal">{{__('general.close_btn')}}</button>
                         </div>
                     </form>
 

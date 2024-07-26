@@ -8,7 +8,6 @@ use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\Modules\Logs\Services\LogService;
 use Maatwebsite\Excel\Facades\Excel;
-use RealRashid\SweetAlert\Facades\Alert;
 
 class ClientsController extends Controller
 {
@@ -27,10 +26,6 @@ class ClientsController extends Controller
     public function index(Request $request)
     {
         $clients = $this->clientsService->getAll($request);
-
-//        if(session('success_message')){
-//            Alert::success('Success!', session('success_message'));
-//        }
 
         return view('pages/clients/index',[
             'is_on_search'=>count($request->all()),
@@ -68,11 +63,9 @@ class ClientsController extends Controller
         }
 
         try {
-
             $client = $this->clientsService->update($request,$client);
             alert()->success(__('clients.alert.success'))->autoclose(2000);
             return redirect()->to('clients');
-
         } catch (\Exception $e) {
             alert()->success(__('clients.alert.error'))->autoclose(2000);
             return redirect()->to('clients');
