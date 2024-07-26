@@ -130,11 +130,15 @@
   "venue.title.reservation": "Rezervimet",
   "venue.title.reservation.date": "Data",
   "venue.title.reservation.venue": "Salla",
-  "venue.title.reservation.description": "Pershkrimi",
+  "venue.title.reservation.description": "Përshkrimi",
   "venue.title.reservation.payment": "Pagesa",
   "venue.title.reservation.client": "Klienti",
   "venue.table.not_found_without_search.reservation": "Nuk ka rezervime momentalisht",
   "venues.edit.title": "Përditso Sallen",
+  "venues.alert.success": "Salla u krijua me sukses",
+  "venues.alert.update_success": "Salla u përditsua",
+  "venues.alert.error": "Probleme me krijimin e sallës",
+  "venues.alert.update_error": "Probleme me përditsimin e sallës",
 
 
   "menu.title": "Menut",
