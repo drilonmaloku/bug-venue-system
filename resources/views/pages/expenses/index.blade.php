@@ -34,7 +34,6 @@
                         <input placeholder="Search" class="hubers-text-input white medium" type="date" name="date" value="{{old('date',app('request')->input('date'))}}">
                     </div>
                 </div>
-               
                 <div class="hubers-filter-list-actions">
                     <button type="submit" class="hubers-btn mr-2">{{__('general.filter_btn')}}</button>
                     <a href="/expenses" class="hubers-btn inverse">{{__('general.filter_reset_btn')}}</a>

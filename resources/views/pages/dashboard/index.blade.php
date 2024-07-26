@@ -5,11 +5,6 @@
 @section('content')
     <div class="vms_panel dashboard_panel">
         <div id='calendar'></div>
-        <script>
-            document.addEventListener('DOMContentLoaded', function() {
-
-            });
-        </script>
         <div class="modal fade" id="reservationModal" tabindex="-1" role="dialog" aria-labelledby="reservationModalLabel"
             aria-hidden="true">
             <div class="modal-dialog" role="document">

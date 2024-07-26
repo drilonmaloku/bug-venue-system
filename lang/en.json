@@ -23,16 +23,6 @@
   "dashboard.profile": "Profili",
 
 
-  "menus.main.title": "Menut",
-  "menus.forms.create_btn": "Krijo",
-  "menus.forms.create_title": "Krijo Menu",
-  "menus.forms.update_title": "Përditso Menun",
-  "menus.table.information": "Informacioni",
-  "menus.table.name": "Emri",
-  "menus.table.price": "Qmimi",
-  "menus.table.description": "Përshkrimi",
-
-
   "clients.main.title": "Klientat",
   "clients.forms.update_title": "Përditso Klientin",
   "clients.table.information": "Informacioni",
@@ -148,6 +138,7 @@
   "menu.table.name": "Emri",
   "menu.table.price": "Qmimi",
   "menu.table.description": "Përshkrimi",
+  "menu.forms.create_title": "Krijo Menu",
   "menu.table.not_found_with_search": "Nuk ka menu sipas search",
   "menu.table.not_found_without_search": "Nuk ka menu momentalisht",
   "menu.title.update": "Përditso Menun",
@@ -160,7 +151,7 @@
   "payment.table.value": "Vlera",
   "payment.table.date": "Data",
   "payment.table.reservation": "Rezervimi",
-  "payment.table.description": "Shenime",
+  "payment.table.description": "Shënime",
   "payment.forms.save": "Ruaj",
   "payment.forms.delete": "Fshij",
   "payment.forms.search": "Search",
@@ -169,6 +160,46 @@
   "payment.title.update": "Përditso Pagesën",
   "payment.title.single": "Pagesa",
   "payment.title.information": "Informatat",
+
+
+  "reservations.title": "Rezervimet",
+  "reservations.create_btn": "Krijo",
+  "reservations.table.filter.search": "Search",
+  "reservations.table.filter.date": "Data",
+  "reservations.table.filter.created_date": "Data e krijimit",
+  "reservations.table.filter.select_venue": "Selekto Sallën",
+  "reservations.table.filter.select_menu": "Selekto Menu",
+  "reservations.table.date": "Data",
+  "reservations.table.venue": "Salla",
+  "reservations.table.description": "Përshkrimi",
+  "reservations.table.payment": "Pagesa",
+  "reservations.table.client": "Klienti",
+  "reservations.table.total_services": "Shërbimi Totali",
+  "reservations.table.total_discount": "Zbritja Totali",
+  "reservations.table.created_date": "Data e krijimit",
+  "reservations.table.not_found_with_search": "Nuk ka rezervime sipas search",
+  "reservations.table.not_found_without_search": "Nuk ka rezervime momentalisht",
+
+
+  "reservations.create.title" : "Krijo Rezervim",
+  "reservations.create.reservation_information" : "Informatat e Rezervimit",
+  "reservations.create.date" : "Data",
+  "reservations.create.number_of_guests" : "Numri i të ftuarve",
+  "reservations.create.venues" : "Sallat",
+  "reservations.create.menu" : "Menu",
+  "reservations.create.select_menu" : "Selekto Menu",
+  "reservations.create.menu_price" : "Qmimi i Menus",
+  "reservations.create.notes" : "Shënime",
+  "reservations.create.select_manager" : "Selekto Menagjerin",
+  "reservations.create.total" : "Totali",
+  "reservations.create.client.information" : "Informatat mbi klientin",
+  "reservations.create.client.name" : "Emri",
+  "reservations.create.client.email" : "Emaili",
+  "reservations.create.client.phone" : "Telefoni Opsional",
+  "reservations.create.client.additional_phone" : "Telefoni Opsional",
+  "reservations.create.payment.date" : "Data e Pagesës",
+  "reservations.create.payment.amount" : "Vlera e Pagesës",
+  "reservations.create.payment.notes" : "Shënime",
 
 
 
@@ -200,5 +231,34 @@
   "services.edit.title": "Përditso Shërbimin",
   "services.edit.form.date": "Data",
   "services.edit.form.value": "Vlera",
-  "services.edit.notes": "Shënime"
+  "services.edit.notes": "Shënime",
+
+  "discount.edit.title": "Përditso Zbritjen",
+  "discount.edit.form.date": "Data",
+  "discount.edit.form.value": "Vlera",
+  "discount.edit.notes": "Shënime",
+
+
+  "reports.title": "Gjenero Raport",
+  "reports.period": "Periudha",
+  "reports.generate": "Gjenero",
+  "reports.report.title":"Raporti per periudhen",
+  "reports.report.information":"Te dhenat",
+  "reports.report.days_count":"Numri i ditëve",
+  "reports.report.new_clients":"Klienta të rinj",
+  "reports.report.reservation_count":"Numri i Rezervimeve",
+  "reports.report.payment_count":"Numri i pagesave",
+  "reports.report.payment_amount":"Vlera e pagesave",
+  "reports.report.venues_with_reservations":"Sallat me rezervime",
+  "reports.report.overall_expenses":"Shpenzimet Gjenerale",
+  "reports.report.staff_expenses":"Shpenzimet për staf",
+  "reports.report.total_discount":"Totali Zbritja",
+  "reports.report.total_services":"Totali Sherbimi",
+  "reports.report.information_by_venue":"Të dhënat sipas Sallav",
+  "reports.report.information_by_venue.reservation_count":"Numri i Rezervimeve",
+  "reports.report.information_by_venue.payments_finished":"Pagesa të perfunduara",
+  "reports.report.information_by_venue.payments_coming":"Pagesa në pritje",
+  "reports.report.information_by_venue.overall_expenses":"Shpenzimet e staffit",
+  "reports.report.information_by_venue.total_payment":"Totali i pagesave"
+
 }

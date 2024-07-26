@@ -20,17 +20,17 @@
                             <div class="col-md-12">
                                 <div class="form-group">
                                     <label for="example-text-input" class="bug-label">{{__('venues.table.description')}}</label>
-                                    <textarea class="bug-text-input" rows="4" required name="description" >{{$venue->description}}</textarea>
+                                    <textarea class="bug-text-input" rows="4" name="description" >{{$venue->description}}</textarea>
                                 </div>
                             </div>
                             <div class="col-md-12">
                                 <div class="form-group">
                                     <label for="example-text-input" class="bug-label">{{__('venues.table.capacity')}}</label>
-                                    <input class="bug-text-input" type="number" required name="capacity" value="{{$venue->capacity}}">
+                                    <input class="bug-text-input" type="number" name="capacity" value="{{$venue->capacity}}">
                                 </div>
                             </div>
                         </div>
-                        <button type="submit" class="hubers-btn">{{__('venues.forms.save')}}</button>
+                        <button type="submit" class="hubers-btn">{{__('general.save_btn')}}</button>
                     </form>
                 </div>
             </div>

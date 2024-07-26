@@ -184,11 +184,11 @@
                             <th>ID</th>
 
                             <th>Vlera</th>
-                            <th class="text-uppercase text-secondary text-sm font-weight-bolder opacity-7">
+                            <th>
                                 Data</th>
-                            <th class="text-uppercase text-secondary text-sm font-weight-bolder opacity-7">
+                            <th>
                                 Pershkrimi</th>
-                            <th width="40" class="text-uppercase text-secondary text-sm font-weight-bolder opacity-7">
+                            <th width="40">
                             </th>
                             <th></th>
 
@@ -306,11 +306,11 @@
                         <tr>
                             <th>ID</th>
                             <th>Vlera</th>
-                            <th class="text-uppercase text-secondary text-sm font-weight-bolder opacity-7">
+                            <th>
                                 Data</th>
-                            <th class="text-uppercase text-secondary text-sm font-weight-bolder opacity-7">
+                            <th>
                                 Përshkrimi</th>
-                            <th width="40" class="text-uppercase text-secondary text-sm font-weight-bolder opacity-7">
+                            <th width="40">
                             </th>
                         </tr>
                     </thead>
@@ -424,9 +424,9 @@
                             <th>ID</th>
 
                             <th>Vlera</th>
-                            <th class="text-uppercase text-secondary text-sm font-weight-bolder opacity-7">
+                            <th>
                                 Data</th>
-                            <th class="text-uppercase text-secondary text-sm font-weight-bolder opacity-7">
+                            <th>
                                 Pershkrimi</th>
                             <th width="60">
                             </th>
@@ -485,18 +485,17 @@
                     <thead>
                         <tr>
                             <th>ID</th>
-
-                            <th class="text-uppercase text-secondary text-sm font-weight-bolder opacity-7">
+                            <th>
                                 Numri i te ftuarve</th>
-                            <th class="text-uppercase text-secondary text-sm font-weight-bolder opacity-7">
+                            <th>
                                 Cmimi total</th>
-                            <th class="text-uppercase text-secondary text-sm font-weight-bolder opacity-7">
+                            <th>
                                 Cmimi i menus
                             </th>
-                            <th class="text-uppercase text-secondary text-sm font-weight-bolder opacity-7">
+                            <th>
                                 Zbritja
                             </th>
-                            <th class="text-uppercase text-secondary text-sm font-weight-bolder opacity-7">
+                            <th>
                                 Sherbimi
                             </th>
 

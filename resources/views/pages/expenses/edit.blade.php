@@ -1,9 +1,3 @@
-
-
-
-
-
-
 @extends('layouts.app')
 
 @section('header')
@@ -29,17 +23,17 @@
                             <div class="col-md-12">
                                 <div class="form-group">
                                     <label for="example-text-input" class="bug-label">{{__('expenses.table.description')}}*</label>
-                                    <input class="bug-text-input" placeholder="Pershkrimi*"   name="description" required value="{{$expense->description}}"></input>
+                                    <input class="bug-text-input" placeholder="{{__('expenses.table.description')}}*"   name="description" required value="{{$expense->description}}"></input>
                                 </div>
                             </div>
                             <div class="col-md-12">
                                 <div class="form-group">
                                     <label for="example-text-input" class="bug-label">{{__('expenses.table.amount')}}*</label>
-                                    <input class="bug-text-input" placeholder="Shuma*" required type="number" name="amount" value="{{$expense->amount}}">
+                                    <input class="bug-text-input" placeholder="{{__('expenses.table.amount')}}*" required type="number" name="amount" value="{{$expense->amount}}">
                                 </div>
                             </div>
                         </div>
-                        <button id="submitBtn" type="submit" class="hubers-btn">{{__('expenses.table.save')}}</button>
+                        <button id="submitBtn" type="submit" class="hubers-btn">{{__('general.save_btn')}}</button>
                     </form>
                 </div>
             </div>

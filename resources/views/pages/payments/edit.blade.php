@@ -7,7 +7,6 @@
         <div class="container-fluid">
             <div class="row">
                 <div class="col-md-8">
-                   
                     <form role="form" method="POST" action="{{ route('payments.update',['id'=>$payment->id]) }}" enctype="multipart/form-data">
                         @csrf
                         @method('PUT')
@@ -32,7 +31,7 @@
                                 </div>
                             </div>
                         </div>
-                        <button type="submit" class="hubers-btn">{{__('payment.forms.save')}}</button>
+                        <button type="submit" class="hubers-btn">{{__('general.save_btn')}}</button>
 
 
                     </form>

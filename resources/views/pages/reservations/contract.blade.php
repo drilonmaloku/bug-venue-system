@@ -13,5 +13,5 @@
     <p>Venue: {{ $reservation->venue->name }}</p>
     <p>Date: {{ $reservation->date }}</p>
     <!-- Add more contract details here -->
-</body>
+</body>c
 </html>

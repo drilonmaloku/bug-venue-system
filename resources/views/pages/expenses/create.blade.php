@@ -20,17 +20,17 @@
                         <div class="col-md-12">
                             <div class="form-group">
                                 <label for="example-text-input" class="bug-label">{{__('expenses.table.description')}}*</label>
-                                <textarea class="bug-text-input" rows="4" required name="description" placeholder="Pershkrimi*"></textarea>
+                                <textarea class="bug-text-input" rows="4" required name="description" placeholder="{{__('expenses.table.description')}}*"></textarea>
                             </div>
                         </div>
                         <div class="col-md-12">
                             <div class="form-group">
                                 <label for="example-text-input" class="bug-label">{{__('expenses.table.amount')}}*</label>
-                                <input class="bug-text-input" type="number" required name="amount" placeholder="Shuma*">
+                                <input class="bug-text-input" type="number" required name="amount" placeholder="{{__('expenses.table.amount')}}*">
                             </div>
                         </div>
                     </div>
-                    <button id="submitBtn" type="submit" class="hubers-btn">{{__('expenses.table.save')}}</button>
+                    <button id="submitBtn" type="submit" class="hubers-btn">{{__('general.save_btn')}}</button>
                 </form>
             </div>
         </div>

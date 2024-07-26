@@ -1,11 +1,11 @@
 @extends('layouts.app')
 @section('header')
-    Rezervimet
+    {{__('reservations.title')}}
 @endsection
 @section('header-actions')
-@if(count($menus) > 0 && count($venues) > 0)
-<a class="hubers-btn" href="{{route('reservations.create')}}">Krijo</a>
-@endif
+    @if(count($menus) > 0 && count($venues) > 0)
+    <a class="hubers-btn" href="{{route('reservations.create')}}">{{__('reservations.create_btn')}}</a>
+    @endif
 @endsection
 @section('content')
     <div class="vms_panel">
@@ -13,7 +13,7 @@
             <div class="filter-options">
                 <div class="huber-filter-btn  @if ($is_on_search) active @endif">
                     <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-filter vue-feather__content"><polygon points="22 3 2 3 10 12.46 10 19 14 21 14 12.46 22 3"></polygon></svg>
-                    <p>Filtro</p>
+                    <p>{{__('general.filter_title')}}</p>
                     <span class="huber-filter-btn-arrow">
                         <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
                             <path d="M6 9L12 15L18 9" stroke="black" stroke-width="2" stroke-linecap="round"
@@ -28,24 +28,22 @@
             <div class="hubers-filter-options @if ($is_on_search) active @endif">
                 <div class="hubers-filter-list-options">
                     <div class="hubers-filter-group">
-                        <label>Search:</label>
+                        <label>{{__('reservations.table.filter.search')}}:</label>
                         <input placeholder="Search" class="hubers-text-input white medium" type="text" name="search" value="{{ request('search') }}">
                     </div>
                     <div class="hubers-filter-group">
-                        <label>Data:</label>
+                        <label>{{__('reservations.table.filter.date')}}:</label>
                         <input placeholder="Search" class="hubers-text-input white medium" type="date" name="date" value="{{old('date',app('request')->input('date'))}}">
                     </div>
 
                     <div class="hubers-filter-group">
-                        <label>Data e krijimit:</label>
+                        <label>{{__('reservations.table.filter.created_date')}}:</label>
                         <input placeholder="Search" class="hubers-text-input white medium" type="date" name="created_at" value="{{ old('created_at', app('request')->input('created_at')) }}">
                     </div>
-
-
                     <div class="hubers-filter-group">
-                        <label>Selekto Sallën:</label>
+                        <label>{{__('reservations.table.filter.select_venue')}}:</label>
                         <select class="hubers-select-input white medium" name="venue" id="">
-                            <option value="">Selekto Sallën</option>
+                            <option value="">{{__('reservations.table.filter.select_venue')}}</option>
                             @foreach($venues as $venue)
                             <option value="{{$venue->id}}" @if($venue->id == app('request')->input('venue')) selected @endif>{{$venue->name}}</option>
                             @endforeach
@@ -53,9 +51,9 @@
                     </div>
 
                     <div class="hubers-filter-group">
-                        <label>Selekto Menunë:</label>
+                        <label>{{__('reservations.table.filter.select_menu')}}:</label>
                         <select class="hubers-select-input white medium" name="menu" id="">
-                            <option value="">Selekto Menunë</option>
+                            <option value="">{{__('reservations.table.filter.select_menu')}}</option>
                             @foreach($menus as $menu)
                             <option value="{{$menu->id}}" @if($menu->id == app('request')->input('menu')) selected @endif>{{$menu->name}}</option>
                             @endforeach
@@ -63,8 +61,8 @@
                     </div>
                 </div>
                 <div class="hubers-filter-list-actions">
-                    <button type="submit" class="hubers-btn mr-2">Filtro</button>
-                    <a href="/reservations" class="hubers-btn inverse">Reset</a>
+                    <button type="submit" class="hubers-btn mr-2">{{__('general.filter_btn')}}</button>
+                    <a href="/reservations" class="hubers-btn inverse">{{__('general.filter_reset_btn')}}</a>
                 </div>
             </div>
         </form>
@@ -76,14 +74,14 @@
                         <th width="40">
                             <input class="main-checkbox bug-checkbox-input" type="checkbox">
                         </th>
-                        <th>Data</th>
-                        <th>Salla</th>
-                        <th>Pershkrimi</th>
-                        <th>Pagesa</th>
-                        <th>Klienti</th>
-                        <th>Sherbimi Totali</th>
-                        <th>Zbritja Totali</th>
-                        <th>Data e krijimit te Rezervimit</th>
+                        <th>{{__('reservations.table.date')}}</th>
+                        <th>{{__('reservations.table.venue')}}</th>
+                        <th>{{__('reservations.table.description')}}</th>
+                        <th>{{__('reservations.table.payment')}}</th>
+                        <th>{{__('reservations.table.client')}}</th>
+                        <th>{{__('reservations.table.total_services')}}</th>
+                        <th>{{__('reservations.table.total_discount')}}</th>
+                        <th>{{__('reservations.table.created_date')}}</th>
                         <th width="40"></th>
                     </tr>
                     </thead>
@@ -134,12 +132,11 @@
         @else
             <div class="hubers-empty-tab">
                 @if ($is_on_search)
-                    <h5 class="text-center">Nuk ka rezervime sipas search</h5>
+                    <h5 class="text-center">{{__('reservations.table.not_found_with_search')}}</h5>
                 @else
-                    <h5 class="text-center">Nuk ka rezervime momentalisht</h5>
+                    <h5 class="text-center">{{__('reservations.table.not_found_without_search')}}</h5>
                 @endif
             </div>
         @endif
     </div>
-
 @endsection
