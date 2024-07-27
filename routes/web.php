@@ -57,3 +57,26 @@ Route::get('/migrate', function () {
 
     return response()->json(['message' => 'Migrations ran successfully']);
 });
+
+
+use Symfony\Component\Process\Process;
+use Symfony\Component\Process\Exception\ProcessFailedException;
+
+Route::get('/run-composer-install', function () {
+    // Ensure this route is protected or restricted to prevent unauthorized access
+    // e.g., add authentication checks here
+
+    try {
+        $process = new Process(['composer', 'install'], base_path());
+        $process->run();
+
+        // Check if the process was successful
+        if (!$process->isSuccessful()) {
+            throw new ProcessFailedException($process);
+        }
+
+        return response()->json(['message' => 'Composer install completed successfully.']);
+    } catch (ProcessFailedException $exception) {
+        return response()->json(['error' => 'Composer install failed: ' . $exception->getMessage()], 500);
+    }
+});
