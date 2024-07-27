@@ -103,6 +103,10 @@
             @yield('content')
         </div>
     </div>
+    <div class="languages_option">
+        <a class="<?php if(app()->getLocale() == 'sq') { echo 'active';} ?>" href="{{ url('locale/sq') }}" >SQ</a>
+        <a class="<?php if(app()->getLocale() == 'en') { echo 'active';} ?>" href="{{ url('locale/en') }}" >EN</a>
+    </div>
 
 @endauth
 

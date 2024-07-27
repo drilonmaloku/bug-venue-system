@@ -1,6 +1,6 @@
 @extends('layouts.app')
 @section('header')
-    Dashboard
+    {{__('dashboard.title')}}
 @endsection
 @section('content')
     <div class="vms_panel dashboard_panel">
@@ -153,41 +153,41 @@
                         <table>
                             <thead>
                                 <tr>
-                                    <th colspan="2">Informatat:</th>
+                                    <th colspan="2">{{__('reservations.table.information')}}:</th>
                                     <th></th>
                                 </tr>
                             </thead>
                             <tbody>
                                 <tr>
-                                    <td>Data</td>
+                                    <td>{{__('reservations.table.date')}}</td>
                                     <td></td>
                                 </tr>
                                 <tr>
-                                    <td>Salla</td>
+                                    <td>{{__('reservations.table.venue')}}</td>
                                     <td></td>
                                 </tr>
                                 <tr>
-                                    <td>Numri i te ftuarve</td>
+                                    <td>{{__('reservations.table.number_of_guests')}}</td>
                                     <td></td>
                                 </tr>
                                 <tr>
-                                    <td>Klienti</td>
+                                    <td>{{__('reservations.table.client')}}</td>
                                     <td></td>
                                 </tr>
                                 <tr>
-                                    <td>Koha:</td>
+                                    <td>{{__('reservations.table.time')}}:</td>
                                     <td></td>
                                 </tr>
                                 <tr>
-                                    <td>Pagesa Momentale:</td>
+                                    <td>{{__('reservations.table.current_payment')}}:</td>
                                     <td></td>
                                 </tr>
                                 <tr>
-                                    <td>Pagesa E Mbetur:</td>
+                                    <td>{{__('reservations.table.payment_left')}}:</td>
                                     <td></td>
                                 </tr>
                                 <tr>
-                                    <td>Shuma Totale :</td>
+                                    <td>{{__('reservations.table.total_amount')}}:</td>
                                     <td></td>
                                 </tr>
                             </tbody>
@@ -215,9 +215,7 @@
                      method: 'GET',
                      
                 },
-
                 height: "auto",
-
                 dateClick: function(info) {
                     // Check if the date has an event
                     $('#dateInput').val(info.dateStr);
@@ -240,7 +238,7 @@
                             const tableContent = `
                     <thead>
                         <tr>
-                            <th colspan="2">Informatat:</th>
+                            <th colspan="2">{{__('reservations.table.information')}}:</th>
                             <th>    
                                 <a class="bug-table-item-option" href="/reservations/${reservation.id}">
                                     <i class="fa fa-eye"></i>
@@ -250,49 +248,49 @@
                     </thead>
                     <tbody>
                         <tr>
-                            <td>Data</td>
+                            <td>{{__('reservations.table.date')}}</td>
                             <td>${reservation.date}</td>
                             <td></td>
 
                         </tr>
                         <tr>
-                            <td>Salla</td>
+                            <td>{{__('reservations.table.venue')}}</td>
                             <td>${reservation.venue.name}</td>
                             <td></td>
 
                         </tr>
                         <tr>
-                            <td>Numri i te ftuarve</td>
+                            <td>{{__('reservations.table.number_of_guests')}}</td>
                             <td>${reservation.number_of_guests}</td>
                             <td></td>
 
                         </tr>
                         <tr>
-                            <td>Klienti</td>
+                            <td>{{__('reservations.table.client')}}</td>
                             <td>${reservation.client.name}</td>
                             <td></td>
 
                         </tr>
                         <tr>
-                            <td>Koha:</td>
+                            <td>{{__('reservations.table.time')}}:</td>
                             <td>${reservation.reservation_type_name}</td>
                             <td></td>
 
                         </tr>
                         <tr>
-                            <td>Pagesa Momentale:</td>
+                            <td>{{__('reservations.table.current_payment')}}:</td>
                             <td>${reservation.current_payment}€</td>
                             <td></td>
 
                         </tr>
                         <tr>
-                            <td>Pagesa E Mbetur:</td>
+                            <td>{{__('reservations.table.payment_left')}}:</td>
                             <td>${reservation.total_payment - reservation.current_payment}€</td>
                             <td></td>
 
                         </tr>
                         <tr>
-                            <td>Shuma Totale :</td>
+                            <td>{{__('reservations.table.total_amount')}}:</td>
                             <td>${reservation.total_payment}€</td>
                             <td></td>
 
@@ -342,9 +340,9 @@
                 const slotsContainer = venue.querySelector('.venue-slots');
                 slotsContainer.innerHTML = ''; // Clear the slots container before populating with new slots
                 const labels = {
-                    1: 'Ditë e Plotë',
-                    2: 'Mëngjes',
-                    3: 'Mbrëmje'
+                    1: '{{__('reservation.type.full_day')}}',
+                    2: '{{__('reservation.type.morning')}}',
+                    3: '{{__('reservation.type.night')}}'
                 };
                 keyValuePairs.forEach(slot => {
                     if(slot['value']) {

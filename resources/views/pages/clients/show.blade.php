@@ -58,13 +58,9 @@
                             <input class="main-checkbox bug-checkbox-input" type="checkbox">
                         </th>
                         <th>{{__('clients.table.date')}}</th>
-                        <th>
-                            {{__('clients.table.venue')}}</th>
-                        <th>
-                            {{__('clients.table.payment')}}    
-                        </th>
-                        <th>
-                            {{__('clients.table.description')}}   </th>
+                        <th>{{__('clients.table.venue')}}</th>
+                        <th>{{__('clients.table.payment')}}</th>
+                        <th>{{__('clients.table.description')}}</th>
                         <th width="40">
                         </th>
                     </tr>

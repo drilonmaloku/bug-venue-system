@@ -9,7 +9,6 @@
         <div class="container-fluid">
             <div class="row">
                 <div class="col-md-8">
-                    
                     <form role="form" method="POST" action="{{ route('expenses.update',['id'=>$expense->id]) }}"   enctype="multipart/form-data" onsubmit="return disableSubmitButton()">
                         @csrf
                         @method('PUT')

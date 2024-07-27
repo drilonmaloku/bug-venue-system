@@ -2413,4 +2413,22 @@ body {
   margin-top: 8px;
 }
 
+.languages_option {
+  position: fixed;
+  bottom: 0;
+  right: 0;
+  background: white;
+  box-shadow: -3px -3px 6px rgba(0, 0, 0, 0.16);
+  display: flex;
+}
+.languages_option a {
+  display: block;
+  margin-bottom: 0;
+  padding: 8px;
+  color: black;
+}
+.languages_option a.active {
+  font-weight: bold;
+}
+
 /*# sourceMappingURL=main.css.map */

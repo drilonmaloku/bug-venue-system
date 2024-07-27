@@ -26,7 +26,7 @@
             <div class="hubers-filter-options @if ($is_on_search) active @endif">
                 <div class="hubers-filter-list-options">
                     <div class="hubers-filter-group">
-                        <label>Search:</label>
+                        <label>{{__('clients.filter.search')}}:</label>
                         <input placeholder="Search" class="hubers-text-input white medium" type="text" name="search" value="{{ request('search') }}">
                     </div>
                 </div>

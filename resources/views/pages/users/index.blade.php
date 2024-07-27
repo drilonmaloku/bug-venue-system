@@ -3,8 +3,7 @@
     {{__('users.main.title')}}
 @endsection
 @section('header-actions')
-    <a class="hubers-btn" href="{{route('users.create')}}">{{__('general.create_btn')}}
-    </a>
+    <a class="hubers-btn" href="{{route('users.create')}}">{{__('general.create_btn')}}</a>
 @endsection
 @section('content')
     <div class="vms_panel">
@@ -33,9 +32,11 @@
                     <div class="hubers-filter-group">
                         <label>{{__('users.table.role')}}:</label>
                         <select class="hubers-select-input white medium" name="role" id="">
-                            <option value="">Selekto</option>
-                            <option @if(app('request')->input('role') == 1) selected @endif value="admin">Admin</option>
-                            <option @if(app('request')->input('context') == 2) selected @endif value="super-admin">Super Admin</option>
+                            <option value="">{{__('users.filter.select')}}</option>
+                            <option @if(app('request')->input('role') == 1) selected @endif value="admin">{{__('users.table.role.admin')}}</option>
+                            <option @if(app('request')->input('context') == 2) selected @endif value="super-admin">{{__('users.table.role.super_admin')}}</option>
+                            <option @if(app('request')->input('context') == 2) selected @endif value="manager">{{__('users.table.role.manager')}}</option>
+                            <option @if(app('request')->input('context') == 2) selected @endif value="staff">{{__('users.table.role.staff')}}</option>
                         </select>
                     </div>
                 </div>

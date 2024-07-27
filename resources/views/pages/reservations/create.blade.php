@@ -161,9 +161,9 @@
                 const slotsContainer = venue.querySelector('.venue-slots');
                 slotsContainer.innerHTML = ''; // Clear the slots container before populating with new slots
                 const labels = {
-                    1: 'Ditë e Plotë',
-                    2: 'Mëngjes',
-                    3: 'Mbrëmje'
+                    1: '{{__('reservation.type.full_day')}}',
+                    2: '{{__('reservation.type.morning')}}',
+                    3: '{{__('reservation.type.night')}}'
                 };
                 keyValuePairs.forEach(slot => {
                     if(slot['value']) {

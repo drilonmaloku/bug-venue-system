@@ -1,7 +1,7 @@
 @extends('layouts.app')
 
 @section('header')
-{{__('venue.title.single1')}}: {{$venue->name}}
+{{__('venue.title.reservation.venue')}}: {{$venue->name}}
 @endsection
 @section('content')
     <div class="vms_panel">

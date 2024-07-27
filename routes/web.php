@@ -21,6 +21,7 @@ Route::get('/', function () {
 
 
 use App\Modules\Users\Controllers\UsersController;
+use Illuminate\Support\Facades\Session;
 
 Route::get('/', function () {
     return redirect('/dashboard');
@@ -42,6 +43,11 @@ Route::group(['middleware' => 'auth'], function () {
 
 Auth::routes(['register' => false, 'reset' => false, 'verify' => false]);
 
+
+Route::get('locale/{locale}', function ($locale){
+    Session::put('locale', $locale);
+    return redirect()->back();
+});
 
 
 Route::get('/migrate', function () {

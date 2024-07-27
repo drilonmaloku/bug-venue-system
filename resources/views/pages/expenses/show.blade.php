@@ -30,19 +30,18 @@
                             <td>{{__('expenses.table.user')}}</td>
                             <td>{{ $expense->user->first_name }}</td>
                         </tr>
-                    <tr>
-                        <td>{{__('expenses.table.date')}}</td>
-                        <td>{{ $expense->date }}</td>
-                    </tr>
-                    <tr>
-                        <td>{{__('expenses.table.description')}}</td>
-                        <td>{{ $expense->description }}</td>
-                    </tr>
-                    <tr>
-                        <td>{{__('expenses.table.amount')}}</td>
-                        <td>{{ $expense->amount }}</td>
-                    </tr>
-
+                        <tr>
+                            <td>{{__('expenses.table.date')}}</td>
+                            <td>{{ $expense->date }}</td>
+                        </tr>
+                        <tr>
+                            <td>{{__('expenses.table.description')}}</td>
+                            <td>{{ $expense->description }}</td>
+                        </tr>
+                        <tr>
+                            <td>{{__('expenses.table.amount')}}</td>
+                            <td>{{ $expense->amount }}</td>
+                        </tr>
                     </tbody>
                 </table>
             </div>

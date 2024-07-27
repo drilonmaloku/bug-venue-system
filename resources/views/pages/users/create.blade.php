@@ -1,6 +1,6 @@
 @extends('layouts.app')
 @section('header')
-{{__('users.forms.create_title')}}
+    {{__('users.forms.create_title')}}
 @endsection
 @section('content')
     <div class="vms_panel">
@@ -18,7 +18,6 @@
                                     @endif
                                     <input class="bug-text-input" type="text" name="username" >
                                 </div>
-
                             </div>
                         </div>
                         <div class="col-md-12">
@@ -69,17 +68,15 @@
                             <div class="form-group">
                                 <label for="example-text-input" class="bug-label">{{__('users.table.role')}}*</label>
                                 <select class="bug-text-input" name="role" id="">
-                                    <option value="admin">Admin</option>
-                                    <option value="super-admin">Super Admin</option>
-                                    <option value="manager">Manager</option>
-                                    <option value="staff">Staff</option>
+                                    <option value="admin">{{__('users.table.role.admin')}}</option>
+                                    <option value="super-admin">{{__('users.table.role.super_admin')}}</option>
+                                    <option value="manager">{{__('users.table.role.manager')}}</option>
+                                    <option value="staff">{{__('users.table.role.staff')}}</option>
                                 </select>
                             </div>
                         </div>
                     </div>
                     <button id="submitBtn" type="submit" class="hubers-btn">{{__('general.save_btn')}}</button>
-
-
                 </form>
             </div>
         </div>

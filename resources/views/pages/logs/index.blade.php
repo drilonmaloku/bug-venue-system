@@ -24,34 +24,34 @@
             <div class="hubers-filter-options @if ($is_on_search) active @endif">
                 <div class="hubers-filter-list-options">
                     <div class="hubers-filter-group">
-                        <label>Perdoruesi:</label>
+                        <label>{{__('logs.filter.user')}}:</label>
                         <select class="hubers-select-input white medium" name="user" id="">
-                            <option value="">Selekto</option>
+                            <option value="">{{__('logs.filter.select')}}</option>
                             @foreach($users as $user)
                                 <option @if(app('request')->input('user') == $user->id) selected @endif  value="{{$user->id}}">{{$user->first_name}} {{$user->last_name}}</option>
                             @endforeach
                         </select>
                     </div>
                     <div class="hubers-filter-group">
-                        <label>Konteksti:</label>
+                        <label>{{__('logs.filter.context')}}:</label>
                         <select class="hubers-select-input white medium" name="context" id="">
-                            <option value="">Selekto</option>
-                            <option @if(app('request')->input('context') == 1) selected @endif value="1">Rezervimet</option>
-                            <option @if(app('request')->input('context') == 2) selected @endif value="2">Pagesat</option>
-                            <option @if(app('request')->input('context') == 3) selected @endif value="3">Klientat</option>
-                            <option @if(app('request')->input('context') == 4) selected @endif value="4">Sallat</option>
-                            <option @if(app('request')->input('context') == 5) selected @endif value="5">Userat</option>
-                            <option @if(app('request')->input('context') == 6) selected @endif value="6">Raportet</option>
-                            <option @if(app('request')->input('context') == 7) selected @endif value="7">Menu</option>
+                            <option value="">{{__('logs.filter.select')}}</option>
+                            <option @if(app('request')->input('context') == 1) selected @endif value="1">{{__('logs.filter.context.option.reservations')}}</option>
+                            <option @if(app('request')->input('context') == 2) selected @endif value="2">{{__('logs.filter.context.option.payments')}}</option>
+                            <option @if(app('request')->input('context') == 3) selected @endif value="3">{{__('logs.filter.context.option.clients')}}</option>
+                            <option @if(app('request')->input('context') == 4) selected @endif value="4">{{__('logs.filter.context.option.venues')}}</option>
+                            <option @if(app('request')->input('context') == 5) selected @endif value="5">{{__('logs.filter.context.option.users')}}</option>
+                            <option @if(app('request')->input('context') == 6) selected @endif value="6">{{__('logs.filter.context.option.reports')}}</option>
+                            <option @if(app('request')->input('context') == 7) selected @endif value="7">{{__('logs.filter.context.option.menus')}}</option>
                         </select>
                     </div>
                     <div class="hubers-filter-group">
-                        <label>Search:</label>
-                        <input placeholder="Search" class="hubers-text-input white medium" type="text" name="search" value="{{old('search',app('request')->input('search'))}}">
+                        <label>{{__('logs.filter.search')}}:</label>
+                        <input placeholder="{{__('logs.filter.search')}}" class="hubers-text-input white medium" type="text" name="search" value="{{old('search',app('request')->input('search'))}}">
                     </div>
                     <div class="hubers-filter-group">
-                        <label>Data:</label>
-                        <input placeholder="Search" class="hubers-text-input white medium" type="date" name="date" value="{{old('date',app('request')->input('data'))}}">
+                        <label>{{__('logs.filter.date')}}:</label>
+                        <input placeholder="{{__('logs.filter.date')}}" class="hubers-text-input white medium" type="date" name="date" value="{{old('date',app('request')->input('data'))}}">
                     </div>
                 </div>
                 <div class="hubers-filter-list-actions">
@@ -68,16 +68,11 @@
                         <th width="40">
                             <input class="main-checkbox bug-checkbox-input" type="checkbox">
                         </th>
-                        <th class="text-uppercase text-secondary text-sm font-weight-bolder opacity-7">
-                            {{__('logs.table.user')}}</th>
-                        <th class="text-uppercase text-secondary text-sm font-weight-bolder opacity-7">
-                            {{__('logs.table.date')}}</th>
-                        <th class="text-uppercase text-secondary text-sm font-weight-bolder opacity-7">
-                            {{__('logs.table.message')}}</th>
-                        <th class="text-uppercase text-secondary text-sm font-weight-bolder opacity-7">
-                            {{__('logs.table.context')}}</th>
-                        <th class="text-uppercase text-secondary text-sm font-weight-bolder opacity-7">
-                        </th>
+                        <th>{{__('logs.table.user')}}</th>
+                        <th>{{__('logs.table.date')}}</th>
+                        <th>{{__('logs.table.message')}}</th>
+                        <th>{{__('logs.table.context')}}</th>
+                        <th></th>
                     </tr>
                     </thead>
                     <tbody>
