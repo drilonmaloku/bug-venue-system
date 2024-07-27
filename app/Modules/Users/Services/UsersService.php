@@ -312,9 +312,9 @@ class UsersService
         $user->phone = $request->input('phone');
         $user->language = $request->input('language');
 
-        $clientSaved = $user->save();
+        $userSaved = $user->save();
 
-        if($clientSaved){
+        if($userSaved){
             $this->logService->log([
                 'message' => 'Përdoruesi u përditësua me sukses',
                 'context' => Log::LOG_CONTEXT_USERS,
