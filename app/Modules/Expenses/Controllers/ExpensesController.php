@@ -4,8 +4,11 @@
 use Illuminate\Http\Request;
 
 use App\Http\Controllers\Controller;
+use App\Modules\Expenses\Exports\ExpensesExport;
 use App\Modules\Logs\Services\LogService;
 use App\Modules\Expenses\Services\ExpensesServices;
+use App\Modules\Logs\Models\Log;
+use Maatwebsite\Excel\Facades\Excel;
 use RealRashid\SweetAlert\Facades\Alert;
 
 class ExpensesController extends Controller
@@ -110,5 +113,21 @@ class ExpensesController extends Controller
             ], 500);
         }
     }
+
+    public function export(Request $request)
+    {
+        $menus = null;
+
+        if($request->has('ids')) {
+            $menus = explode(',', $request->input('ids'));
+        }
+        $this->logService->log([
+            'message' => 'Expenses are being exported to Excel',
+            'context' => Log::LOG_CONTEXT_MENU,
+            'ttl'=> Log::LOG_TTL_THREE_MONTHS,
+        ]);
+        return Excel::download(new ExpensesExport($menus), "expenses-export.xlsx");
+    }
+
 
 }

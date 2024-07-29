@@ -10,6 +10,8 @@ use Illuminate\Http\JsonResponse;
 use App\Http\Controllers\Controller;
 use App\Modules\Logs\Services\LogService;
 use App\Modules\Logs\Models\Log;
+use App\Modules\Payments\Exports\PaymentsExport;
+use Maatwebsite\Excel\Facades\Excel;
 use RealRashid\SweetAlert\Facades\Alert;
 
 class PaymentsController extends Controller
@@ -163,4 +165,21 @@ class PaymentsController extends Controller
             ], 500);
         }
     }
+
+
+    public function export(Request $request)
+    {
+        $payments = null;
+
+        if($request->has('ids')) {
+            $payments = explode(',', $request->input('ids'));
+        }
+        $this->logService->log([
+            'message' => 'Payments are being exported to Excel',
+            'context' => Log::LOG_CONTEXT_MENU,
+            'ttl'=> Log::LOG_TTL_THREE_MONTHS,
+        ]);
+        return Excel::download(new PaymentsExport($payments), "payments-export.xlsx");
+    }
+
 }

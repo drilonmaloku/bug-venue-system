@@ -1,21 +1,16 @@
 @extends('layouts.app')
 @section('header')
-    Dashboard
+    {{__('dashboard.title')}}
 @endsection
 @section('content')
-    <div class="vms_panel">
+    <div class="vms_panel dashboard_panel">
         <div id='calendar'></div>
-        <script>
-            document.addEventListener('DOMContentLoaded', function() {
-
-            });
-        </script>
         <div class="modal fade" id="reservationModal" tabindex="-1" role="dialog" aria-labelledby="reservationModalLabel"
             aria-hidden="true">
             <div class="modal-dialog" role="document">
                 <div class="modal-content">
                     <div class="modal-header">
-                        <h5 class="modal-title" id="reservationModalLabel">Krijo Rezervim</h5>
+                        <h5 class="modal-title" id="reservationModalLabel">{{__('reservations.create.title')}}</h5>
                         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                             <span aria-hidden="true">&times;</span>
                         </button>
@@ -24,25 +19,23 @@
                         enctype="multipart/form-data">
                         @csrf
                         <div class="modal-body">
-                            <h6><strong>Informatat e Rezervimit</strong></h6>
+                            <h6><strong>{{__('reservations.create.reservation_information')}}</strong></h6>
                             <div class="row">
                                 <div class="col-md-6">
                                     <div class="form-group">
-                                        <label for="example-text-input" class="form-control-label">Data*</label>
+                                        <label for="example-text-input" class="form-control-label">{{__('reservations.create.date')}}*</label>
                                         <input class="bug-text-input" type="date" name="date" required id="dateInput">
                                     </div>
                                 </div>
                                 <div class="col-md-6">
                                     <div class="form-group">
-                                        <label for="example-text-input" class="form-control-label">Numri i të
-                                            ftuarve*</label>
-                                        <input id="numberOfGuests" class="bug-text-input" type="number"
-                                            name="number_of_guests" required>
+                                        <label for="example-text-input" class="form-control-label">{{__('reservations.create.number_of_guests')}}*</label>
+                                        <input id="numberOfGuests" class="bug-text-input" required type="number" name="number_of_guests" >
                                     </div>
                                 </div>
                                 <div class="col-md-12">
                                     <input type="hidden" name="venue_id" id="venueID">
-                                    Sallat:
+                                    {{__('reservations.create.venues')}}:
                                     <div class="row venue-items">
                                         @foreach ($venues as $venue)
                                             <div class="col-md-4">
@@ -61,9 +54,9 @@
                                 </div>
                                 <div class="col-md-6">
                                     <div class="form-group">
-                                        <label for="example-text-input" class="form-control-label">Menu</label>
-                                        <select id="menuId" class="bug-text-input" name="menu_id">
-                                            <option value="">Selekto Menun</option>
+                                        <label for="example-text-input" class="form-control-label">{{__('reservations.create.menu')}}*</label>
+                                        <select required id="menuId" class="bug-text-input" name="menu_id">
+                                            <option value="">{{__('reservations.create.select_menu')}}</option>
                                             @foreach ($menus as $menu)
                                                 <option data-price="{{ $menu->price }}" value="{{ $menu->id }}">
                                                     {{ $menu->name }},{{ $menu->price }}</option>
@@ -73,65 +66,63 @@
                                 </div>
                                 <div class="col-md-6">
                                     <div class="form-group">
-                                        <label for="example-text-input" class="form-control-label">Qmimi i Menus</label>
-                                        <input id="menuPrice" class="bug-text-input" type="number" name="menu_price">
+                                        <label for="example-text-input" class="form-control-label">{{__('reservations.create.menu_price')}}*</label>
+                                        <input required id="menuPrice" class="bug-text-input" type="number" name="menu_price">
                                     </div>
                                 </div>
                                 <div class="col-md-12">
                                     <div class="form-group">
-                                        <label for="example-text-input" class="form-control-label">Shenime</label>
+                                        <label for="example-text-input" class="form-control-label">{{__('reservations.create.notes')}}</label>
                                         <textarea class="bug-text-input" type="text" name="description"></textarea>
                                     </div>
                                 </div>
                                 <div class="col-md-12">
                                     <div class="form-group">
-                                        <h5>Totali: <span id="totalPrice">0</span></h5>
+                                        <h5>{{__('reservations.create.total')}}: <span id="totalPrice">0</span></h5>
                                     </div>
                                 </div>
                             </div>
-                            <h6><strong>Informatat mbi klientin:</strong></h6>
+                            <h6><strong>{{__('reservations.create.client.information')}}:</strong></h6>
                             <div class="row">
                                 <div class="col-md-6">
                                     <div class="form-group">
-                                        <label for="example-text-input" class="form-control-label">Emri</label>
-                                        <input class="bug-text-input" type="text" name="client_name">
+                                        <label for="example-text-input" class="form-control-label">{{__('reservations.create.client.name')}}</label>
+                                        <input required class="bug-text-input" type="text" name="client_name">
                                     </div>
                                 </div>
                                 <div class="col-md-6">
                                     <div class="form-group">
-                                        <label for="example-text-input" class="form-control-label">Emaili</label>
+                                        <label for="example-text-input" class="form-control-label">{{__('reservations.create.client.phone')}}*</label>
+                                        <input required class="bug-text-input" type="text" name="client_phone_number">
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        <label for="example-text-input" class="form-control-label">{{__('reservations.create.client.email')}}</label>
                                         <input class="bug-text-input" type="text" name="client_email">
                                     </div>
                                 </div>
                                 <div class="col-md-6">
                                     <div class="form-group">
-                                        <label for="example-text-input" class="form-control-label">Telefoni</label>
-                                        <input class="bug-text-input" type="text" name="client_phone_number">
+                                        <label for="example-text-input" class="form-control-label">{{__('reservations.create.client.additional_phone')}}</label>
+                                        <input class="bug-text-input" type="text" name="client_additional_phone_number">
                                     </div>
                                 </div>
                                 <div class="col-md-6">
                                     <div class="form-group">
-                                        <label for="example-text-input" class="form-control-label">Telefoni
-                                            Opsional</label>
-                                        <input class="bug-text-input" type="text"
-                                            name="client_additional_phone_number">
+                                        <label for="example-text-input" class="form-control-label">{{__('reservations.create.payment.date')}}</label>
+                                        <input required class="bug-text-input" type="date" name="payment_date">
                                     </div>
                                 </div>
                                 <div class="col-md-6">
                                     <div class="form-group">
-                                        <label for="example-text-input" class="form-control-label">Data e Pagesës</label>
-                                        <input class="bug-text-input" type="date" name="payment_date">
-                                    </div>
-                                </div>
-                                <div class="col-md-6">
-                                    <div class="form-group">
-                                        <label for="example-text-input" class="form-control-label">Vlera e Pagesës</label>
+                                        <label for="example-text-input" class="form-control-label">{{__('reservations.create.payment.amount')}}</label>
                                         <input class="bug-text-input" type="number" name="initial_payment_value">
                                     </div>
                                 </div>
                                 <div class="col-md-12">
                                     <div class="form-group">
-                                        <label for="example-text-input" class="form-control-label">Shenime</label>
+                                        <label for="example-text-input" class="form-control-label">{{__('reservations.create.payment.notes')}}</label>
                                         <textarea class="bug-text-input" type="text" name="payment_notes"></textarea>
                                     </div>
                                 </div>
@@ -139,8 +130,8 @@
 
                         </div>
                         <div class="modal-footer">
-                            <button type="submit" class="btn btn-primary">Ruaj</button>
-                            <button type="button" class="btn btn-secondary" data-dismiss="modal">Mbyll</button>
+                            <button type="submit" class="btn btn-primary">{{__('general.save_btn')}}</button>
+                            <button type="button" class="btn btn-secondary" data-dismiss="modal">{{__('general.close_btn')}}</button>
                         </div>
                     </form>
 
@@ -162,41 +153,41 @@
                         <table>
                             <thead>
                                 <tr>
-                                    <th colspan="2">Informatat:</th>
+                                    <th colspan="2">{{__('reservations.table.information')}}:</th>
                                     <th></th>
                                 </tr>
                             </thead>
                             <tbody>
                                 <tr>
-                                    <td>Data</td>
+                                    <td>{{__('reservations.table.date')}}</td>
                                     <td></td>
                                 </tr>
                                 <tr>
-                                    <td>Salla</td>
+                                    <td>{{__('reservations.table.venue')}}</td>
                                     <td></td>
                                 </tr>
                                 <tr>
-                                    <td>Numri i te ftuarve</td>
+                                    <td>{{__('reservations.table.number_of_guests')}}</td>
                                     <td></td>
                                 </tr>
                                 <tr>
-                                    <td>Klienti</td>
+                                    <td>{{__('reservations.table.client')}}</td>
                                     <td></td>
                                 </tr>
                                 <tr>
-                                    <td>Koha:</td>
+                                    <td>{{__('reservations.table.time')}}:</td>
                                     <td></td>
                                 </tr>
                                 <tr>
-                                    <td>Pagesa Momentale:</td>
+                                    <td>{{__('reservations.table.current_payment')}}:</td>
                                     <td></td>
                                 </tr>
                                 <tr>
-                                    <td>Pagesa E Mbetur:</td>
+                                    <td>{{__('reservations.table.payment_left')}}:</td>
                                     <td></td>
                                 </tr>
                                 <tr>
-                                    <td>Shuma Totale :</td>
+                                    <td>{{__('reservations.table.total_amount')}}:</td>
                                     <td></td>
                                 </tr>
                             </tbody>
@@ -214,7 +205,8 @@
         document.addEventListener('DOMContentLoaded', function() {
             var calendarEl = document.getElementById('calendar');
             var events = @json($events); 
-
+            var menusCount = @json(count($menus));
+            var venuesCount = @json(count($venues));
             console.log(events);
             var calendar = new FullCalendar.Calendar(calendarEl, {
                 initialView: 'dayGridMonth',
@@ -223,11 +215,16 @@
                      method: 'GET',
                      
                 },
+                height: "auto",
                 dateClick: function(info) {
                     // Check if the date has an event
                     $('#dateInput').val(info.dateStr);
                     checkAvailabilityAndUpdateTotal();
-                    $('#reservationModal').modal('show');
+                    if(venuesCount> 0 && menusCount > 0){
+                        $('#reservationModal').modal('show');
+                    }else {
+                    alert('Duhet te keni nje menu te pakten dhe nje salle per ta krijuar nje rezervim');
+                }
 
                 },
                 eventClick: function(info) {
@@ -241,7 +238,7 @@
                             const tableContent = `
                     <thead>
                         <tr>
-                            <th colspan="2">Informatat:</th>
+                            <th colspan="2">{{__('reservations.table.information')}}:</th>
                             <th>    
                                 <a class="bug-table-item-option" href="/reservations/${reservation.id}">
                                     <i class="fa fa-eye"></i>
@@ -251,49 +248,49 @@
                     </thead>
                     <tbody>
                         <tr>
-                            <td>Data</td>
+                            <td>{{__('reservations.table.date')}}</td>
                             <td>${reservation.date}</td>
                             <td></td>
 
                         </tr>
                         <tr>
-                            <td>Salla</td>
+                            <td>{{__('reservations.table.venue')}}</td>
                             <td>${reservation.venue.name}</td>
                             <td></td>
 
                         </tr>
                         <tr>
-                            <td>Numri i te ftuarve</td>
+                            <td>{{__('reservations.table.number_of_guests')}}</td>
                             <td>${reservation.number_of_guests}</td>
                             <td></td>
 
                         </tr>
                         <tr>
-                            <td>Klienti</td>
+                            <td>{{__('reservations.table.client')}}</td>
                             <td>${reservation.client.name}</td>
                             <td></td>
 
                         </tr>
                         <tr>
-                            <td>Koha:</td>
+                            <td>{{__('reservations.table.time')}}:</td>
                             <td>${reservation.reservation_type_name}</td>
                             <td></td>
 
                         </tr>
                         <tr>
-                            <td>Pagesa Momentale:</td>
+                            <td>{{__('reservations.table.current_payment')}}:</td>
                             <td>${reservation.current_payment}€</td>
                             <td></td>
 
                         </tr>
                         <tr>
-                            <td>Pagesa E Mbetur:</td>
+                            <td>{{__('reservations.table.payment_left')}}:</td>
                             <td>${reservation.total_payment - reservation.current_payment}€</td>
                             <td></td>
 
                         </tr>
                         <tr>
-                            <td>Shuma Totale :</td>
+                            <td>{{__('reservations.table.total_amount')}}:</td>
                             <td>${reservation.total_payment}€</td>
                             <td></td>
 
@@ -325,10 +322,17 @@
                 venue.classList.remove('available');
                 venue.classList.remove('partially-available');
                 venue.classList.remove('not-available');
-
-                if (availability.length == 3) {
+                let availableCount = 0;
+                const keyValuePairs = [];
+                for (const availabilityItem of Object.entries(availability)) {
+                    keyValuePairs.push({ key: availabilityItem[0], value: availabilityItem[1] });
+                    if (availabilityItem[1] === true) {
+                        availableCount++;
+                    }
+                }
+                if (availableCount == 3) {
                     venue.classList.add('available');
-                } else if (availability.length == 1 || availability.length == 2) {
+                } else if (availableCount == 1 || availableCount == 2) {
                     venue.classList.add('partially-available');
                 } else {
                     venue.classList.add('not-available');
@@ -336,24 +340,26 @@
                 const slotsContainer = venue.querySelector('.venue-slots');
                 slotsContainer.innerHTML = ''; // Clear the slots container before populating with new slots
                 const labels = {
-                    1: 'Ditë e Plotë',
-                    2: 'Mëngjes',
-                    3: 'Mbrëmje'
+                    1: '{{__('reservation.type.full_day')}}',
+                    2: '{{__('reservation.type.morning')}}',
+                    3: '{{__('reservation.type.night')}}'
                 };
-                availability.forEach(slot => {
-                    const slotDiv = document.createElement('div');
-                    slotDiv.classList.add('slot');
-                    const input = document.createElement('input');
-                    input.classList.add('bug-checkbox-input');
-                    input.setAttribute('type', 'radio');
-                    input.setAttribute('name', `reservation`);
-                    input.setAttribute('value', `${venueId},${slot}`);
-                    const label = document.createElement('label');
-                    label.classList.add('form-control-label');
-                    label.textContent = labels[slot];
-                    slotDiv.appendChild(input);
-                    slotDiv.appendChild(label);
-                    slotsContainer.appendChild(slotDiv);
+                keyValuePairs.forEach(slot => {
+                    if(slot['value']) {
+                        const slotDiv = document.createElement('div');
+                        slotDiv.classList.add('slot');
+                        const input = document.createElement('input');
+                        input.classList.add('bug-checkbox-input');
+                        input.setAttribute('type', 'radio');
+                        input.setAttribute('name', `reservation`);
+                        input.setAttribute('value', `${venueId},${slot['key']}`);
+                        const label = document.createElement('label');
+                        label.classList.add('form-control-label');
+                        label.textContent = labels[slot['key']];
+                        slotDiv.appendChild(input);
+                        slotDiv.appendChild(label);
+                        slotsContainer.appendChild(slotDiv);
+                    }
                 });
             }
 
@@ -392,7 +398,7 @@
                     })
                     .then(response => response.json())
                     .then(res => {
-                        console.log(res.data);
+                        console.log('dtz',res.data);
                         res.data.forEach(venue => {
                             generateReservationTypeOptions(venue.id, venue.availability);
                         });

@@ -1,6 +1,6 @@
 @extends('layouts.app')
 @section('header')
-    Përditso Sherbimin: {{$invoice->id}}
+    {{__('services.edit.title')}}: {{$invoice->id}}
 @endsection
 @section('content')
     <div class="vms_panel">
@@ -13,27 +13,25 @@
                         <div class="row">
                             <div class="col-md-12">
                                 <div class="form-group">
-                                    <label for="example-text-input" class="bug-label">Vlera*</label>
-                                    <input class="bug-text-input" type="number" name="amount" value="{{$invoice->amount}}">
+                                    <label for="example-text-input" class="bug-label">{{__('services.edit.form.value')}}*</label>
+                                    <input class="bug-text-input" required type="number" name="amount" value="{{$invoice->amount}}">
                                     
                                 </div>
                             </div>
                             <div class="col-md-12">
                                 <div class="form-group">
-                                    <label for="example-text-input" class="bug-label">Data*</label>
+                                    <label for="example-text-input" class="bug-label">{{__('services.edit.form.date')}}*</label>
                                 <input class="bug-text-input" type="date" name="date" required id="dateInput" value="{{$invoice->date}}">
                                 </div>
                             </div>
                             <div class="col-md-12">
                                 <div class="form-group">
-                                    <label for="example-text-input" class="bug-label">Pershkrimi</label>
-                                    <input class="bug-text-input" type="text" name="description" value="{{$invoice->description}}">
+                                    <label for="example-text-input" class="bug-label">{{__('services.edit.notes')}}</label>
+                                    <input class="bug-text-input" required type="text" name="description" value="{{$invoice->description}}">
                                 </div>
                             </div>
                         </div>
-                        <button type="submit" class="hubers-btn">Ruaj</button>
-
-
+                        <button type="submit" class="hubers-btn">{{__('general.save_btn')}}</button>
                     </form>
                 </div>
             </div>

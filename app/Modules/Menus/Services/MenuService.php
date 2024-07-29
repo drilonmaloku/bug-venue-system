@@ -60,7 +60,7 @@ class MenuService
      * @param int|array $id
      **/
     public function getByIds($ids){
-        return Client::whereIn('id', $ids)->get();
+        return Menu::whereIn('id', $ids)->get();
     }
 
     /**

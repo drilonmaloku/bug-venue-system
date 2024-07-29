@@ -1,7 +1,7 @@
 @extends('layouts.app')
 
 @section('header')
-   User : {{$user->username}}
+{{__('users.signle.title')}} : {{$user->username}}
 @endsection
 @section('content')
     <div class="vms_panel">
@@ -22,29 +22,34 @@
                 <table>
                     <thead>
                         <tr>
-                            <th colspan="2">Informatat:</th>
+                            <th colspan="2">{{__('users.single.info')}}:</th>
                         </tr>
                     </thead>
                     <tbody>
                         <tr>
-                            <td>Username</td>
+                            <td>{{__('users.table.username')}}</td>
                             <td>{{ $user->username }}</td>
                         </tr>
                         <tr>
-                            <td>Emri</td>
+                            <td>{{__('users.table.name')}}</td>
                             <td>{{ $user->first_name }} {{ $user->last_name }}</td>
                         </tr>
                         <tr>
-                            <td>Roli:</td>
+                            <td>{{__('users.table.role')}}:</td>
                             <td>{{ $user->getRoleNames()->first() ?? 'No role assigned' }}</td>
                         </tr>
                         <tr>
-                            <td>Emaili</td>
+                            <td>{{__('users.table.email')}}</td>
                             <td>{{ $user->email }}</td>
                         </tr>
                         <tr>
-                            <td>Telefoni</td>
+                            <td>{{__('users.table.phone_number')}}</td>
                             <td>{{ $user->phone }}</td>
+                        </tr>
+                        <tr>
+                            <td>{{__('users.table.language')}}</td>
+
+                            <td>{{ $user->language == "en" ? __('users.table.language.en') : __('users.table.language.sq') }}</td>
                         </tr>
                     </tbody>
                 </table>

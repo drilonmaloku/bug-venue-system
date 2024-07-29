@@ -1,7 +1,7 @@
 @extends('layouts.app')
 
 @section('header')
-   Shpenzimi : {{$expense->id}}
+{{__('expenses.title.single')}} : {{$expense->id}}
 @endsection
 @section('content')
     <div class="vms_panel">
@@ -22,27 +22,26 @@
                 <table>
                     <thead>
                     <tr>
-                        <th colspan="2">Informatat:</th>
+                        <th colspan="2">{{__('expenses.title.single.info')}}:</th>
                     </tr>
                     </thead>
                     <tbody>
                         <tr>
-                            <td>User</td>
+                            <td>{{__('expenses.table.user')}}</td>
                             <td>{{ $expense->user->first_name }}</td>
                         </tr>
-                    <tr>
-                        <td>Data</td>
-                        <td>{{ $expense->date }}</td>
-                    </tr>
-                    <tr>
-                        <td>Pershkrimi</td>
-                        <td>{{ $expense->description }}</td>
-                    </tr>
-                    <tr>
-                        <td>Shuma</td>
-                        <td>{{ $expense->amount }}</td>
-                    </tr>
-
+                        <tr>
+                            <td>{{__('expenses.table.date')}}</td>
+                            <td>{{ $expense->date }}</td>
+                        </tr>
+                        <tr>
+                            <td>{{__('expenses.table.description')}}</td>
+                            <td>{{ $expense->description }}</td>
+                        </tr>
+                        <tr>
+                            <td>{{__('expenses.table.amount')}}</td>
+                            <td>{{ $expense->amount }}</td>
+                        </tr>
                     </tbody>
                 </table>
             </div>

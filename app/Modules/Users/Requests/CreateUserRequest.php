@@ -20,6 +20,7 @@ class CreateUserRequest extends FormRequest
             "email" => "nullable|string|unique:users",
             "phone" => "nullable|string",
             "role" => "string",
+            "language" => "nullable|string",
         ];
         return $rules;
     }

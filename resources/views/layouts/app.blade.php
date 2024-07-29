@@ -20,12 +20,11 @@
     <script src="https://cdn.jsdelivr.net/npm/jquery@3.7.1/dist/jquery.slim.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/js/bootstrap.bundle.min.js"></script>
-    <link href="{{ asset('../resources/css/sass/main.css') }}" rel="stylesheet" />
-    <link href="http://127.0.0.1:8000/assets/css/sass/main.css" rel="stylesheet" />
     <script src='https://cdn.jsdelivr.net/npm/fullcalendar/index.global.min.js'></script>
     <script src="assets/js/core/scripts.min.js"></script>
+
     <script src="{{ asset('/assets/js/scripts.js') }}"></script>
-    <script src="{{ asset('../resources/js/app.js') }}"></script>
+    <link href="{{ asset('/assets/css/sass/main.css') }}" rel="stylesheet" />
     
 </head>
 
@@ -57,25 +56,23 @@
 
                 <div class="hubers-navbar-links">
                     <ul>
-                        <li><a class="{{ Request::is(['dashboard']) ? 'active' : '' }}" href="{{route('dashboard.index')}}">Dashboard</a></li>
-                        <li><a class="{{ Request::is(['reservations','reservations/*']) ? 'active' : '' }}" href="{{route('reservations.index')}}">Rezervimet</a></li>
-                        <li><a class="{{ Request::is(['expenses','expenses/*']) ? 'active' : '' }}" href="{{route('expenses.index')}}">Shpenzimet</a></li>
-                        <li><a class="{{ Request::is(['payments','payments/*']) ? 'active' : '' }}" href="{{route('payments.index')}}">Pagesat</a></li>
-                        <li><a class="{{ Request::is(['menus','menus/*']) ? 'active' : '' }}" href="{{route('menus.index')}}">Menut</a></li>
-                        <li><a class="{{ Request::is(['clients','clients/*']) ? 'active' : '' }}" href="{{route('clients.index')}}">Klientat</a></li>
-                        <li><a class="{{ Request::is(['users','users/*']) ? 'active' : '' }}" href="{{route('users.index')}}">Përdoruesit</a></li>
-                        <li><a class="{{ Request::is(['venues','venues/*']) ? 'active' : '' }}" href="{{route('venues.index')}}">Sallat</a></li>
-                        @role('super-admin') 
-                            <li><a class="{{ Request::is(['reports','reports-generated']) ? 'active' : '' }}" href="{{route('reports.index')}}">Raportet</a></li>
-                            <li><a class="{{ Request::is(['logs','logs/*']) ? 'active' : '' }}" href="{{route('logs.index')}}">Aktiviteti</a></li>
+                        <li><a class="{{ Request::is(['dashboard']) ? 'active' : '' }}" href="{{route('dashboard.index')}}">{{__('dashboard.dashboard')}}</a></li>
+                        <li><a class="{{ Request::is(['reservations','reservations/*']) ? 'active' : '' }}" href="{{route('reservations.index')}}">{{__('dashboard.reservations')}}</a></li>
+                        <li><a class="{{ Request::is(['expenses','expenses/*']) ? 'active' : '' }}" href="{{route('expenses.index')}}">{{__('dashboard.expenses')}}</a></li>
+                        <li><a class="{{ Request::is(['payments','payments/*']) ? 'active' : '' }}" href="{{route('payments.index')}}">{{__('dashboard.payments')}}</a></li>
+                        <li><a class="{{ Request::is(['menus','menus/*']) ? 'active' : '' }}" href="{{route('menus.index')}}">{{__('dashboard.menus')}}</a></li>
+                        <li><a class="{{ Request::is(['clients','clients/*']) ? 'active' : '' }}" href="{{route('clients.index')}}">{{__('dashboard.clients')}}</a></li>
+                        <li><a class="{{ Request::is(['users','users/*']) ? 'active' : '' }}" href="{{route('users.index')}}">{{__('dashboard.users')}}</a></li>
+                        <li><a class="{{ Request::is(['venues','venues/*']) ? 'active' : '' }}" href="{{route('venues.index')}}">{{__('dashboard.venues')}}</a></li>
+                        @role(['super-admin', 'system-admin'])
+                            <li><a class="{{ Request::is(['reports','reports-generated']) ? 'active' : '' }}" href="{{ route('reports.index') }}">{{__('dashboard.reports')}}</a></li>
+                            <li><a class="{{ Request::is(['logs','logs/*']) ? 'active' : '' }}" href="{{ route('logs.index') }}">{{__('dashboard.logs')}}</a></li>
                         @endrole
-
-                        @role('system-admin')
-                        <li><a class="{{ Request::is(['locations','locations/*']) ? 'active' : '' }}" href="{{route('locations.index')}}">Locations</a></li>
-                    @endrole
-                        <li><a class="{{ Request::is(['supports-tickets','supports-tickets/*']) ? 'active' : '' }}" href="{{route('support-tickets.index')}}">Support Tickets</a></li>
-
-                        <li><a class="{{ Request::is(['profile']) ? 'active' : '' }}" href="{{route('profile')}}">Profili</a></li>
+                        @role('system-admin' )
+                            <li><a class="{{ Request::is(['locations','locations/*']) ? 'active' : '' }}" href="{{route('locations.index')}}">{{__('dashboard.locations')}}</a></li>
+                        @endrole
+                        <li><a class="{{ Request::is(['supports-tickets','supports-tickets/*']) ? 'active' : '' }}" href="{{route('support-tickets.index')}}">{{__('dashboard.support_tickets')}}</a></li>
+                        <li><a class="{{ Request::is(['profile']) ? 'active' : '' }}" href="{{route('profile')}}">{{__('dashboard.profile')}}</a></li>
                     </ul>
                     <div class="hubers-navbar-logout">
                         <form action="{{ route('logout') }}" method="POST">
@@ -85,8 +82,6 @@
                                 Log Out
                             </button>
                         </form>
-
-
                     </div>
                 </div>
             </div>
@@ -98,8 +93,6 @@
                         Log Out
                     </button>
                 </form>
-
-
             </div>
         </div>
         <div class="hubers-body-content">
@@ -107,10 +100,12 @@
                 <h5 class="mb-0">@yield('header')</h5>
                 @yield('header-actions')
             </header>
-
-                @yield('content')
-
+            @yield('content')
         </div>
+    </div>
+    <div class="languages_option">
+        <a class="<?php if(app()->getLocale() == 'sq') { echo 'active';} ?>" href="{{ url('locale/sq') }}" >SQ</a>
+        <a class="<?php if(app()->getLocale() == 'en') { echo 'active';} ?>" href="{{ url('locale/en') }}" >EN</a>
     </div>
 
 @endauth
@@ -119,7 +114,7 @@
 <script src="assets/js/core/popper.min.js"></script>
 <script src="assets/js/plugins/perfect-scrollbar.min.js"></script>
 <script src="assets/js/plugins/smooth-scrollbar.min.js"></script>
-@stack('js');
+@stack('js')
 @include('sweetalert::alert')
 </body>
 

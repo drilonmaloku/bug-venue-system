@@ -12,6 +12,7 @@ class PricingStatusTracking extends Model
     protected $table = 'pricing_status_tracking';
 
     protected $fillable = [
+        'location_id',
         'price',
         'number_of_guests',
         'total_price',

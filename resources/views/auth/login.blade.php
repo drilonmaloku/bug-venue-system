@@ -3,9 +3,16 @@
 @section('content')
     @if ($errors->any())
         <div class="alert alert-danger">
-            <p class="text-center mb-0"><strong>Kredencialet janë gabim.</strong></p>
+            <p class="text-center mb-0"><strong>
+                @if ($errors->has('location_disabled'))
+                    Ky përdorues është çaktivizuar. Nuk mund të kyçeni.
+                @else
+                    Kredencialet janë gabim.
+                @endif
+            </strong></p>
         </div>
     @endif
+
     <div class="vms-login-view">
         <div class="container">
             @foreach($errors as $error)

@@ -18,11 +18,16 @@
                     <a class="bug-table-item-option ml-2" href="{{ route('locations.edit', ['id' => $location->id]) }}">
                         <i class="fa fa-edit"></i>
                     </a>
-
-                    <a class="bug-table-item-option ml-2" href="{{ route('locations.deactive', ['id' => $location->id]) }}">
-                        <i class="fa fa-power-off"></i>
-                    </a>
-                </div>
+                    @if ($location->deactivated_at === null)
+                        <a class="bug-table-item-option ml-2" href="{{ route('locations.deactive', ['id' => $location->id]) }}">
+                            <i class="fa fa-power-off"></i> 
+                        </a>
+                    @else
+                        <a class="bug-table-item-option ml-2" href="{{ route('locations.active', ['id' => $location->id]) }}">
+                            <i class="fa fa-power-off"></i>
+                        </a>
+                    @endif
+                    </div>
                 <table>
                     <thead>
                         <tr>

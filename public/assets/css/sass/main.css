@@ -120,6 +120,9 @@
   .hubers-empty-tab {
     padding: 24px 16px;
   }
+  .hubers-empty-tab h4, .hubers-empty-tab h5 {
+    font-size: 1rem;
+  }
 }
 
 .hubers-title-btn-options {
@@ -1304,6 +1307,17 @@
   justify-content: center;
   position: relative;
   font-weight: bold;
+  margin-bottom: 16px;
+}
+.file-uploader label {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 0;
+}
+.file-uploader label .file-name {
+  margin-bottom: 0;
 }
 .file-uploader input {
   position: absolute;
@@ -1317,6 +1331,12 @@
   position: absolute;
   top: 8px;
   right: 8px;
+  display: none;
+  z-index: 2;
+  cursor: pointer;
+}
+.file-uploader .remove-file.active {
+  display: block;
 }
 
 .file-uploader-multi .file-uploader-multi-add {
@@ -1474,6 +1494,11 @@
   margin-bottom: 8px;
 }
 
+@media (max-width: 767px) {
+  .fc-toolbar-title {
+    font-size: 16px !important;
+  }
+}
 .hubers-flash-notifications {
   display: flex;
   flex-direction: column;
@@ -1799,6 +1824,23 @@ td {
 .filter-items {
   margin-bottom: 16px;
 }
+.filter-items .filter-items-options {
+  display: flex;
+  align-items: center;
+}
+
+.export-options {
+  display: inline-flex;
+  align-items: center;
+  margin-right: 8px;
+  background: #F8FBFC;
+  border: 1px solid #EAF3F5;
+  flex: 0 1 auto;
+  padding: 12px;
+  border-radius: 4px;
+  position: relative;
+  cursor: pointer;
+}
 
 .huber-filter-btn {
   display: inline-flex;
@@ -2068,6 +2110,10 @@ body {
     display: none;
   }
 }
+#calendar {
+  min-height: 100% !important;
+}
+
 .hubers-layout {
   background: rgba(236, 239, 241, 0.5);
   min-height: 100vh;
@@ -2142,7 +2188,7 @@ body {
     width: 100%;
     margin: 0;
     padding: 0;
-    z-index: 1000000;
+    z-index: 100;
     border: none;
     border-radius: 0px;
     height: auto;
@@ -2198,6 +2244,24 @@ body {
     display: none;
   }
 }
+.username-input {
+  display: flex;
+}
+.username-input .location_slug {
+  padding: 12px 16px 12px 16px;
+  background: #bac2c4;
+  border: 1px solid #D1DBDF;
+  font-weight: 500;
+}
+.username-input .bug-text-input {
+  border-top-left-radius: 0;
+  border-bottom-left-radius: 0;
+}
+
+.dashboard_panel {
+  min-height: 500px;
+}
+
 .vue-tel-input {
   background: #F8FBFC !important;
 }
@@ -2347,6 +2411,24 @@ body {
 }
 .venue-slots .slot:first-child {
   margin-top: 8px;
+}
+
+.languages_option {
+  position: fixed;
+  bottom: 0;
+  right: 0;
+  background: white;
+  box-shadow: -3px -3px 6px rgba(0, 0, 0, 0.16);
+  display: flex;
+}
+.languages_option a {
+  display: block;
+  margin-bottom: 0;
+  padding: 8px;
+  color: black;
+}
+.languages_option a.active {
+  font-weight: bold;
 }
 
 /*# sourceMappingURL=main.css.map */

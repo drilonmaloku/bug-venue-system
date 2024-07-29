@@ -43,6 +43,18 @@ class PaymentsService
             });
         }
 
+
+        if ($request->filled('start_date')) {
+            $startDate = $request->input('start_date');
+            $endDate = $request->input('end_date');
+            if ($request->filled('end_date')) {
+                $query->whereDate('date', '>=', $startDate)
+                      ->whereDate('date', '<=', $endDate);
+            } else {
+                $query->whereDate('date', '=', $startDate);
+            }
+        }
+
         // Handle date filter
         if ($request->has('date') && $request->input('date') != '') {
             $date = $request->input('date');

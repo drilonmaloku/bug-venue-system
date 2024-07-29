@@ -3,7 +3,10 @@
 namespace App\Http\Controllers\Auth;
 
 use App\Http\Controllers\Controller;
+use App\Models\User;
 use Illuminate\Foundation\Auth\AuthenticatesUsers;
+use Illuminate\Http\Request;
+use Illuminate\Validation\ValidationException;
 
 class LoginController extends Controller
 {
@@ -37,4 +40,19 @@ class LoginController extends Controller
         $this->middleware('guest')->except('logout');
     }
 
+
+
+
+
+    protected function authenticated(Request $request, User $user)
+    {
+        if (!$user->isLocationEnabled()) {
+            $this->guard()->logout();
+            throw ValidationException::withMessages([
+                'location_disabled' => "Ky perdorues eshte bere disable",
+            ]);
+        }
+
+        return redirect()->intended($this->redirectPath());
+    }
 }

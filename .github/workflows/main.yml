@@ -15,10 +15,9 @@ jobs:
       uses: SamKirkland/FTP-Deploy-Action@4.3.2
       with:
         server: premium236.web-hosting.com
-        username: ${{ secrets.FTP_USERNAME }}
-        password: ${{ secrets.FTP_PASSWORD }}
+        username: drilon@vms-ks.com
+        password: Drilonmaloku1!
         server-dir: /vms-ks.com/
         exclude: |
           **/.git*
           **/.git*/**
-          **/vendor/**

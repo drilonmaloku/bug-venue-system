@@ -17,10 +17,23 @@ class UsersService
 {
     public $logService;
 
-    public function __construct(LogService $logService)
+    public function __construct()
     {
-        $this->logService = $logService;
+        $this->logService = app()->make(LogService::class);
     }
+
+
+
+
+
+     /**
+     * Get Venues by IDs
+     * @param int|array $id
+     **/
+    public function getByIds($ids){
+        return User::whereIn('id', $ids)->get();
+    }
+
 
      /**
      * Retrieve all users with roles of 'admin' or 'super-admin'.
@@ -192,6 +205,7 @@ class UsersService
             "last_name" => $request->input("last_name"),
             "email" => $request->input("email"),
             "phone" => $request->input("phone"),
+            "language" => $request->input("language"),
             "password" => Hash::make($request->input("password")),
             ]
         );
@@ -296,10 +310,11 @@ class UsersService
         $user->last_name = $request->input('last_name');
         $user->email = $request->input('email');
         $user->phone = $request->input('phone');
+        $user->language = $request->input('language');
 
-        $clientSaved = $user->save();
+        $userSaved = $user->save();
 
-        if($clientSaved){
+        if($userSaved){
             $this->logService->log([
                 'message' => 'Përdoruesi u përditësua me sukses',
                 'context' => Log::LOG_CONTEXT_USERS,
@@ -326,6 +341,13 @@ class UsersService
         $user->password = Hash::make($newPassword);
 
         return $user->save();
+    }
+
+    public static function getStaffUsers()
+    {
+        return User::whereHas('roles', function ($query) {
+            $query->where('name', 'staff');
+        })->get();
     }
 
 }

@@ -11,7 +11,7 @@ class ReservationComment extends Model
 
     protected $table = 'reservations_comments'; // Specify the table name
 
-    protected $fillable = ['reservation_id', 'user_id', 'comment'];
+    protected $fillable = ['location_id','reservation_id', 'user_id', 'comment'];
 
     protected static function booted()
     {

@@ -14,13 +14,10 @@ class ReportsService
 {
     public function generateGeneralReport($startDate, $endDate)
     {
-        // Convert to Carbon instances for date comparison
         $startDate = Carbon::parse($startDate)->startOfDay();
         $endDate = Carbon::parse($endDate)->endOfDay();
 
-        // Calculate the number of days in the period
-        $daysCount = $startDate->diffInDays($endDate) + 1; // +1 to include both start and end dates
-
+        $daysCount = $startDate->diffInDays($endDate) + 1;
 
 
         // Count the number of clients created during the period

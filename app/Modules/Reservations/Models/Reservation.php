@@ -5,6 +5,7 @@ namespace App\Modules\Reservations\Models;
 
 use App\Models\User;
 use App\Modules\Clients\Models\Client;
+use App\Modules\Menus\Models\Menu;
 use App\Modules\Payments\Models\Payment;
 use App\Modules\Venues\Models\Venue;
 use App\Scopes\CurrentLocationScope;
@@ -71,11 +72,15 @@ class Reservation extends Model
         return $this->hasMany(PricingStatusTracking::class);
     }
 
+    public function menu()
+    {
+        return $this->belongsTo(Menu::class, 'menu_id');
+    }
+
     public function user()
     {
         return $this->belongsTo(User::class,'menager_id');
     }
-
 
     // Calculate total amount of invoices
     public function getTotalInvoiceAmountAttribute()
@@ -119,5 +124,12 @@ class Reservation extends Model
             ]
         );
 
+    }
+
+
+
+    public function reservationStaff()
+    {
+        return $this->hasMany(ReservationStaff::class, 'reservation_id');
     }
 }

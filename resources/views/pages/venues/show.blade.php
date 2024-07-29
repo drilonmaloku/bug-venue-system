@@ -1,7 +1,7 @@
 @extends('layouts.app')
 
 @section('header')
-    Salla: {{$venue->name}}
+{{__('venue.title.reservation.venue')}}: {{$venue->name}}
 @endsection
 @section('content')
     <div class="vms_panel">
@@ -17,20 +17,20 @@
                 <table>
                     <thead>
                     <tr>
-                        <th colspan="2">Informacioni:</th>
+                        <th colspan="2">{{__('venue.title.information')}}:</th>
                     </tr>
                     </thead>
                     <tbody>
                     <tr>
-                        <td>EMRI</td>
+                        <td>{{__('venues.table.name')}}</td>
                         <td>{{ $venue->name }}</td>
                     </tr>
                     <tr>
-                        <td>Përshkrimi</td>
+                        <td>{{__('venues.table.description')}}</td>
                         <td>{{ $venue->description }} </td>
                     </tr>
                     <tr>
-                        <td>Kapaciteti</td>
+                        <td>{{__('venues.table.capacity')}}</td>
                         <td>{{ $venue->capacity }}</td>
                     </tr>
                     </tbody>
@@ -39,31 +39,39 @@
         </div>
     </div>
     <div class="vms_panel">
-        <h5>Rezervimet:</h5>
+        <h5>{{__('venue.title.reservation')}}:</h5>
         @if(count($venue->reservations) > 0)
+            <div class="export-options" onclick="exportOptions.export('/reservations/export','reservations-export.xlsx')">
+                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-file-text"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/><polyline points="10 9 9 9 8 9"/></svg>
+            </div>
             <div class="table-responsive ">
-                <table class="bug-venue-table">
+                <table class="bug-table">
                     <thead>
                     <tr>
-                        <th class="">
-                            Date</th>
-                        <th class="text-uppercase text-secondary text-sm font-weight-bolder opacity-7">
-                            Venue</th>
-                        <th class="text-uppercase text-secondary text-sm font-weight-bolder opacity-7">
-                            Description</th>
-                        <th class="text-uppercase text-secondary text-sm font-weight-bolder opacity-7">
-                            Payment
+                        <th width="40">
+                            <input class="main-checkbox bug-checkbox-input" type="checkbox">
                         </th>
-                        <th class="text-uppercase text-secondary text-sm font-weight-bolder opacity-7">
-                            Klienti
+                        <th class="">{{__('venue.title.reservation.date')}}</th>
+                        <th>
+                            {{__('venue.title.reservation.venue')}}</th>
+                        <th>
+                            {{__('venue.title.reservation.description')}}</th>
+                        <th>
+                            {{__('venue.title.reservation.payment')}}
                         </th>
-                        <th width="40" class="text-uppercase text-secondary text-sm font-weight-bolder opacity-7">
+                        <th>
+                            {{__('venue.title.reservation.client')}}
+                        </th>
+                        <th width="40">
                         </th>
                     </tr>
                     </thead>
                     <tbody>
                     @foreach($venue->reservations as $reservation)
                         <tr>
+                            <td>
+                                <input class="table-checkbox bug-checkbox-input" type="checkbox" value="{{$reservation->id}}">
+                            </td>
                             <td>
                                 {{$reservation->date}}
                             </td>
@@ -92,7 +100,9 @@
                 </table>
             </div>
         @else
-            <h6 class="text-center">There are no reservations currently</h6>
+            <div class="hubers-empty-tab">
+                <h5 class="text-center"> {{__('venue.table.not_found_without_search.reservation')}}</h5>
+            </div>
         @endif
     </div>
 @endsection

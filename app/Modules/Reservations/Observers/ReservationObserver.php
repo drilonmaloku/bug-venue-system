@@ -52,13 +52,17 @@ class ReservationObserver
         $oldMenuPrice = $reservation->getOriginal('menu_price');
         $newMenuPrice = $reservation->menu_price;
 
-        
-        // $totalInvoiceSum = $reservation->invoices()->sum('amount');
         $totalDiscountSum = $reservation->discounts()->sum('amount');
 
         $totalInvoiceSum = $reservation->invoices()->sum('amount');
 
-        $this->reservationService->storePricingTracking($reservation, $newNumberOfGuests,$newMenuPrice,$totalInvoiceSum,$totalDiscountSum);
+        $this->reservationService->storePricingTracking(
+            $reservation,
+            $newNumberOfGuests,
+            $newMenuPrice,
+            $totalInvoiceSum,
+            $totalDiscountSum
+        );
     }
 
     public function deleted(Reservation $reservation)

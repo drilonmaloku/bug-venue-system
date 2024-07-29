@@ -1,6 +1,6 @@
 <?php
 use App\Modules\Common\Controllers\DashboardController;
-use App\Modules\Logs\Controllers\LogsController;
+use Illuminate\Support\Facades\Artisan;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 
@@ -21,6 +21,7 @@ Route::get('/', function () {
 
 
 use App\Modules\Users\Controllers\UsersController;
+use Illuminate\Support\Facades\Session;
 
 Route::get('/', function () {
     return redirect('/dashboard');
@@ -28,10 +29,6 @@ Route::get('/', function () {
 
 Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard.index')->middleware('auth');
 Route::get('/dashboard/events', [DashboardController::class, 'fetchEvents'])->name('dashboard.events');
-
-
-
-
 
 
 
@@ -44,17 +41,42 @@ Route::group(['middleware' => 'auth'], function () {
     Route::get('/profile/password', [UsersController::class, 'editPassword'])->name('profile.password-update');
 });
 
-
-
-
-
-Route::group(['middleware' => 'auth'], function () {
-    Route::get('/profile', [UsersController::class, 'profile'])->name('profile');
-    Route::get('/profile/edit', [UsersController::class, 'editProfile'])->name('profile.edit');
-    Route::put('/profile', [UsersController::class, 'updateProfile'])->name('profile.update');
-});
-
 Auth::routes(['register' => false, 'reset' => false, 'verify' => false]);
 
 
+Route::get('locale/{locale}', function ($locale){
+    Session::put('locale', $locale);
+    return redirect()->back();
+});
 
+
+Route::get('/migrate', function () {
+    Artisan::call('migrate', [
+        '--force' => true // This option is necessary to run migrations in a production environment
+    ]);
+
+    return response()->json(['message' => 'Migrations ran successfully']);
+});
+
+
+use Symfony\Component\Process\Process;
+use Symfony\Component\Process\Exception\ProcessFailedException;
+
+Route::get('/run-composer-install', function () {
+    // Ensure this route is protected or restricted to prevent unauthorized access
+    // e.g., add authentication checks here
+
+    try {
+        $process = new Process(['composer', 'install'], base_path());
+        $process->run();
+
+        // Check if the process was successful
+        if (!$process->isSuccessful()) {
+            throw new ProcessFailedException($process);
+        }
+
+        return response()->json(['message' => 'Composer install completed successfully.']);
+    } catch (ProcessFailedException $exception) {
+        return response()->json(['error' => 'Composer install failed: ' . $exception->getMessage()], 500);
+    }
+});

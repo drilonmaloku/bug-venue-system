@@ -1,40 +1,38 @@
 @extends('layouts.app')
 
 @section('header')
-    Krijo Sallë
+{{__('venues.forms.create_title')}}
 @endsection
 @section('content')
     <div class="vms_panel">
-        <div class="container-fluid">
-            <div class="row">
+        <div class="row">
                 <div class="col-md-8">
                     <form role="form" method="POST" action={{ route('venues.store') }} enctype="multipart/form-data" onsubmit="return disableSubmitButton();">
                         @csrf
                         <div class="row">
                             <div class="col-md-12">
                                 <div class="form-group">
-                                    <label for="example-text-input" class="bug-label">Emri*</label>
-                                    <input class="bug-text-input" type="text" name="name" >
+                                    <label for="example-text-input" class="bug-label">{{__('venues.table.name')}}*</label>
+                                    <input class="bug-text-input" type="text" required name="name" >
                                 </div>
                             </div>
                             <div class="col-md-12">
                                 <div class="form-group">
-                                    <label for="example-text-input" class="bug-label">Përshkrimi</label>
+                                    <label for="example-text-input" class="bug-label">{{__('venues.table.description')}}</label>
                                     <textarea class="bug-text-input" rows="4" name="description" ></textarea>
                                 </div>
                             </div>
                             <div class="col-md-12">
                                 <div class="form-group">
-                                    <label for="example-text-input" class="bug-label">Kapaciteti</label>
-                                    <input class="bug-text-input" type="number" name="capacity">
+                                    <label for="example-text-input" class="bug-label">{{__('venues.table.capacity')}}*</label>
+                                    <input class="bug-text-input" type="number" required name="capacity">
                                 </div>
                             </div>
                         </div>
-                        <button id="submitBtn" type="submit" class="hubers-btn">Ruaj</button>
+                        <button id="submitBtn" type="submit" class="hubers-btn">{{__('venues.forms.save')}}</button>
                     </form>
                 </div>
             </div>
-        </div>
     </div>
     <script>
         function disableSubmitButton() {

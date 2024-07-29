@@ -1,5 +1,6 @@
 <?php namespace App\Modules\Reservations\Services;
 
+use App\Models\User;
 use App\Modules\Clients\Models\Client;
 use App\Modules\Clients\Services\ClientsService;
 use App\Modules\Reservations\Models\Reservation;
@@ -8,6 +9,7 @@ use Illuminate\Http\Request;
 use App\Modules\Logs\Models\Log;
 use App\Modules\Logs\Services\LogService;
 use App\Modules\Reservations\Models\PricingStatusTracking;
+use App\Modules\Reservations\Models\ReservationStaff;
 use Illuminate\Support\Carbon;
 use Illuminate\Support\Facades\DB;
 
@@ -40,16 +42,32 @@ class ReservationsService
         }
 
            // Handle date filter
-           if ($request->has('date') && $request->input('date') != '') {
-            $date = $request->input('date');
-            $formattedDate = \Carbon\Carbon::createFromFormat('Y-m-d', $date)->format('d-m-Y');
-            $query->where('date', $formattedDate); // Use the 'date' column for filtering
+        if ($request->filled('start_date')) {
+            $startDate = $request->input('start_date');
+            $endDate = $request->input('end_date');
+            if ($request->filled('end_date')) {
+                $query->whereDate('date', '>=', $startDate)
+                    ->whereDate('date', '<=', $endDate);
+            } else {
+                $query->whereDate('date', '=', $startDate);
+            }
         }
         // Handle created_at filter
         if ($request->has('created_at') && $request->input('created_at') != '') {
             $createdAt = $request->input('created_at');
             $query->whereDate('created_at', $createdAt);
         }
+
+         // Venue filter
+    if ($request->has('venue') && $request->input('venue') != '') {
+        $venueId = $request->input('venue');
+        $query->where('venue_id', $venueId); // Adjust 'venue_id' according to your actual column name
+    }
+
+    if ($request->has('menu') && $request->input('menu') != '') {
+        $menuId = $request->input('menu');
+        $query->where('menu_id', $menuId); // Adjust 'venue_id' according to your actual column name
+    }
         
         $query->orderBy('created_at', 'desc');
         return $query->paginate($perPage);
@@ -69,7 +87,7 @@ class ReservationsService
      * @param int|array $id
      **/
     public function getByIds($ids){
-        return Client::whereIn('id', $ids)->get();
+        return Reservation::whereIn('id', $ids)->get();
     }
 
     /**
@@ -113,6 +131,8 @@ class ReservationsService
      * Updates existing Reservation
      **/
     public function update($request, Reservation $reservation) {
+
+        // dd($request);
         // Update the reservation with the new data from the request
         $reservation->number_of_guests = $request->input('number_of_guests');
         $reservation->menu_price = $request->input('menu_price');
@@ -188,22 +208,18 @@ class ReservationsService
 
    public function storePricingTracking(Reservation $reservation, $numberOfGuests,$newMenuPrice,$totalInvoiceSum,$totalDiscountSum)
    {
-
-       try {
-           return PricingStatusTracking::create([
-               "location_id" => auth()->user()->getCurrentLocationId(),
-               'user_id' => auth()->user()->id,
-               'number_of_guests' => $numberOfGuests,
-               'menu_price' => $newMenuPrice,
-               'price' => $newMenuPrice,
-               'total_price' => ($numberOfGuests * $newMenuPrice) + $totalInvoiceSum - $totalDiscountSum,
-               'total_invoice_price'=>$totalInvoiceSum,
-               'total_discount_price'=>$totalDiscountSum,
-               'reservation_id' => $reservation->id,
-           ]);
-       } catch (\Exception $e) {
-           return null; 
-       }
+       return PricingStatusTracking::create([
+           "location_id" => auth()->user()->getCurrentLocationId(),
+           'user_id' => auth()->user()->id,
+           'number_of_guests' => $numberOfGuests,
+           'menu_price' => $newMenuPrice,
+           'price' => $newMenuPrice,
+           'total_price' => ($numberOfGuests * $newMenuPrice) + $totalInvoiceSum - $totalDiscountSum,
+           'total_invoice_price'=>$totalInvoiceSum,
+           'total_discount_price'=>$totalDiscountSum,
+           'reservation_id' => $reservation->id,
+       ]);
    }
 
+   
 }
