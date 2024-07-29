@@ -54,6 +54,7 @@ class PaymentsService
                 $query->whereDate('date', '=', $startDate);
             }
         }
+
         // Handle date filter
         if ($request->has('date') && $request->input('date') != '') {
             $date = $request->input('date');

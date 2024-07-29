@@ -32,8 +32,12 @@
                         <input placeholder="Search" class="hubers-text-input white medium" type="text" name="search" value="{{ request('search') }}">
                     </div>
                     <div class="hubers-filter-group">
-                        <label>{{__('reservations.table.filter.date')}}:</label>
-                        <input placeholder="Search" class="hubers-text-input white medium" type="date" name="date" value="{{old('date',app('request')->input('date'))}}">
+                        <label>{{__('reservations.table.filter.start_date')}}:</label>
+                        <input  class="hubers-text-input white medium" type="date" name="start_date" value="{{old('date',app('request')->input('date'))}}">
+                    </div>
+                    <div class="hubers-filter-group">
+                        <label>{{__('reservations.table.filter.end_date')}}:</label>
+                        <input class="hubers-text-input white medium" type="date" name="end_date" value="{{old('date',app('request')->input('end_date'))}}">
                     </div>
 
                     <div class="hubers-filter-group">

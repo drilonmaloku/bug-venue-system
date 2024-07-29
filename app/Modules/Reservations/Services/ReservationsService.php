@@ -42,10 +42,15 @@ class ReservationsService
         }
 
            // Handle date filter
-           if ($request->has('date') && $request->input('date') != '') {
-            $date = $request->input('date');
-            $formattedDate = \Carbon\Carbon::createFromFormat('Y-m-d', $date)->format('d-m-Y');
-            $query->where('date', $formattedDate); // Use the 'date' column for filtering
+        if ($request->filled('start_date')) {
+            $startDate = $request->input('start_date');
+            $endDate = $request->input('end_date');
+            if ($request->filled('end_date')) {
+                $query->whereDate('date', '>=', $startDate)
+                    ->whereDate('date', '<=', $endDate);
+            } else {
+                $query->whereDate('date', '=', $startDate);
+            }
         }
         // Handle created_at filter
         if ($request->has('created_at') && $request->input('created_at') != '') {
