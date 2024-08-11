@@ -1981,15 +1981,12 @@ body {
   position: fixed;
   top: 0;
   left: 0;
-  width: 300px;
+  width: 270px;
   height: calc(100% - 32px);
-  background: white;
   padding: 16px;
   margin-top: 16px;
   margin-left: 16px;
   border-radius: 12px;
-  border: 1px solid rgb(207, 216, 220);
-  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.15);
   display: flex;
   flex-direction: column;
   justify-content: space-between;
@@ -2029,26 +2026,62 @@ body {
   margin: 0;
 }
 .vms-navbar .hubers-navbar-links ul li {
-  padding: 4px;
   margin-bottom: 4px;
+  position: relative;
 }
-.vms-navbar .hubers-navbar-links ul li a {
+.vms-navbar .hubers-navbar-links ul li a, .vms-navbar .hubers-navbar-links ul li .hubers-menu-item {
+  display: flex;
+  align-items: center;
   text-decoration: none;
-  padding: 12px;
+  padding: 8px;
   font-size: 18px;
   line-height: 24px;
   color: black;
   font-weight: 400;
+  border-radius: 4px;
+  margin-bottom: 0;
+  transition: all 0.3s ease-in-out;
+  cursor: pointer;
 }
-.vms-navbar .hubers-navbar-links ul li a.active {
+.vms-navbar .hubers-navbar-links ul li a:hover, .vms-navbar .hubers-navbar-links ul li .hubers-menu-item:hover {
+  background: #a1b5de;
+}
+.vms-navbar .hubers-navbar-links ul li a.active, .vms-navbar .hubers-navbar-links ul li .hubers-menu-item.active {
   font-weight: 600;
+  background: #a1b5de;
+}
+.vms-navbar .hubers-navbar-links ul li a svg, .vms-navbar .hubers-navbar-links ul li .hubers-menu-item svg {
+  margin-right: 8px;
+}
+.vms-navbar .hubers-navbar-links ul li .hubers-menu-item {
+  justify-content: space-between;
+}
+.vms-navbar .hubers-navbar-links ul li .submenu-opener-icon {
+  position: absolute;
+  right: 4px;
+  top: 4px;
+  cursor: pointer;
+  padding: 4px;
+  transition: all 0.3s ease-in-out;
+}
+.vms-navbar .hubers-navbar-links ul li .submenu-opener-icon.open {
+  transform: rotate(180deg);
+}
+.vms-navbar .hubers-navbar-links .hubers-submenu {
+  overflow: hidden;
+  max-height: 0;
+  transition: all 0.3s ease-in-out;
+}
+.vms-navbar .hubers-navbar-links .hubers-submenu.open {
+  max-height: 400px;
 }
 .vms-navbar .hubers-navbar-links .hubers-navbar-logout {
   display: none;
 }
 .vms-navbar .hubers-navbar-logout {
   display: flex;
-  border-top: 2px solid rgb(207, 216, 220);
+  background: white;
+  border-radius: 8px;
   padding: 12px;
 }
 .vms-navbar .hubers-navbar-logout form {
@@ -2066,18 +2099,14 @@ body {
 }
 
 .vms-layout {
-  background: rgba(236, 239, 241, 0.5);
+  background: #f0f8ff;
   min-height: 100vh;
-  padding-left: 332px;
-  padding-right: 16px;
+  padding-left: 286px;
 }
 .vms-layout .hubers-page-header {
   background: white;
-  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.15);
-  margin-bottom: 16px;
-  border-radius: 12px;
-  padding: 16px;
-  border: 1px solid rgb(207, 216, 220);
+  border-top-left-radius: 12px;
+  padding: 16px 24px;
   display: flex;
   justify-content: space-between;
   align-items: center;
@@ -2091,7 +2120,15 @@ body {
 }
 
 .hubers-body-content {
-  padding-top: 16px;
+  padding-top: 24px;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+}
+.hubers-body-content > .vms_panel {
+  flex-grow: 1;
+  border-radius: 0;
+  margin-bottom: 0;
 }
 
 @media (max-width: 767px) {
@@ -2260,6 +2297,10 @@ body {
 
 .dashboard_panel {
   min-height: 500px;
+}
+
+.cke_notifications_area {
+  display: none !important;
 }
 
 .vue-tel-input {

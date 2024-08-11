@@ -8,6 +8,7 @@ use App\Modules\Payments\Services\PaymentsService;
 use App\Modules\Reservations\Models\Reservation;
 use App\Modules\Reservations\Services\InvoicesServices;
 use App\Modules\Reservations\Services\ReservationsService;
+use App\Modules\Settings\Models\LocationSettings;
 use App\Modules\Venues\Models\Venue;
 use App\Modules\Venues\Services\VenuesService;
 use Illuminate\Http\Request;
@@ -640,7 +641,7 @@ class ReservationsController extends Controller
         }
 
         // Create a new PHPWord instance
-        $phpWord = new PhpWord();
+        $phpWord = new \PhpOffice\PhpWord\PhpWord();
 
         // Add a section to the document
         $section = $phpWord->addSection();
@@ -648,7 +649,26 @@ class ReservationsController extends Controller
         // Add content to the section (example)
         $section->addText('Reservation Contract');
         $section->addText('Reservation ID: ' . $reservation->id);
-        // Add more content as needed
+
+        // Fetch the contract content
+        $locationSettings = LocationSettings::find(1);
+        $contractContent = json_decode($locationSettings->settings,true)['contract'];
+
+        // Replace placeholders with actual reservation data
+        $placeholders = [
+            '{{reservation_date}}' => $reservation->date->format('d/m/Y'),
+            '{{reservation_client}}' => $reservation->client->name,
+            '{{reservation_venue}}' => $reservation->venue->name,
+            '{{reservation_id}}' => $reservation->id,
+        ];
+
+        // Replace all placeholders in the contract content
+        $contractContent = str_replace(array_keys($placeholders), array_values($placeholders), $contractContent);
+
+        // Check if contractContent is not empty
+        if (!empty($contractContent)) {
+            \PhpOffice\PhpWord\Shared\Html::addHtml($section, $contractContent);
+        }
 
         // Save the document to a temporary file
         $tempFilePath = tempnam(sys_get_temp_dir(), 'contract');

@@ -113,10 +113,42 @@ var exportOptions = {
         }
     }
 }
+var submenuOptions = {
+    init: function () {
+        var submenuItems = document.querySelectorAll('.submenu-opener');
+
+        submenuItems.forEach(function (item) {
+            item.addEventListener('click', function () {
+                // Toggle 'open' class on the clicked menu item
+                item.classList.toggle('open');
+
+                // Find the adjacent .hubers-submenu element
+                var submenu = item.nextElementSibling;
+
+                // Check if the next sibling is the .hubers-submenu
+                if (submenu && submenu.classList.contains('hubers-submenu')) {
+                    submenu.classList.toggle('open');
+                }
+
+                // Close other submenu items
+                submenuItems.forEach(function (otherItem) {
+                    if (otherItem !== item) {
+                        otherItem.classList.remove('open');
+                        var otherSubmenu = otherItem.nextElementSibling;
+                        if (otherSubmenu && otherSubmenu.classList.contains('hubers-submenu')) {
+                            otherSubmenu.classList.remove('open');
+                        }
+                    }
+                });
+            });
+        });
+    }
+};
 document.addEventListener('DOMContentLoaded', function () {
     menuOptions.init();
     filterOptions.init();
     passwordToggle.init();
     filterInputOptions.init();
     checkboxOptions.init();
+    submenuOptions.init();
 });

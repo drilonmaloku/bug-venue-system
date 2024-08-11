@@ -23,11 +23,11 @@
                         </button>
                     </a>
 
-{{--                    <a href="{{ route('reservations.printContract', ['id' => $reservation->id]) }}">--}}
-{{--                        <button class="btn btn-info btn-sm ms-auto mb-0 ml-2" type="submit"><i class="fa fa-print"></i>--}}
-{{--                            {{__('reservations.view.print_contract_btn_title')}}--}}
-{{--                        </button>--}}
-{{--                    </a>--}}
+                    <a href="{{ route('reservations.printContract', ['id' => $reservation->id]) }}">
+                        <button class="btn btn-info btn-sm ms-auto mb-0 ml-2" type="submit"><i class="fa fa-print"></i>
+                            {{__('reservations.view.print_contract_btn_title')}}
+                        </button>
+                    </a>
                 </div>
                 <table>
                     <thead>

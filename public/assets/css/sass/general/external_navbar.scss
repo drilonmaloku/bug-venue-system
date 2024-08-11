@@ -2,15 +2,12 @@
   position: fixed;
   top: 0;
   left: 0;
-  width: 300px;
+  width: 270px;
   height: calc(100% - 32px);
-  background: white;
   padding: 16px;
   margin-top: 16px;
   margin-left: 16px;
   border-radius: 12px;
-  border: 1px solid rgb(207, 216, 220);
-  box-shadow:  0 1px 2px  rgba(0,0,0,.15);
   display: flex;
   flex-direction: column;
   justify-content: space-between;
@@ -49,20 +46,58 @@
       padding: 0;
       margin: 0;
       li {
-
-        padding: 4px;
         margin-bottom: 4px;
-        a {
+        position: relative;
+        a,.hubers-menu-item {
+          display: flex;
+          align-items: center;
           text-decoration: none;
-          padding: 12px;
+          padding: 8px;
           font-size: 18px;
           line-height: 24px;
           color : black;
           font-weight: 400;
+          border-radius: 4px;
+          margin-bottom: 0;
+          transition: all .3s ease-in-out;
+          cursor: pointer;
+          &:hover {
+            background: #a1b5de;
+          }
           &.active {
             font-weight: 600;
+            background: #a1b5de;
+          }
+
+          svg {
+            margin-right: 8px;
+          }
+
+
+        }
+        .hubers-menu-item {
+          justify-content: space-between;
+        }
+        .submenu-opener-icon {
+          position: absolute;
+          right: 4px;
+          top: 4px;
+          cursor: pointer;
+          padding: 4px;
+          transition: all .3s ease-in-out;
+
+          &.open {
+            transform: rotate(180deg);
           }
         }
+      }
+    }
+    .hubers-submenu {
+      overflow: hidden;
+      max-height: 0;
+      transition: all .3s ease-in-out;
+      &.open {
+        max-height: 400px;
       }
     }
     .hubers-navbar-logout {
@@ -71,7 +106,8 @@
   }
   .hubers-navbar-logout {
     display: flex;
-    border-top: 2px solid rgb(207, 216, 220);
+    background: white;
+    border-radius: 8px;
     padding: 12px;
     form {
       display: flex;
@@ -89,17 +125,14 @@
   }
 }
 .vms-layout {
-  background: rgba(236, 239, 241, 0.5);
+  background: #f0f8ff;
   min-height: 100vh;
-  padding-left: 332px;
-  padding-right: 16px;
+  padding-left: 286px;
+
   .hubers-page-header {
     background: white;
-    box-shadow:  0 1px 2px  rgba(0,0,0,.15);
-    margin-bottom: 16px;
-    border-radius: 12px;
-    padding: 16px;
-    border: 1px solid rgb(207, 216, 220);
+    border-top-left-radius: 12px;
+    padding: 16px 24px;
     display: flex;
     justify-content: space-between;
     align-items: center;
@@ -113,7 +146,16 @@
   }
 }
 .hubers-body-content {
-  padding-top: 16px;
+  padding-top: 24px;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+
+  & > .vms_panel {
+    flex-grow: 1;
+    border-radius: 0;
+    margin-bottom: 0;
+  }
 
 }
 
@@ -299,4 +341,9 @@
 
 .dashboard_panel {
   min-height: 500px;
+}
+
+
+.cke_notifications_area {
+  display: none !important;
 }
