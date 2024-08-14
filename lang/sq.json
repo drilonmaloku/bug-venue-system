@@ -24,6 +24,7 @@
   "dashboard.support_tickets": "Support Tickets",
   "dashboard.profile": "Profili",
   "dashboard.settings": "Settings",
+  "dashboard.contract": "Kontrata",
 
 
   "clients.main.title": "Klientat",
@@ -362,6 +363,9 @@
   "reports.report.information_by_venue.total_payment":"Totali i pagesave",
   "reservation.type.full_day" : "Ditë e Plotë",
   "reservation.type.morning" : "Mëngjes",
-  "reservation.type.night" : "Mbrëmje"
+  "reservation.type.night" : "Mbrëmje",
+
+  "contracts.manage" : "Menagjo Kontratën",
+  "contracts.contract" : "Kontrata"
 
 }

@@ -2071,9 +2071,13 @@ body {
   overflow: hidden;
   max-height: 0;
   transition: all 0.3s ease-in-out;
+  padding-left: 8px;
+  padding-right: 8px;
 }
 .vms-navbar .hubers-navbar-links .hubers-submenu.open {
   max-height: 400px;
+  padding-top: 8px;
+  padding-bottom: 8px;
 }
 .vms-navbar .hubers-navbar-links .hubers-navbar-logout {
   display: none;
@@ -2088,6 +2092,7 @@ body {
   display: flex;
   align-items: center;
   cursor: pointer;
+  margin-bottom: 0;
 }
 .vms-navbar .hubers-navbar-logout button {
   all: unset;
@@ -2236,6 +2241,8 @@ body {
     align-items: center;
     padding: 8px;
     height: 68px;
+    background: white;
+    z-index: 2;
   }
   .vms-navbar .hubers-navbar-logo-items .hubers-navbar-logo img {
     height: 52px;
@@ -2269,7 +2276,7 @@ body {
   }
   .vms-layout {
     padding-top: 76px;
-    padding-left: 16px;
+    padding-left: 0px;
   }
   .vms-layout .hubers-page-header {
     padding: 12px;

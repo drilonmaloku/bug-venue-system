@@ -14,6 +14,7 @@ use App\Modules\Venues\Services\VenuesService;
 use Illuminate\Http\Request;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Support\Carbon;
+use Inertia\Inertia;
 use Maatwebsite\Excel\Facades\Excel;
 use App\Http\Controllers\Controller;
 use App\Modules\Reservations\Exports\ReservationsExport;
@@ -149,7 +150,6 @@ class ReservationsController extends Controller
         return response()->json(['data' =>$venues->toArray()]);
     }
 
-
     public function view($id)
     {
         $reservation = $this->reservationsService->getByID($id);
@@ -161,6 +161,15 @@ class ReservationsController extends Controller
         if (is_null($reservation)) {
             return abort(404);
         }
+
+//        Inertia::setRootView('pages.reservations.show-inertia');
+//        return Inertia::render('Reservation', [
+//            'reservation' => $reservation,
+//            'totalDiscount'=>$totalDiscount,
+//            'totalInvoiceAmount'=>$totalInvoiceAmount,
+//            'totalAmount'=>$totalAmount,
+//            'users' => $this->userService->getStaffUsers()
+//        ]);
         return view('pages/reservations/show', [
             'reservation' => $reservation,
             'totalDiscount'=>$totalDiscount,

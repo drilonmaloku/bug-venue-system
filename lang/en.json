@@ -24,6 +24,7 @@
   "dashboard.support_tickets": "Support Tickets",
   "dashboard.profile": "Profile",
   "dashboard.settings": "Settings",
+  "dashboard.contract": "Contract",
 
 
   "clients.main.title": "Clients",
@@ -356,6 +357,9 @@
 
   "reservation.type.full_day" : "Full Day",
   "reservation.type.morning" : "Midday",
-  "reservation.type.night" : "Night"
+  "reservation.type.night" : "Night",
+
+  "contracts.manage" : "Manage Contract",
+  "contracts.contract" : "Contract"
 
 }

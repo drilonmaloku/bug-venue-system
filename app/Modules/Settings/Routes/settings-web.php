@@ -6,6 +6,6 @@ use App\Modules\Settings\Controllers\SettingsController;
 use Illuminate\Support\Facades\Route;
 
 Route::group(['middleware' => 'auth'], function () {
-    Route::get('/settings', [SettingsController::class, 'index'])->name('location-settings.index');
-    Route::post('/settings', [SettingsController::class, 'save'])->name('location-settings.save');
+    Route::get('/contract', [SettingsController::class, 'index'])->name('location-settings.contract');
+    Route::post('/save-contract', [SettingsController::class, 'save'])->name('location-settings.contract-save');
 });

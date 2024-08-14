@@ -5,19 +5,20 @@ namespace App\Models;
 use App\Modules\Expenses\Models\Expense;
 use App\Modules\Location\Models\Location;
 use App\Modules\Users\Models\LocationUser;
-use App\Scopes\CurrentLocationScope;
-use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
-use Laravel\Sanctum\HasApiTokens;
 use Spatie\Permission\Traits\HasRoles;
 
 class User extends Authenticatable
 {
-    use  HasFactory, Notifiable, HasRoles,SoftDeletes;
+    use
+        HasFactory,
+        Notifiable,
+        HasRoles,
+        SoftDeletes;
 
 
     const ROLE_ADMIN = "admin";
@@ -72,23 +73,12 @@ class User extends Authenticatable
     protected $dates = ['deleted_at']; // Add deleted_at to dates
 
 
-
-
     public function expenses()
     {
         return $this->hasMany(Expense::class);
     }
 
-    /**
-     * Get the current location for the user.
-     *
-     * @return id|null
-     */
-    public function getCurrentLocationId()
-    {
-        $locationUser = $this->locationUsers->first();
-        return $locationUser ? $locationUser->location_id : null;
-    }
+
 
     public function locationUsers()
     {
@@ -100,11 +90,7 @@ class User extends Authenticatable
         return $this->belongsToMany(Location::class, 'locations_users', 'user_id', 'location_id');
     }
 
-    public function getCurrentLocationSlug()
-    {
-        $locationUser = $this->locationUsers->first();
-        return $locationUser ? Location::find($locationUser->location_id)->slug : null;
-    }
+
 
     public function isLocationEnabled()
     {
@@ -124,6 +110,34 @@ class User extends Authenticatable
         } catch (ModelNotFoundException $e) {
             return false; // Location not found
         }
+    }
+
+    /**
+     * Get the current location for the user.
+     *
+     * @return id|null
+     */
+    public function getCurrentLocation()
+    {
+        $locationUser = $this->locationUsers->first();
+        return $locationUser ? $locationUser->location : null;
+    }
+
+    /**
+     * Get the current location for the user.
+     *
+     * @return id|null
+     */
+    public function getCurrentLocationId()
+    {
+        $locationUser = $this->locationUsers->first();
+        return $locationUser ? $locationUser->location_id : null;
+    }
+
+    public function getCurrentLocationSlug()
+    {
+        $locationUser = $this->locationUsers->first();
+        return $locationUser ? Location::find($locationUser->location_id)->slug : null;
     }
     
 }

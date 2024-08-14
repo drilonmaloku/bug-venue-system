@@ -19,7 +19,6 @@ class LocationSettings extends Model
         return $this->belongsTo(Location::class);
     }
 
-    // Function to get the decoded contract content
     public function getContractAttribute()
     {
         return json_decode($this->settings,true)['contract'];

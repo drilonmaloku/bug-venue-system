@@ -1,19 +1,19 @@
 @extends('layouts.app')
 
 @section('header')
-    Settings
+    {{__('contracts.manage')}}
 @endsection
 @section('content')
     <div class="vms_panel">
-        <form action="{{ route('location-settings.save') }}" method="POST">
+        <form action="{{ route('location-settings.contract-save') }}" method="POST">
             @csrf
             <div class="hubers-form-group">
-                <label class="bug-label" for="">Kontrata</label>
+                <label class="bug-label" for="">{{__('contracts.contract')}}</label>
                 <textarea name="contractContent" id="contractContent" rows="20" >
                     {!! isset($location_contract) ? $location_contract : '' !!}
                 </textarea>
             </div>
-            <button class="hubers-btn" type="submit">Save Contract</button>
+            <button class="hubers-btn" type="submit">{{__('general.save_btn')}}</button>
         </form>
     </div>
 
