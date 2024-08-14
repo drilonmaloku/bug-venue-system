@@ -86,7 +86,9 @@
           padding: 4px;
           transition: all .3s ease-in-out;
 
-          &.open {
+        }
+        &.open{
+          .submenu-opener-icon {
             transform: rotate(180deg);
           }
         }

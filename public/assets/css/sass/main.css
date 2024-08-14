@@ -2064,7 +2064,7 @@ body {
   padding: 4px;
   transition: all 0.3s ease-in-out;
 }
-.vms-navbar .hubers-navbar-links ul li .submenu-opener-icon.open {
+.vms-navbar .hubers-navbar-links ul li.open .submenu-opener-icon {
   transform: rotate(180deg);
 }
 .vms-navbar .hubers-navbar-links .hubers-submenu {

@@ -115,6 +115,7 @@ var exportOptions = {
 }
 var submenuOptions = {
     init: function () {
+        submenuOptions.closeAllSubmenus();
         var submenuItems = document.querySelectorAll('.submenu-opener');
 
         submenuItems.forEach(function (item) {
@@ -122,25 +123,26 @@ var submenuOptions = {
                 // Toggle 'open' class on the clicked menu item
                 item.classList.toggle('open');
 
-                // Find the adjacent .hubers-submenu element
-                var submenu = item.nextElementSibling;
+                var parentLi = item.closest('li');
+                var submenu = parentLi.querySelector('.hubers-submenu');
 
                 // Check if the next sibling is the .hubers-submenu
                 if (submenu && submenu.classList.contains('hubers-submenu')) {
+                    parentLi.classList.toggle('open');
                     submenu.classList.toggle('open');
                 }
-
-                // Close other submenu items
-                submenuItems.forEach(function (otherItem) {
-                    if (otherItem !== item) {
-                        otherItem.classList.remove('open');
-                        var otherSubmenu = otherItem.nextElementSibling;
-                        if (otherSubmenu && otherSubmenu.classList.contains('hubers-submenu')) {
-                            otherSubmenu.classList.remove('open');
-                        }
-                    }
-                });
             });
+        });
+    },
+    closeAllSubmenus: function () {
+        var submenuItems = document.querySelectorAll('.submenu-opener');
+        submenuItems.forEach(function (item) {
+            item.classList.remove('open');
+            var parentLi = item.closest('li');
+            var submenu = parentLi.querySelector('.hubers-submenu');
+            if (submenu) {
+                submenu.classList.remove('open');
+            }
         });
     }
 };
