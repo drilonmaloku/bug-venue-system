@@ -47,11 +47,11 @@
                     </div>
                     <div class="hubers-filter-group">
                         <label>{{__('logs.filter.search')}}:</label>
-                        <input placeholder="{{__('logs.filter.search')}}" class="hubers-text-input white medium" type="text" name="search" value="{{old('search',app('request')->input('search'))}}">
+                        <input placeholder="{{__('logs.filter.search')}}" class="bug-text-input white medium" type="text" name="search" value="{{old('search',app('request')->input('search'))}}">
                     </div>
                     <div class="hubers-filter-group">
                         <label>{{__('logs.filter.date')}}:</label>
-                        <input placeholder="{{__('logs.filter.date')}}" class="hubers-text-input white medium" type="date" name="date" value="{{old('date',app('request')->input('data'))}}">
+                        <input placeholder="{{__('logs.filter.date')}}" class="bug-text-input white medium" type="date" name="date" value="{{old('date',app('request')->input('date'))}}">
                     </div>
                 </div>
                 <div class="hubers-filter-list-actions">

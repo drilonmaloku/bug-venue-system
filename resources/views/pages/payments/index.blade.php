@@ -25,7 +25,7 @@
                 <div class="hubers-filter-list-options">
                     <div class="hubers-filter-group">
                         <label>{{__('payment.forms.search')}}:</label>
-                        <input placeholder="Search" class="hubers-text-input white medium" type="text" name="search" value="{{ request('search') }}">
+                        <input placeholder="Search" class="bug-text-input white medium" type="text" name="search" value="{{ request('search') }}">
                     </div>
                   
 
@@ -36,7 +36,7 @@
                             id="start_date"
                             name="start_date"
                             type="date"
-                           class="hubers-text-input white medium"
+                           class="bug-text-input white medium"
                           value="{{old('date',app('request')->input('start_date'))}}"
                         />
                     </div>
@@ -46,7 +46,7 @@
                             id="end_date"
                             name="end_date"
                             type="date"
-                          class="hubers-text-input white medium"
+                          class="bug-text-input white medium"
                           value="{{old('date',app('request')->input('end_date'))}}"
 
                         />

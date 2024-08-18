@@ -29,20 +29,20 @@
                 <div class="hubers-filter-list-options">
                     <div class="hubers-filter-group">
                         <label>{{__('reservations.table.filter.search')}}:</label>
-                        <input placeholder="Search" class="hubers-text-input white medium" type="text" name="search" value="{{ request('search') }}">
+                        <input placeholder="Search" class="bug-text-input white medium" type="text" name="search" value="{{ request('search') }}">
                     </div>
                     <div class="hubers-filter-group">
                         <label>{{__('reservations.table.filter.start_date')}}:</label>
-                        <input  class="hubers-text-input white medium" type="date" name="start_date" value="{{old('date',app('request')->input('date'))}}">
+                        <input  class="bug-text-input white medium" type="date" name="start_date" value="{{old('date',app('request')->input('date'))}}">
                     </div>
                     <div class="hubers-filter-group">
                         <label>{{__('reservations.table.filter.end_date')}}:</label>
-                        <input class="hubers-text-input white medium" type="date" name="end_date" value="{{old('date',app('request')->input('end_date'))}}">
+                        <input class="bug-text-input white medium" type="date" name="end_date" value="{{old('date',app('request')->input('end_date'))}}">
                     </div>
 
                     <div class="hubers-filter-group">
                         <label>{{__('reservations.table.filter.created_date')}}:</label>
-                        <input placeholder="Search" class="hubers-text-input white medium" type="date" name="created_at" value="{{ old('created_at', app('request')->input('created_at')) }}">
+                        <input placeholder="Search" class="bug-text-input white medium" type="date" name="created_at" value="{{ old('created_at', app('request')->input('created_at')) }}">
                     </div>
                     <div class="hubers-filter-group">
                         <label>{{__('reservations.table.filter.select_venue')}}:</label>

@@ -27,15 +27,15 @@
                 <div class="hubers-filter-list-options">
                     <div class="hubers-filter-group">
                         <label>{{__('expenses.table.search')}}:</label>
-                        <input placeholder="{{__('expenses.table.search')}}" class="hubers-text-input white medium" type="text" name="search" value="{{ request('search') }}">
+                        <input placeholder="{{__('expenses.table.search')}}" class="bug-text-input white medium" type="text" name="search" value="{{ request('search') }}">
                     </div>
                     <div class="hubers-filter-group">
                         <label>{{__('expenses.filter.start_date')}}:</label>
-                        <input class="hubers-text-input white medium" type="date" name="start_date" value="{{old('date',app('request')->input('start_date'))}}">
+                        <input class="bug-text-input white medium" type="date" name="start_date" value="{{old('date',app('request')->input('start_date'))}}">
                     </div>
                     <div class="hubers-filter-group">
                         <label>{{__('expenses.filter.end_date')}}:</label>
-                        <input class="hubers-text-input white medium" type="date" name="end_date" value="{{old('date',app('request')->input('end_date'))}}">
+                        <input class="bug-text-input white medium" type="date" name="end_date" value="{{old('date',app('request')->input('end_date'))}}">
                     </div>
                 </div>
                 <div class="hubers-filter-list-actions">

@@ -26,16 +26,20 @@ var filterOptions = {
 };
 var passwordToggle = {
     init: function () {
-        var toggleIcon = document.querySelector('.password-input-toggle-icon');
-        var passwordField = document.querySelector('#password');
+        var toggles = document.querySelectorAll('.password-input-toggle');
 
-        if (toggleIcon && passwordField) {
-            toggleIcon.addEventListener('click', function () {
-                var type = passwordField.getAttribute('type') === 'password' ? 'text' : 'password';
-                passwordField.setAttribute('type', type);
-                this.innerHTML = type === 'password' ? '<i class="fa fa-eye"></i>' : '<i class="fa fa-eye-slash"></i>';
-            });
-        }
+        toggles.forEach(function (toggle) {
+            var toggleIcon = toggle.querySelector('.password-input-toggle-icon');
+            var passwordField = toggle.querySelector('input[type="password"], input[type="text"]');
+
+            if (toggleIcon && passwordField) {
+                toggleIcon.addEventListener('click', function () {
+                    var type = passwordField.getAttribute('type') === 'password' ? 'text' : 'password';
+                    passwordField.setAttribute('type', type);
+                    toggleIcon.innerHTML = type === 'password' ? '<i class="fa fa-eye"></i>' : '<i class="fa fa-eye-slash"></i>';
+                });
+            }
+        });
     }
 };
 var filterInputOptions = {

@@ -27,16 +27,16 @@
                 <div class="hubers-filter-list-options">
                     <div class="hubers-filter-group">
                         <label>{{__('users.filter.search')}}:</label>
-                        <input placeholder="Search" class="hubers-text-input white medium" type="text" name="search" value="{{ request('search') }}">
+                        <input placeholder="Search" class="bug-text-input white medium" type="text" name="search" value="{{ request('search') }}">
                     </div>
                     <div class="hubers-filter-group">
                         <label>{{__('users.table.role')}}:</label>
                         <select class="hubers-select-input white medium" name="role" id="">
                             <option value="">{{__('users.filter.select')}}</option>
-                            <option @if(app('request')->input('role') == 1) selected @endif value="admin">{{__('users.table.role.admin')}}</option>
-                            <option @if(app('request')->input('context') == 2) selected @endif value="super-admin">{{__('users.table.role.super_admin')}}</option>
-                            <option @if(app('request')->input('context') == 2) selected @endif value="manager">{{__('users.table.role.manager')}}</option>
-                            <option @if(app('request')->input('context') == 2) selected @endif value="staff">{{__('users.table.role.staff')}}</option>
+                            <option @if(app('request')->input('role') == 'admin') selected @endif value="admin">{{__('users.table.role.admin')}}</option>
+                            <option @if(app('request')->input('role') == 'super-admin') selected @endif value="super-admin">{{__('users.table.role.super_admin')}}</option>
+                            <option @if(app('request')->input('role') == 'manager') selected @endif value="manager">{{__('users.table.role.manager')}}</option>
+                            <option @if(app('request')->input('role') == 'staff') selected @endif value="staff">{{__('users.table.role.staff')}}</option>
                         </select>
                     </div>
                 </div>
