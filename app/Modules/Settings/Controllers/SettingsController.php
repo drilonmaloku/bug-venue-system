@@ -42,7 +42,7 @@ class SettingsController extends Controller
             'contract' => $request->input('contractContent')
         ]);
         $locationSettings->save();
-        return redirect()->to('/settings');
+        return redirect()->to('/contract');
     }
 
 }

@@ -498,7 +498,7 @@ class ReservationsController extends Controller
         ]);
     }
 
-    public function  updatePayment(Request $request, $id, $paymentId)
+    public function updatePayment(Request $request, $id, $paymentId)
     {
         $reservation = $this->reservationsService->getByID($id);
 
@@ -660,12 +660,11 @@ class ReservationsController extends Controller
         $section->addText('Reservation ID: ' . $reservation->id);
 
         // Fetch the contract content
-        $locationSettings = LocationSettings::find(1);
+        $locationSettings = auth()->user()->getCurrentLocation()->locationSettings;
         $contractContent = json_decode($locationSettings->settings,true)['contract'];
-
-        // Replace placeholders with actual reservation data
+        
         $placeholders = [
-            '{{reservation_date}}' => $reservation->date->format('d/m/Y'),
+            '{{reservation_date}}' => $reservation->date,
             '{{reservation_client}}' => $reservation->client->name,
             '{{reservation_venue}}' => $reservation->venue->name,
             '{{reservation_id}}' => $reservation->id,

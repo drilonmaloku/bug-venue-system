@@ -241,7 +241,7 @@
   "reservations.create.client.information": "Client Information",
   "reservations.create.client.name": "Name",
   "reservations.create.client.email": "Email",
-  "reservations.create.client.phone": "Phone (Optional)",
+  "reservations.create.client.phone": "Phone",
   "reservations.create.client.additional_phone": "Additional Phone (Optional)",
   "reservations.create.payment.date": "Payment Date",
   "reservations.create.payment.amount": "Payment Amount",

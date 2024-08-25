@@ -35,7 +35,7 @@
                         <td>{{ $menu->price }}</td>
                     </tr>
                     <tr>
-                        <td>{{__('menu.title.description')}}</td>
+                        <td>{{__('menu.table.description')}}</td>
                         <td>{{ $menu->description }}</td>
                     </tr>
                     </tbody>

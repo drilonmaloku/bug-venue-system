@@ -244,7 +244,7 @@
   "reservations.create.client.information" : "Informatat mbi klientin",
   "reservations.create.client.name" : "Emri",
   "reservations.create.client.email" : "Emaili",
-  "reservations.create.client.phone" : "Telefoni Opsional",
+  "reservations.create.client.phone" : "Telefoni",
   "reservations.create.client.additional_phone" : "Telefoni Opsional",
   "reservations.create.payment.date" : "Data e Pagesës",
   "reservations.create.payment.amount" : "Vlera e Pagesës",
