@@ -662,7 +662,7 @@ class ReservationsController extends Controller
         // Fetch the contract content
         $locationSettings = auth()->user()->getCurrentLocation()->locationSettings;
         $contractContent = json_decode($locationSettings->settings,true)['contract'];
-        
+
         $placeholders = [
             '{{reservation_date}}' => $reservation->date,
             '{{reservation_client}}' => $reservation->client->name,
@@ -711,9 +711,6 @@ class ReservationsController extends Controller
             return response()->json(['message' => 'Internal Server Error'], JsonResponse::HTTP_INTERNAL_SERVER_ERROR);
         }
     }
-
-
-
 
     public function export(Request $request)
     {

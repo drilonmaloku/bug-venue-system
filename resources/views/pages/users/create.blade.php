@@ -22,7 +22,7 @@
                         </div>
                         <div class="col-md-12">
                             <div class="form-group">
-                                <label for="example-text-input" class="bug-label">{{__('users.table.email')}}*</label>
+                                <label for="example-text-input" class="bug-label">{{__('users.table.first_name')}}*</label>
                                 <input class="bug-text-input" required placeholder="Emri" type="text" name="first_name" >
                             </div>
                         </div>

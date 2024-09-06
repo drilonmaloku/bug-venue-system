@@ -41,7 +41,24 @@ class LoginController extends Controller
     }
 
 
+    /**
+     * Override the credentials method to allow login with either username or email.
+     *
+     * @param Request $request
+     * @return array
+     */
+    protected function credentials(Request $request)
+    {
+        // Determine if the input is an email or username
+        $login = $request->input('email');
+        $fieldType = filter_var($login, FILTER_VALIDATE_EMAIL) ? 'email' : 'username';
 
+        // Return credentials for the login attempt
+        return [
+            $fieldType => $login,
+            'password' => $request->input('password'),
+        ];
+    }
 
 
     protected function authenticated(Request $request, User $user)

@@ -29,7 +29,7 @@
                         <form method="POST" action="{{ route('login') }}">
                             @csrf
                             <div class="form-group">
-                                <label for="email" class="bug-label">Email*</label>
+                                <label for="email" class="bug-label">Email or Username*</label>
                                 <input id="email" type="text" class="bug-text-input @error('email') is-invalid @enderror" name="email" value="{{ old('email') }}" required  autofocus>
                             </div>
                             <div class="form-group">
