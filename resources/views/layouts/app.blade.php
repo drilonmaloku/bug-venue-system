@@ -149,7 +149,6 @@
                                     {{__('dashboard.reports')}}
                                 </a>
                             </li>
-
                         @endrole
 
 

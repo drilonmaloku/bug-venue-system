@@ -223,6 +223,7 @@
   "reservations.table.total_amount" : "Shuma Totale",
   "reservations.table.staff_expenses" : "Shpenzimet e Stafit",
   "reservations.table.manager" : "Menagjeri",
+  "reservations.no_create_option" : "Duhet të krijoni një Sallë dhe një Menu për të vazhduar me krijimin e rezervimeve",
 
   "reservations.table.not_found_with_search": "Nuk ka rezervime sipas search",
   "reservations.table.not_found_without_search": "Nuk ka rezervime momentalisht",

@@ -4,6 +4,12 @@
 @endsection
 @section('content')
     <div class="vms_panel dashboard_panel">
+        @if(count($menus) == 0 || count($venues) == 0)
+            <div class="hubers-notification big">
+                {{__('reservations.no_create_option')}}
+                <a class="hubers-btn" href="{{route('onboard.index')}}">Onboard</a>
+            </div>
+        @endif
         <div id='calendar'></div>
         <div class="modal fade" id="reservationModal" tabindex="-1" role="dialog" aria-labelledby="reservationModalLabel"
             aria-hidden="true">

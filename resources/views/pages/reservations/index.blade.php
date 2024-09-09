@@ -9,6 +9,12 @@
 @endsection
 @section('content')
     <div class="vms_panel">
+        @if(count($menus) == 0 || count($venues) == 0)
+            <div class="hubers-notification big">
+                {{__('reservations.no_create_option')}}
+                <a class="hubers-btn" href="{{route('onboard.index')}}">Onboard</a>
+            </div>
+        @endif
         <form class="filter-items" action="/reservations" method="GET" >
             <div class="filter-options">
                 <div class="huber-filter-btn  @if ($is_on_search) active @endif">

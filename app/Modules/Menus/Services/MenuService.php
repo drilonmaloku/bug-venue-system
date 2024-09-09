@@ -120,7 +120,7 @@ class MenuService
                 'message' => 'Menuja është fshirë me sukses',
                 'context' => Log::LOG_CONTEXT_CLIENTS,
                 'ttl'=> Log::LOG_TTL_THREE_MONTHS,
-                'previous_data' => $previousData
+                'previous_data' => json_encode($previousData)
             ]);
         }
         return $menuDeleted;
