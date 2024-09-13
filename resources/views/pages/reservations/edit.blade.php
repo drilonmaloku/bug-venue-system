@@ -26,6 +26,8 @@
                                 <input id="numberOfGuests" class="bug-text-input" type="number" name="number_of_guests" required value="{{$reservation->number_of_guests}}" >
                             </div>
                         </div>
+                    </div>
+                    <div class="row">
                         <div class="col-md-12">
                             <input type="hidden" name="venue_id" id="venueID">
                             {{__('reservations.edit.venues')}}:
@@ -45,13 +47,15 @@
                                 @endforeach
                             </div>
                         </div>
+                    </div>
+                    <div class="row">
                         <div class="col-md-6">
                             <div class="form-group">
                                 <label for="example-text-input" class="form-control-label">{{__('reservations.edit.menu')}}*</label>
                                 <select id="menuId" class="bug-text-input" name="menu_id">
                                     <option value="">{{__('reservations.edit.select_menu')}}</option>
                                     @foreach($menus as $menu)
-                                        <option value="{{ $menu->id }}" {{ $menu->id == $reservation->menu_id ? 'selected' : '' }}>{{$menu->name}},{{$menu->price}}</option>
+                                        <option data-price="{{$menu->price}}" value="{{$menu->id}}" data-menu-contents="{{$menu->description}}" {{ $menu->id == $reservation->menu_id ? 'selected' : '' }}>{{$menu->name}},{{$menu->price}}</option>
                                     @endforeach
                                 </select>
                             </div>
@@ -62,6 +66,15 @@
                                 <input id="menuPrice" class="bug-text-input" type="number" name="menu_price" value="{{$reservation->menu_price}}" >
                             </div>
                         </div>
+                        <div class="col-md-12">
+                            <div class="form-group">
+                                <label for="example-text-input" class="form-control-label">{{__('reservations.create.menu_items')}}*</label>
+                                <textarea rows="6" id="menuContents" class="bug-text-input" required  name="menu_contents" >{{$reservation->menu_contents}}</textarea>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+
                         <div class="col-md-12">
                             <div class="form-group">
                                 <label for="example-text-input" class="form-control-label">{{__('reservations.edit.notes')}}</label>
@@ -127,6 +140,7 @@
         document.addEventListener('DOMContentLoaded', function() {
             const menuSelect = document.getElementById('menuId');
             const menuPriceInput = document.getElementById('menuPrice');
+            const menuContentsInput = document.getElementById('menuContents');
             const numberOfGuestsInput = document.getElementById('numberOfGuests');
             const totalPriceDisplay = document.getElementById('totalPrice');
             const initialReservationData = document.getElementById('initialReservationData');
@@ -190,7 +204,9 @@
             function updateMenuPrice() {
                 const selectedOption = menuSelect.options[menuSelect.selectedIndex];
                 const menuPrice = parseFloat(selectedOption.getAttribute('data-price')) || 0;
+                const menuContent = selectedOption.getAttribute('data-menu-contents') || "";
                 menuPriceInput.value = menuPrice;
+                menuContentsInput.value = menuContent;
                 updateTotalPrice();
             }
 

@@ -113,7 +113,7 @@ class ReservationsService
             "number_of_guests" =>$numberOfGuests,
             "current_payment" => $request->input("initial_payment_value"),
             "total_payment" => $totalPayment,
-            "menu_contents" => 'test',
+            "menu_contents" => $request->input("menu_contents"),
             "staff_expenses" => 0,
         ]);
         if($reservation){
@@ -140,6 +140,7 @@ class ReservationsService
         $reservation->staff_expenses = $request->input('staff_expenses');
         $reservation->date = $request->input('date');
         $reservation->description = $request->input('description');
+        $reservation->menu_contents = $request->input('menu_contents');
 
 
         $client = $this->clientService->getByID($reservation->client->id);

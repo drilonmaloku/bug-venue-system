@@ -8,7 +8,6 @@ use App\Modules\Payments\Services\PaymentsService;
 use App\Modules\Reservations\Models\Reservation;
 use App\Modules\Reservations\Services\InvoicesServices;
 use App\Modules\Reservations\Services\ReservationsService;
-use App\Modules\Settings\Models\LocationSettings;
 use App\Modules\Venues\Models\Venue;
 use App\Modules\Venues\Services\VenuesService;
 use Illuminate\Http\Request;

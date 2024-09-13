@@ -236,6 +236,7 @@
   "reservations.create.menu": "Menu",
   "reservations.create.select_menu": "Select Menu",
   "reservations.create.menu_price": "Menu Price",
+  "reservations.create.menu_items": "Menu Items",
   "reservations.create.notes": "Notes",
   "reservations.create.select_manager": "Select Manager",
   "reservations.create.total": "Total",

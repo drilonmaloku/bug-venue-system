@@ -63,9 +63,8 @@
                                         <label for="example-text-input" class="form-control-label">{{__('reservations.create.menu')}}*</label>
                                         <select required id="menuId" class="bug-text-input" name="menu_id">
                                             <option value="">{{__('reservations.create.select_menu')}}</option>
-                                            @foreach ($menus as $menu)
-                                                <option data-price="{{ $menu->price }}" value="{{ $menu->id }}">
-                                                    {{ $menu->name }},{{ $menu->price }}</option>
+                                            @foreach($menus as $menu)
+                                                <option  data-price="{{$menu->price}}" value="{{$menu->id}}" data-menu-contents="{{$menu->description}}">{{$menu->name}},{{$menu->price}}</option>
                                             @endforeach
                                         </select>
                                     </div>
@@ -73,9 +72,16 @@
                                 <div class="col-md-6">
                                     <div class="form-group">
                                         <label for="example-text-input" class="form-control-label">{{__('reservations.create.menu_price')}}*</label>
-                                        <input required id="menuPrice" class="bug-text-input" type="number" name="menu_price">
+                                        <input id="menuPrice" class="bug-text-input" required type="number" name="menu_price" >
                                     </div>
                                 </div>
+                                <div class="col-md-12">
+                                    <div class="form-group">
+                                        <label for="example-text-input" class="form-control-label">{{__('reservations.create.menu_items')}}*</label>
+                                        <textarea rows="6" id="menuContents" class="bug-text-input" required  name="menu_contents"></textarea>
+                                    </div>
+                                </div>
+
                                 <div class="col-md-12">
                                     <div class="form-group">
                                         <label for="example-text-input" class="form-control-label">{{__('reservations.create.notes')}}</label>
@@ -318,6 +324,7 @@
 
             const menuSelect = document.getElementById('menuId');
             const menuPriceInput = document.getElementById('menuPrice');
+            const menuContentsInput = document.getElementById('menuContents');
             const numberOfGuestsInput = document.getElementById('numberOfGuests');
             const totalPriceDisplay = document.getElementById('totalPrice');
             const dateInput = document.getElementById('dateInput');
@@ -372,7 +379,9 @@
             function updateMenuPrice() {
                 const selectedOption = menuSelect.options[menuSelect.selectedIndex];
                 const menuPrice = parseFloat(selectedOption.getAttribute('data-price')) || 0;
+                const menuContent = selectedOption.getAttribute('data-menu-contents') || "";
                 menuPriceInput.value = menuPrice;
+                menuContentsInput.value = menuContent;
                 updateTotalPrice();
             }
 

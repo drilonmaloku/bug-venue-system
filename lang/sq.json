@@ -239,6 +239,7 @@
   "reservations.create.menu" : "Menu",
   "reservations.create.select_menu" : "Selekto Menu",
   "reservations.create.menu_price" : "Qmimi i Menus",
+  "reservations.create.menu_items": "Menuja",
   "reservations.create.notes" : "Shënime",
   "reservations.create.select_manager" : "Selekto Menagjerin",
   "reservations.create.total" : "Totali",
