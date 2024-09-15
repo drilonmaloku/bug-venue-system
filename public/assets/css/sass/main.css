@@ -254,11 +254,13 @@
   background: #F8FBFC;
   border: 1px solid #D1DBDF;
   border-radius: 4px;
-  appearance: none; /* Remove default arrow */
+  appearance: none;
+  /* Remove default arrow */
   background-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-chevron-down"><polyline points="6 9 12 15 18 9"/></svg>');
   background-repeat: no-repeat;
   background-position: right 8px center;
-  cursor: pointer; /* Add cursor style for consistency */
+  cursor: pointer;
+  /* Add cursor style for consistency */
   min-width: 180px;
 }
 .hubers-select-input.white {
@@ -480,6 +482,9 @@
 .hubers-btn.secondary {
   background: #EAF3F5;
   color: black;
+}
+.hubers-btn:hover {
+  color: inherit;
 }
 @media (max-width: 767px) {
   .hubers-btn {
@@ -1550,6 +1555,7 @@
     bottom: 16px;
     right: 16px;
   }
+
   .hubers-flash-notification {
     max-width: calc(100vw - 32px);
     width: calc(100vw - 32px);
@@ -2274,6 +2280,7 @@ body {
   .vms-navbar .hubers-navbar-logout {
     display: none;
   }
+
   .vms-layout {
     padding-top: 76px;
     padding-left: 0px;

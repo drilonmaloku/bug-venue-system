@@ -270,7 +270,7 @@
   "reservations.view.title": "Reservation",
   "reservations.view.delete_btn_title": "Delete",
   "reservations.view.update_btn_title": "Update",
-  "reservations.view.print_contract_btn_title": "Print Contract",
+  "reservations.view.print_contract_btn_title": "Print",
 
 
   "reservations.view.add_payment": "Add Payment",
@@ -322,6 +322,7 @@
   "reservations.view.no_comments": "No comments for this reservation.",
   "reservations.view.add_comment": "Add Comment",
   "reservations.view.form.comment": "Comment",
+  "reservations.view.delete.note": "Are you sure you want to delete this reservation you will not be able to reverse this?",
 
 
   "services.edit.title": "Update Service",

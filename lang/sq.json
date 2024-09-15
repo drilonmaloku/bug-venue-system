@@ -273,7 +273,7 @@
   "reservations.view.title": "Rezervimi",
   "reservations.view.delete_btn_title": "Fshij",
   "reservations.view.update_btn_title": "Përditso",
-  "reservations.view.print_contract_btn_title": "Printo kontraten",
+  "reservations.view.print_contract_btn_title": "Printo",
 
 
   "reservations.view.add_payment": "Shto Pages",
@@ -284,6 +284,7 @@
   "reservations.view.form.date": "Data e Pagesës",
   "reservations.view.form.value": "Vlera e Pagesës",
   "reservations.view.form.notes": "Shënime",
+  "reservations.view.delete.note": "A jeni i sigurt që dëshironi të fshini rezervimin, ky veprim nuk mund të kthehet?",
 
 
   "reservations.view.staff": "Stafi",

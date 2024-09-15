@@ -107,6 +107,9 @@
     background: #EAF3F5;
     color : black;
   }
+  &:hover {
+    color: inherit;
+  }
 
   @media (max-width: 767px ) {
     padding: 8px 16px;

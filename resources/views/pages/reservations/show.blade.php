@@ -8,25 +8,17 @@
         <div class="row">
             <div class="col-md-8">
                 <div class="d-flex">
-                    <form action="{{ route('reservation.destroy', $reservation->id) }}" method="POST"
-                        class="d-flex justify-content-end">
-                        @csrf
-                        @method('DELETE')
-                        <button class="btn btn-danger btn-sm ms-auto mb-0" type="submit"><i class="fa fa-trash mr-2"></i>{{__('reservations.view.delete_btn_title')}}</button>
-                    </form>
-
-
-                    <a href="{{ route('reservation.edit', ['id' => $reservation->id]) }}">
-                        <button class="btn btn-success btn-sm ms-auto mb-0 ml-2" type="submit">
-                            <i class="fa fa-edit"></i>
+                    <a class="hubers-btn" href="{{ route('reservation.edit', ['id' => $reservation->id]) }}">
+                            <i class="fa fa-edit mr-2"></i>
                             {{__('reservations.view.update_btn_title')}}
-                        </button>
                     </a>
-
-                    <a href="{{ route('reservations.printContract', ['id' => $reservation->id]) }}">
-                        <button class="btn btn-info btn-sm ms-auto mb-0 ml-2" type="submit"><i class="fa fa-print"></i>
-                            {{__('reservations.view.print_contract_btn_title')}}
-                        </button>
+                    <a class="hubers-btn ml-2" href="{{ route('reservations.printContract', ['id' => $reservation->id]) }}">
+                      <i class="fa fa-print mr-2"></i>
+                        {{__('reservations.view.print_contract_btn_title')}}
+                    </a>
+                    <a class="btn hubers-btn danger ml-2" data-toggle="modal" data-target="#deleteReservation">
+                        <i class="fa fa-trash mr-2"></i>
+                        {{__('reservations.view.delete_btn_title')}}
                     </a>
                 </div>
                 <table>
@@ -659,6 +651,31 @@
                     </div>
                 </form>
 
+            </div>
+        </div>
+    </div>
+    <div class="modal fade" id="deleteReservation" tabindex="-1" role="dialog"
+         aria-labelledby="reservationModalLabel" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="reservationModalMembersLabel">{{__('reservations.view.delete_btn_title')}}</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <form action="{{ route('reservation.destroy', $reservation->id) }}" method="POST" >
+                    @method('DELETE')
+                    @csrf
+                    <div class="modal-body">
+                        <input type="hidden" name="reservation_id" value="{{ $reservation->id }}">
+                        <p>{{__("reservations.view.delete.note")}}</p>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="submit" class="btn btn-primary">{{__('reservations.view.delete_btn_title')}}</button>
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">{{__('general.close_btn')}}</button>
+                    </div>
+                </form>
             </div>
         </div>
     </div>
