@@ -155,8 +155,11 @@ class ReservationsController extends Controller
         $totalDiscount = $reservation->discounts->sum('amount');
         $totalInvoiceAmount = $reservation->invoices->sum('amount');
         $totalAmount = ($reservation->menu_price * $reservation->number_of_guests) + $totalInvoiceAmount - $totalDiscount;
-        
 
+        $location = auth()->user()->getCurrentLocation();
+        $locationSettings = $location->locationSettings;
+
+        $contractContent = json_decode($locationSettings->settings, true);
         if (is_null($reservation)) {
             return abort(404);
         }
@@ -174,7 +177,8 @@ class ReservationsController extends Controller
             'totalDiscount'=>$totalDiscount,
             'totalInvoiceAmount'=>$totalInvoiceAmount,
             'totalAmount'=>$totalAmount,
-            'users' => $this->userService->getStaffUsers()
+            'users' => $this->userService->getStaffUsers(),
+            'contract' => $this->reservationsService->generateReservationContract($reservation,$contractContent['contract'])
         ]);
     }
 
@@ -279,8 +283,6 @@ class ReservationsController extends Controller
             return redirect()->route('reservations.view', ['id' => $reservation->id])->withErrorMessage('Rezervimi nuk u be update');
         }
     }
-
-
 
     public function delete($id)
     {
@@ -678,23 +680,12 @@ class ReservationsController extends Controller
         // Add a section to the document
         $section = $phpWord->addSection();
 
-        // Add content to the section (example)
-        $section->addText('Reservation Contract');
-        $section->addText('Reservation ID: ' . $reservation->id);
-
         // Fetch the contract content
         $locationSettings = auth()->user()->getCurrentLocation()->locationSettings;
         $contractContent = json_decode($locationSettings->settings,true)['contract'];
 
-        $placeholders = [
-            '{{reservation_date}}' => $reservation->date,
-            '{{reservation_client}}' => $reservation->client->name,
-            '{{reservation_venue}}' => $reservation->venue->name,
-            '{{reservation_id}}' => $reservation->id,
-        ];
-
         // Replace all placeholders in the contract content
-        $contractContent = str_replace(array_keys($placeholders), array_values($placeholders), $contractContent);
+        $contractContent = $this->reservationsService->generateReservationContract($reservation,$contractContent);
 
         // Check if contractContent is not empty
         if (!empty($contractContent)) {

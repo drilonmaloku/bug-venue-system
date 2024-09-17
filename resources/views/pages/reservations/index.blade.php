@@ -38,6 +38,15 @@
                         <input placeholder="Search" class="bug-text-input white medium" type="text" name="search" value="{{ request('search') }}">
                     </div>
                     <div class="hubers-filter-group">
+                        <label>{{__('reservations.table.filter.select_status')}}:</label>
+                        <select class="hubers-select-input white medium" name="status" id="">
+                            <option value="">{{__('reservations.table.filter.select_status')}}</option>
+                            <option @if(app('request')->input('status') == 1) selected @endif value="1">{{__('reservations.status.planned')}}</option>
+                            <option @if(app('request')->input('status') == 2) selected @endif value="2">{{__('reservations.status.finished')}}</option>
+                            <option @if(app('request')->input('status') == 3) selected @endif value="3">{{__('reservations.status.canceled')}}</option>
+                        </select>
+                    </div>
+                    <div class="hubers-filter-group">
                         <label>{{__('reservations.table.filter.start_date')}}:</label>
                         <input  class="bug-text-input white medium" type="date" name="start_date" value="{{old('date',app('request')->input('date'))}}">
                     </div>

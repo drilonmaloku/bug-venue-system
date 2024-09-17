@@ -16,10 +16,13 @@
                       <i class="fa fa-print mr-2"></i>
                         {{__('reservations.view.print_contract_btn_title')}}
                     </a>
-                    <a class="btn hubers-btn danger ml-2" data-toggle="modal" data-target="#deleteReservation">
-                        <i class="fa fa-trash mr-2"></i>
-                        {{__('reservations.view.delete_btn_title')}}
+                    <a class="btn hubers-btn ml-2" data-toggle="modal" data-target="#contractPreview">
+                        <i class="fa fa-file"></i>
                     </a>
+                    <a class="btn hubers-btn danger ml-2" data-toggle="modal" data-target="#deleteReservation">
+                        <i class="fa fa-trash"></i>
+                    </a>
+
                 </div>
                 <table>
                     <thead>
@@ -734,6 +737,29 @@
                         <button type="button" class="btn btn-secondary" data-dismiss="modal">{{__('general.close_btn')}}</button>
                     </div>
                 </form>
+
+            </div>
+        </div>
+    </div>
+    <div class="modal fade" id="contractPreview" tabindex="-1" role="dialog"
+         aria-labelledby="reservationModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-xl" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="reservationModalMembersLabel">{{__('reservations.view.contract_preview')}}</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+
+                <div class="modal-body">
+                    {!! $contract !!}
+                </div>
+                <div class="modal-footer">
+                    <button type="submit" class="btn btn-primary">{{__('general.save_btn')}}</button>
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">{{__('general.close_btn')}}</button>
+                </div>
+
 
             </div>
         </div>

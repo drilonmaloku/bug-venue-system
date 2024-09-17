@@ -203,6 +203,7 @@
   "reservations.table.filter.created_date": "Created Date",
   "reservations.table.filter.select_venue": "Select Venue",
   "reservations.table.filter.select_menu": "Select Menu",
+  "reservations.table.filter.select_status": "Select Status",
   "reservations.table.status": "Status",
   "reservations.table.date": "Date",
   "reservations.table.venue": "Venue",
@@ -290,6 +291,8 @@
   "reservations.view.update_status": "Update Status",
   "reservations.view.select_status": "Select Status",
 
+  "reservations.view.contract_preview": "Contract Preview",
+
   "reservations.view.staff": "Staff",
   "reservations.view.no_staff": "No staff for this reservation.",
   "reservations.view.add_staff": "Add Staff",
@@ -371,6 +374,7 @@
   "reservation.type.night" : "Night",
 
   "contracts.manage" : "Manage Contract",
-  "contracts.contract" : "Contract"
+  "contracts.contract" : "Contract",
+  "contracts.info" : "You can use the following placeholders that will be dynamically generated when printing a contract for a reservation:"
 
 }

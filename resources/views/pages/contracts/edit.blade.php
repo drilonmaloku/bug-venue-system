@@ -9,6 +9,21 @@
             @csrf
             <div class="hubers-form-group">
                 <label class="bug-label" for="">{{__('contracts.contract')}}</label>
+
+                <div>
+                    {{__('contracts.info')}}
+                    <div class="vms-tags">
+                        <div class="vms-tag">@{{data}}</div>
+                        <div class="vms-tag">@{{klienti}}</div>
+                        <div class="vms-tag">@{{klienti_telefoni}}</div>
+                        <div class="vms-tag">@{{salla}}</div>
+                        <div class="vms-tag">@{{menu}}</div>
+                        <div class="vms-tag">@{{id}}</div>
+                        <div class="vms-tag">@{{qmimi_menus}}</div>
+                        <div class="vms-tag">@{{numri_personav}}</div>
+                        <div class="vms-tag">@{{pagesa_totale}}</div>
+                    </div>
+                </div>
                 <textarea name="contractContent" id="contractContent" rows="20" >
                     {!! isset($location_contract) ? $location_contract : '' !!}
                 </textarea>

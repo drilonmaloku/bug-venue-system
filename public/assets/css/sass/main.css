@@ -1530,6 +1530,24 @@
   background: #b42318;
 }
 
+.vms-tags {
+  display: flex;
+  flex-wrap: wrap;
+}
+.vms-tags .vms-tag {
+  margin-right: 8px;
+  margin-bottom: 8px;
+}
+
+.vms-tag {
+  background: #787b89;
+  border-radius: 4px;
+  padding: 4px;
+  font-weight: bold;
+  font-size: 14px;
+  line-height: 18px;
+}
+
 .hubers-flash-notifications {
   display: flex;
   flex-direction: column;

@@ -199,6 +199,7 @@
 
   "reservations.view.update_status": "Përditso Statusin",
   "reservations.view.select_status": "Selekto Statusin",
+  "reservations.view.contract_preview": "Kontrata",
 
   "reservations.title": "Rezervimet",
   "reservations.create_btn": "Krijo",
@@ -209,6 +210,7 @@
   "reservations.table.filter.created_date": "Data e krijimit",
   "reservations.table.filter.select_venue": "Selekto Sallën",
   "reservations.table.filter.select_menu": "Selekto Menu",
+  "reservations.table.filter.select_status": "Selekto Statusin",
   "reservations.table.status": "Statusi",
   "reservations.table.date": "Data",
   "reservations.table.venue": "Salla",
@@ -376,6 +378,7 @@
   "reservation.type.night" : "Mbrëmje",
 
   "contracts.manage" : "Menagjo Kontratën",
-  "contracts.contract" : "Kontrata"
+  "contracts.contract" : "Kontrata",
+  "contracts.info" : "Mund të përdorni vendmbushjet e mëposhtme që do të gjenerohen dinamikisht kur printoni një kontratë për një rezervim:"
 
 }

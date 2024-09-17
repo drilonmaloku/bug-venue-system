@@ -31,7 +31,6 @@ class ReservationsService
         $perPage = $request->has('per_page') ? $request->input('per_page') : 25;
         $query = Reservation::query();
 
-
         if ($request && $request->has("search") && $request->input("search") != '') {
             $searchTerm = '%' . $request->input("search") . '%';
 
@@ -41,7 +40,6 @@ class ReservationsService
             });
         }
 
-           // Handle date filter
         if ($request->filled('start_date')) {
             $startDate = $request->input('start_date');
             $endDate = $request->input('end_date');
@@ -52,22 +50,26 @@ class ReservationsService
                 $query->whereDate('date', '=', $startDate);
             }
         }
-        // Handle created_at filter
+
         if ($request->has('created_at') && $request->input('created_at') != '') {
             $createdAt = $request->input('created_at');
             $query->whereDate('created_at', $createdAt);
         }
 
-         // Venue filter
-    if ($request->has('venue') && $request->input('venue') != '') {
-        $venueId = $request->input('venue');
-        $query->where('venue_id', $venueId); // Adjust 'venue_id' according to your actual column name
-    }
+        if ($request->has('venue') && $request->input('venue') != '') {
+            $venueId = $request->input('venue');
+            $query->where('venue_id', $venueId); // Adjust 'venue_id' according to your actual column name
+        }
 
-    if ($request->has('menu') && $request->input('menu') != '') {
-        $menuId = $request->input('menu');
-        $query->where('menu_id', $menuId); // Adjust 'venue_id' according to your actual column name
-    }
+        if ($request->has('status') && $request->input('status') != '') {
+            $venueId = $request->input('status');
+            $query->where('status', $request->input('status'));
+        }
+
+        if ($request->has('menu') && $request->input('menu') != '') {
+            $menuId = $request->input('menu');
+            $query->where('menu_id', $menuId); // Adjust 'venue_id' according to your actual column name
+        }
         
         $query->orderBy('created_at', 'desc');
         return $query->paginate($perPage);
@@ -209,8 +211,6 @@ class ReservationsService
        return $reservationDeleted;
    }
 
-
-
     public function recalculatePrice(Reservation $reservation) {
 //        $reservationTotalMenuPrice = $reservation->number_of_guests * $reservation->menu_price;
 //        $previousData = $reservation->attributesToArray();
@@ -227,7 +227,7 @@ class ReservationsService
 //        return $reservationDeleted;
     }
 
-   public function storePricingTracking(Reservation $reservation, $numberOfGuests,$newMenuPrice,$totalInvoiceSum,$totalDiscountSum)
+    public function storePricingTracking(Reservation $reservation, $numberOfGuests,$newMenuPrice,$totalInvoiceSum,$totalDiscountSum)
    {
        return PricingStatusTracking::create([
            "location_id" => auth()->user()->getCurrentLocationId(),
@@ -242,5 +242,21 @@ class ReservationsService
        ]);
    }
 
+    public function generateReservationContract($reservation,$contractContent){
+        $placeholders = [
+            '{{data}}' => $reservation->date,
+            '{{klienti}}' => $reservation->client->name,
+            '{{klienti_telefoni}}' => $reservation->client->phone_number,
+            '{{salla}}' => $reservation->venue->name,
+            '{{menu}}' => $reservation->menu->name,
+            '{{id}}' => $reservation->id,
+            '{{qmimi_menus}}' => $reservation->menu_price,
+            '{{numri_personav}}' => $reservation->number_of_guests,
+            '{{pagesa_totale}}' => $reservation->total_payment,
+        ];
+
+        return str_replace(array_keys($placeholders), array_values($placeholders), $contractContent);
+
+    }
    
 }
