@@ -203,6 +203,7 @@
   "reservations.table.filter.created_date": "Created Date",
   "reservations.table.filter.select_venue": "Select Venue",
   "reservations.table.filter.select_menu": "Select Menu",
+  "reservations.table.status": "Status",
   "reservations.table.date": "Date",
   "reservations.table.venue": "Venue",
   "reservations.table.description": "Description",
@@ -272,6 +273,10 @@
   "reservations.view.update_btn_title": "Update",
   "reservations.view.print_contract_btn_title": "Print",
 
+  "reservations.status.planned": "In Progress",
+  "reservations.status.finished": "Finished",
+  "reservations.status.canceled": "Canceled",
+
 
   "reservations.view.add_payment": "Add Payment",
   "reservations.view.payments": "Payments",
@@ -281,6 +286,9 @@
   "reservations.view.form.date": "Payment Date",
   "reservations.view.form.value": "Payment Value",
   "reservations.view.form.notes": "Notes",
+
+  "reservations.view.update_status": "Update Status",
+  "reservations.view.select_status": "Select Status",
 
   "reservations.view.staff": "Staff",
   "reservations.view.no_staff": "No staff for this reservation.",

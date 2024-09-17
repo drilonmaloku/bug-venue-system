@@ -84,6 +84,9 @@
                         <th width="40">
                             <input class="main-checkbox bug-checkbox-input" type="checkbox">
                         </th>
+                        <th width="40">
+                           
+                        </th>
                         <th>{{__('reservations.table.date')}}</th>
                         <th>{{__('reservations.table.venue')}}</th>
                         <th>{{__('reservations.table.description')}}</th>
@@ -100,6 +103,11 @@
                         <tr>
                             <td>
                                 <input class="table-checkbox bug-checkbox-input" type="checkbox" value="{{$reservation->id}}">
+                            </td>
+                            <td>
+                                <div class="status-box {{ $reservation->statusClass }}">
+
+                                </div>
                             </td>
                             <td>
                                {{$reservation->date}}

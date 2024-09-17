@@ -1504,6 +1504,32 @@
     font-size: 16px !important;
   }
 }
+.status-column-wrapper {
+  display: flex;
+  justify-content: space-between;
+}
+
+.status-box-wrapper {
+  display: flex;
+  align-items: center;
+}
+.status-box-wrapper .status-box {
+  margin-right: 8px;
+}
+
+.status-box {
+  width: 32px;
+  height: 32px;
+  border-radius: 8px;
+  background: #36a536;
+}
+.status-box.finished {
+  background: #0a0c0d;
+}
+.status-box.canceled {
+  background: #b42318;
+}
+
 .hubers-flash-notifications {
   display: flex;
   flex-direction: column;

@@ -258,6 +258,30 @@ class ReservationsController extends Controller
         }
     }
 
+    public function updateStatus(Request $request, $id)
+    {
+        $reservation = $this->reservationsService->getByID($id);
+        if (is_null($reservation)) {
+            return response()->json([
+                'message' => 'Rezervimi nuk u gjet '
+            ], JsonResponse::HTTP_NOT_FOUND);
+        }
+        try {
+
+            $reservationUpdated = $this->reservationsService->updateStatus($request, $reservation);
+
+            if ($reservationUpdated) {
+                return redirect()->route('reservations.view', ['id' => $reservation->id])->withSuccessMessage('Rezervimi u be update me sukses');
+            }
+            return redirect()->route('reservations.view', ['id' => $reservation->id])->withErrorMessage('Rezervimi nuk u be update');
+
+        } catch (ValidationException $e) {
+            return redirect()->route('reservations.view', ['id' => $reservation->id])->withErrorMessage('Rezervimi nuk u be update');
+        }
+    }
+
+
+
     public function delete($id)
     {
         $reservation = $this->reservationsService->getByID($id);

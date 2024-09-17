@@ -193,6 +193,12 @@
   "payment.title.single": "Pagesa",
   "payment.title.information": "Informatat",
 
+  "reservations.status.planned": "Planifikuar",
+  "reservations.status.finished": "Mbajtur",
+  "reservations.status.canceled": "Anuluar",
+
+  "reservations.view.update_status": "Përditso Statusin",
+  "reservations.view.select_status": "Selekto Statusin",
 
   "reservations.title": "Rezervimet",
   "reservations.create_btn": "Krijo",
@@ -203,6 +209,7 @@
   "reservations.table.filter.created_date": "Data e krijimit",
   "reservations.table.filter.select_venue": "Selekto Sallën",
   "reservations.table.filter.select_menu": "Selekto Menu",
+  "reservations.table.status": "Statusi",
   "reservations.table.date": "Data",
   "reservations.table.venue": "Salla",
   "reservations.table.description": "Përshkrimi",

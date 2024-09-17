@@ -28,6 +28,21 @@
                         </tr>
                     </thead>
                     <tbody>
+                    <tr>
+                        <td>{{__('reservations.table.status')}}</td>
+                        <td>
+                            <div class="status-column-wrapper">
+                                <div class="status-box-wrapper">
+                                    <div class="status-box {{ $reservation->statusClass }}">
+
+                                    </div>
+                                    <strong>{{ $reservation->statusLabel }}</strong>
+                                </div>
+                                <a class="hubers-btn small"  data-toggle="modal" data-target="#updateStatusModal"><i class="fa fa-edit"></i></a>
+                            </div>
+
+                        </td>
+                    </tr>
                         <tr>
                             <td>{{__('reservations.table.date')}}</td>
                             <td>{{ $reservation->date }}</td>
@@ -676,6 +691,50 @@
                         <button type="button" class="btn btn-secondary" data-dismiss="modal">{{__('general.close_btn')}}</button>
                     </div>
                 </form>
+            </div>
+        </div>
+    </div>
+    <div class="modal fade" id="updateStatusModal" tabindex="-1" role="dialog"
+         aria-labelledby="reservationModalLabel" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="reservationModalMembersLabel">{{__('reservations.view.update_status')}}</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+
+
+                <form role="form"  action="{{ route('reservations.updateStatus', ['id' => $reservation->id]) }}" method="POST"
+                      enctype="multipart/form-data">
+                    @csrf
+                    @method('PUT')
+                    <div class="modal-body">
+                        <input type="hidden" name="reservation_id" value="{{ $reservation->id }}">
+
+                        <div class="row">
+                            <div class="col-md-12">
+                                <div class="form-group">
+                                    <label for="example-text-input" class="form-control-label">{{__('reservations.view.select_status')}}*</label>
+
+                                    <select required class="bug-text-input" name="status">
+                                        <option value="">{{__('reservations.view.select_status')}}</option>
+                                        <option @if($reservation->status == 1) selected @endif value="1">{{__('reservations.status.planned')}}</option>
+                                        <option @if($reservation->status == 2) selected @endif value="2">{{__('reservations.status.finished')}}</option>
+                                        <option @if($reservation->status == 3) selected @endif value="3">{{__('reservations.status.canceled')}}</option>
+
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="submit" class="btn btn-primary">{{__('general.save_btn')}}</button>
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">{{__('general.close_btn')}}</button>
+                    </div>
+                </form>
+
             </div>
         </div>
     </div>

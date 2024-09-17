@@ -170,6 +170,26 @@ class ReservationsService
     
         return $reservationSaved;
     }
+
+    /**
+     * Updates existing Reservation status
+     **/
+    public function updateStatus($request, Reservation $reservation) {
+
+        $reservation->status = $request->input('status');
+
+        $reservationSaved = $reservation->saveQuietly();
+
+        if ($reservationSaved) {
+            $this->logService->log([
+                'message' => 'Statusi i rezervimit u përditësua me sukses në të: '.$reservation->statusLabel,
+                'context' => Log::LOG_CONTEXT_RESERVATIONS,
+                'ttl'=> Log::LOG_TTL_THREE_MONTHS,
+            ]);
+        }
+
+        return $reservationSaved;
+    }
     
     /**
      * Deletes existing Reservation

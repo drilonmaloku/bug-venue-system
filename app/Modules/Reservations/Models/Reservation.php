@@ -2,7 +2,6 @@
 
 namespace App\Modules\Reservations\Models;
 
-
 use App\Models\User;
 use App\Modules\Clients\Models\Client;
 use App\Modules\Menus\Models\Menu;
@@ -18,19 +17,52 @@ class Reservation extends Model
 
     protected $guarded = [];
 
+    // Append custom attribute to model's array and JSON representations
+    protected $appends = ['reservation_type_name'];
+
     const RESERVATION_TYPES = [
         1 => 'Ditë e Plotë',
         2 => 'Mëngjes',
         3 => 'Mbrëmje',
     ];
 
+
     public function getReservationTypeNameAttribute()
     {
+
         return self::RESERVATION_TYPES[$this->reservation_type] ?? 'Unknown';
     }
 
-    // Append custom attribute to model's array and JSON representations
-    protected $appends = ['reservation_type_name'];
+    public function getStatusLabelAttribute()
+    {
+        if($this->status == 1) {
+            return __('reservations.status.planned');
+        }
+        if($this->status == 2) {
+            return __('reservations.status.finished');
+        }
+        if($this->status == 3) {
+            return __('reservations.status.canceled');
+        }
+    }
+
+    public function getStatusClassAttribute()
+    {
+        if($this->status == 1) {
+            return 'planned';
+        }
+        if($this->status == 2) {
+            return 'finished';
+        }
+        if($this->status == 3) {
+            return 'canceled';
+        }
+    }
+
+
+
+
+
 
 
     protected static function booted()
