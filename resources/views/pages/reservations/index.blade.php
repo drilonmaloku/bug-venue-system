@@ -85,7 +85,7 @@
                             <input class="main-checkbox bug-checkbox-input" type="checkbox">
                         </th>
                         <th width="40">
-                           
+
                         </th>
                         <th>{{__('reservations.table.date')}}</th>
                         <th>{{__('reservations.table.venue')}}</th>
