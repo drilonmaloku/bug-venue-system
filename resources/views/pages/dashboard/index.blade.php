@@ -10,7 +10,18 @@
                 <a class="hubers-btn" href="{{route('onboard.index')}}">Onboard</a>
             </div>
         @endif
-        <div id='calendar'></div>
+        <div>
+            <div class="mb-2">
+                <select class="hubers-select-input" name="" id="venueSelector">
+                    <option value=""> {{__('reservation.show_all_venues')}}</option>
+                    @foreach($venues as $venue)
+                        <option value="{{$venue->id}}">{{$venue->name}}</option>
+                    @endforeach
+                </select>
+            </div>
+            <div id='calendar'></div>
+        </div>
+
         <div class="modal fade" id="reservationModal" tabindex="-1" role="dialog" aria-labelledby="reservationModalLabel"
             aria-hidden="true">
             <div class="modal-dialog" role="document">
@@ -214,18 +225,48 @@
 
     </div>
     <script>
+        const venueSelector = document.getElementById('venueSelector');
+        const formatDateString = (date) => {
+            // Replace spaces with '+', ensure proper ISO format
+            return date.replace(' ', '+');
+        };
         document.addEventListener('DOMContentLoaded', function() {
             var calendarEl = document.getElementById('calendar');
             var events = @json($events); 
             var menusCount = @json(count($menus));
             var venuesCount = @json(count($venues));
-            console.log(events);
+
             var calendar = new FullCalendar.Calendar(calendarEl, {
                 initialView: 'dayGridMonth',
-                events: {
-                     url:'/dashboard/events',
-                     method: 'GET',
-                     
+                headerToolbar: {
+                    left: 'prev,next today',
+                    center: 'title',
+                    right: 'dayGridMonth,timeGridWeek,timeGridDay' // Add view options here
+                },
+                // events: {
+                //     url: '/dashboard/events',
+                //     method : 'GET'
+                // },
+                events: function(fetchInfo, successCallback, failureCallback) {
+                    console.log(fetchInfo);
+                    var selectedVenueId = venueSelector.value; // Get the current selected venue from the dropdown
+                    const startDate = fetchInfo.start.toISOString();
+                    const endDate = fetchInfo.end.toISOString();
+
+                    fetch(`/dashboard/events?start=${startDate}&end=${endDate}&venue=${selectedVenueId}`, {
+                        method: 'GET',
+                        headers: {
+                            'Content-Type': 'application/json',
+                        },
+                    })
+                        .then(response => response.json())
+                        .then(events => {
+                            successCallback(events);  // Pass events to FullCalendar to render
+                        })
+                        .catch(error => {
+                            failureCallback(error);  // Handle any errors
+                            console.error('Error fetching events:', error);
+                        });
                 },
                 height: "auto",
                 dateClick: function(info) {
@@ -234,10 +275,10 @@
                     checkAvailabilityAndUpdateTotal();
                     if(venuesCount> 0 && menusCount > 0){
                         $('#reservationModal').modal('show');
-                    }else {
-                    alert('Duhet te keni nje menu te pakten dhe nje salle per ta krijuar nje rezervim');
-                }
-
+                    }
+                    else {
+                        alert('Duhet te keni nje menu te pakten dhe nje salle per ta krijuar nje rezervim');
+                    }
                 },
                 eventClick: function(info) {
                     // An event was clicked, open the information modal
@@ -328,6 +369,7 @@
             const numberOfGuestsInput = document.getElementById('numberOfGuests');
             const totalPriceDisplay = document.getElementById('totalPrice');
             const dateInput = document.getElementById('dateInput');
+
 
 
             function generateReservationTypeOptions(venueId, availability) {
@@ -425,6 +467,11 @@
                     });
             }
 
+            function updateCalendarByVenue() {
+                calendar.refetchEvents();
+            }
+
+            venueSelector.addEventListener('change', updateCalendarByVenue);
             menuSelect.addEventListener('change', updateMenuPrice);
             dateInput.addEventListener('input', checkAvailabilityAndUpdateTotal);
             dateInput.addEventListener('change', checkAvailabilityAndUpdateTotal);

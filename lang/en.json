@@ -372,6 +372,7 @@
   "reservation.type.full_day" : "Full Day",
   "reservation.type.morning" : "Midday",
   "reservation.type.night" : "Night",
+  "reservation.show_all_venues" : "Show all venues",
 
   "contracts.manage" : "Manage Contract",
   "contracts.contract" : "Contract",

@@ -376,6 +376,7 @@
   "reservation.type.full_day" : "Ditë e Plotë",
   "reservation.type.morning" : "Mëngjes",
   "reservation.type.night" : "Mbrëmje",
+  "reservation.show_all_venues" : "Shfaq të gjitha",
 
   "contracts.manage" : "Menagjo Kontratën",
   "contracts.contract" : "Kontrata",

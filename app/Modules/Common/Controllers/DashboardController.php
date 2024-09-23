@@ -47,45 +47,58 @@ class DashboardController extends Controller
     }
 
 
-public function fetchEvents(Request $request)
-{
-    $start = $request->input('start');
-    $end = $request->input('end');
+    public function fetchEvents(Request $request)
+    {
+        $start = $request->input('start');
+        $end = $request->input('end');
+        $venueId = $request->input('venue');
 
-    // Convert start and end dates to Carbon instances (assuming they are ISO 8601 strings)
-    $start = \Carbon\Carbon::parse($start);
-    $end = \Carbon\Carbon::parse($end);
+        // Convert start and end dates to Carbon instances
+        try {
+            $start = \Carbon\Carbon::parse($start);
+            $end = \Carbon\Carbon::parse($end);
+        } catch (\Exception $e) {
+            dd($e);
+            return response()->json(['error' => 'Invalid date format.'], 400);
+        }
 
 
-    $colors = [
-        1 => '#ff6961', // Coral
-        2 => '#77dd77', // Pastel Green
-        3 => '#aec6cf', // Light Blue
-        4 => '#f49ac2', // Orchid Pink
-        5 => '#f0e68c', // Khaki
-        6 => '#ffb347', // Orange
-        // Add more colors as needed
-    ];
 
-    $reservations = Reservation::with('venue')
-                                ->whereBetween('date', [$start, $end])
-                                ->get();
 
-    $events = $reservations->map(function ($reservation)  use ($colors){
-
-        $color = isset($colors[$reservation->venue_id]) ? $colors[$reservation->venue_id] : '#000000'; // Default to black
-        return [
-            'id' => $reservation->id,
-            'title' => $reservation->client->name . ',' . $reservation->venue->name,
-            'start' => $reservation->date,
-            'end' => $reservation->date,
-            'color' => $color,
-
+        $colors = [
+            1 => '#ff6961', // Coral
+            2 => '#77dd77', // Pastel Green
+            3 => '#aec6cf', // Light Blue
+            4 => '#f49ac2', // Orchid Pink
+            5 => '#f0e68c', // Khaki
+            6 => '#ffb347', // Orange
+            // Add more colors as needed
         ];
-    });
 
-    return response()->json($events);
-}
+
+
+        $query = Reservation::with('venue')
+                                    ->whereBetween('date', [$start, $end]);
+        if($venueId) {
+            $query->where('venue_id', $venueId);
+        }
+        $reservations = $query->get();
+
+        $events = $reservations->map(function ($reservation)  use ($colors){
+
+            $color = isset($colors[$reservation->venue_id]) ? $colors[$reservation->venue_id] : '#000000'; // Default to black
+            return [
+                'id' => $reservation->id,
+                'title' => $reservation->client->name . ',' . $reservation->venue->name,
+                'start' => $reservation->date,
+                'end' => $reservation->date,
+                'color' => $color,
+
+            ];
+        });
+
+        return response()->json($events);
+    }
 
 
 
