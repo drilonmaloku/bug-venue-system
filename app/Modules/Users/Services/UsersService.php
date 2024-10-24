@@ -331,7 +331,8 @@ class UsersService
 
         $users = User::whereHas('locations', function ($query) use ($currentLocationId) {
             $query->where('locations.id', $currentLocationId);
-        })->where('id', '!=', $user->id)->get();
+        })->get();
+        // ->where('id', '!=', $user->id)
         return $users;
     }
 

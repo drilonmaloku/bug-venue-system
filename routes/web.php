@@ -4,6 +4,8 @@ use App\Modules\GoogleCalendar\Controllers\GoogleCalendarController;
 use Illuminate\Support\Facades\Artisan;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
+use App\Modules\Notifications\Controllers\NotificationsController;
+
 
 /*
 |--------------------------------------------------------------------------
@@ -63,3 +65,7 @@ Route::get('/migrate', function () {
 Route::get('/google/redirect', [GoogleCalendarController::class, 'redirectToGoogle'])->name('google.auth');
 Route::get('/google/callback', [GoogleCalendarController::class, 'handleGoogleCallback']);
 Route::get('/events/sync', [GoogleCalendarController::class, 'syncEventsToGoogle']);
+
+
+Route::get('/notifications', [NotificationsController::class, 'archive'])->name('notification');
+Route::patch('/notifications/{notification}/mark-as-read', [NotificationsController::class, 'markNotificationAsRead'])->name('notifications.markAsRead');
