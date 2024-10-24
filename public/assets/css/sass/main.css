@@ -546,6 +546,14 @@
 .bug-table-item-options .bug-table-item-option button {
   border: none;
 }
+.bug-table-item-options .bug-table-item-option.danger {
+  background: #A52A2A;
+  color: white;
+  border: none;
+}
+.bug-table-item-options .bug-table-item-option.danger i {
+  color: white;
+}
 
 .excel-option {
   background: #F8FBFC;

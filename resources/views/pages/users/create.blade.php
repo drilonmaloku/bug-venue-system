@@ -16,33 +16,47 @@
                                     @if(auth()->user()->getCurrentLocationId())
                                         <span class="location_slug">{{auth()->user()->getCurrentLocationSlug()}}_</span>
                                     @endif
-                                    <input class="bug-text-input" type="text" name="username" >
+                                    <input class="bug-text-input" type="text" name="username" required>
                                 </div>
+                                @error('username')
+                                    <small class="text-danger mt-2">{{ $message }}</small>
+                                @enderror
                             </div>
                         </div>
                         <div class="col-md-12">
                             <div class="form-group">
                                 <label for="example-text-input" class="bug-label">{{__('users.table.first_name')}}*</label>
                                 <input class="bug-text-input" required placeholder="Emri" type="text" name="first_name" >
+                                @error('first_name')
+                                    <small class="text-danger mt-2">{{ $message }}</small>
+                                @enderror
                             </div>
                         </div>
                         <div class="col-md-12">
                             <div class="form-group">
                                 <label for="example-text-input" class="bug-label">{{__('users.table.last_name')}}*</label>
                                 <input class="bug-text-input" required placeholder="Mbiemri" type="text" name="last_name" >
-
+                                @error('last_name')
+                                    <small class="text-danger mt-2">{{ $message }}</small>
+                                @enderror
                             </div>
                         </div>
                         <div class="col-md-12">
                             <div class="form-group">
                                 <label for="example-text-input" class="bug-label">{{__('users.table.email')}}*</label>
                                 <input class="bug-text-input" required placeholder="Emaili*" type="text" name="email">
+                                @error('email')
+                                    <small class="text-danger mt-2">{{ $message }}</small>
+                                @enderror
                             </div>
                         </div>
                         <div class="col-md-12">
                             <div class="form-group">
                                 <label for="example-text-input" class="bug-label">{{__('users.table.phone_number')}}*</label>
                                 <input class="bug-text-input" required placeholder="Telefoni" type="text" name="phone">
+                                @error('phone')
+                                    <small class="text-danger mt-2">{{ $message }}</small>
+                                @enderror
                             </div>
                         </div>
                         <div class="col-md-12">
@@ -73,6 +87,7 @@
                                     <option value="manager">{{__('users.table.role.manager')}}</option>
                                     <option value="staff">{{__('users.table.role.staff')}}</option>
                                 </select>
+
                             </div>
                         </div>
                     </div>

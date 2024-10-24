@@ -1,18 +1,26 @@
 <?php namespace App\Modules\Venues\Services;
 
 use App\Modules\Clients\Models\Client;
+use App\Modules\Expenses\Notifications\ExpenseUpdatedNotification;
+use App\Modules\Users\Services\UsersService;
 use App\Modules\Venues\Models\Venue;
+use App\Modules\Venues\Notifications\VenueAddedNotification;
+use App\Modules\Venues\Notifications\VenueDeletedNotification;
+use App\Modules\Venues\Notifications\VenueUpdatedNotification;
 use Illuminate\Http\Request;
 use App\Modules\Logs\Models\Log;
 use App\Modules\Logs\Services\LogService;
+use Illuminate\Support\Facades\Notification;
 
 class VenuesService
 {
     private $logService;
+    private $usersService;
 
     public function __construct()
     {
         $this->logService = new LogService();
+        $this->usersService = new UsersService();
     }
 
     /**
@@ -63,6 +71,13 @@ class VenuesService
                 'context' => Log::LOG_CONTEXT_VENUES,
                 'ttl'=> Log::LOG_TTL_THREE_MONTHS,
             ]);
+            Notification::send(
+                $this->usersService->getUsersForNotifications(),
+                new VenueAddedNotification(
+                    $venue,
+                    auth()->user()
+                )
+            );
         }
 
         return $venue;
@@ -83,6 +98,13 @@ class VenuesService
                 'context' => Log::LOG_CONTEXT_VENUES,
                 'ttl'=> Log::LOG_TTL_THREE_MONTHS,
             ]);
+            Notification::send(
+                $this->usersService->getUsersForNotifications(),
+                new VenueUpdatedNotification(
+                    $venue,
+                    auth()->user()
+                )
+            );
         }
 
         return $venueSaved;
@@ -105,6 +127,13 @@ class VenuesService
                 'ttl'=> Log::LOG_TTL_THREE_MONTHS,
                 'previous_data'=> json_encode($previousData)
             ]);
+             Notification::send(
+                 $this->usersService->getUsersForNotifications(),
+                 new VenueDeletedNotification(
+                     $venue,
+                     auth()->user()
+                 )
+             );
         }
 
         return $venue;

@@ -103,7 +103,7 @@ class ExpensesController extends Controller
     public function destroy($id)
     {
         $expense = $this->expenseServices->getByID($id);
-        $expenseDeleted = $this->expenseServices->destroy($expense);
+        $expenseDeleted = $this->expenseServices->delete($expense);
 
         if ($expenseDeleted) {
             return redirect()->to('expenses')->withSuccessMessage('Shpenzimi u fshi me sukses');

@@ -1,17 +1,22 @@
 <?php namespace App\Modules\Clients\Services;
 
-use App\Modules\Clients\Models\Client;
 use Illuminate\Http\Request;
 use App\Modules\Logs\Models\Log;
+use App\Modules\Clients\Models\Client;
 use App\Modules\Logs\Services\LogService;
+use Illuminate\Support\Facades\Notification;
+use App\Modules\Users\Services\UsersService;
+use App\Modules\Clients\Notifications\ClientUpdatedNotification;
 
 class ClientsService
 {
     private $logService;
+    private $usersService;
 
     public function __construct()
     {
         $this->logService = new LogService();
+        $this->usersService = new UsersService();
     }
 
     /**
@@ -28,6 +33,7 @@ class ClientsService
                 $subquery->where('name', 'LIKE', $searchTerm)
                     ->orWhere('email', 'LIKE', $searchTerm)
                     ->orWhere('phone_number', 'LIKE', $searchTerm)
+                    ->orWhere('address', 'LIKE', $searchTerm)
                     ->orWhere('additional_phone_number', 'LIKE', $searchTerm);
             });
         }
@@ -42,14 +48,6 @@ class ClientsService
      **/
     public function getByID($id){
         return Client::find($id);
-    }
-
-    
-    /**
-     * Get Client
-     **/
-    public function getBasicList(){
-        return Client::select('id', 'name')->get();
     }
 
     /**
@@ -70,6 +68,7 @@ class ClientsService
             "name" => data_get($data, "name"),
             "email" => data_get($data, "email"),
             "phone_number" => data_get($data, "phone_number"),
+            "address" => data_get($data, "address"),
             "additional_phone_number" => data_get($data, "additional_phone_number"),
         ]);
 
@@ -92,6 +91,7 @@ class ClientsService
         $client->email = $request->input('email');
         $client->phone_number = $request->input('phone_number');
         $client->additional_phone_number = $request->input('additional_phone_number');
+        $client->address = $request->input('address');
         $clientSaved = $client->save();
 
         if($clientSaved){
@@ -100,6 +100,14 @@ class ClientsService
                 'context' => Log::LOG_CONTEXT_CLIENTS,
                 'ttl'=> Log::LOG_TTL_THREE_MONTHS,
             ]);
+            Notification::send(
+                $this->usersService->getUsersForNotifications(),
+                new ClientUpdatedNotification(
+                    $client,
+                    auth()->user()
+                )
+            );
+
         }
 
         return $client;

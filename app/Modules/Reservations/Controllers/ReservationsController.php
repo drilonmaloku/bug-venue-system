@@ -202,6 +202,7 @@ class ReservationsController extends Controller
         $clientData = [
             'name' => $request->input('client_name'),
             'email' => $request->input('client_email'),
+            'address' => $request->input('client_address'),
             'phone_number' => $request->input('client_phone_number'),
             'additional_phone_number' => $request->input('client_additional_phone_number')
         ];

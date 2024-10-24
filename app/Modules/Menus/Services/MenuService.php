@@ -1,18 +1,26 @@
 <?php namespace App\Modules\Menus\Services;
 
 use App\Modules\Clients\Models\Client;
+use App\Modules\Clients\Notifications\ClientUpdatedNotification;
 use App\Modules\Menus\Models\Menu;
+use App\Modules\Menus\Notifications\MenuAddedNotification;
+use App\Modules\Menus\Notifications\MenuDeletedNotification;
+use App\Modules\Menus\Notifications\MenuUpdatedNotification;
+use App\Modules\Users\Services\UsersService;
 use Illuminate\Http\Request;
 use App\Modules\Logs\Models\Log;
 use App\Modules\Logs\Services\LogService;
+use Illuminate\Support\Facades\Notification;
 
 class MenuService
 {
     private $logService;
+    private $usersService;
 
     public function __construct()
     {
         $this->logService = new LogService();
+        $this->usersService = app()->make(UsersService::class);
     }
 
     /**
@@ -81,6 +89,13 @@ class MenuService
                 'context' => Log::LOG_CONTEXT_CLIENTS,
                 'ttl'=> Log::LOG_TTL_THREE_MONTHS,
             ]);
+            Notification::send(
+                $this->usersService->getUsersForNotifications(),
+                new MenuAddedNotification(
+                    $menu,
+                    auth()->user()
+                )
+            );
         }
 
         return $menu;
@@ -102,6 +117,14 @@ class MenuService
                 'context' => Log::LOG_CONTEXT_CLIENTS,
                 'ttl'=> Log::LOG_TTL_THREE_MONTHS,
             ]);
+
+            Notification::send(
+                $this->usersService->getUsersForNotifications(),
+                new MenuUpdatedNotification(
+                    $menu,
+                    auth()->user()
+                )
+            );
         }
         
         return $menuUpdated;
@@ -122,6 +145,13 @@ class MenuService
                 'ttl'=> Log::LOG_TTL_THREE_MONTHS,
                 'previous_data' => json_encode($previousData)
             ]);
+             Notification::send(
+                 $this->usersService->getUsersForNotifications(),
+                 new MenuDeletedNotification(
+                     $menu,
+                     auth()->user()
+                 )
+             );
         }
         return $menuDeleted;
     }

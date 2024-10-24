@@ -105,9 +105,10 @@
                                     </div>
                                 </div>
                             </div>
+                            <hr>
                             <h6><strong>{{__('reservations.create.client.information')}}:</strong></h6>
                             <div class="row">
-                                <div class="col-md-6">
+                                <div class="col-md-12">
                                     <div class="form-group">
                                         <label for="example-text-input" class="form-control-label">{{__('reservations.create.client.name')}}</label>
                                         <input required class="bug-text-input" type="text" name="client_name">
@@ -117,6 +118,12 @@
                                     <div class="form-group">
                                         <label for="example-text-input" class="form-control-label">{{__('reservations.create.client.phone')}}*</label>
                                         <input required class="bug-text-input" type="text" name="client_phone_number">
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        <label for="example-text-input" class="form-control-label">{{__('reservations.create.client.address')}}</label>
+                                        <input class="bug-text-input" type="text" name="client_address">
                                     </div>
                                 </div>
                                 <div class="col-md-6">
@@ -131,6 +138,10 @@
                                         <input class="bug-text-input" type="text" name="client_additional_phone_number">
                                     </div>
                                 </div>
+                            </div>
+                            <hr>
+                            <h6><strong>{{__('reservations.create.payment.information')}}:</strong></h6>
+                            <div class="row">
                                 <div class="col-md-6">
                                     <div class="form-group">
                                         <label for="example-text-input" class="form-control-label">{{__('reservations.create.payment.date')}}</label>
@@ -150,7 +161,6 @@
                                     </div>
                                 </div>
                             </div>
-
                         </div>
                         <div class="modal-footer">
                             <button type="submit" class="btn btn-primary">{{__('general.save_btn')}}</button>

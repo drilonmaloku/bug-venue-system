@@ -5,7 +5,6 @@ namespace App\Modules\Users\Services;
 use App\Models\User;
 use App\Modules\Logs\Models\Log;
 use App\Modules\Logs\Services\LogService;
-use App\Modules\Users\Notifications\UserNotification;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
@@ -21,9 +20,6 @@ class UsersService
     {
         $this->logService = app()->make(LogService::class);
     }
-
-
-
 
 
      /**
@@ -132,28 +128,6 @@ class UsersService
         return $query->orderBy('id', 'desc')->paginate($perPage);
     }
 
-    /**
-     * Register a new user with the provided information.
-     *
-     * @param array $request The request data containing information for the new user.
-     * @return void
-     */
-    public function registerUser($request)
-    {
-        $user = (new User)->create([
-            "name" => data_get($request, "name"),
-            "email" => data_get($request, "email"),
-            "phone" => data_get($request, "phone"),
-            "password" => Hash::make(data_get($request, "password")) 
-                ?? Str::random(12),
-        ]);
-
-        if (data_get($request, "role") === "staff") {
-            $user->assignRole("staff");
-        }
-
-        $user->notify(new UserNotification($user));
-    }
 
     /**
      * Set the password for a user.
@@ -216,7 +190,6 @@ class UsersService
         return $user;
     }
 
-
     /**
      * Delete a user and log the action.
      *
@@ -238,6 +211,7 @@ class UsersService
 
         return $userDeleted;
     }
+
     /**
      * Reset the password for a user.
      *
@@ -302,12 +276,11 @@ class UsersService
         return $user->forceDelete();
     }
 
-
-
     /**
      * Updates existing client
      **/
     public function update($request, User $user) {
+        $user->username = $request->input('username');
         $user->first_name = $request->input('first_name');
         $user->last_name = $request->input('last_name');
         $user->email = $request->input('email');
@@ -326,8 +299,6 @@ class UsersService
 
         return $user;
     }
-
-
 
 
     public function updatePassword(Request $request, User $user)
@@ -350,6 +321,18 @@ class UsersService
         return User::whereHas('roles', function ($query) {
             $query->where('name', 'staff');
         })->get();
+    }
+
+    public function getUsersForNotifications()
+    {
+        $user = auth()->user();
+
+        $currentLocationId = $user->getCurrentLocationId();
+
+        $users = User::whereHas('locations', function ($query) use ($currentLocationId) {
+            $query->where('locations.id', $currentLocationId);
+        })->where('id', '!=', $user->id)->get();
+        return $users;
     }
 
 }

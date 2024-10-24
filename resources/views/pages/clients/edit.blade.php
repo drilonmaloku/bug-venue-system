@@ -31,6 +31,12 @@
                             </div>
                             <div class="col-md-12">
                                 <div class="form-group">
+                                    <label for="example-text-input" class="bug-label">{{__('clients.table.address')}}</label>
+                                    <input class="bug-text-input" type="text" name="address" value="{{$client->address}}">
+                                </div>
+                            </div>
+                            <div class="col-md-12">
+                                <div class="form-group">
                                     <label for="example-text-input" class="bug-label">{{__('clients.table.email')}}</label>
                                     <input type="email" class="bug-text-input" name="email" value="{{$client->email}}" />
                                 </div>

@@ -92,18 +92,13 @@
                                 </div>
                             </div>
                         </div>
+                        <hr>
                         <h6><strong>{{__('reservations.create.client.information')}}:</strong></h6>
                         <div class="row">
-                            <div class="col-md-6">
+                            <div class="col-md-12">
                                 <div class="form-group">
                                     <label for="example-text-input" class="form-control-label">{{__('reservations.create.client.name')}}*</label>
                                     <input class="bug-text-input" type="text" name="client_name" required >
-                                </div>
-                            </div>
-                            <div class="col-md-6">
-                                <div class="form-group">
-                                    <label for="example-text-input" class="form-control-label">{{__('reservations.create.client.email')}}</label>
-                                    <input class="bug-text-input" type="text" name="client_email" >
                                 </div>
                             </div>
                             <div class="col-md-6">
@@ -114,10 +109,27 @@
                             </div>
                             <div class="col-md-6">
                                 <div class="form-group">
+                                    <label for="example-text-input" class="form-control-label">{{__('reservations.create.client.address')}}</label>
+                                    <input class="bug-text-input" type="text" name="client_address" >
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label for="example-text-input" class="form-control-label">{{__('reservations.create.client.email')}}</label>
+                                    <input class="bug-text-input" type="text" name="client_email" >
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="form-group">
                                     <label for="example-text-input" class="form-control-label">{{__('reservations.create.client.additional_phone')}}</label>
                                     <input class="bug-text-input" type="text" name="client_additional_phone_number" >
                                 </div>
                             </div>
+                        </div>
+                        <hr>
+                        <h6><strong>{{__('reservations.create.payment.information')}}:</strong></h6>
+                        <div class="row">
+
                             <div class="col-md-6">
                                 <div class="form-group">
                                     <label for="example-text-input" class="form-control-label">{{__('reservations.create.payment.date')}}*</label>

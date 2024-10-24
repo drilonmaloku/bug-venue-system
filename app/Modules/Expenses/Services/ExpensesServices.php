@@ -1,22 +1,30 @@
 <?php namespace App\Modules\Expenses\Services;
 
 use App\Modules\Expenses\Models\Expense;
+use App\Modules\Expenses\Notifications\ExpenseAddedNotification;
+use App\Modules\Expenses\Notifications\ExpenseDeletedNotification;
+use App\Modules\Expenses\Notifications\ExpenseUpdatedNotification;
+use App\Modules\Menus\Notifications\MenuUpdatedNotification;
+use App\Modules\Users\Services\UsersService;
 use Illuminate\Http\Request;
 use App\Modules\Logs\Models\Log;
 use App\Modules\Logs\Services\LogService;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Notification;
 
 class ExpensesServices
 {
     private $logService;
+    private $usersService;
 
     public function __construct()
     {
         $this->logService = new LogService();
+        $this->usersService = app()->make(UsersService::class);
     }
 
     /**
-     * Gets the list of clients
+     * Gets the list of expenses
      **/
     public function getAll(Request $request){
 
@@ -58,7 +66,7 @@ class ExpensesServices
     }
 
     /**
-     * Get Client by ID
+     * Get Expense by ID
      * @param int|array $id
      **/
     public function getByID($id){
@@ -66,14 +74,7 @@ class ExpensesServices
     }
 
     /**
-     * Get Client
-     **/
-    public function getBasicList(){
-        return Expense::select('id', 'name')->get();
-    }
-
-    /**
-     * Get Clients by ID
+     * Get Expenses by IDs
      * @param int|array $id
      **/
     public function getByIds($ids){
@@ -81,11 +82,11 @@ class ExpensesServices
     }
 
     /**
-     * Stores new Client
+     * Stores new Expense
      **/
     public function store($data)
     {
-        $client = Expense::create([
+        $expense = Expense::create([
             "location_id" => auth()->user()->getCurrentLocationId(),
             "user_id" => data_get($data, "user_id"),
             "date" => data_get($data, "date"),
@@ -93,19 +94,26 @@ class ExpensesServices
             "amount" => data_get($data, "amount"),
         ]);
 
-        if($client){
+        if($expense){
             $this->logService->log([
                 'message' => 'Shpenzimi është krijuar me sukses',
                 'context' => Log::LOG_CONTEXT_CLIENTS,
                 'ttl'=> Log::LOG_TTL_THREE_MONTHS,
             ]);
+            Notification::send(
+                $this->usersService->getUsersForNotifications(),
+                new ExpenseAddedNotification(
+                    $expense,
+                    auth()->user()
+                )
+            );
         }
 
-        return $client;
+        return $expense;
     }
 
     /**
-     * Updates existing client
+     * Updates existing expense
      **/
     public function update($request, Expense $expense) {
         $expense->date = $request->input('date');
@@ -119,50 +127,42 @@ class ExpensesServices
                 'context' => Log::LOG_CONTEXT_CLIENTS,
                 'ttl'=> Log::LOG_TTL_THREE_MONTHS,
             ]);
+            Notification::send(
+                $this->usersService->getUsersForNotifications(),
+                new ExpenseUpdatedNotification(
+                    $expense,
+                    auth()->user()
+                )
+            );
         }
 
         return $expense;
     }
 
     /**
-     * Deletes existing client
+     * Deletes existing expense
      **/
-    public function delete(Expense $client) {
-         $previousData = $client->attributesToArray();
-         $clientDeleted = $client->delete();
+    public function delete(Expense $expense) {
+         $previousData = $expense->attributesToArray();
+         $expenseDeleted = $expense->delete();
 
-         if($clientDeleted){
+         if($expenseDeleted){
             $this->logService->log([
                 'message' => 'Klienti u fshi me sukses',
                 'context' => Log::LOG_CONTEXT_CLIENTS,
                 'ttl'=> Log::LOG_TTL_THREE_MONTHS,
                 'previous_data'=> json_encode($previousData)
             ]);
+             Notification::send(
+                 $this->usersService->getUsersForNotifications(),
+                 new ExpenseDeletedNotification(
+                     $expense,
+                     auth()->user()
+                 )
+             );
         }
 
-        return $client;
-    }
-
-       /**
-     * Delete a user and log the action.
-     *
-     * @param User $user The user instance to be deleted.
-     * @return bool True if the user was deleted successfully, otherwise false.
-     */
-    public function destroy(Expense $expense)
-    {
-        $expenseDeleted = $expense->delete();
-
-        if ($expenseDeleted) {
-            $this->logService->store([
-                "message" => "Shpenzimi u fshi me sukses",
-                "context" => Log::LOG_CONTEXT_USERS,
-                "ttl" => Log::LOG_TTL_FOREVER,
-                "keep_alive" => Log::LOG_TTL_KEEP_ALIVE,
-            ]);
-        }
-
-        return $expenseDeleted;
+        return $expense;
     }
 
 }

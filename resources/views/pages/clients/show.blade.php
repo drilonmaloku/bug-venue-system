@@ -24,14 +24,17 @@
                         <td>{{ $client->name }}</td>
                     </tr>
                     <tr>
-                        <td>{{__('clients.table.email')}}</td>
-                        <td>{{ $client->email }}</td>
-                    </tr>
-                    <tr>
                         <td>{{__('clients.table.phone_number')}}</td>
                         <td>{{ $client->phone_number }}</td>
                     </tr>
-
+                    <tr>
+                        <td>{{__('clients.table.address')}}</td>
+                        <td>{{ $client->address }}</td>
+                    </tr>
+                    <tr>
+                        <td>{{__('clients.table.email')}}</td>
+                        <td>{{ $client->email }}</td>
+                    </tr>
                     <tr>
                         <td>{{__('clients.table.additional_phone_number')}}</td>
                         <td>{{ $client->additional_phone_number }}</td>

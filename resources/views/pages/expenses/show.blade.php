@@ -8,16 +8,16 @@
         <div class="row">
             <div class="col-md-8">
                 <div class="bug-table-item-options">
-                    <form  method="POST" action="{{ route('expenses.destroy', ['id' => $expense->id]) }}" style="display: inline;">
-                        @csrf
-                        @method('DELETE')
-                        <button type="submit" class="bug-table-item-option">
-                            <i class="fa fa-trash"></i>
-                        </button>
-                    </form>
                     <a class="bug-table-item-option ml-2" href="{{route('expenses.edit',['id'=>$expense->id])}}">
                         <i class="fa fa-edit"></i>
                     </a>
+                    <form  method="POST" action="{{ route('expenses.destroy', ['id' => $expense->id]) }}" style="display: inline;">
+                        @csrf
+                        @method('DELETE')
+                        <button type="submit" class="bug-table-item-option danger ">
+                            <i class="fa fa-trash"></i>
+                        </button>
+                    </form>
                 </div>
                 <table>
                     <thead>

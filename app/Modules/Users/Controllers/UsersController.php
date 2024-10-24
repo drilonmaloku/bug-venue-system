@@ -158,17 +158,6 @@ class UsersController extends Controller
     }
 
     /**
-     * Register a new user.
-     *
-     * @param RegisterUserRequest $request
-     * @return void
-     */
-    public function registerUser(RegisterUserRequest $request)
-    {
-        $user = $this->usersService->registerUser($request);
-    }
-
-    /**
      * Set password for a user.
      *
      * @param Request $request

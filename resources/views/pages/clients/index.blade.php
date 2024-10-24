@@ -45,8 +45,9 @@
                             <input class="main-checkbox bug-checkbox-input" type="checkbox">
                         </th>
                         <th>{{__('clients.table.name')}}</th>
-                        <th>{{__('clients.table.email')}}</th>
                         <th>{{__('clients.table.phone_number')}}</th>
+                        <th>{{__('clients.table.email')}}</th>
+                        <th>{{__('clients.table.address')}}</th>
                         <th>{{__('clients.table.additional_phone_number')}}</th>
                         <th></th>
                     </tr>
@@ -61,10 +62,13 @@
                                 {{$client->name}}
                             </td>
                             <td>
+                                {{$client->phone_number}}
+                            </td>
+                            <td>
                                 {{$client->email}}
                             </td>
                             <td>
-                                {{$client->phone_number}}
+                                {{$client->address}}
                             </td>
                             <td>
                                 {{$client->additional_phone_number}}

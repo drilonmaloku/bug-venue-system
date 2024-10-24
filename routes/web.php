@@ -1,5 +1,6 @@
 <?php
 use App\Modules\Common\Controllers\DashboardController;
+use App\Modules\GoogleCalendar\Controllers\GoogleCalendarController;
 use Illuminate\Support\Facades\Artisan;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
@@ -58,3 +59,7 @@ Route::get('/migrate', function () {
     return response()->json(['message' => 'Migrations ran successfully']);
 });
 
+
+Route::get('/google/redirect', [GoogleCalendarController::class, 'redirectToGoogle'])->name('google.auth');
+Route::get('/google/callback', [GoogleCalendarController::class, 'handleGoogleCallback']);
+Route::get('/events/sync', [GoogleCalendarController::class, 'syncEventsToGoogle']);
