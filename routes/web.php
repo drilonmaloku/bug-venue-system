@@ -69,3 +69,4 @@ Route::get('/events/sync', [GoogleCalendarController::class, 'syncEventsToGoogle
 
 Route::get('/notifications', [NotificationsController::class, 'archive'])->name('notification');
 Route::patch('/notifications/{notification}/mark-as-read', [NotificationsController::class, 'markNotificationAsRead'])->name('notifications.markAsRead');
+Route::patch('/notifications/{notification}/mark-as-unread', [NotificationsController::class, 'markNotificationAsUnread'])->name('notifications.markAsUnread');

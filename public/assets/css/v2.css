@@ -1,0 +1,22 @@
+.notification-panel {
+    margin-top: 20px;
+}
+.notification-panel ul {
+    padding: 0;
+}
+
+.notification-panel .allnotifications li {
+    width: 100%;
+    margin-bottom: 10px;
+    display: flex;
+    justify-content: space-between;
+    border-radius: 10px;
+    padding: 20px;
+    background-color: aqua;
+}
+
+.notification-panel .allnotifications button {
+    background: transparent;
+    border: none;
+    border-radius: 6px;
+}

@@ -23,6 +23,8 @@
 
     <script src="{{ asset('/assets/js/scripts.js') }}"></script>
     <link href="{{ asset('/assets/css/sass/main.css') }}" rel="stylesheet" />
+        <link href="{{ asset('/assets/css/v2.css') }}" rel="stylesheet" />
+
     
 </head>
 

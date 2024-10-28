@@ -52,10 +52,10 @@ class NotificationsController extends Controller
     public function markNotificationAsUnread(DatabaseNotification $notification)
     {
         $this->notificationsService->markNotificationAsUnread($notification);
-        return response()->json([
-            'success' => true,
-         'message' => 'Notification marked as unread'
-        ],200);
+                   alert()->success(
+                    'Notification u be unread me sukses'
+                )->autoclose(2000);
+        return redirect()->to('notifications');
     }
 
     /**

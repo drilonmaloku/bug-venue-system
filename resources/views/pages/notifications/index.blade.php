@@ -1,34 +1,104 @@
-@extends('layouts.app')
+{{-- @extends('layouts.app')
 
 @section('header')
-   <h5>Notifications</h5>
+   {{_('Notifications')}}
 @endsection
 
 @section('content')
+  <div class="vms-panel notification-panel">
+    <ul>
+      <h5>Notifications List:</h5>
+       <hr>
+        @foreach ($notifications as $notification)
+    <div class="allnotifications">
+      @if (is_null($notification->read_at))
+      <div class="UnreadNotifications" style="border: 1px solid black; margin-bottom:20px;">
+        <h5>
+          UnreadNotifictions
+        </h5>
+        <li>
+          {{$notification->created_at}}  -  {{ $notification->data['message'] ?? 'No message available' }} 
+          <form action="{{ route('notifications.markAsRead', $notification->id) }}" method="POST">
+              @csrf
+              @method('PATCH')
+             <button>Mark as read</button>    
+            </form>
+            </li>
+      </div>
+      <div>
 
-<h5>Notifications List:</h5>
-
-<ul>
-    @foreach ($notifications as $notification)
-    <div style="display: flex">
-
-      <li style="width: 100%; display: flex; justify-content:space-between; background-color:aqua; border-radius:10px; padding:20px;">
+      </div>
+       @else
+       <div class="readNotifictions" style="border: 1px solid black">
+        <h5>
+          readNotifictions
+        </h5>
+         <li style="background-color: #d8e2dc;">  
            {{$notification->created_at}}  -  {{ $notification->data['message'] ?? 'No message available' }} 
-        @if (is_null($notification->read_at))
-                <form action="{{ route('notifications.markAsRead', $notification->id) }}" method="POST">
+           <form action="{{ route('notifications.markAsUnread', $notification->id) }}" method="POST">
+           @csrf
+           @method('PATCH')
+             <button class="markasunread">Mark as unread</button>
+           </form>
+         </li>
+       </div>
+       </div>
+        @endif
+        @endforeach
+    </ul>
+  </div>
+
+@endsection --}}
+
+
+@extends('layouts.app')
+
+@section('header')
+   {{ __('Notifications') }}
+@endsection
+
+@section('content')
+  <div class="vms_panel notification-panel">
+    <h5>Notifications List:</h5>
+    <hr>
+    
+    <ul>
+      @foreach ($notifications as $notification)
+        <div class="allnotifications">
+          
+          {{-- Check if the notification is unread --}}
+          @if (is_null($notification->read_at))
+            {{-- Unread Notification --}}
+            
+              <li>
+                {{ $notification->created_at }} - {{ $notification->data['message'] ?? 'No message available' }}
+                
+                <form action="{{ route('notifications.markAsRead', $notification->id) }}" method="POST" style="display: inline;">
                     @csrf
                     @method('PATCH')
-                    <button style="background:transparent; border: none;  border-radius:6px;">Mark as read</button>
+                    <button >Mark as read</button>
                 </form>
-            @else
-            <button class="markasunread" style="display: none">Mark as unread</button>
-            @endif
-        </form>
-      </li>
+              </li>
+     
+
+          @else
+            {{-- Read Notification --}}
       
-
-    </div>
-    @endforeach
-</ul>
-
+              <li style="background-color: #d8e2dc;">
+                {{ $notification->created_at }} - {{ $notification->data['message'] ?? 'No message available' }}
+                
+                <form action="{{ route('notifications.markAsUnread', $notification->id) }}" method="POST" style="display: inline;">
+                  @csrf
+                  @method('PATCH')
+                  <button>Mark as unread</button>
+                </form>
+              </li>
+       
+          @endif
+          
+        </div>
+      @endforeach
+    </ul>
+  </div>
 @endsection
+
