@@ -133,6 +133,7 @@ class Reservation extends Model
         $totalDiscountSum = $reservation->discounts->sum('amount');
         $numberOfGuests = $reservation->number_of_guests;
         return PricingStatusTracking::create([
+            "location_id" => auth()->user()->getCurrentLocationId(),
             'user_id' => auth()->user()->id,
             'number_of_guests' => $numberOfGuests,
             'menu_price' => $reservation->menu_price,

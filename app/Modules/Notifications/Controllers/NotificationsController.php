@@ -73,4 +73,14 @@ class NotificationsController extends Controller
         ],200);
     }
 
+   public function fetchUnread()
+{
+    // Fetch unread notifications from the authenticated user
+    $notifications = auth()->user()->unreadNotifications;
+
+    return response()->json([
+        'notifications' => $notifications
+    ]);
+}
+
 }

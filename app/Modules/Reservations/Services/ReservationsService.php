@@ -1,6 +1,7 @@
 <?php namespace App\Modules\Reservations\Services;
 
 use App\Models\User;
+use App\Modules\Users\Services\UsersService;
 use App\Modules\Clients\Models\Client;
 use App\Modules\Clients\Services\ClientsService;
 use App\Modules\Reservations\Models\Reservation;
@@ -12,15 +13,24 @@ use App\Modules\Reservations\Models\PricingStatusTracking;
 use App\Modules\Reservations\Models\ReservationStaff;
 use Illuminate\Support\Carbon;
 use Illuminate\Support\Facades\DB;
+use App\Modules\Reservations\Notifications\ReservationAddedNotification;
+use App\Modules\Reservations\Notifications\ReservationDeletedNotifiaction;
+use App\Modules\Reservations\Notifications\ReservationUpdatedNotification;
+use Illuminate\Support\Facades\Notification;
+
+
+
 
 class ReservationsService
 {
     private $logService;
     private $clientService;
+      private $usersService;
     public function __construct()
     {
         $this->logService = new LogService();
         $this->clientService = new ClientsService();
+        $this->usersService = app()->make(UsersService::class);
 
     }
 
@@ -124,6 +134,13 @@ class ReservationsService
                 'context' => Log::LOG_CONTEXT_RESERVATIONS,
                 'ttl'=> Log::LOG_TTL_THREE_MONTHS,
             ]);
+             Notification::send(
+                 $this->usersService->getUsersForNotifications(),
+                 new ReservationAddedNotification(
+                     $reservation,
+                     auth()->user()
+                 )
+             );
         }
 
         return $reservation;
@@ -168,6 +185,13 @@ class ReservationsService
                 'context' => Log::LOG_CONTEXT_RESERVATIONS,
                 'ttl'=> Log::LOG_TTL_THREE_MONTHS,
             ]);
+            Notification::send(
+                 $this->usersService->getUsersForNotifications(),
+                 new ReservationUpdatedNotification(
+                     $reservation,
+                     auth()->user()
+                 )
+             );
         }
     
         return $reservationSaved;
@@ -207,6 +231,13 @@ class ReservationsService
                'context' => Log::LOG_CONTEXT_CLIENTS,
                'ttl'=> Log::LOG_TTL_THREE_MONTHS,
            ]);
+           Notification::send(
+                 $this->usersService->getUsersForNotifications(),
+                 new ReservationDeletedNotifiaction(
+                     $reservation,
+                     auth()->user()
+                 )
+             );
        }
        return $reservationDeleted;
    }
