@@ -15,11 +15,13 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"  crossorigin="anonymous" referrerpolicy="no-referrer" />
 
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/css/bootstrap.min.css">
-    <script src="https://cdn.jsdelivr.net/npm/jquery@3.7.1/dist/jquery.slim.min.js"></script>
+<script src="https://code.jquery.com/jquery-3.3.1.min.js" integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=" crossorigin="anonymous"></script>
     <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/js/bootstrap.bundle.min.js"></script>
     <script src='https://cdn.jsdelivr.net/npm/fullcalendar/index.global.min.js'></script>
     <script src="assets/js/core/scripts.min.js"></script>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.10/css/select2.min.css" rel="stylesheet" />
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.10/js/select2.min.js"></script>
 
     <script src="{{ asset('/assets/js/scripts.js') }}"></script>
     <link href="{{ asset('/assets/css/sass/main.css') }}" rel="stylesheet" />
@@ -39,12 +41,14 @@
         <div class="vms-navbar">
             <div>
                 <div class="hubers-navbar-logo-items">
-                    <div class="hubers-navbar-logo">
+                    <div class="hubers-navbar-logo" style="display: flex; justify-content:space-between">
                         <a href="/">
                             <img style="height: 40px;text-align: center;" src="https://bugagency.tech/wp-content/uploads/assets/logo_main.png" alt="" />
                             VMS
                         </a>
+                        @include('pages.notifications.notifications-popup')
                     </div>
+                   
                     <div class="hubers-navbar-hamburger-notifications">
                         <div class="hamburger-menu">
                             <span></span>
@@ -195,7 +199,7 @@
             <header class="hubers-page-header">
                 <h5 class="mb-0">@yield('header')</h5>
                 @yield('header-actions')
-                @include('pages.notifications.notifications-popup')
+               
             </header>
             @yield('content')
         </div>

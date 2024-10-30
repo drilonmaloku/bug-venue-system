@@ -6,6 +6,7 @@ use App\Modules\Clients\Services\ClientsService;
 use App\Modules\Logs\Models\Log;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
+use App\Modules\Clients\Models\Client;
 use App\Modules\Logs\Services\LogService;
 use Maatwebsite\Excel\Facades\Excel;
 
@@ -86,5 +87,14 @@ class ClientsController extends Controller
         ]);
         return Excel::download(new ClientsExport($clients), "clients-export.xlsx");
     }
+    public function getClients(Request $request)
+        {
+            $search = $request->input('term');
+            $clients = Client::where('name','LIKE', '%' . $search . '%')
+                ->select('id', 'name') // Select only the fields needed
+                ->get();
+
+            return response()->json($clients);
+        }
 
 }

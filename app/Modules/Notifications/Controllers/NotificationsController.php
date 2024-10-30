@@ -67,10 +67,10 @@ class NotificationsController extends Controller
     {
         $this->notificationsService->markNotificationsAsReadOrUnread();
 
-        return response()->json([
-            'success' => true,
-            'message' => 'Notifications marked as read'
-        ],200);
+         alert()->success(
+                    'Notifications u ben read me sukses'
+                )->autoclose(2000);
+        return redirect()->back();
     }
 
    public function fetchUnread()

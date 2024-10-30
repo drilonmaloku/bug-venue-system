@@ -15,6 +15,13 @@
             <h6>NOTIFICATIONS:</h6>
                  <ul id="notificationList">
                  </ul>
+                 <div class="markall">
+                   <form action="{{ route('notifications.markAllAsRead') }}" method="POST" style="display: inline;">
+                    @csrf
+                    @method('PATCH')
+                    <button class="markallasread">Mark as read</button>
+                </form>
+                 </div>
                  <hr>
                  <a href="/notifications" class="archive">Arkiva</a>
           </div>

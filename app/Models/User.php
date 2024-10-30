@@ -13,7 +13,7 @@ use Illuminate\Notifications\Notifiable;
 use Spatie\Permission\Traits\HasRoles;
 
 class User extends Authenticatable
-{
+{ 
     use
         HasFactory,
         Notifiable,
@@ -62,6 +62,7 @@ class User extends Authenticatable
      */
     protected $casts = [
         'email_verified_at' => 'datetime',
+        'preferences' => 'array',
     ];
 
 
@@ -140,4 +141,22 @@ class User extends Authenticatable
         return $locationUser ? Location::find($locationUser->location_id)->slug : null;
     }
     
+    public function notificationPreference($key = null, $value = null)
+    {
+        if (is_null($key)) {
+            return $this->preferences;
+        }
+        
+        // If value is provided, update preference
+        if (!is_null($value)) {
+            $preferences = $this->preferences ?? [];
+            $preferences[$key] = $value;
+            $this->preferences = $preferences;
+            $this->save();
+        }
+
+    return $this->belongsTo(NotificationPreference::class);
+    }
 }
+    
+

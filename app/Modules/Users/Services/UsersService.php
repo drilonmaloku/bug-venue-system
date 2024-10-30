@@ -335,5 +335,5 @@ class UsersService
         // ->where('id', '!=', $user->id)
         return $users;
     }
-
+      
 }
