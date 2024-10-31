@@ -88,8 +88,9 @@ class User extends Authenticatable
                 'reservation-updated' => true,
                 'staff-added' => true,
                 'staff-deleted' => true,
-                'payments-added' => true,
-                'payments-deleted' => true,
+                'payment-added' => true,
+                'payment-updated' => true,
+                'payment-deleted' => true,
                 'expenses-added' => true,
                 'expenses-updated' => true,
                 'expenses-deleted' => true,
@@ -103,13 +104,15 @@ class User extends Authenticatable
         ];
     }
 
+    public function getNameAttribute(){
+        return $this->first_name .' '.$this->last_name;
+    }
+
 
     public function expenses()
     {
         return $this->hasMany(Expense::class);
     }
-
-
 
     public function locationUsers()
     {

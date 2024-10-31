@@ -12,6 +12,7 @@
         @endif
         <div>
             <div class="mb-2">
+                <a class="hubers-btn" href="/events/sync">Sync</a>
                 <select class="hubers-select-input" name="" id="venueSelector">
                     <option value=""> {{__('reservation.show_all_venues')}}</option>
                     @foreach($venues as $venue)
@@ -250,39 +251,39 @@
     <script>
 
      
-$(document).ready(function() {
-      $("#select2insidemodal").select2({
-              dropdownParent: $("#myModal")
-      });
-});
-                                    $(document).ready(function() {
-                                        $('#clientSearch').select2({
-                                            placeholder: 'Selekto Klientin', 
-                                            minimumInputLength: 2,        
-                                            ajax: {
-                                                url: '/api/clients',     
-                                                dataType: 'json',
-                                                delay: 250,              
-                                                data: function (params) {
-                                                    return {
-                                                        term: params.term 
-                                                    };
-                                                },
-                                                processResults: function (data) {
-                                                    
-                                                    return {
-                                                        results: data.map(function(client) {
-                                                            return {
-                                                                id: client.id,      
-                                                                text: client.name    
-                                                            };
-                                                        })
-                                                    };
-                                                },
-                                                cache: true
-                                            }
-                                        });
-                                    });
+        $(document).ready(function() {
+              $("#select2insidemodal").select2({
+                      dropdownParent: $("#myModal")
+              });
+        });
+        $(document).ready(function() {
+            $('#clientSearch').select2({
+                placeholder: 'Selekto Klientin',
+                minimumInputLength: 2,
+                ajax: {
+                    url: '/api/clients',
+                    dataType: 'json',
+                    delay: 250,
+                    data: function (params) {
+                        return {
+                            term: params.term
+                        };
+                    },
+                    processResults: function (data) {
+
+                        return {
+                            results: data.map(function(client) {
+                                return {
+                                    id: client.id,
+                                    text: client.name
+                                };
+                            })
+                        };
+                    },
+                    cache: true
+                }
+            });
+        });
                                     
                             
 

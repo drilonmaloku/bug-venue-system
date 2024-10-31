@@ -26,6 +26,10 @@ class Reservation extends Model
         3 => 'Mbrëmje',
     ];
 
+    protected static function booted()
+    {
+        static::addGlobalScope(new CurrentLocationScope);
+    }
 
     public function getReservationTypeNameAttribute()
     {
@@ -61,14 +65,6 @@ class Reservation extends Model
 
 
 
-
-
-
-
-    protected static function booted()
-    {
-        static::addGlobalScope(new CurrentLocationScope);
-    }
 
     public function venue()
     {

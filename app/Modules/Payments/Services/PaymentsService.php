@@ -2,33 +2,31 @@
 
 namespace App\Modules\Payments\Services;
 
-use App\Modules\Clients\Models\Client;
 use App\Modules\Payments\Notifications\PaymentsDeletedNotification;
 use App\Modules\Payments\Notifications\PaymentAddedNotification;
 use App\Modules\Payments\Models\Payment;
-use App\Modules\Venues\Models\Venue;
+use App\Modules\Payments\Notifications\PaymentUpdatedNotification;
 use Illuminate\Http\Request;
 use App\Modules\Logs\Models\Log;
 use App\Modules\Logs\Services\LogService;
 use App\Modules\Users\Services\UsersService;
 use App\Modules\Reservations\Models\Reservation;
 use Illuminate\Support\Facades\Notification;
-use Illuminate\Support\Carbon;
-use Illuminate\Support\Facades\DB;
+
 
 class PaymentsService
 {
-      private $logService;
+    private $logService;
     private $usersService;
 
     public function __construct()
     {
-        $this->logService = new LogService();
+        $this->logService = app()->make(LogService::class);
         $this->usersService = app()->make(UsersService::class);
     }
 
     /**
-     * Gets the list of venues
+     * Gets the list of payments
      **/
     public function getAll(Request $request)
     {
@@ -73,7 +71,7 @@ class PaymentsService
     }
 
     /**
-     * Get Venue by ID
+     * Get Payment by ID
      * @param int|array $id
      **/
     public function getByID($id)
@@ -91,7 +89,7 @@ class PaymentsService
     }
 
     /**
-     * Stores new Venue
+     * Stores new Payment
      **/
     public function store($data, $reservation_id, $client_id)
     {
@@ -167,6 +165,13 @@ class PaymentsService
                 'previous_data' => json_encode($previousData),
                 'updated_data' => json_encode($payment)
             ]);
+            Notification::send(
+                $this->usersService->getUsersForNotifications('payment-updated'),
+                new PaymentUpdatedNotification(
+                    $payment,
+                    auth()->user()
+                )
+            );
         }
 
         return $paymentSaved;

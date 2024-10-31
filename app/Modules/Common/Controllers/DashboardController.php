@@ -77,8 +77,8 @@ class DashboardController extends Controller
 
 
 
-        $query = Reservation::with('venue')
-                                    ->whereBetween('date', [$start, $end]);
+        $query = Reservation::with('venue')->whereBetween('date', [$start, $end]);
+
         if($venueId) {
             $query->where('venue_id', $venueId);
         }

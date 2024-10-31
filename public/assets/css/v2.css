@@ -26,23 +26,23 @@
     border: none;
     border-radius: 10px;
     background: none;
-    right: 30px;
+    cursor: pointer;
 }
 
 #notificationDropdown {
     display: none;
     box-shadow: 0 0 4px #d1dbdf;
-    position: absolute;
+    position: fixed;
     top: 65px;
     left: 200px;
     background: white;
     border: 1px solid #ccc;
-    z-index: 10;
     opacity: 0;
     border-radius: 8px;
     width: 440px;
     transform: translateY(-10px);
     transition: opacity 0.3s ease, transform 0.3s ease;
+    z-index: 1000000;
 }
 
 #notificationDropdown.show {
@@ -90,9 +90,9 @@
 
 .externalnotifications a {
     color: black;
-    font-weight: 700;
-    font-size: 20px !important;
+    font-size: 16px !important;
     margin-bottom: 10px;
+    font-weight: bold;
 }
 
 .externalnotifications a:hover {

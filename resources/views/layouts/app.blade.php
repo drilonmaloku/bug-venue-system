@@ -46,10 +46,16 @@
                             <img style="height: 40px;text-align: center;" src="https://bugagency.tech/wp-content/uploads/assets/logo_main.png" alt="" />
                             VMS
                         </a>
-                        @include('pages.notifications.notifications-popup')
                     </div>
                    
                     <div class="hubers-navbar-hamburger-notifications">
+                       <span id="notificationButton">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-bell"><path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9"/><path d="M13.73 21a2 2 0 0 1-3.46 0"/></svg>
+                            <span id="notificationBadge">
+                                0
+                            </span>
+                        </span>
+                        @include('pages.notifications.notifications-popup')
                         <div class="hamburger-menu">
                             <span></span>
                             <span></span>
