@@ -26,6 +26,10 @@ class Reservation extends Model
         3 => 'Mbrëmje',
     ];
 
+    protected static function booted()
+    {
+        static::addGlobalScope(new CurrentLocationScope);
+    }
 
     public function getReservationTypeNameAttribute()
     {
@@ -61,14 +65,6 @@ class Reservation extends Model
 
 
 
-
-
-
-
-    protected static function booted()
-    {
-        static::addGlobalScope(new CurrentLocationScope);
-    }
 
     public function venue()
     {
@@ -133,6 +129,7 @@ class Reservation extends Model
         $totalDiscountSum = $reservation->discounts->sum('amount');
         $numberOfGuests = $reservation->number_of_guests;
         return PricingStatusTracking::create([
+            "location_id" => auth()->user()->getCurrentLocationId(),
             'user_id' => auth()->user()->id,
             'number_of_guests' => $numberOfGuests,
             'menu_price' => $reservation->menu_price,

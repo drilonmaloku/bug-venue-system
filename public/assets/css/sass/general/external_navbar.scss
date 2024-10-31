@@ -11,10 +11,15 @@
   display: flex;
   flex-direction: column;
   justify-content: space-between;
+  z-index: 100;
   .hubers-navbar-logo-items {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
     .hubers-navbar-logo {
       display: flex;
       align-items: center;
+      justify-content: space-between;
       a {
         display: flex;
         align-items: center;
@@ -33,7 +38,10 @@
       }
     }
     .hubers-navbar-hamburger-notifications {
-      display: none;
+      display: flex;
+      .hamburger-menu {
+        display: none;
+      }
     }
   }
   .hubers-navbar-links {
@@ -176,7 +184,14 @@
     z-index: 1000000;
     height: auto;
 
-
+    .hubers-navbar-logo-items {
+      .hubers-navbar-hamburger-notifications {
+        .hamburger-menu {
+          display: block;
+          margin-left: 15px;
+        }
+      }
+    }
     .hubers-navbar-links {
       max-height: 0px;
       overflow: hidden;
@@ -356,4 +371,11 @@
 
 .cke_notifications_area {
   display: none !important;
+}
+
+.vms-panel-bordered {
+  padding: 8px;
+  border: 1px solid rgb(207, 216, 220);
+  border-radius: 12px;
+  margin-bottom: 16px;
 }

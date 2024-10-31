@@ -1,9 +1,14 @@
 <?php
+
+use App\Http\Controllers\NotificationPreferenceController;
+use App\Modules\Clients\Controllers\ClientsController;
 use App\Modules\Common\Controllers\DashboardController;
 use App\Modules\GoogleCalendar\Controllers\GoogleCalendarController;
 use Illuminate\Support\Facades\Artisan;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
+use App\Modules\Notifications\Controllers\NotificationsController;
+
 
 /*
 |--------------------------------------------------------------------------
@@ -63,3 +68,14 @@ Route::get('/migrate', function () {
 Route::get('/google/redirect', [GoogleCalendarController::class, 'redirectToGoogle'])->name('google.auth');
 Route::get('/google/callback', [GoogleCalendarController::class, 'handleGoogleCallback']);
 Route::get('/events/sync', [GoogleCalendarController::class, 'syncEventsToGoogle']);
+
+
+Route::get('/notifications', [NotificationsController::class, 'archive'])->name('notification');
+Route::patch('/notifications/{notification}/mark-as-read', [NotificationsController::class, 'markNotificationAsRead'])->name('notifications.markAsRead');
+Route::patch('/notifications/{notification}/mark-as-unread', [NotificationsController::class, 'markNotificationAsUnread'])->name('notifications.markAsUnread');
+Route::get('/notifications/unread', [NotificationsController::class, 'fetchUnread'])->name('notifications.fetchUnread');
+Route::patch('/notifications/mark-all-as-read', [NotificationsController::class, 'markAllNotificationsAsRead'])->name('notifications.markAllAsRead');
+
+
+Route::get('/notifications/preferences', [NotificationPreferenceController::class, 'edit'])->name('notifications.preferences.edit');
+Route::patch('/notifications/preferences', [NotificationPreferenceController::class, 'update'])->name('notifications.preferences.update');

@@ -92,8 +92,17 @@
                                 </div>
                             </div>
                         </div>
-                        <hr>
-                        <h6><strong>{{__('reservations.create.client.information')}}:</strong></h6>
+                    <hr>                                       
+                       <div >
+                            <div class="form-group">
+                                <label for="clientSearch" class="form-control-label">{{ __('reservations.create.select_client') }}</label>                        
+                                <select id="clientSearch" class="form-control" name="client_id">
+                                    <option value="">{{ __('reservations.create.select_client') }}</option>                   
+                                </select>                      
+                                </div>                         
+                        </div>
+                        <p class="mt-3 mb-3">Ose Krijo Klient</p>
+                    <h6><strong>{{__('reservations.create.client.information')}}:</strong></h6>
                         <div class="row">
                             <div class="col-md-12">
                                 <div class="form-group">
@@ -125,7 +134,7 @@
                                     <input class="bug-text-input" type="text" name="client_additional_phone_number" >
                                 </div>
                             </div>
-                        </div>
+                </div>      
                         <hr>
                         <h6><strong>{{__('reservations.create.payment.information')}}:</strong></h6>
                         <div class="row">
@@ -155,6 +164,37 @@
             </div>
         </div>
     </div>
+    <script>
+                                    $(document).ready(function() {
+                                        $('#clientSearch').select2({
+                                            placeholder: 'Selekto Klientin', 
+                                            minimumInputLength: 2,        
+                                            ajax: {
+                                                url: '/api/clients',     
+                                                dataType: 'json',
+                                                delay: 250,              
+                                                data: function (params) {
+                                                    return {
+                                                        term: params.term 
+                                                    };
+                                                },
+                                                processResults: function (data) {
+                                                    
+                                                    return {
+                                                        results: data.map(function(client) {
+                                                            return {
+                                                                id: client.id,      
+                                                                text: client.name    
+                                                            };
+                                                        })
+                                                    };
+                                                },
+                                                cache: true
+                                            }
+                                        });
+                                    });
+                                    
+                                </script>
     <script>
         document.addEventListener('DOMContentLoaded', function() {
             const menuSelect = document.getElementById('menuId');

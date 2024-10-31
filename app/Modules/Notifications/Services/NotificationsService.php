@@ -21,7 +21,7 @@ class NotificationsService
      *  Get all unread notifications
      **/
     public function getAll(){
-        return auth()->user()->unreadNotifications;
+        return auth()->user()->Notifications;
     }
 
     /**

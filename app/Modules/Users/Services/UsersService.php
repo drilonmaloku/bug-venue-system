@@ -2,6 +2,7 @@
 
 namespace App\Modules\Users\Services;
 
+use App\Models\NotificationPreference;
 use App\Models\User;
 use App\Modules\Logs\Models\Log;
 use App\Modules\Logs\Services\LogService;
@@ -187,6 +188,11 @@ class UsersService
         );
 
         $user->assignRole($request->input("role"));
+        
+
+         $user->notificationPreferences()->create([
+            'preferences' => $user->defaultNotificationPreferences(),
+        ]);
         return $user;
     }
 
@@ -323,16 +329,32 @@ class UsersService
         })->get();
     }
 
-    public function getUsersForNotifications()
+   public function getUsersForNotifications($notificationKey)
+{
+    $user = auth()->user();
+    $currentLocationId = $user->getCurrentLocationId();
+
+    // Get users at the current location who have the notification preference enabled
+    $users = User::whereHas('locations', function ($query) use ($currentLocationId) {
+        $query->where('locations.id', $currentLocationId);
+    })
+    ->whereHas('notificationPreferences', function ($query) use ($notificationKey) {
+        $query->where('preferences->' . $notificationKey, true);
+    })
+    //->where('id', '!=', $user->id) // Exclude the current user
+    ->get();
+
+    return $users;
+}
+
+      
+     public function updateNotificationPreferences($preferences)
     {
-        $user = auth()->user();
-
-        $currentLocationId = $user->getCurrentLocationId();
-
-        $users = User::whereHas('locations', function ($query) use ($currentLocationId) {
-            $query->where('locations.id', $currentLocationId);
-        })->where('id', '!=', $user->id)->get();
-        return $users;
+        auth()->user()->notificationPreferences()->updateOrCreate(
+            ['user_id' => auth()->id()],
+            ['preferences' => $preferences]
+        );
     }
 
+   
 }

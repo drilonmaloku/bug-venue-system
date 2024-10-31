@@ -1,17 +1,32 @@
 <?php namespace App\Modules\Reservations\Services;
 
 
+use App\Modules\Users\Services\UsersService;
 use App\Modules\Logs\Models\Log;
 use App\Modules\Logs\Services\LogService;
+use App\Modules\Clients\Models\Client;
+use App\Modules\Clients\Services\ClientsService;
 use App\Modules\Reservations\Models\Discount;
+use App\Modules\Reservations\Notifications;
+use App\Modules\Reservations\Notifications\DiscountAddedNotification;
+use App\Modules\Reservations\Notifications\DiscountDeletedNotification;
+use App\Modules\Reservations\Notifications\DiscountUpdatedNotification;
+use Illuminate\Support\Facades\Notification;
+
+
 
 class DiscountReservationsServices
 {
     private $logService;
-
+private $clientService;
+      private $usersService;
     public function __construct()
     {
         $this->logService = new LogService();
+                $this->clientService = new ClientsService();
+
+        $this->usersService = app()->make(UsersService::class);
+
     }
 
     public function getByID($id){
@@ -33,6 +48,13 @@ class DiscountReservationsServices
                 'context' => Log::LOG_CONTEXT_INVOICE,
                 'ttl' => Log::LOG_TTL_THREE_MONTHS,
             ]);
+              Notification::send(
+                 $this->usersService->getUsersForNotifications('discount-added'),
+                 new DiscountAddedNotification(
+                     $discount,
+                     auth()->user()
+                 )
+             );
         }
 
         return $discount;
@@ -54,6 +76,13 @@ class DiscountReservationsServices
                 'previous_data' => json_encode($previousData),
                 'updated_data' => json_encode($discount)
             ]);
+            Notification::send(
+                 $this->usersService->getUsersForNotifications('discount-updated'),
+                 new DiscountUpdatedNotification(
+                     $discount,
+                     auth()->user()
+                 )
+             );
         }
     
         return $discountSaved;
@@ -72,6 +101,13 @@ class DiscountReservationsServices
                 'ttl' => Log::LOG_TTL_THREE_MONTHS,
                 'previous_data' => json_encode($previousData),
             ]);
+             Notification::send(
+                 $this->usersService->getUsersForNotifications('discount-deleted'),
+                 new DiscountDeletedNotification(
+                     $discount,
+                     auth()->user()
+                 )
+             );
         }
         return $discountDeleted;
     }

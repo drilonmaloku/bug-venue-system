@@ -66,6 +66,7 @@ class LocationController extends Controller
             "email" => $request->input("email"),
             "phone" => $request->input("phone"),
             "password" => $request->input("password"),
+            "language" => 'sq',
             "role" => $request->input("role")
         ];
     

@@ -8,6 +8,9 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use Illuminate\Notifications\DatabaseNotification;
 
+
+
+
 class NotificationsController extends Controller
 {
     public $notificationsService;
@@ -19,25 +22,28 @@ class NotificationsController extends Controller
 
     public function index(){
         $notifications = $this->notificationsService->getAll();
-        return response()->json([
-            'data' =>NotificationResource::collection($notifications)
+        return view('pages.notifications.index',  [
+            'notifications' => $notifications
         ]);
     }
 
     public function archive(Request $request){
-        $notifications = $this->notificationsService->getAllArchiveNotifications($request);
-        return response()->json([
-            'data' =>NotificationResource::collection($notifications->items())
+        $notifications = $this->notificationsService->getAll();
+        return view('pages.notifications.index',  [
+            'notifications' => $notifications
         ]);
+      
     }
 
     public function markNotificationAsRead(DatabaseNotification $notification)
     {
+
         $this->notificationsService->markNotificationAsRead($notification);
-        return response()->json([
-            'success' => true,
-            'message' => 'Notification marked as read'
-        ],200);
+         
+                alert()->success(
+                    'Notification u be read me sukses'
+                )->autoclose(2000);
+        return redirect()->to('notifications');
     }
 
     /**
@@ -46,10 +52,10 @@ class NotificationsController extends Controller
     public function markNotificationAsUnread(DatabaseNotification $notification)
     {
         $this->notificationsService->markNotificationAsUnread($notification);
-        return response()->json([
-            'success' => true,
-            'message' => 'Notification marked as unread'
-        ],200);
+                   alert()->success(
+                    'Notification u be unread me sukses'
+                )->autoclose(2000);
+        return redirect()->to('notifications');
     }
 
     /**
@@ -61,10 +67,20 @@ class NotificationsController extends Controller
     {
         $this->notificationsService->markNotificationsAsReadOrUnread();
 
-        return response()->json([
-            'success' => true,
-            'message' => 'Notifications marked as read'
-        ],200);
+         alert()->success(
+                    'Notifications u ben read me sukses'
+                )->autoclose(2000);
+        return redirect()->back();
     }
+
+   public function fetchUnread()
+{
+    // Fetch unread notifications from the authenticated user
+    $notifications = auth()->user()->unreadNotifications;
+
+    return response()->json([
+        'notifications' => $notifications
+    ]);
+}
 
 }

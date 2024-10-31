@@ -13,7 +13,7 @@ use Illuminate\Notifications\Notifiable;
 use Spatie\Permission\Traits\HasRoles;
 
 class User extends Authenticatable
-{
+{ 
     use
         HasFactory,
         Notifiable,
@@ -62,6 +62,7 @@ class User extends Authenticatable
      */
     protected $casts = [
         'email_verified_at' => 'datetime',
+        'preferences' => 'array',
     ];
 
 
@@ -72,13 +73,46 @@ class User extends Authenticatable
      */
     protected $dates = ['deleted_at']; // Add deleted_at to dates
 
+    public static function defaultNotificationPreferences()
+    {
+        return [
+                'coment-added' => true,
+                'comment-deleted' => true,
+                'discount-added' => true,
+                'discount-updated' => true,
+                'discount-deleted' => true,
+                'invoices-added' => true,
+                'invoices-deleted' => true,
+                'reservation-added' => true,
+                'reservation-deleted' => true,
+                'reservation-updated' => true,
+                'staff-added' => true,
+                'staff-deleted' => true,
+                'payment-added' => true,
+                'payment-updated' => true,
+                'payment-deleted' => true,
+                'expenses-added' => true,
+                'expenses-updated' => true,
+                'expenses-deleted' => true,
+                'menu-added' => true,
+                'menu-updated' => true,
+                'menu-deleted' => true,
+                'client-updated' => true,
+                'venue-added' => true,
+                'venue-updated' => true,
+                'venue-deleted' => true,
+        ];
+    }
+
+    public function getNameAttribute(){
+        return $this->first_name .' '.$this->last_name;
+    }
+
 
     public function expenses()
     {
         return $this->hasMany(Expense::class);
     }
-
-
 
     public function locationUsers()
     {
@@ -89,7 +123,6 @@ class User extends Authenticatable
     {
         return $this->belongsToMany(Location::class, 'locations_users', 'user_id', 'location_id');
     }
-
 
 
     public function isLocationEnabled()
@@ -140,4 +173,10 @@ class User extends Authenticatable
         return $locationUser ? Location::find($locationUser->location_id)->slug : null;
     }
     
+    public function notificationPreferences()
+    {
+        return $this->hasOne(NotificationPreference::class);
+    }
 }
+    
+

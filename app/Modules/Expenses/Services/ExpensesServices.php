@@ -101,7 +101,7 @@ class ExpensesServices
                 'ttl'=> Log::LOG_TTL_THREE_MONTHS,
             ]);
             Notification::send(
-                $this->usersService->getUsersForNotifications(),
+                $this->usersService->getUsersForNotifications('expenses-added'),
                 new ExpenseAddedNotification(
                     $expense,
                     auth()->user()
@@ -128,7 +128,7 @@ class ExpensesServices
                 'ttl'=> Log::LOG_TTL_THREE_MONTHS,
             ]);
             Notification::send(
-                $this->usersService->getUsersForNotifications(),
+                $this->usersService->getUsersForNotifications('expenses-updated'),
                 new ExpenseUpdatedNotification(
                     $expense,
                     auth()->user()
@@ -148,13 +148,13 @@ class ExpensesServices
 
          if($expenseDeleted){
             $this->logService->log([
-                'message' => 'Klienti u fshi me sukses',
+                'message' => 'Shpenzimi u fshi me sukses',
                 'context' => Log::LOG_CONTEXT_CLIENTS,
                 'ttl'=> Log::LOG_TTL_THREE_MONTHS,
                 'previous_data'=> json_encode($previousData)
             ]);
              Notification::send(
-                 $this->usersService->getUsersForNotifications(),
+                 $this->usersService->getUsersForNotifications('expenses-deleted'),
                  new ExpenseDeletedNotification(
                      $expense,
                      auth()->user()

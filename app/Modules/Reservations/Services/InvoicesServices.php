@@ -1,17 +1,22 @@
 <?php namespace App\Modules\Reservations\Services;
 
-
+use App\Modules\Users\Services\UsersService;
 use App\Modules\Logs\Models\Log;
 use App\Modules\Logs\Services\LogService;
+use App\Modules\Reservations\Notifications\InvoicesAddedNotification;
+use App\Modules\Reservations\Notifications\InvoicesDeletedNotification;
 use App\Modules\Reservations\Models\Invoice;
+use Illuminate\Support\Facades\Notification;
+
 
 class InvoicesServices
 {
     private $logService;
-
+    private $usersService;
     public function __construct()
     {
         $this->logService = new LogService();
+        $this->usersService = app()->make(UsersService::class);
     }
 
     public function getByID($id){
@@ -34,6 +39,13 @@ class InvoicesServices
                 'context' => Log::LOG_CONTEXT_INVOICE,
                 'ttl' => Log::LOG_TTL_THREE_MONTHS,
             ]);
+              Notification::send(
+                 $this->usersService->getUsersForNotifications('invoices-added'),
+                 new InvoicesAddedNotification(
+                     $invoice,
+                     auth()->user()
+                 )
+             );
         }
 
         return $invoice;
@@ -63,25 +75,33 @@ class InvoicesServices
     }
 
 
-    public function delete(Invoice $invoice)
-    {
-        $previousData = $invoice->attributesToArray();
-        $invoiceDeleted = $invoice->delete();
+   public function delete(Invoice $invoice)
+{
+    $previousData = $invoice->attributesToArray();
+    $invoiceDeleted = $invoice->delete();
 
-
-        if ($invoiceDeleted) {
-
+    if ($invoiceDeleted) {
         $invoice->reservation->updateReservationTracking($invoice->reservation);
 
-            $this->logService->log([
-                'message' => 'Sherbimi është fshirë me sukses',
-                'context' => Log::LOG_CONTEXT_INVOICE,
-                'ttl' => Log::LOG_TTL_THREE_MONTHS,
-                'previous_data' => json_encode($previousData),
-            ]);
-        }
-        return $invoiceDeleted;
+        $this->logService->log([
+            'message' => 'Sherbimi është fshirë me sukses',
+            'context' => Log::LOG_CONTEXT_INVOICE,
+            'ttl' => Log::LOG_TTL_THREE_MONTHS,
+            'previous_data' => json_encode($previousData),
+        ]);
+
+        Notification::send(
+            $this->usersService->getUsersForNotifications('invoices-deleted'),
+            new InvoicesDeletedNotification(
+                $invoice,
+                auth()->user()
+            )
+        );
     }
+
+    return $invoiceDeleted;
+}
+
 
 
 

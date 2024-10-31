@@ -4,6 +4,7 @@ namespace App\Modules\Reservations\Controllers;
 
 use App\Modules\Clients\Services\ClientsService;
 use App\Modules\Menus\Services\MenuService;
+use App\Modules\Reservations\Services\ReservationService;
 use App\Modules\Payments\Services\PaymentsService;
 use App\Modules\Reservations\Models\Reservation;
 use App\Modules\Reservations\Services\InvoicesServices;
@@ -91,7 +92,8 @@ class ReservationsController extends Controller
         return view('pages/reservations/create', [
             'venues' => $this->venuesService->getVenues(),
             'menus' => $this->menuService->getAll(request(), false),
-            'users' => $this->userService->getAll(request(), false)
+            'users' => $this->userService->getAll(request(), false),
+            'clients' => $this->clientsService->getAll(request(), false),
         ]);
     }
 
@@ -293,10 +295,7 @@ class ReservationsController extends Controller
                 'message' => 'Reservation Not Found'
             ], JsonResponse::HTTP_NOT_FOUND);
         }
-
-        try {
-
-            $reservationDeleted = $this->reservationsService->delete($reservation);
+  $reservationDeleted = $this->reservationsService->delete($reservation);
 
             if ($reservationDeleted) {
                 return redirect()->to('reservations')->withSuccessMessage('Rezervimi u fshi me sukses');
@@ -305,6 +304,9 @@ class ReservationsController extends Controller
             return response()->json([
                 "message" => "Failed to delete existing client."
             ], JsonResponse::HTTP_BAD_REQUEST);
+        try {
+
+          
         } catch (\Exception $e) {
             return response()->json([
                 'message' => 'Internal Server Error'
@@ -577,8 +579,8 @@ class ReservationsController extends Controller
             ], JsonResponse::HTTP_NOT_FOUND);
         }
 
+        $invoiceDeleted = $this->invoiceService->delete($invoice);
         try {
-            $invoiceDeleted = $this->invoiceService->delete($invoice);
 
             if ($invoiceDeleted) {
                 return redirect()->route('reservations.view', ['id' => $id])
@@ -640,9 +642,10 @@ class ReservationsController extends Controller
             return response()->json(['message' => 'Comment Not Found'], JsonResponse::HTTP_NOT_FOUND);
         }
 
-        try {
-            $this->commentReservationService->deleteComment($comment);
+         $this->commentReservationService->deleteComment($comment);
             return redirect()->back()->withSuccessMessage('Komenti eshte fshire me sukses');
+        try {
+           
         } catch (\Exception $e) {
             return response()->json(['message' => 'Internal Server Error'], JsonResponse::HTTP_INTERNAL_SERVER_ERROR);
         }
@@ -701,27 +704,32 @@ class ReservationsController extends Controller
         return response()->download($tempFilePath, 'reservation_contract_' . $reservation->id . '.docx')->deleteFileAfterSend(true);
     }
 
-   public function addMember($reservation,Request $request)
-   {
-       $member = ReservationStaff::create([
-           "user_id" =>  $request->input('user_id'),
-           "reservation_id" => $reservation,
-       ]);
-   
-      return redirect()->back()->withSuccessMessage('Staffi eshte shtuar me sukses');;
-   }
+  public function addMember($reservation, Request $request)
+{
+    try {
+        $member = $this->staffServices->addMember($reservation,$request);
+        return redirect()->back()->with('success', 'Staffi eshte shtuar me sukses');
+
+    } catch (\Exception $e) {
+        \Log::error('Error adding staff member: ' . $e->getMessage());
+
+        return redirect()->back()->withErrors(['message' => 'Internal Server Error']);
+    }
+}
+
 
    public function deleteStaff($id)
     {
+        // TODO Improve Code 
         $staff = ReservationStaff::find($id);
 
         if (is_null($staff)) {
             return response()->json(['message' => 'Staff Not Found'], JsonResponse::HTTP_NOT_FOUND);
         }
 
+        $this->staffServices->deleteStaff($staff);
+        return redirect()->back()->withSuccessMessage('Stafi eshte fshire me sukses');
         try {
-            $this->staffServices->deleteStaff($staff);
-            return redirect()->back()->withSuccessMessage('Stafi eshte fshire me sukses');
         } catch (\Exception $e) {
             return response()->json(['message' => 'Internal Server Error'], JsonResponse::HTTP_INTERNAL_SERVER_ERROR);
         }
