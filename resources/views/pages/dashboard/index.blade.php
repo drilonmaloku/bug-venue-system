@@ -111,14 +111,6 @@
                                 
                             </div>
                         <div >
-                            <div class="form-group">
-                                <label for="clientSearch" class="form-control-label">{{ __('reservations.create.select_client') }}</label>                        
-                                <select id="clientSearch" class="form-control" name="client_id">
-                                    <option value="">{{ __('reservations.create.select_client') }}</option>                   
-                                </select>                      
-                                </div>                         
-                        </div>
-                        <p class="mt-3 mb-3">Ose Krijo Klient</p>
                             <h6><strong>{{__('reservations.create.client.information')}}:</strong></h6>
                             <div class="row">
                                 <div class="col-md-12">

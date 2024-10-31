@@ -181,3 +181,13 @@
     border-radius: 6px;
     padding: 10px;
 }
+
+
+@media (max-width: 767px) {
+    #notificationDropdown {
+        top: 65px;
+        left: auto;
+        right: 16px;
+        max-width: calc(100% - 32px);
+    }
+}

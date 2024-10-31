@@ -125,7 +125,6 @@ class User extends Authenticatable
     }
 
 
-
     public function isLocationEnabled()
     {
         if(auth()->user()->hasRole('system-admin')) {

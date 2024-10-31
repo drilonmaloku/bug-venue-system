@@ -184,7 +184,14 @@
     z-index: 1000000;
     height: auto;
 
-
+    .hubers-navbar-logo-items {
+      .hubers-navbar-hamburger-notifications {
+        .hamburger-menu {
+          display: block;
+          margin-left: 15px;
+        }
+      }
+    }
     .hubers-navbar-links {
       max-height: 0px;
       overflow: hidden;

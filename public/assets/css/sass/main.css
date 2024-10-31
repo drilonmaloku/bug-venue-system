@@ -2212,6 +2212,10 @@ body {
     z-index: 1000000;
     height: auto;
   }
+  .vms-navbar .hubers-navbar-logo-items .hubers-navbar-hamburger-notifications .hamburger-menu {
+    display: block;
+    margin-left: 15px;
+  }
   .vms-navbar .hubers-navbar-links {
     max-height: 0px;
     overflow: hidden;
