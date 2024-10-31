@@ -107,10 +107,6 @@
                                 </div>                               
                             </div>
                             <hr>
-                            <div>
-                                
-                            </div>
-                        <div >
                             <h6><strong>{{__('reservations.create.client.information')}}:</strong></h6>
                             <div class="row">
                                 <div class="col-md-12">
@@ -172,7 +168,6 @@
                             <button type="button" class="btn btn-secondary" data-dismiss="modal">{{__('general.close_btn')}}</button>
                         </div>
                     </form>
-
                 </div>
             </div>
         </div>
@@ -242,40 +237,6 @@
     
     <script>
 
-     
-        $(document).ready(function() {
-              $("#select2insidemodal").select2({
-                      dropdownParent: $("#myModal")
-              });
-        });
-        $(document).ready(function() {
-            $('#clientSearch').select2({
-                placeholder: 'Selekto Klientin',
-                minimumInputLength: 2,
-                ajax: {
-                    url: '/api/clients',
-                    dataType: 'json',
-                    delay: 250,
-                    data: function (params) {
-                        return {
-                            term: params.term
-                        };
-                    },
-                    processResults: function (data) {
-
-                        return {
-                            results: data.map(function(client) {
-                                return {
-                                    id: client.id,
-                                    text: client.name
-                                };
-                            })
-                        };
-                    },
-                    cache: true
-                }
-            });
-        });
                                     
                             
 

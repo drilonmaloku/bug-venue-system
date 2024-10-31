@@ -191,3 +191,10 @@
         max-width: calc(100% - 32px);
     }
 }
+
+@media (max-width: 576px) {
+    #notificationDropdown li {
+        min-width: 100%;
+        max-width: 100%;
+    }
+}
