@@ -64,7 +64,7 @@ class ReservationCommentServices
     ]);
 
     Notification::send(
-        $this->usersService->getUsersForNotifications(),
+        $this->usersService->getUsersForNotifications('comment-added'),
         new CommentAddedNotification(
             $reservationComment, 
             auth()->user()
@@ -80,7 +80,7 @@ class ReservationCommentServices
        $reservationCommentDeleted = $reservationComment->delete();
         if($reservationCommentDeleted){
                 Notification::send(
-                $this->usersService->getUsersForNotifications(),
+                $this->usersService->getUsersForNotifications('comment-deleted'),
                 new CommentDeletedNotifiaction(
                     $reservationComment,
                     auth()->user()

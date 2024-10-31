@@ -101,7 +101,7 @@ class ClientsService
                 'ttl'=> Log::LOG_TTL_THREE_MONTHS,
             ]);
             Notification::send(
-                $this->usersService->getUsersForNotifications(),
+                $this->usersService->getUsersForNotifications('client-updated'),
                 new ClientUpdatedNotification(
                     $client,
                     auth()->user()

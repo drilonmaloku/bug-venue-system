@@ -3,22 +3,28 @@
 namespace App\Modules\Payments\Services;
 
 use App\Modules\Clients\Models\Client;
+use App\Modules\Payments\Notifications\PaymentsDeletedNotification;
+use App\Modules\Payments\Notifications\PaymentAddedNotification;
 use App\Modules\Payments\Models\Payment;
 use App\Modules\Venues\Models\Venue;
 use Illuminate\Http\Request;
 use App\Modules\Logs\Models\Log;
 use App\Modules\Logs\Services\LogService;
+use App\Modules\Users\Services\UsersService;
 use App\Modules\Reservations\Models\Reservation;
+use Illuminate\Support\Facades\Notification;
 use Illuminate\Support\Carbon;
 use Illuminate\Support\Facades\DB;
 
 class PaymentsService
 {
-    private $logService;
+      private $logService;
+    private $usersService;
 
     public function __construct()
     {
         $this->logService = new LogService();
+        $this->usersService = app()->make(UsersService::class);
     }
 
     /**
@@ -130,6 +136,13 @@ class PaymentsService
                 'context' => Log::LOG_CONTEXT_PAYMENTS,
                 'ttl' => Log::LOG_TTL_THREE_MONTHS,
             ]);
+             Notification::send(
+                 $this->usersService->getUsersForNotifications('payment-added'),
+                 new PaymentAddedNotification(
+                     $payment,
+                     auth()->user()
+                 )
+             );
         }
 
         return $payment;
@@ -177,6 +190,13 @@ class PaymentsService
                 'context' => Log::LOG_CONTEXT_CLIENTS,
                 'ttl' => Log::LOG_TTL_THREE_MONTHS,
             ]);
+            Notification::send(
+                 $this->usersService->getUsersForNotifications('payment-deleted'),
+                 new PaymentsDeletedNotification(
+                     $payment,
+                     auth()->user()
+                 )
+             );
         }
         return $paymentDeleted;
     }

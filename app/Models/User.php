@@ -73,6 +73,36 @@ class User extends Authenticatable
      */
     protected $dates = ['deleted_at']; // Add deleted_at to dates
 
+    public static function defaultNotificationPreferences()
+    {
+        return [
+                'coment-added' => true,
+                'comment-deleted' => true,
+                'discount-added' => true,
+                'discount-updated' => true,
+                'discount-deleted' => true,
+                'invoices-added' => true,
+                'invoices-deleted' => true,
+                'reservation-added' => true,
+                'reservation-deleted' => true,
+                'reservation-updated' => true,
+                'staff-added' => true,
+                'staff-deleted' => true,
+                'payments-added' => true,
+                'payments-deleted' => true,
+                'expenses-added' => true,
+                'expenses-updated' => true,
+                'expenses-deleted' => true,
+                'menu-added' => true,
+                'menu-updated' => true,
+                'menu-deleted' => true,
+                'client-updated' => true,
+                'venue-added' => true,
+                'venue-updated' => true,
+                'venue-deleted' => true,
+        ];
+    }
+
 
     public function expenses()
     {
@@ -141,21 +171,9 @@ class User extends Authenticatable
         return $locationUser ? Location::find($locationUser->location_id)->slug : null;
     }
     
-    public function notificationPreference($key = null, $value = null)
+    public function notificationPreferences()
     {
-        if (is_null($key)) {
-            return $this->preferences;
-        }
-        
-        // If value is provided, update preference
-        if (!is_null($value)) {
-            $preferences = $this->preferences ?? [];
-            $preferences[$key] = $value;
-            $this->preferences = $preferences;
-            $this->save();
-        }
-
-    return $this->belongsTo(NotificationPreference::class);
+        return $this->hasOne(NotificationPreference::class);
     }
 }
     

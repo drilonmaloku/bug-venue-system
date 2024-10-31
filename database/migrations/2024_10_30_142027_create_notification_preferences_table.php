@@ -27,6 +27,18 @@ return new class extends Migration
                 'reservation-updated' => true,
                 'staff-added' => true,
                 'staff-deleted' => true,
+                'payments-added' => true,
+                'payments-deleted' => true,
+                'expenses-added' => true,
+                'expenses-updated' => true,
+                'expenses-deleted' => true,
+                'menu-added' => true,
+                'menu-updated' => true,
+                'menu-deleted' => true,
+                'client-updated' => true,
+                'venue-added' => true,
+                'venue-updated' => true,
+                'venue-deleted' => true,
                 ]));
               $table->timestamps();
         });

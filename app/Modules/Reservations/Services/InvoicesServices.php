@@ -40,7 +40,7 @@ class InvoicesServices
                 'ttl' => Log::LOG_TTL_THREE_MONTHS,
             ]);
               Notification::send(
-                 $this->usersService->getUsersForNotifications(),
+                 $this->usersService->getUsersForNotifications('invoices-added'),
                  new InvoicesAddedNotification(
                      $invoice,
                      auth()->user()
@@ -91,7 +91,7 @@ class InvoicesServices
         ]);
 
         Notification::send(
-            $this->usersService->getUsersForNotifications(),
+            $this->usersService->getUsersForNotifications('invoices-deleted'),
             new InvoicesDeletedNotification(
                 $invoice,
                 auth()->user()

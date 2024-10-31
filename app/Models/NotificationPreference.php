@@ -27,4 +27,5 @@ class NotificationPreference extends Model
     }
     
     use HasFactory;
+    
 }

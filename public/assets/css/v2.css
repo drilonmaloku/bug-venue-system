@@ -82,16 +82,20 @@
     background: none;
 }
 
-.archive {
+.externalnotifications {
     display: flex;
-    justify-content: flex-end;
+    justify-content: space-between;
     align-items: center;
+}
+
+.externalnotifications a {
     color: black;
     font-weight: 700;
     font-size: 20px !important;
     margin-bottom: 10px;
 }
-.archive:hover {
+
+.externalnotifications a:hover {
     text-decoration: none;
 }
 
@@ -158,4 +162,22 @@
     top: 50% !important;
     transform: translateY(-50%) !important;
     right: 8px !important;
+}
+
+.notifications_preferences label {
+    display: flex;
+    width: 20%;
+    align-items: center;
+    justify-content: center;
+    border-radius: 6px;
+
+    border: 1px solid #0171c2;
+}
+
+.notifications_preferences button {
+    background-color: #0171c2;
+    width: 20%;
+    color: white;
+    border-radius: 6px;
+    padding: 10px;
 }

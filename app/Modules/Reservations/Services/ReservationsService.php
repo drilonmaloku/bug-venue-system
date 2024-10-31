@@ -135,7 +135,7 @@ class ReservationsService
                 'ttl'=> Log::LOG_TTL_THREE_MONTHS,
             ]);
              Notification::send(
-                 $this->usersService->getUsersForNotifications(),
+                 $this->usersService->getUsersForNotifications('reservation-added'),
                  new ReservationAddedNotification(
                      $reservation,
                      auth()->user()
@@ -186,7 +186,7 @@ class ReservationsService
                 'ttl'=> Log::LOG_TTL_THREE_MONTHS,
             ]);
             Notification::send(
-                 $this->usersService->getUsersForNotifications(),
+                 $this->usersService->getUsersForNotifications('reservation-updated'),
                  new ReservationUpdatedNotification(
                      $reservation,
                      auth()->user()
@@ -232,7 +232,7 @@ class ReservationsService
                'ttl'=> Log::LOG_TTL_THREE_MONTHS,
            ]);
            Notification::send(
-                 $this->usersService->getUsersForNotifications(),
+                 $this->usersService->getUsersForNotifications('reservation-deleted'),
                  new ReservationDeletedNotifiaction(
                      $reservation,
                      auth()->user()

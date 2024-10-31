@@ -72,7 +72,7 @@ class VenuesService
                 'ttl'=> Log::LOG_TTL_THREE_MONTHS,
             ]);
             Notification::send(
-                $this->usersService->getUsersForNotifications(),
+                $this->usersService->getUsersForNotifications('venue-added'),
                 new VenueAddedNotification(
                     $venue,
                     auth()->user()
@@ -99,7 +99,7 @@ class VenuesService
                 'ttl'=> Log::LOG_TTL_THREE_MONTHS,
             ]);
             Notification::send(
-                $this->usersService->getUsersForNotifications(),
+                $this->usersService->getUsersForNotifications('venue-updated'),
                 new VenueUpdatedNotification(
                     $venue,
                     auth()->user()
@@ -128,7 +128,7 @@ class VenuesService
                 'previous_data'=> json_encode($previousData)
             ]);
              Notification::send(
-                 $this->usersService->getUsersForNotifications(),
+                 $this->usersService->getUsersForNotifications('venue-deleted'),
                  new VenueDeletedNotification(
                      $venue,
                      auth()->user()

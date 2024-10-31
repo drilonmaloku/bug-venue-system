@@ -53,7 +53,7 @@ class ReservationStaffServices
 
     if ($staff) {
         Notification::send(
-            $this->usersService->getUsersForNotifications(),
+            $this->usersService->getUsersForNotifications('staff-added'),
             new StaffAddedNotification(
                 $staff,
                 auth()->user()
@@ -71,7 +71,7 @@ public function deleteStaff(ReservationStaff $staff)
 
     if ($staffDeleted) {
         Notification::send(
-            $this->usersService->getUsersForNotifications(),
+            $this->usersService->getUsersForNotifications('staff-deleted'),
             new StaffDeletedNotification(
                 $staff,   
                 auth()->user()

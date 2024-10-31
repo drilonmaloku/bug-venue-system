@@ -49,7 +49,7 @@ private $clientService;
                 'ttl' => Log::LOG_TTL_THREE_MONTHS,
             ]);
               Notification::send(
-                 $this->usersService->getUsersForNotifications(),
+                 $this->usersService->getUsersForNotifications('discount-added'),
                  new DiscountAddedNotification(
                      $discount,
                      auth()->user()
@@ -77,7 +77,7 @@ private $clientService;
                 'updated_data' => json_encode($discount)
             ]);
             Notification::send(
-                 $this->usersService->getUsersForNotifications(),
+                 $this->usersService->getUsersForNotifications('discount-updated'),
                  new DiscountUpdatedNotification(
                      $discount,
                      auth()->user()
@@ -102,7 +102,7 @@ private $clientService;
                 'previous_data' => json_encode($previousData),
             ]);
              Notification::send(
-                 $this->usersService->getUsersForNotifications(),
+                 $this->usersService->getUsersForNotifications('discount-deleted'),
                  new DiscountDeletedNotification(
                      $discount,
                      auth()->user()

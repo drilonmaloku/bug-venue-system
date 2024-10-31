@@ -90,7 +90,7 @@ class MenuService
                 'ttl'=> Log::LOG_TTL_THREE_MONTHS,
             ]);
             Notification::send(
-                $this->usersService->getUsersForNotifications(),
+                $this->usersService->getUsersForNotifications('menu-added'),
                 new MenuAddedNotification(
                     $menu,
                     auth()->user()
@@ -119,7 +119,7 @@ class MenuService
             ]);
 
             Notification::send(
-                $this->usersService->getUsersForNotifications(),
+                $this->usersService->getUsersForNotifications('menu-updated'),
                 new MenuUpdatedNotification(
                     $menu,
                     auth()->user()
@@ -146,7 +146,7 @@ class MenuService
                 'previous_data' => json_encode($previousData)
             ]);
              Notification::send(
-                 $this->usersService->getUsersForNotifications(),
+                 $this->usersService->getUsersForNotifications('menu-deleted'),
                  new MenuDeletedNotification(
                      $menu,
                      auth()->user()
