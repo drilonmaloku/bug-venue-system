@@ -92,6 +92,18 @@
                                 </select>
                             </div>
                         </div>
+                           <div class="col-md-6">
+                                <div class="form-group">
+                                    <label for="example-text-input" class="form-control-label">Selekto Dekorin</label>
+                                    <select id="menuId" class="bug-text-input" name="decor_id">
+                                        <option value="">Selekto Dekorin</option>
+                                        @foreach($decors as $decor)
+                                            <option  value="{{$decor->id}}">{{$decor->name}}</option>
+                                        @endforeach
+                                    </select>
+                                </div>
+                            </div>
+
                         <div class="col-md-6">
                             <div class="form-group">
                                 <label for="example-text-input" class="form-control-label">{{__('reservations.edit.staff_expenses')}}*</label>

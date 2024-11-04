@@ -124,6 +124,12 @@
                             <td>{{__('reservations.table.manager')}}:</td>
                             <td>{{ $reservation->user ? $reservation->user->username : '' }}</td>
                         </tr>
+                             <tr>
+                            <td>{{__('reservations.table.decor')}}:</td>
+                          <td>{{ $reservation->decor ? $reservation->decor->name : '' }}</td>
+                        </tr>
+
+                       
                     </tbody>
                 </table>
             </div>

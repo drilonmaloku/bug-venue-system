@@ -24,7 +24,7 @@
     "dashboard.profile": "Profili",
     "dashboard.settings": "Settings",
     "dashboard.contract": "Kontrata",
-
+    "dashboard.decors": "Dekoret",
     "clients.main.title": "Klientat",
     "clients.forms.update_title": "Përditso Klientin",
     "clients.filter.search": "Search",
@@ -226,7 +226,7 @@
     "reservations.table.staff_expenses": "Shpenzimet e Stafit",
     "reservations.table.manager": "Menagjeri",
     "reservations.no_create_option": "Duhet të krijoni një Sallë dhe një Menu për të vazhduar me krijimin e rezervimeve",
-
+    "reservations.table.decor": "Dekori",
     "reservations.table.not_found_with_search": "Nuk ka rezervime sipas search",
     "reservations.table.not_found_without_search": "Nuk ka rezervime momentalisht",
 
@@ -264,6 +264,7 @@
     "reservations.edit.menu_price": "Qmimi i Menus",
     "reservations.edit.notes": "Shënime",
     "reservations.edit.select_manager": "Selekto Menagjerin",
+    "reservations.edit.select_decor": "Selekto Dekorin",
     "reservations.edit.staff_expenses": "Shpenzimet e Stafit",
     "reservations.edit.total": "Totali",
     "reservations.edit.client.information": "Informatat mbi klientin",

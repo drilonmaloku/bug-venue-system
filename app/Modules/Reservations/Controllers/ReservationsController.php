@@ -17,6 +17,7 @@ use Illuminate\Support\Carbon;
 use Inertia\Inertia;
 use Maatwebsite\Excel\Facades\Excel;
 use App\Http\Controllers\Controller;
+use App\Modules\Decors\Services\DecorService;
 use App\Modules\Reservations\Exports\ReservationsExport;
 use App\Modules\Reservations\Models\ReservationComment;
 use App\Modules\Reservations\Models\ReservationStaff;
@@ -43,6 +44,7 @@ class ReservationsController extends Controller
     private $userService;
     private $discountService;
     private $staffServices;
+    private $decorService;
 
 
 
@@ -56,7 +58,8 @@ class ReservationsController extends Controller
         ReservationStaffServices $staffServices,
         UsersService $userService,
         InvoicesServices $invoiceService,
-        DiscountReservationsServices $discountService
+        DiscountReservationsServices $discountService,
+        DecorService $decorService
     ) {
         $this->venuesService = $venuesService;
         $this->reservationsService = $reservationsService;
@@ -68,6 +71,7 @@ class ReservationsController extends Controller
         $this->invoiceService = $invoiceService;
         $this->discountService = $discountService;
         $this->staffServices = $staffServices;
+        $this->decorService = $decorService;
 
     }
 
@@ -84,6 +88,7 @@ class ReservationsController extends Controller
             'is_on_search' => count($request->all()),
             'venues' => $this->venuesService->getVenues(),
             'menus' => $this->menuService->getAll(request(), false),
+            'decors' => $this->decorService->getAll(request(), false),
         ]);
     }
 
@@ -94,6 +99,7 @@ class ReservationsController extends Controller
             'menus' => $this->menuService->getAll(request(), false),
             'users' => $this->userService->getAll(request(), false),
             'clients' => $this->clientsService->getAll(request(), false),
+            'decors' => $this->decorService->getAll(request(), false),
         ]);
     }
 
@@ -229,6 +235,7 @@ class ReservationsController extends Controller
             'users' => $this->userService->getAll(request(), true),
             'venues' => $this->venuesService->getVenues(),
             'menus' => $this->menuService->getAll(request(), false),
+            'decors' => $this->decorService->getAll(request(), false),
 
         ]);
     }

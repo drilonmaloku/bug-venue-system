@@ -24,7 +24,7 @@
     "dashboard.profile": "Profile",
     "dashboard.settings": "Settings",
     "dashboard.contract": "Contract",
-
+    "dashboard.decors": "Decors",
     "clients.main.title": "Clients",
     "clients.forms.update_title": "Update Client",
     "clients.filter.search": "Search",
@@ -218,7 +218,7 @@
     "reservations.table.staff_expenses": "Staff Expenses",
     "reservations.table.manager": "Manager",
     "reservations.no_create_option": "You must at least create a Venue and a Menu in order to create Reservations",
-
+    "reservations.table.decor": "Decor",
     "reservations.table.not_found_with_search": "No reservations found with search",
     "reservations.table.not_found_without_search": "No reservations available at the moment",
 
@@ -256,6 +256,7 @@
     "reservations.edit.menu_price": "Menu Price",
     "reservations.edit.notes": "Notes",
     "reservations.edit.select_manager": "Select Manager",
+    "reservations.edit.select_decor": "Select Decor",
     "reservations.edit.staff_expenses": "Staff Expenses",
     "reservations.edit.total": "Total",
     "reservations.edit.client.information": "Client Information",

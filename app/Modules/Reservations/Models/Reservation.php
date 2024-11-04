@@ -4,6 +4,7 @@ namespace App\Modules\Reservations\Models;
 
 use App\Models\User;
 use App\Modules\Clients\Models\Client;
+use App\Modules\Decors\Models\Decor;
 use App\Modules\Menus\Models\Menu;
 use App\Modules\Payments\Models\Payment;
 use App\Modules\Venues\Models\Venue;
@@ -108,6 +109,10 @@ class Reservation extends Model
     public function user()
     {
         return $this->belongsTo(User::class,'menager_id');
+    }
+       public function decor()
+    {
+        return $this->belongsTo(Decor::class,'decor_id');
     }
 
     // Calculate total amount of invoices

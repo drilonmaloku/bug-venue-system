@@ -118,6 +118,7 @@ class ReservationsService
             "venue_id" => $venueData[0],
             "menu_id" => $request->input("menu_id"),
             "menager_id" => $request->input("menager_id"),
+            "decor_id" => $request->input("decor_id"),
             "menu_price" => $request->input("menu_price"),
             "reservation_type" => $venueData[1],
             "date" => $date,
@@ -156,6 +157,7 @@ class ReservationsService
         $reservation->number_of_guests = $request->input('number_of_guests');
         $reservation->menu_price = $request->input('menu_price');
         $reservation->menager_id = $request->input('menager_id');
+        $reservation->decor_id = $request->input('decor_id');
         $reservation->staff_expenses = $request->input('staff_expenses');
         $reservation->date = $request->input('date');
         $reservation->description = $request->input('description');
