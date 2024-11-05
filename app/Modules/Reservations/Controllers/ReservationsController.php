@@ -23,6 +23,7 @@ use App\Modules\Reservations\Models\ReservationComment;
 use App\Modules\Reservations\Models\ReservationStaff;
 use App\Modules\Reservations\Resources\ReservationListCommentResource;
 use App\Modules\Reservations\Services\DiscountReservationsServices;
+use App\Modules\Reservations\Services\ReservationCollaboratorServices;
 use App\Modules\Reservations\Services\ReservationCommentServices;
 use App\Modules\Reservations\Services\ReservationStaffServices;
 use App\Modules\Users\Services\UsersService;
@@ -45,7 +46,7 @@ class ReservationsController extends Controller
     private $discountService;
     private $staffServices;
     private $decorService;
-
+    private $reservationCollaboratorService;
 
 
     public function __construct(
@@ -59,7 +60,10 @@ class ReservationsController extends Controller
         UsersService $userService,
         InvoicesServices $invoiceService,
         DiscountReservationsServices $discountService,
-        DecorService $decorService
+        DecorService $decorService,
+        ReservationCollaboratorServices $reservationCollaboratorService,
+
+        
     ) {
         $this->venuesService = $venuesService;
         $this->reservationsService = $reservationsService;
@@ -72,6 +76,8 @@ class ReservationsController extends Controller
         $this->discountService = $discountService;
         $this->staffServices = $staffServices;
         $this->decorService = $decorService;
+        $this->reservationCollaboratorService = $reservationCollaboratorService;
+
 
     }
 
@@ -89,6 +95,7 @@ class ReservationsController extends Controller
             'venues' => $this->venuesService->getVenues(),
             'menus' => $this->menuService->getAll(request(), false),
             'decors' => $this->decorService->getAll(request(), false),
+            'collaborators' => $this->reservationCollaboratorService->getAll(request(), false),
         ]);
     }
 
@@ -100,6 +107,8 @@ class ReservationsController extends Controller
             'users' => $this->userService->getAll(request(), false),
             'clients' => $this->clientsService->getAll(request(), false),
             'decors' => $this->decorService->getAll(request(), false),
+            'collaborators' => $this->reservationCollaboratorService->getAll(request(), false),
+
         ]);
     }
 
@@ -186,7 +195,8 @@ class ReservationsController extends Controller
             'totalInvoiceAmount'=>$totalInvoiceAmount,
             'totalAmount'=>$totalAmount,
             'users' => $this->userService->getStaffUsers(),
-            'contract' => $this->reservationsService->generateReservationContract($reservation,$contractContent['contract'])
+            'contract' => $this->reservationsService->generateReservationContract($reservation,$contractContent['contract']),
+            'collaborators' => $this->reservationCollaboratorService->getAll(),
         ]);
     }
 
@@ -236,6 +246,7 @@ class ReservationsController extends Controller
             'venues' => $this->venuesService->getVenues(),
             'menus' => $this->menuService->getAll(request(), false),
             'decors' => $this->decorService->getAll(request(), false),
+            'collaborators' =>  $this->reservationCollaboratorService->getAll(request(), false),
 
         ]);
     }

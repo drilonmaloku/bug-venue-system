@@ -461,6 +461,45 @@
             @endif
         </div>
     </div>
+    <div class="vms_panel">
+    <div class="d-flex align-items-center justify-content-between">
+        <h5>Collaborators</h5>
+        <a class="btn hubers-btn" data-toggle="modal" data-target="#">Add Collaborator</a>
+    </div>
+    <div>
+        @if ($reservation->collaborators->isNotEmpty())
+            <table class="hubers-table mt-4">
+                <thead>
+                    <tr>
+                        <th>Name</th>
+                        <th width="60"></th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach ($reservation->collaborators as $collaborator)
+                        <tr>
+                            <td>{{ $collaborator->name }}</td>
+                            <td>
+                                <div class="hubers-item-options mt-3">
+                                    <form action="{{ route('reservations.collaborator.delete', $collaborator->id) }}" method="POST">
+                                        @csrf
+                                        @method('DELETE')
+                                        <button class="btn btn-danger btn-sm" type="submit"><i class="fa fa-trash"></i></button>
+                                    </form>
+                                </div>
+                            </td>
+                        </tr>
+                    @endforeach
+                </tbody>
+            </table>
+        @else
+            <div class="hubers-empty-tab">
+                <h5 class="text-center">No Collaborators</h5>
+            </div>
+        @endif
+    </div>
+</div>
+
     <div class="modal fade" id="reservationModal" tabindex="-1" role="dialog" aria-labelledby="reservationModalLabel" aria-hidden="true">
         <div class="modal-dialog" role="document">
             <div class="modal-content">
@@ -678,6 +717,7 @@
             </div>
         </div>
     </div>
+     
     <div class="modal fade" id="deleteReservation" tabindex="-1" role="dialog"
          aria-labelledby="reservationModalLabel" aria-hidden="true">
         <div class="modal-dialog" role="document">

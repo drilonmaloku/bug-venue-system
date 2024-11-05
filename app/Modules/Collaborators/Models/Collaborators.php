@@ -2,6 +2,7 @@
 
 namespace App\Modules\Collaborators\Models;
 
+use App\Modules\Reservations\Models\Reservation;
 use App\Scopes\CurrentLocationScope;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
@@ -22,5 +23,10 @@ class Collaborators extends Model
     protected static function booted()
     {
         static::addGlobalScope(new CurrentLocationScope);
+    }
+ 
+    public function reservations()
+    {
+        return $this->belongsToMany(Reservation::class, 'collaborator_reservation', 'collaborator_id', 'reservation_id');
     }
 }

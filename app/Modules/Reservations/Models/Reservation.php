@@ -4,6 +4,7 @@ namespace App\Modules\Reservations\Models;
 
 use App\Models\User;
 use App\Modules\Clients\Models\Client;
+use App\Modules\Collaborators\Models\Collaborators;
 use App\Modules\Decors\Models\Decor;
 use App\Modules\Menus\Models\Menu;
 use App\Modules\Payments\Models\Payment;
@@ -114,6 +115,13 @@ class Reservation extends Model
     {
         return $this->belongsTo(Decor::class,'decor_id');
     }
+ 
+    public function collaborators()
+    {
+        return $this->belongsToMany(Collaborators::class, 'collaborator_reservation', 'reservation_id', 'collaborator_id');
+    }
+
+
 
     // Calculate total amount of invoices
     public function getTotalInvoiceAmountAttribute()

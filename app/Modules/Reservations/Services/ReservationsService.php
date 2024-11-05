@@ -119,6 +119,7 @@ class ReservationsService
             "menu_id" => $request->input("menu_id"),
             "menager_id" => $request->input("menager_id"),
             "decor_id" => $request->input("decor_id"),
+            "collaborator_id" => $request->input("collaborator_id"),
             "menu_price" => $request->input("menu_price"),
             "reservation_type" => $venueData[1],
             "date" => $date,
