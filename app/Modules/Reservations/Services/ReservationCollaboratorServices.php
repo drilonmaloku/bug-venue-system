@@ -41,13 +41,13 @@ class ReservationCollaboratorServices
         return ReservationCollaborator::whereIn('id', $ids)->get();
     }
 
-  public function addMember($reservation, $request) 
-{
-    $collaborator = ReservationCollaborator::create([
-        "user_id" => $request->input('user_id'),
-        "reservation_id" => $reservation,
-    ]);
-
+    public function addCollaborator($reservation, $request) 
+    {
+  $collaborator = ReservationCollaborator::create([
+    "collaborator_id" => $request->input('collaborator_id'),
+    "reservation_id" => $reservation,
+  ]);
+    
     return $collaborator;
 }
 

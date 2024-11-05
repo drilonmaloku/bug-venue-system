@@ -119,7 +119,6 @@ class ReservationsService
             "menu_id" => $request->input("menu_id"),
             "menager_id" => $request->input("menager_id"),
             "decor_id" => $request->input("decor_id"),
-            "collaborator_id" => $request->input("collaborator_id"),
             "menu_price" => $request->input("menu_price"),
             "reservation_type" => $venueData[1],
             "date" => $date,
@@ -159,11 +158,11 @@ class ReservationsService
         $reservation->menu_price = $request->input('menu_price');
         $reservation->menager_id = $request->input('menager_id');
         $reservation->decor_id = $request->input('decor_id');
+        $reservation->collaborator_id = $request->input('collaborator_id');
         $reservation->staff_expenses = $request->input('staff_expenses');
         $reservation->date = $request->input('date');
         $reservation->description = $request->input('description');
         $reservation->menu_contents = $request->input('menu_contents');
-
 
         $client = $this->clientService->getByID($reservation->client->id);
         $this->clientService->update($request, $client);

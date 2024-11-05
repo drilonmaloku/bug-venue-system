@@ -29,4 +29,6 @@ class Collaborators extends Model
     {
         return $this->belongsToMany(Reservation::class, 'collaborator_reservation', 'collaborator_id', 'reservation_id');
     }
+
+
 }

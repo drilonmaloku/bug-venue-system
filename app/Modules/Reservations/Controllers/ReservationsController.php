@@ -735,6 +735,19 @@ class ReservationsController extends Controller
     }
 }
 
+ public function addCollaborator($reservation, Request $request)
+{
+    try {
+        $member = $this->reservationCollaboratorService->addCollaborator($reservation,$request);
+        return redirect()->back()->with('success', 'Bashkpuntori eshte shtuar me sukses');
+
+    } catch (\Exception $e) {
+        \Log::error('Error adding collaborator: ' . $e->getMessage());
+
+        return redirect()->back()->withErrors(['message' => 'Internal Server Error']);
+    }
+}
+
 
    public function deleteStaff($id)
     {

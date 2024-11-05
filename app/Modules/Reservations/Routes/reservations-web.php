@@ -3,6 +3,8 @@
 declare(strict_types=1);
 
 use App\Modules\Reservations\Controllers\ReservationsController;
+use App\Modules\Reservations\Models\ReservationCollaborator;
+use App\Modules\Reservations\Services\ReservationCollaboratorServices;
 use Illuminate\Support\Facades\Route;
 
 
@@ -43,7 +45,6 @@ Route::group(['middleware' => 'auth'], function () {
     Route::post('/reservations/{reservationId}/add-member', [ReservationsController::class, 'addMember'])->name('reservations.addMember');
     Route::delete('/reservations/staff/{id}', [ReservationsController::class, 'deleteStaff'])->name('reservations.staff.delete');
 
-
-
+    Route::post('/reservations/{reservationId}/add-collaborator', [ReservationsController::class, 'addCollaborator'])->name('reservations.addCollaborator');
 });
 
