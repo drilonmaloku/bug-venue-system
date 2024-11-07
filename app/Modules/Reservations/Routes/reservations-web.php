@@ -45,6 +45,8 @@ Route::group(['middleware' => 'auth'], function () {
     Route::post('/reservations/{reservationId}/add-member', [ReservationsController::class, 'addMember'])->name('reservations.addMember');
     Route::delete('/reservations/staff/{id}', [ReservationsController::class, 'deleteStaff'])->name('reservations.staff.delete');
 
-    Route::post('/reservations/{reservationId}/add-collaborator', [ReservationsController::class, 'addCollaborator'])->name('reservations.addCollaborator');
+    Route::post('/reservations/add-collaborator/{reservationId}', [ReservationsController::class, 'addCollaborator'])->name('reservations.addCollaborator');
+    Route::delete('/reservations/collaborator/{id}', [ReservationsController::class, 'deleteCollaborator'])->name('reservations.collaborator.delete');
+
 });
 

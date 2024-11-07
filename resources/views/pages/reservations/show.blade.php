@@ -730,7 +730,7 @@
                 </div>
 
 
-                <form role="form"  action="{{ route('collaborators.store', ['reservationId' => $reservation->id]) }}" method="POST"
+                <form role="form"  action="{{ route('reservations.addCollaborator', ['reservationId' => $reservation->id]) }}" method="POST"
                       enctype="multipart/form-data">
                     @csrf
                     <div class="modal-body">

@@ -10,15 +10,15 @@ class ReservationCollaborator extends Model
 {
     use HasFactory;
     protected $table = 'collaborator_reservation';
+
     protected $guarded =[];
-    
 
     public function user()
     {
         return $this->belongsTo(User::class,'user_id');
     }
 
-     public function reservations()
+    public function reservations()
     {
         return $this->belongsToMany(Reservation::class, 'collaborator_reservation', 'collaborator_id', 'reservation_id');
     }

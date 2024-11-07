@@ -21,22 +21,9 @@ class CollaboratorsService
     /**
      * Gets the list of collaborators with optional pagination.
      */
-    public function getAll(Request $request, $paginated = true)
+       public function getAll()
     {
-        $perPage = $request->input('per_page', 10);
-        $query = Collaborators::query();
-
-        if ($request->has("search") && !empty($request->input("search"))) {
-            $searchTerm = '%' . $request->input("search") . '%';
-            $query->where(function ($subquery) use ($searchTerm) {
-                $subquery->where('name', 'LIKE', $searchTerm)
-                         ->orWhere('typeof', 'LIKE', $searchTerm);
-            });
-        }
-
-        $query->orderBy('updated_at', 'desc');
-
-         return $paginated ? $query->paginate($perPage) : $query->get();
+        return Collaborators::all();
     }
 
     /**
@@ -70,25 +57,32 @@ class CollaboratorsService
     public function store(Request $request)
     {
       
+    $validatedData = $request->validate([
+        'name' => 'required|string|max:255',
+        'email' => 'nullable|email',
+        'phone_number' => 'nullable|string|max:20',
+        'typeof' => 'nullable|string',
+    ]);
 
-        $collaborator = Collaborators::create([
-            "location_id" => auth()->user()->getCurrentLocationId(),
-            "name" => $request->input('name'),
-            "email" => $request->input('email'),
-            "phone_number" => $request->input('phone_number'),
-            "typeof" =>$request->input('typeof'),
+    // If validation passes, proceed with creation
+    $collaborator = Collaborators::create([
+        "location_id" => auth()->user()->getCurrentLocationId(),
+        "name" => $validatedData['name'],
+        "email" => $validatedData['email'],
+        "phone_number" => $validatedData['phone_number'],
+        "typeof" => $validatedData['typeof'],
+    ]);
+
+    if ($collaborator) {
+        $this->logService->log([
+            'message' => 'Bashkpuntori është krijuar me sukses',
+            'context' => Log::LOG_CONTEXT_CLIENTS,
+            'ttl' => Log::LOG_TTL_THREE_MONTHS,
         ]);
-
-        if ($collaborator) {
-            $this->logService->log([
-                'message' => 'Bashkpuntori është krijuar me sukses',
-                'context' => Log::LOG_CONTEXT_CLIENTS,
-                'ttl' => Log::LOG_TTL_THREE_MONTHS,
-            ]);
-        }
-
-        return $collaborator;
     }
+
+    return $collaborator;
+}
 
     /**
      * Updates existing collaborator.
