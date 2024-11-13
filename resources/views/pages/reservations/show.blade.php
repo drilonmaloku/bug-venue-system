@@ -93,7 +93,7 @@
                             <td>{{ $reservation->number_of_guests * $reservation->menu_price }}</td>
                         </tr>
                         <tr>
-                            <td>{{__('reservations.table.menu_price')}}:</td>
+                            <td>{{__('reservations.table.menu')}}:</td>
                             <td>{{ $reservation->menu_contents }}</td>
                         </tr>
                         <tr>

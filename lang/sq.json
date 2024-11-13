@@ -218,6 +218,7 @@
     "reservations.table.general_information": "Informatat Gjenerale",
     "reservations.table.price_information": "Informatat E qmimit",
     "reservations.table.time": "Koha",
+    "reservations.table.menu": "Menuja",
     "reservations.table.menu_price": "Qmimi i Menus",
     "reservations.table.menu_total_price": "Qmimi total per Menu",
     "reservations.table.current_payment": "Pagesa E Kryer",
