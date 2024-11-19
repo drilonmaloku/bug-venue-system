@@ -17,11 +17,16 @@ use Illuminate\Support\Carbon;
 use Inertia\Inertia;
 use Maatwebsite\Excel\Facades\Excel;
 use App\Http\Controllers\Controller;
+use App\Modules\Collaborators\Services\CollaboratorsService;
+use App\Modules\Decors\Services\DecorService;
 use App\Modules\Reservations\Exports\ReservationsExport;
+use App\Modules\Reservations\Models\ReservationCollaborator;
 use App\Modules\Reservations\Models\ReservationComment;
 use App\Modules\Reservations\Models\ReservationStaff;
 use App\Modules\Reservations\Resources\ReservationListCommentResource;
 use App\Modules\Reservations\Services\DiscountReservationsServices;
+use App\Modules\Reservations\Services\collaboratorServices;
+use App\Modules\Reservations\Services\ReservationCollaboratorServices;
 use App\Modules\Reservations\Services\ReservationCommentServices;
 use App\Modules\Reservations\Services\ReservationStaffServices;
 use App\Modules\Users\Services\UsersService;
@@ -43,8 +48,9 @@ class ReservationsController extends Controller
     private $userService;
     private $discountService;
     private $staffServices;
-
-
+    private $decorService;
+    private $collaboratorService;
+    private $reservationcollaboratorService;
 
     public function __construct(
         VenuesService $venuesService,
@@ -56,7 +62,13 @@ class ReservationsController extends Controller
         ReservationStaffServices $staffServices,
         UsersService $userService,
         InvoicesServices $invoiceService,
-        DiscountReservationsServices $discountService
+        DiscountReservationsServices $discountService,
+        DecorService $decorService,
+        CollaboratorsService $collaboratorService,
+        ReservationCollaboratorServices $reservationcollaboratorService,
+
+
+        
     ) {
         $this->venuesService = $venuesService;
         $this->reservationsService = $reservationsService;
@@ -68,6 +80,11 @@ class ReservationsController extends Controller
         $this->invoiceService = $invoiceService;
         $this->discountService = $discountService;
         $this->staffServices = $staffServices;
+        $this->decorService = $decorService;
+        $this->collaboratorService = $collaboratorService;
+        $this->reservationcollaboratorService = $reservationcollaboratorService;
+
+
 
     }
 
@@ -84,6 +101,8 @@ class ReservationsController extends Controller
             'is_on_search' => count($request->all()),
             'venues' => $this->venuesService->getVenues(),
             'menus' => $this->menuService->getAll(request(), false),
+            'decors' => $this->decorService->getAll(request(), false),
+            'collaborators' => $this->collaboratorService->getAll(request(), false),
         ]);
     }
 
@@ -94,6 +113,9 @@ class ReservationsController extends Controller
             'menus' => $this->menuService->getAll(request(), false),
             'users' => $this->userService->getAll(request(), false),
             'clients' => $this->clientsService->getAll(request(), false),
+            'decors' => $this->decorService->getAll(request(), false),
+            'collaborators' => $this->collaboratorService->getAll(request(), false),
+
         ]);
     }
 
@@ -165,7 +187,7 @@ class ReservationsController extends Controller
         if (is_null($reservation)) {
             return abort(404);
         }
-
+     
 //        Inertia::setRootView('pages.reservations.show-inertia');
 //        return Inertia::render('Reservation', [
 //            'reservation' => $reservation,
@@ -180,7 +202,8 @@ class ReservationsController extends Controller
             'totalInvoiceAmount'=>$totalInvoiceAmount,
             'totalAmount'=>$totalAmount,
             'users' => $this->userService->getStaffUsers(),
-            'contract' => $this->reservationsService->generateReservationContract($reservation,$contractContent['contract'])
+            'contract' => $this->reservationsService->generateReservationContract($reservation,$contractContent['contract']),
+            'collaborators' => $this->collaboratorService->getAll(),
         ]);
     }
 
@@ -229,6 +252,8 @@ class ReservationsController extends Controller
             'users' => $this->userService->getAll(request(), true),
             'venues' => $this->venuesService->getVenues(),
             'menus' => $this->menuService->getAll(request(), false),
+            'decors' => $this->decorService->getAll(request(), false),
+            'collaborators' =>  $this->collaboratorService->getAll(request(), false),
 
         ]);
     }
@@ -716,6 +741,37 @@ class ReservationsController extends Controller
         return redirect()->back()->withErrors(['message' => 'Internal Server Error']);
     }
 }
+
+    public function addCollaborator($reservation, Request $request)
+    {
+   
+    try {
+        $collaborator = $this->reservationcollaboratorService->addCollaborator($reservation,$request);
+      
+        return redirect()->back()->with('success', 'Bashkpuntori eshte shtuar me sukses');
+
+    } catch (\Exception $e) {
+        \Log::error('Error adding collaborator: ' . $e->getMessage());
+
+        return redirect()->back()->withErrors(['message' => 'Internal Server Error']);
+    }
+}
+       public function deleteCollaborator($id)
+    {
+        // TODO Improve Code 
+        $collaborator = ReservationCollaborator::find($id);
+
+        if (is_null($collaborator)) {
+            return response()->json(['message' => 'Collaborator Not Found'], JsonResponse::HTTP_NOT_FOUND);
+        }
+
+        $this->reservationcollaboratorService->deleteCollaborator($collaborator);
+        return redirect()->back()->withSuccessMessage('Bashkpuntori eshte fshire me sukses');
+        try {
+        } catch (\Exception $e) {
+            return response()->json(['message' => 'Internal Server Error'], JsonResponse::HTTP_INTERNAL_SERVER_ERROR);
+        }
+    }
 
 
    public function deleteStaff($id)

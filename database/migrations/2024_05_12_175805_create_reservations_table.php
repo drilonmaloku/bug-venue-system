@@ -27,6 +27,7 @@ return new class extends Migration
             $table->double('total_payment')->nullable();
             $table->double('staff_expenses')->nullable();
             $table->unsignedBigInteger('location_id');
+            $table->unsignedBigInteger('decor_id')->nullable();
 
 
             $table->timestamps();
@@ -41,9 +42,14 @@ return new class extends Migration
                 ->on('clients')
                 ->onDelete("cascade");
                 
-                $table->foreign('menager_id')
+            $table->foreign('menager_id')
                 ->references('id')
                 ->on('users')
+                ->onDelete("cascade");
+                
+            $table->foreign('decor_id')
+                ->references('id')
+                ->on('decors')
                 ->onDelete("cascade");
 
             $table->foreign('menu_id')
