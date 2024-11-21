@@ -12,7 +12,7 @@ class ReservationExportResource extends JsonResource
         return [
             "venue_id"                       => $this->venue ? $this->venue->name : '',
             "client_id"                      => $this->client ? $this->client->name : '',
-            "menager_id"                     => $this->user ? $this->user->first_name : '',
+            "manager_id"                     => $this->user ? $this->user->first_name : '',
             "menu_id"                        => $this->menu ? $this->menu->name : '',
             "menu_price"                     => $this->menu_price,
             "date"                           => $this->date,

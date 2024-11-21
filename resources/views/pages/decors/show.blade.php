@@ -26,18 +26,18 @@
                     </tr>
                     </thead>
                     <tbody>
-                    <tr>
-                        <td>Emri</td>
-                        <td>{{ $decor->name }}</td>
-                    </tr>
-                    <tr>
-                        <td>Foto</td>
-                        <td>{{ $decor->image }}</td>
-                    </tr>
-                    <tr>
-                        <td>Pershkrimi</td>
-                        <td>{{ $decor->description }}</td>
-                    </tr>
+                        <tr>
+                            <td>Emri</td>
+                            <td>{{ $decor->name }}</td>
+                        </tr>
+                        <tr>
+                            <td>Pershkrimi</td>
+                            <td>{{ $decor->description }}</td>
+                        </tr>
+                        <tr>
+                            <td>Foto</td>
+                            <td><img style="max-width: 80%" src="{{ $decor->image_url }}" alt=""></td>
+                        </tr>
                     </tbody>
                 </table>
             </div>

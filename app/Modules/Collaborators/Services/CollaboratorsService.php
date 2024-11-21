@@ -7,7 +7,6 @@ use App\Modules\Clients\Models\Client;
 use Illuminate\Http\Request;
 use App\Modules\Logs\Models\Log;
 use App\Modules\Logs\Services\LogService;
-use Illuminate\Support\Facades\Storage;
 
 class CollaboratorsService
 {
@@ -21,7 +20,7 @@ class CollaboratorsService
     /**
      * Gets the list of collaborators with optional pagination.
      */
-       public function getAll()
+   public function getAll()
     {
         return Collaborators::all();
     }
@@ -76,7 +75,7 @@ class CollaboratorsService
     if ($collaborator) {
         $this->logService->log([
             'message' => 'Bashkpuntori është krijuar me sukses',
-            'context' => Log::LOG_CONTEXT_CLIENTS,
+            'context' => Log::LOG_CONTEXT_COLLABORATORS,
             'ttl' => Log::LOG_TTL_THREE_MONTHS,
         ]);
     }
@@ -108,7 +107,7 @@ class CollaboratorsService
         if ($collaboratorUpdated) {
             $this->logService->log([
                 'message' => 'Bashkpuntori është përditësuar me sukses',
-                'context' => Log::LOG_CONTEXT_CLIENTS,
+                'context' => Log::LOG_CONTEXT_COLLABORATORS,
                 'ttl' => Log::LOG_TTL_THREE_MONTHS,
             ]);
         }
@@ -121,15 +120,50 @@ class CollaboratorsService
      */
     public function delete(Collaborators $collaborator)
     {
+        
+        if(count($collaborator->reservations) == 0){
+            return $this->forceDelete($collaborator);
+        }
+
+        return $this->archive($collaborator);
+    }
+
+    /**
+     * Deletes existing collaborator.
+     */
+    public function archive(Collaborators $collaborator)
+    {
         $previousData = $collaborator->attributesToArray();
-   
+
+
+        $collaboratorDeleted = $collaborator->delete();
+
+        if ($collaboratorDeleted) {
+            $this->logService->log([
+                'message' => 'Bashkpuntori është arkivuar me sukses',
+                'context' => Log::LOG_CONTEXT_COLLABORATORS,
+                'ttl' => Log::LOG_TTL_THREE_MONTHS,
+                'previous_data' => json_encode($previousData),
+            ]);
+        }
+
+        return $collaboratorDeleted;
+    }
+
+    /**
+     * Deletes existing collaborator.
+     */
+    public function forceDelete(Collaborators $collaborator)
+    {
+        $previousData = $collaborator->attributesToArray();
+
 
         $collaboratorDeleted = $collaborator->delete();
 
         if ($collaboratorDeleted) {
             $this->logService->log([
                 'message' => 'Bashkpuntori është fshirë me sukses',
-                'context' => Log::LOG_CONTEXT_CLIENTS,
+                'context' => Log::LOG_CONTEXT_COLLABORATORS,
                 'ttl' => Log::LOG_TTL_THREE_MONTHS,
                 'previous_data' => json_encode($previousData),
             ]);

@@ -124,9 +124,16 @@
                             <td>{{__('reservations.table.manager')}}:</td>
                             <td>{{ $reservation->user ? $reservation->user->username : '' }}</td>
                         </tr>
-                             <tr>
+                        <tr>
                             <td>{{__('reservations.table.decor')}}:</td>
-                          <td>{{ $reservation->decor ? $reservation->decor->name : '' }}</td>
+                            <td>
+                                @if ($reservation->decor)
+                                    <a href="{{ route('decors.view', $reservation->decor->id) }}">
+                                        {{ $reservation->decor->name }}
+                                    </a>
+                                @else
+                                @endif
+                            </td>
                         </tr>
 
                        

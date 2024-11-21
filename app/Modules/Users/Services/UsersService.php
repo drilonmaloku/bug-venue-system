@@ -2,7 +2,6 @@
 
 namespace App\Modules\Users\Services;
 
-use App\Models\NotificationPreference;
 use App\Models\User;
 use App\Modules\Logs\Models\Log;
 use App\Modules\Logs\Services\LogService;
@@ -11,7 +10,7 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Storage;
-use Illuminate\Support\Str;
+
 
 class UsersService
 {
@@ -22,21 +21,10 @@ class UsersService
         $this->logService = app()->make(LogService::class);
     }
 
-
-     /**
-     * Get Venues by IDs
-     * @param int|array $id
-     **/
     public function getByIds($ids){
         return User::whereIn('id', $ids)->get();
     }
 
-
-     /**
-     * Retrieve all users with roles of 'admin' or 'super-admin'.
-     *
-     * @return \Illuminate\Database\Eloquent\Collection The collection of users with admin or super-admin roles.
-     */
     public function getAll($request,$withoutPagination = false){
         $query = User::query();
 
@@ -76,12 +64,6 @@ class UsersService
         return $query->paginate(50);
     }
 
-     /**
-     * Retrieve archived users based on the provided request parameters.
-     *
-     * @param Request $request The HTTP request object containing query parameters.
-     * @return \Illuminate\Pagination\LengthAwarePaginator A paginated list of archived users.
-     */
     public function getArchived($request){
 
         $usersQuery = (new User)->query()->onlyTrashed();
@@ -114,12 +96,6 @@ class UsersService
         return $users;
     }
 
-     /**
-     * Retrieve paginated list of users based on the provided request parameters.
-     *
-     * @param Request $request The HTTP request object containing query parameters.
-     * @return \Illuminate\Contracts\Pagination\LengthAwarePaginator
-     */
     public function getPaginated(Request $request){
         $perPage = $request->has('per_page') ? $request->input('per_page') : 50;
         $query = User::query();
@@ -129,13 +105,6 @@ class UsersService
         return $query->orderBy('id', 'desc')->paginate($perPage);
     }
 
-
-    /**
-     * Set the password for a user.
-     *
-     * @param Request $request The HTTP request object containing user ID and new password.
-     * @return void
-     */
     public function setPassword(Request $request)
     {
         $user = (new User)->find(data_get($request, "user"));
@@ -146,33 +115,16 @@ class UsersService
         Auth::login($user);
     }
 
-    /**
-     * Get User by ID
-     * @param bool $id
-     **/
     public function getByID($id,$withTrashed = false){
 
         return $withTrashed ?  User::withTrashed()->find($id) : User::find($id);
     }
 
-    /**
-     * Retrieve multiple users based on the provided IDs.
-     *
-     * @param array $ids An array containing the IDs of the users to retrieve.
-     * @param bool $withTrashed Optional. Whether to include soft-deleted users. Default is false.
-     * @return \Illuminate\Database\Eloquent\Collection A collection of users.
-     */
     public function getMultiple($ids,$withTrashed = false){
 
         return $withTrashed ?  User::withTrashed()->whereIn('id',$ids)->get() : User::whereIn('id',$ids)->get();
     }
 
-    /**
-     * Store a new user based on the provided request data.
-     *
-     * 
-     * @return User|null The newly created user instance, or null if creation fails.
-     */
     public function store($request) {
         $username = auth()->user()->getCurrentLocationId() ? auth()->user()->getCurrentLocationSlug().'_'.$request->input("username") : $request->input("username");
                                     
@@ -196,12 +148,6 @@ class UsersService
         return $user;
     }
 
-    /**
-     * Delete a user and log the action.
-     *
-     * @param User $user The user instance to be deleted.
-     * @return bool True if the user was deleted successfully, otherwise false.
-     */
     public function destroy(User $user)
     {
         $userDeleted = $user->delete();
@@ -218,12 +164,6 @@ class UsersService
         return $userDeleted;
     }
 
-    /**
-     * Reset the password for a user.
-     *
-     * @param array $request The request data containing user ID and new password.
-     * @return bool True if the password was reset successfully, otherwise false.
-     */
     public function resetPassword($request)
     {
         $user = (new User)->find(data_get($request, "user"));
@@ -234,34 +174,16 @@ class UsersService
         return $updatedUser;
     }
 
-    /**
-     * Archive a user by soft-deleting it.
-     *
-     * @param User $user The user instance to be archived.
-     * @return bool True if the user was archived successfully, otherwise false.
-     */
     public function archive($user)
     {
         return $user->delete();
     }
 
-    /**
-     * Restore a soft-deleted user.
-     *
-     * @param \App\Models\User $user The soft-deleted user instance to be restored.
-     * @return bool True if the user was restored successfully, otherwise false.
-     */
     public function restore($user)
     {
         return $user->restore();
     }
 
-    /**
-     * Restore multiple soft-deleted users in bulk.
-     *
-     * @param \Illuminate\Database\Eloquent\Collection $users The collection of soft-deleted user instances to be restored.
-     * @return int The number of users restored.
-     */
     public function restoreBulk($users)
     {
         $userIds = $users->pluck('id')->toArray();
@@ -271,20 +193,11 @@ class UsersService
         return $updatedCount;
     }
 
-    /**
-     * Permanently delete a user from the system.
-     *
-     * @param User $user The user instance to be permanently deleted.
-     * @return bool True if the user was permanently deleted successfully, otherwise false.
-     */
     public function forceDelete($user){
         Storage::deleteDirectory("public/staff-files/user/{$user->id}");
         return $user->forceDelete();
     }
 
-    /**
-     * Updates existing client
-     **/
     public function update($request, User $user) {
         $user->username = $request->input('username');
         $user->first_name = $request->input('first_name');
@@ -305,7 +218,6 @@ class UsersService
 
         return $user;
     }
-
 
     public function updatePassword(Request $request, User $user)
     {
@@ -329,26 +241,23 @@ class UsersService
         })->get();
     }
 
-   public function getUsersForNotifications($notificationKey)
-{
-    $user = auth()->user();
-    $currentLocationId = $user->getCurrentLocationId();
+    public function getUsersForNotifications($notificationKey){
+        $user = auth()->user();
+        $currentLocationId = $user->getCurrentLocationId();
 
-    // Get users at the current location who have the notification preference enabled
-    $users = User::whereHas('locations', function ($query) use ($currentLocationId) {
-        $query->where('locations.id', $currentLocationId);
-    })
-    ->whereHas('notificationPreferences', function ($query) use ($notificationKey) {
-        $query->where('preferences->' . $notificationKey, true);
-    })
-    //->where('id', '!=', $user->id) // Exclude the current user
-    ->get();
+        $users = User::whereHas('locations', function ($query) use ($currentLocationId) {
+            $query->where('locations.id', $currentLocationId);
+        })
+        ->whereHas('notificationPreferences', function ($query) use ($notificationKey) {
+            $query->where('preferences->' . $notificationKey, true);
+        })
+        ->where('id', '!=', $user->id)
+        ->get();
 
-    return $users;
-}
+        return $users;
+    }
 
-      
-     public function updateNotificationPreferences($preferences)
+    public function updateNotificationPreferences($preferences)
     {
         auth()->user()->notificationPreferences()->updateOrCreate(
             ['user_id' => auth()->id()],

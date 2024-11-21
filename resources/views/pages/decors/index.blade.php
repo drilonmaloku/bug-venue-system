@@ -23,7 +23,7 @@
                 <div class="hubers-filter-list-options">
                     <div class="hubers-filter-group">
                         <label>Search:</label>
-                        <input placeholder="Search" class="hubers-text-input white medium" type="text" name="search" value="{{ request('search') }}">
+                        <input placeholder="Search" class="bug-text-input  white medium" type="text" name="search" value="{{ request('search') }}">
                     </div>
                 </div>
                 <div class="hubers-filter-list-actions">
@@ -50,7 +50,7 @@
                                 {{ $decor->name }}
                             </td>
                             <td>
-                                <img src="{{ asset($decor->image) }}" alt="Foto" width="50" height="50">
+                                <img src="{{$decor->image_url }}" alt="Existing Image" style="max-width: 150px; height: auto;">
                             </td>
                             <td>
                                 {{ $decor->description }}

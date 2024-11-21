@@ -13,10 +13,10 @@ return new class extends Migration
     {
         Schema::create('reservations', function (Blueprint $table) {
             $table->id();
-            $table->unsignedBigInteger('venue_id');
+            $table->unsignedBigInteger('venue_id')->nullable();
             $table->unsignedBigInteger('client_id');
-            $table->unsignedBigInteger('menager_id')->nullable();
-            $table->unsignedBigInteger('menu_id');
+            $table->unsignedBigInteger('manager_id')->nullable();
+            $table->unsignedBigInteger('menu_id')->nullable();
             $table->longText('menu_contents')->nullable();
             $table->double('menu_price')->nullable();
             $table->double('number_of_guests')->nullable();
@@ -27,7 +27,6 @@ return new class extends Migration
             $table->double('total_payment')->nullable();
             $table->double('staff_expenses')->nullable();
             $table->unsignedBigInteger('location_id');
-            $table->unsignedBigInteger('decor_id')->nullable();
 
 
             $table->timestamps();
@@ -42,15 +41,11 @@ return new class extends Migration
                 ->on('clients')
                 ->onDelete("cascade");
                 
-            $table->foreign('menager_id')
+            $table->foreign('manager_id')
                 ->references('id')
                 ->on('users')
                 ->onDelete("cascade");
-                
-            $table->foreign('decor_id')
-                ->references('id')
-                ->on('decors')
-                ->onDelete("cascade");
+
 
             $table->foreign('menu_id')
                 ->references('id')

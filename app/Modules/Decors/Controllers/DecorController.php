@@ -50,12 +50,12 @@ class DecorController extends Controller
 
     public function view($id)
     {
-        $decors = $this->decorService->getByID($id);
-        if(is_null($decors)) {
+        $decor = $this->decorService->getByID($id);
+        if(is_null($decor)) {
             return abort(404);
         }
         return view('pages/decors/show',[
-            'decor'=>$decors
+            'decor'=>$decor
         ]);
     }
 

@@ -6,10 +6,12 @@ use App\Modules\Reservations\Models\Reservation;
 use App\Scopes\CurrentLocationScope;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\SoftDeletes;
 
 class Collaborators extends Model
 {
-     use HasFactory;
+     use HasFactory,
+         SoftDeletes;
 
     protected $fillable = [
         'id', 
@@ -29,6 +31,4 @@ class Collaborators extends Model
     {
         return $this->belongsToMany(Reservation::class, 'collaborator_reservation', 'collaborator_id', 'reservation_id');
     }
-
-
 }

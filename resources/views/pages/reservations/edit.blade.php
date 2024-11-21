@@ -84,10 +84,10 @@
                         <div class="col-md-6">
                             <div class="form-group">
                                 <label for="example-text-input" class="form-control-label">{{__('reservations.edit.select_manager')}}*</label>
-                                <select  class="bug-text-input" name="menager_id">
+                                <select  class="bug-text-input" name="manager_id">
                                     <option value="">{{__('reservations.edit.select_manager')}}</option>
                                     @foreach($users as $user)
-                                        <option value="{{ $user->id }}" {{ $user->id == $reservation->menager_id ? 'selected' : '' }}>{{ $user->first_name }}</option>
+                                        <option value="{{ $user->id }}" {{ $user->id == $reservation->manager_id ? 'selected' : '' }}>{{ $user->first_name }}</option>
                                     @endforeach
                                 </select>
                             </div>

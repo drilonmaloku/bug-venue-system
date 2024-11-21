@@ -28,6 +28,19 @@
                                     <input class="bug-text-input" type="text" name="description" value="{{$decor->description}}">
                                 </div>
                             </div>
+                            <div class="col-md-12">
+                                <div class="form-group">
+                                    <label for="example-text-input" class="bug-label">Foto</label>
+                                    @if(!empty($decor->image_url))
+                                        <div>
+                                            <img src="{{$decor->image_url }}" alt="Existing Image" style="max-width: 150px; height: auto;">
+                                        </div>
+                                    @endif
+
+                                    <label for="image">Perditso</label>
+                                    <input class="bug-text-input" type="file" name="image" id="image">
+                                </div>
+                            </div>
                         </div>
                         <button type="submit" class="hubers-btn">Ruaj</button>
 

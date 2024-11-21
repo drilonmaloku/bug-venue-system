@@ -117,7 +117,7 @@ class ReservationsService
             "client_id" => $clientId,
             "venue_id" => $venueData[0],
             "menu_id" => $request->input("menu_id"),
-            "menager_id" => $request->input("menager_id"),
+            "manager_id" => $request->input("manager_id"),
             "decor_id" => $request->input("decor_id"),
             "menu_price" => $request->input("menu_price"),
             "reservation_type" => $venueData[1],
@@ -156,7 +156,7 @@ class ReservationsService
         // Update the reservation with the new data from the request
         $reservation->number_of_guests = $request->input('number_of_guests');
         $reservation->menu_price = $request->input('menu_price');
-        $reservation->menager_id = $request->input('menager_id');
+        $reservation->manager_id = $request->input('manager_id');
         $reservation->decor_id = $request->input('decor_id');
         $reservation->collaborator_id = $request->input('collaborator_id');
         $reservation->staff_expenses = $request->input('staff_expenses');

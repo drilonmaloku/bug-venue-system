@@ -20,13 +20,13 @@
                             </div>
                             <div class="col-md-12">
                                   <div class="form-group">
-                                    <label for="example-text-input" class="bug-label">Email*</label>
+                                    <label for="example-text-input" class="bug-label">Email</label>
                                     <input class="bug-text-input" type="text" name="email">
                                 </div>
                             </div>
                             <div class="col-md-12">
                                     <div class="form-group">
-                                    <label for="example-text-input" class="bug-label">Numri i telefonit*</label>
+                                    <label for="example-text-input" class="bug-label">Numri i telefonit</label>
                                     <input class="bug-text-input" type="text" name="phone_number">
                                 </div>
                             </div>

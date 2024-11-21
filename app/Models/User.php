@@ -71,7 +71,7 @@ class User extends Authenticatable
      *
      * @var array
      */
-    protected $dates = ['deleted_at']; // Add deleted_at to dates
+    protected $dates = ['deleted_at'];
 
     public static function defaultNotificationPreferences()
     {

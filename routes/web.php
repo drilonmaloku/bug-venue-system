@@ -1,7 +1,6 @@
 <?php
 
 use App\Http\Controllers\NotificationPreferenceController;
-use App\Modules\Clients\Controllers\ClientsController;
 use App\Modules\Common\Controllers\DashboardController;
 use App\Modules\GoogleCalendar\Controllers\GoogleCalendarController;
 use Illuminate\Support\Facades\Artisan;
@@ -56,14 +55,20 @@ Route::get('locale/{locale}', function ($locale){
 });
 
 
-Route::get('/migrate', function () {
+Route::get('/migrate-seed', function () {
+    // Run migrations
     Artisan::call('migrate', [
         '--force' => true // This option is necessary to run migrations in a production environment
     ]);
 
-    return response()->json(['message' => 'Migrations ran successfully']);
-});
+ 
+    Artisan::call('db:seed', [
+        '--class' => 'ProductionSeeder', // Replace with your specific seeder class name
+        '--force' => true // Use '--force' to run the seeder in production
+    ]);
 
+    return response()->json(['message' => 'Migrations and seeding ran successfully']);
+});
 
 Route::get('/google/redirect', [GoogleCalendarController::class, 'redirectToGoogle'])->name('google.auth');
 Route::get('/google/callback', [GoogleCalendarController::class, 'handleGoogleCallback']);
@@ -79,3 +84,7 @@ Route::patch('/notifications/mark-all-as-read', [NotificationsController::class,
 
 Route::get('/notifications/preferences', [NotificationPreferenceController::class, 'edit'])->name('notifications.preferences.edit');
 Route::patch('/notifications/preferences', [NotificationPreferenceController::class, 'update'])->name('notifications.preferences.update');
+
+
+Route::get('files/{path}', [\App\Modules\Files\Controllers\AppFileController::class, 'getFile'])
+    ->where('path', '.*')->name('files.getFile');

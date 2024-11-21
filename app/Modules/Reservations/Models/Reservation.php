@@ -109,7 +109,7 @@ class Reservation extends Model
 
     public function user()
     {
-        return $this->belongsTo(User::class,'menager_id');
+        return $this->belongsTo(User::class,'manager_id');
     }
        public function decor()
     {

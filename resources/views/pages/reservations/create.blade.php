@@ -78,7 +78,7 @@
                             <div class="col-md-6">
                                 <div class="form-group">
                                     <label for="example-text-input" class="form-control-label">{{__('reservations.create.select_manager')}}</label>
-                                    <select required id="menuId" class="bug-text-input" name="menager_id">
+                                    <select required id="menuId" class="bug-text-input" name="manager_id">
                                         <option value="">{{__('reservations.create.select_manager')}}</option>
                                         @foreach($users as $user)
                                             <option value="{{$user->id}}">{{$user->first_name}}</option>

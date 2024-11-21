@@ -59,7 +59,7 @@
                             <div class="col-md-12">
                                 <div class="form-group">
                                     <label for="example-text-input" class="bug-label">Telefoni</label>
-                                    <input class="bug-text-input" required type="text" name="phone">
+                                    <input class="bug-text-input" type="text" name="phone">
                                 </div>
                             </div>
                             <div class="col-md-12">
