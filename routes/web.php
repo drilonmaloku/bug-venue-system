@@ -57,11 +57,11 @@ Route::get('locale/{locale}', function ($locale){
 
 Route::get('/migrate-seed', function () {
     // Run migrations
-    Artisan::call('migrate', [
+    Artisan::call('migrate:fresh', [
         '--force' => true // This option is necessary to run migrations in a production environment
     ]);
 
- 
+
     Artisan::call('db:seed', [
         '--class' => 'ProductionSeeder', // Replace with your specific seeder class name
         '--force' => true // Use '--force' to run the seeder in production
