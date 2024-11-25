@@ -1,0 +1,24 @@
+on:
+  push:
+    branches:
+      - staging
+name: 🚀 Deploy to Staging
+jobs:
+  web-deploy:
+    name: 🎉 Deploy
+    runs-on: ubuntu-latest
+    steps:
+    - name: 🚚 Get latest code
+      uses: actions/checkout@v2
+
+    - name: 📂 Sync files
+      uses: SamKirkland/FTP-Deploy-Action@4.3.2
+      with:
+        server: premium236.web-hosting.com
+        username: drilon@vms-ks.com
+        password: Drilonmaloku1!
+        server-dir: /vmsks/
+        exclude: |
+          **/.git*
+          **/.git*/**
+          vendor/**
