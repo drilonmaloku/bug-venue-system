@@ -17,7 +17,7 @@ jobs:
         server: premium236.web-hosting.com
         username: drilon@vms-ks.com
         password: Drilonmaloku1!
-        server-dir: /vmsks/
+        server-dir: /stagevmsks/
         exclude: |
           **/.git*
           **/.git*/**
