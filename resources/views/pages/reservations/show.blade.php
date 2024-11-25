@@ -488,7 +488,7 @@
                             <td>{{ $collaborator->name }}</td>
                             <td>
                                 <div class="hubers-item-options mt-3">
-                                    <form action="{{ route('reservations.collaborator.delete', $collaborator->id) }}" method="POST">
+                                    <form action="{{ route('reservations.delete-collaborator', ['reservationId' => $reservation->id, 'collaboratorId' => $collaborator->id]) }}" method="POST">
                                         @csrf
                                         @method('DELETE')
                                         <button class="btn btn-danger btn-sm" type="submit"><i class="fa fa-trash"></i></button>
@@ -501,7 +501,7 @@
             </table>
         @else
             <div class="hubers-empty-tab">
-                <h5 class="text-center">No Collaborators</h5>
+                <h5 class="text-center">{{__('no_collaborators') }}</h5>
             </div>
         @endif
     </div>
@@ -752,8 +752,10 @@
                                         <option value="">Select Collaborator</option>
                                         @foreach($collaborators as $collaborator)
                                        
-                                            <option value="{{$collaborator->id}}">{{$collaborator->name}} </option>
-                                        @endforeach
+                                            @if(!$reservation->collaborators->contains('id', $collaborator->id))
+                                                <option value="{{$collaborator->id}}">{{$collaborator->name}}</option>
+                                            @endif                                      
+                                             @endforeach
                                     </select>
                                 </div>
                             </div>
@@ -779,7 +781,7 @@
                         <span aria-hidden="true">&times;</span>
                     </button>
                 </div>
-                <form action="{{ route('collaborators.destroy', $reservation->id) }}" method="POST" >
+                <form action="{{ route('reservation.destroy', $reservation->id) }}" method="POST" >
                     @method('DELETE')
                     @csrf
                     <div class="modal-body">

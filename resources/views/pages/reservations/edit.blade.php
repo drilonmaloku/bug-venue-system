@@ -94,9 +94,9 @@
                         </div>
                            <div class="col-md-6">
                                 <div class="form-group">
-                                    <label for="example-text-input" class="form-control-label">Selekto Dekorin</label>
+                                    <label for="example-text-input" class="form-control-label">{{__('reservations.table.filter.select_decor') }}</label>
                                     <select id="menuId" class="bug-text-input" name="decor_id">
-                                        <option value="">Selekto Dekorin</option>
+                                        <option value="">{{__('reservations.table.filter.select_decor') }}</option>
                                         @foreach($decors as $decor)
                                             <option  value="{{$decor->id}}">{{$decor->name}}</option>
                                         @endforeach

@@ -53,7 +53,7 @@
                             <div class="col-md-12">
                                 <div class="form-group">
                                     <label for="example-text-input" class="bug-label">Emaili</label>
-                                    <input class="bug-text-input" required type="text" name="email">
+                                    <input class="bug-text-input" type="text" name="email">
                                 </div>
                             </div>
                             <div class="col-md-12">

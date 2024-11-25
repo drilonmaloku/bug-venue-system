@@ -72,7 +72,7 @@
                             <div class="col-md-12">
                                 <div class="form-group">
                                     <label for="example-text-input" class="form-control-label">{{__('reservations.create.notes')}}</label>
-                                    <textarea class="bug-text-input" type="text" required  name="description" ></textarea>
+                                    <textarea class="bug-text-input" type="text" name="description" ></textarea>
                                 </div>
                             </div>
                             <div class="col-md-6">
@@ -88,9 +88,9 @@
                             </div>
                                <div class="col-md-6">
                                 <div class="form-group">
-                                    <label for="example-text-input" class="form-control-label">Selekto Dekorin</label>
+                                    <label for="example-text-input" class="form-control-label">{{ __('reservations.edit.select_decor') }}</label>
                                     <select id="menuId" class="bug-text-input" name="decor_id">
-                                        <option value="">Selekto Dekorin</option>
+                                        <option value="">{{ __('reservations.edit.select_decor') }}</option>
                                         @foreach($decors as $decor)
                                             <option  value="{{$decor->id}}">{{$decor->name}}</option>
                                         @endforeach

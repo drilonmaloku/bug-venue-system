@@ -78,6 +78,16 @@
                             @endforeach
                         </select>
                     </div>
+
+                      <div class="hubers-filter-group">
+                        <label>Select Decor:</label>
+                        <select class="hubers-select-input white medium" name="menu" id="">
+                            <option value="">{{__('reservations.table.filter.select_decor') }}</option>
+                            @foreach($decors as $decor)
+                            <option value="{{$decor->id}}" @if($decor->id == app('request')->input('decor')) selected @endif>{{$decor->name}}</option>
+                            @endforeach
+                        </select>
+                    </div>
                 </div>
                 <div class="hubers-filter-list-actions">
                     <button type="submit" class="hubers-btn mr-2">{{__('general.filter_btn')}}</button>

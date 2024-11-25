@@ -35,6 +35,7 @@ use Barryvdh\DomPDF\PDF;
 use Illuminate\Validation\ValidationException;
 use PhpOffice\PhpWord\PhpWord;
 use RealRashid\SweetAlert\Facades\Alert;
+use Illuminate\Validation\Rule;
 
 class ReservationsController extends Controller
 {
@@ -196,6 +197,7 @@ class ReservationsController extends Controller
 //            'totalAmount'=>$totalAmount,
 //            'users' => $this->userService->getStaffUsers()
 //        ]);
+
         return view('pages/reservations/show', [
             'reservation' => $reservation,
             'totalDiscount'=>$totalDiscount,
@@ -730,23 +732,33 @@ class ReservationsController extends Controller
     }
 
   public function addMember($reservation, Request $request)
-{
-    try {
-        $member = $this->staffServices->addMember($reservation,$request);
-        return redirect()->back()->with('success', 'Staffi eshte shtuar me sukses');
+    {
+        try {
+            $member = $this->staffServices->addMember($reservation,$request);
+            return redirect()->back()->with('success', 'Staffi eshte shtuar me sukses');
 
-    } catch (\Exception $e) {
-        \Log::error('Error adding staff member: ' . $e->getMessage());
+        } catch (\Exception $e) {
+            \Log::error('Error adding staff member: ' . $e->getMessage());
 
-        return redirect()->back()->withErrors(['message' => 'Internal Server Error']);
+            return redirect()->back()->withErrors(['message' => 'Internal Server Error']);
+        }
     }
-}
+
+
+
 
     public function addCollaborator($reservation, Request $request)
     {
    
     try {
         $collaborator = $this->reservationcollaboratorService->addCollaborator($reservation,$request);
+            $request->validate([
+            'collaborator_id' => [
+                'required',
+                Rule::unique('reservation_collaborator', 'collaborator_id')
+                    ->where('reservation_id', $reservationId)
+            ]
+        ]);
       
         return redirect()->back()->with('success', 'Bashkpuntori eshte shtuar me sukses');
 
@@ -756,22 +768,30 @@ class ReservationsController extends Controller
         return redirect()->back()->withErrors(['message' => 'Internal Server Error']);
     }
 }
-       public function deleteCollaborator($id)
-    {
-        // TODO Improve Code 
-        $collaborator = ReservationCollaborator::find($id);
+      public function deleteCollaborator($reservationId, $collaboratorId)
+        {
+            try {
+                $collaborator = ReservationCollaborator::where('reservation_id', $reservationId)
+                    ->where('collaborator_id', $collaboratorId)
+                    ->first();
 
-        if (is_null($collaborator)) {
-            return response()->json(['message' => 'Collaborator Not Found'], JsonResponse::HTTP_NOT_FOUND);
-        }
+                if (is_null($collaborator)) {
+                    return redirect()->back()->withErrorMessage('Bashkpuntori nuk u gjet');
+                }
 
-        $this->reservationcollaboratorService->deleteCollaborator($collaborator);
-        return redirect()->back()->withSuccessMessage('Bashkpuntori eshte fshire me sukses');
-        try {
-        } catch (\Exception $e) {
-            return response()->json(['message' => 'Internal Server Error'], JsonResponse::HTTP_INTERNAL_SERVER_ERROR);
-        }
-    }
+                $deleted = $this->reservationcollaboratorService->deleteCollaborator($collaborator);
+                
+                if ($deleted) {
+                    return redirect()->back()->withSuccessMessage('Bashkpuntori eshte fshire me sukses');
+                }
+
+                return redirect()->back()->withErrorMessage('Bashkpuntori nuk mund te fshihet');
+
+                } catch (\Exception $e) {
+                    \Log::error('Error deleting collaborator: ' . $e->getMessage());
+                    return redirect()->back()->withErrorMessage('Ndodhi nje problem gjate fshirjes se bashkpuntorit');
+                }
+            }
 
 
    public function deleteStaff($id)

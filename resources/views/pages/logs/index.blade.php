@@ -43,6 +43,10 @@
                             <option @if(app('request')->input('context') == 5) selected @endif value="5">{{__('logs.filter.context.option.users')}}</option>
                             <option @if(app('request')->input('context') == 6) selected @endif value="6">{{__('logs.filter.context.option.reports')}}</option>
                             <option @if(app('request')->input('context') == 7) selected @endif value="7">{{__('logs.filter.context.option.menus')}}</option>
+                            <option @if(app('request')->input('context') == 8) selected @endif value="8">{{__('logs.filter.context.option.invoice')}}</option>
+                            <option @if(app('request')->input('context') == 9) selected @endif value="9">{{__('logs.filter.context.option.discount')}}</option>                            
+                            <option @if(app('request')->input('context') == 10) selected @endif value="10">{{__('logs.filter.context.option.decors')}}</option>
+                            <option @if(app('request')->input('context') == 11) selected @endif value="11">{{__('logs.filter.context.option.collaborators')}}</option>
                         </select>
                     </div>
                     <div class="hubers-filter-group">

@@ -84,6 +84,12 @@ class Log extends Model
         else if($log->context == 9) {
             return 'Zbritja';
         }
+        else if($log->context == 10) {
+            return 'Dekori';
+        }
+         else if($log->context == 11) {
+            return 'Bashkpuntoret';
+        }
     }
 
 }

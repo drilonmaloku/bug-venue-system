@@ -134,7 +134,10 @@
     "logs.filter.context.option.users": "Userat",
     "logs.filter.context.option.reports": "Raportet",
     "logs.filter.context.option.menus": "Menu",
-
+    "logs.filter.context.option.invoice": "Sherbimet",
+    "logs.filter.context.option.discount": "Zbritjet",
+    "logs.filter.context.option.collaborators": "Bashkpuntort",
+    "logs.filter.context.option.decors": "Dekoret",
     "venues.forms.create_btn": "Krijo",
     "venues.forms.create_title": "Krijo Sallë",
     "venues.forms.save": "Ruaj",
@@ -203,6 +206,7 @@
     "reservations.table.filter.created_date": "Data e krijimit",
     "reservations.table.filter.select_venue": "Selekto Sallën",
     "reservations.table.filter.select_menu": "Selekto Menu",
+    "reservations.table.filter.select_decor": "Selekto Dekorin",
     "reservations.table.filter.select_status": "Selekto Statusin",
     "reservations.table.status": "Statusi",
     "reservations.table.date": "Data",
@@ -254,7 +258,7 @@
     "reservations.create.payment.date": "Data e Pagesës",
     "reservations.create.payment.amount": "Vlera e Pagesës",
     "reservations.create.payment.notes": "Shënime",
-
+    "no_collaborators": "Nuk ka Bashkpuntor për këte rezervim",
     "reservations.edit.title": "Edito Rezervim",
     "reservations.edit.reservation_information": "Informatat e Rezervimit",
     "reservations.edit.date": "Data",

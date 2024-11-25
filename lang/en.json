@@ -134,7 +134,12 @@
     "logs.filter.context.option.users": "Users",
     "logs.filter.context.option.reports": "Reports",
     "logs.filter.context.option.menus": "Menu",
-
+    "logs.filter.context.option.invoice": "Invoices",
+    "logs.filter.context.option.discount": "Discount",
+    "logs.filter.context.option.collaborators": "Collaborators",
+    
+    "logs.filter.context.option.decors": "Decors",
+    "no_collaborators":"No Collaborators",
     "venues.forms.create_btn": "Create",
     "venues.forms.create_title": "Create Venue",
     "venues.forms.save": "Save",
@@ -195,6 +200,7 @@
     "reservations.table.filter.created_date": "Created Date",
     "reservations.table.filter.select_venue": "Select Venue",
     "reservations.table.filter.select_menu": "Select Menu",
+    "reservations.table.filter.select_decor": "Select Decor",
     "reservations.table.filter.select_status": "Select Status",
     "reservations.table.status": "Status",
     "reservations.table.date": "Date",
