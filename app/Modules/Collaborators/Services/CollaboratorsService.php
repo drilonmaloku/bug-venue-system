@@ -2,7 +2,7 @@
 
 namespace App\Modules\Collaborators\Services;
 
-use App\Modules\Collaborators\Models\Collaborators;
+use App\Modules\Collaborators\Models\Collaborator;
 use App\Modules\Clients\Models\Client;
 use Illuminate\Http\Request;
 use App\Modules\Logs\Models\Log;
@@ -22,7 +22,7 @@ class CollaboratorsService
      */
    public function getAll()
     {
-        return Collaborators::all();
+        return Collaborator::all();
     }
 
     /**
@@ -30,7 +30,7 @@ class CollaboratorsService
      */
     public function getByID($id)
     {
-        return Collaborators::find($id);
+        return Collaborator::find($id);
     }
 
     /**
@@ -64,7 +64,7 @@ class CollaboratorsService
     ]);
 
     // If validation passes, proceed with creation
-    $collaborator = Collaborators::create([
+    $collaborator = Collaborator::create([
         "location_id" => auth()->user()->getCurrentLocationId(),
         "name" => $validatedData['name'],
         "email" => $validatedData['email'],
@@ -86,7 +86,7 @@ class CollaboratorsService
     /**
      * Updates existing collaborator.
      */
-    public function update(Request $request, Collaborators $collaborator)
+    public function update(Request $request, Collaborator $collaborator)
     {
         if ($request->has('name')) {
             $collaborator->name = $request->input('name');
@@ -118,7 +118,7 @@ class CollaboratorsService
     /**
      * Deletes existing collaborator.
      */
-    public function delete(Collaborators $collaborator)
+    public function delete(Collaborator $collaborator)
     {
         
         if(count($collaborator->reservations) == 0){
@@ -131,7 +131,7 @@ class CollaboratorsService
     /**
      * Deletes existing collaborator.
      */
-    public function archive(Collaborators $collaborator)
+    public function archive(Collaborator $collaborator)
     {
         $previousData = $collaborator->attributesToArray();
 
@@ -153,7 +153,7 @@ class CollaboratorsService
     /**
      * Deletes existing collaborator.
      */
-    public function forceDelete(Collaborators $collaborator)
+    public function forceDelete(Collaborator $collaborator)
     {
         $previousData = $collaborator->attributesToArray();
 
