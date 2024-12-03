@@ -22,6 +22,7 @@ use App\Modules\Decors\Services\DecorService;
 use App\Modules\Reservations\Exports\ReservationsExport;
 use App\Modules\Reservations\Models\ReservationCollaborator;
 use App\Modules\Reservations\Models\ReservationComment;
+use App\Modules\Reservations\Models\ReservationEvent;
 use App\Modules\Reservations\Models\ReservationStaff;
 use App\Modules\Reservations\Resources\ReservationListCommentResource;
 use App\Modules\Reservations\Services\DiscountReservationsServices;
@@ -810,6 +811,7 @@ class ReservationsController extends Controller
             return response()->json(['message' => 'Internal Server Error'], JsonResponse::HTTP_INTERNAL_SERVER_ERROR);
         }
     }
+   
 
     public function export(Request $request)
     {

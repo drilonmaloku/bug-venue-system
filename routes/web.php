@@ -7,7 +7,7 @@ use Illuminate\Support\Facades\Artisan;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 use App\Modules\Notifications\Controllers\NotificationsController;
-
+use App\Modules\Events\Controllers\EventsController;
 
 /*
 |--------------------------------------------------------------------------
@@ -88,3 +88,4 @@ Route::patch('/notifications/preferences', [NotificationPreferenceController::cl
 
 Route::get('files/{path}', [\App\Modules\Files\Controllers\AppFileController::class, 'getFile'])
     ->where('path', '.*')->name('files.getFile');
+

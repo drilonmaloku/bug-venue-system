@@ -128,6 +128,7 @@ class ReservationsService
             "total_payment" => $totalPayment,
             "menu_contents" => $request->input("menu_contents"),
             "staff_expenses" => 0,
+            "planning" => $request->input("planning"),
         ]);
         if($reservation){
             $this->logService->log([
@@ -163,6 +164,7 @@ class ReservationsService
         $reservation->date = $request->input('date');
         $reservation->description = $request->input('description');
         $reservation->menu_contents = $request->input('menu_contents');
+        $reservation->planning = $request->input('planning');
 
         $client = $this->clientService->getByID($reservation->client->id);
         $this->clientService->update($request, $client);

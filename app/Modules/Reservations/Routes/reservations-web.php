@@ -48,5 +48,7 @@ Route::group(['middleware' => 'auth'], function () {
     Route::post('/reservations/add-collaborator/{reservationId}', [ReservationsController::class, 'addCollaborator'])->name('reservations.addCollaborator');
     Route::delete('reservations/{reservationId}/collaborators/{collaboratorId}', [ReservationsController::class, 'deleteCollaborator'])
     ->name('reservations.delete-collaborator');
+    Route::put('/reservations/{id}/events/{eventId}', [ReservationsController::class, 'updateEvent'])->name('reservations.updateEvent');
+
 });
 

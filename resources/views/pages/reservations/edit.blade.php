@@ -103,6 +103,13 @@
                                     </select>
                                 </div>
                             </div>
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label for="example-text-input" class="form-control-label">Planifikimi</label>
+                                    <input id="event" class="bug-text-input" type="number" name="event" value="" >
+                                    </select>
+                                </div>
+                            </div>
 
                         <div class="col-md-6">
                             <div class="form-group">
