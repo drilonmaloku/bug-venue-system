@@ -207,6 +207,8 @@ class ReservationsController extends Controller
             'users' => $this->userService->getStaffUsers(),
             'contract' => $this->reservationsService->generateReservationContract($reservation,$contractContent['contract']),
             'collaborators' => $this->collaboratorService->getAll(),
+            'planning' => json_decode($reservation->planning, true), 
+
         ]);
     }
 
@@ -222,6 +224,7 @@ class ReservationsController extends Controller
             'reservation' => $reservation,
             'reservation_client' => $reservation->client,
             'reservation_venue' => $reservation->venue,
+            'planning'=>$reservation->planning,
         ]]);
     }
 
@@ -257,6 +260,7 @@ class ReservationsController extends Controller
             'menus' => $this->menuService->getAll(request(), false),
             'decors' => $this->decorService->getAll(request(), false),
             'collaborators' =>  $this->collaboratorService->getAll(request(), false),
+            'planning' => json_decode($reservation->planning, true), 
 
         ]);
     }
