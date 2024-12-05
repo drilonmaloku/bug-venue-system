@@ -137,6 +137,7 @@
     "logs.filter.context.option.invoice": "Sherbimet",
     "logs.filter.context.option.discount": "Zbritjet",
     "logs.filter.context.option.collaborators": "Bashkpuntort",
+    "logs.filter.context.option.location": "Lokacioni",
     "logs.filter.context.option.decors": "Dekoret",
     "venues.forms.create_btn": "Krijo",
     "venues.forms.create_title": "Krijo Sallë",

@@ -503,9 +503,80 @@
             <div class="hubers-empty-tab">
                 <h5 class="text-center">{{__('no_collaborators') }}</h5>
             </div>
+<<<<<<< Updated upstream
         @endif
     </div>
 </div>
+=======
+            <div>
+                @if (!empty($planning))
+                    <table class="hubers-table mt-4">
+                        <thead>
+                            <tr>
+                                <th>Start Time</th>
+                                <th>End Time</th>
+                                <th>Description</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @foreach ($planning as $plan)
+                                <tr>
+                                    <td>{{ \Carbon\Carbon::parse($plan['start_time'])->format('d/m/Y H:i') }}</td>
+                                    <td>{{ \Carbon\Carbon::parse($plan['end_time'])->format('d/m/Y H:i') }}</td>
+                                    <td>{{ $plan['description'] }}</td>
+                                </tr>
+                            @endforeach
+                        </tbody>
+                    </table>
+                @else
+                    <div class="hubers-empty-tab">
+                        <h5 class="text-center">{{__('reservations.view.no_planning')}}</h5>
+                    </div>
+                @endif
+            </div>
+        </div>
+    
+        <div class="vms_panel">
+            <div class="d-flex align-items-center justify-content-between">
+                <h5>Collaborators</h5>
+                <a class="btn hubers-btn" data-toggle="modal" data-target="#reservationCollaborators">Add Collaborator</a>
+            </div>
+            <div>
+                @if ($reservation->collaborators->isNotEmpty())
+                    <table class="hubers-table mt-4">
+                        <thead>
+                            <tr>
+                                <th>Name</th>
+                                <th width="60"></th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @foreach ($reservation->collaborators as $collaborator)
+                                <tr>
+                                    <td>{{ $collaborator->name }}</td>
+                                    <td>
+                                        <div class="hubers-item-options mt-3">
+                                            <form action="{{ route('reservations.delete-collaborator', ['reservationId' => $reservation->id, 'collaboratorId' => $collaborator->id]) }}" method="POST">
+                                                @csrf
+                                                @method('DELETE')
+                                                <button class="btn btn-danger btn-sm" type="submit"><i class="fa fa-trash"></i></button>
+                                            </form>
+                                        </div>
+                                    </td>
+                                </tr>
+                            @endforeach
+                        </tbody>
+                    </table>
+                @else
+                    <div class="hubers-empty-tab">
+                        <h5 class="text-center">{{__('no_collaborators') }}</h5>
+                    </div>
+                @endif
+            </div>
+        </div>
+</div>
+
+>>>>>>> Stashed changes
 
     <div class="modal fade" id="reservationModal" tabindex="-1" role="dialog" aria-labelledby="reservationModalLabel" aria-hidden="true">
         <div class="modal-dialog" role="document">

@@ -7,7 +7,12 @@ use Illuminate\Support\Facades\Artisan;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 use App\Modules\Notifications\Controllers\NotificationsController;
+<<<<<<< Updated upstream
 
+=======
+use App\Modules\Events\Controllers\EventsController;
+use App\Http\Controllers\Auth\ResetPasswordController;
+>>>>>>> Stashed changes
 
 /*
 |--------------------------------------------------------------------------
@@ -87,4 +92,16 @@ Route::patch('/notifications/preferences', [NotificationPreferenceController::cl
 
 
 Route::get('files/{path}', [\App\Modules\Files\Controllers\AppFileController::class, 'getFile'])
+<<<<<<< Updated upstream
     ->where('path', '.*')->name('files.getFile');
+=======
+    ->where('path', '.*')->name('files.getFile');
+
+
+// Password Reset Routes
+Route::get('password/reset', [ResetPasswordController::class, 'showLinkRequestForm'])->name('password.request');
+Route::post('password/email', [ResetPasswordController::class, 'sendResetLinkEmail'])->name('password.email');
+Route::get('password/reset/{token}', [ResetPasswordController::class, 'showResetForm'])->name('password.reset');
+Route::post('password/reset', [ResetPasswordController::class, 'reset'])->name('password.update');
+
+>>>>>>> Stashed changes

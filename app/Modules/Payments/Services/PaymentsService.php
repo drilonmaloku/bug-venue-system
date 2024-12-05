@@ -158,9 +158,13 @@ class PaymentsService
         $paymentSaved = $payment->save();
 
         if ($paymentSaved) {
+            $reservation = Reservation::findOrFail($payment->reservation_id);
+            $reservation->current_payment = $reservation->payments->sum('value'); // Sum of all payments
+            $reservation->save(); 
+
             $this->logService->log([
                 'message' => 'Pagesa u përditësua me sukses',
-                'context' => Log::LOG_CONTEXT_CLIENTS,
+                'context' => Log::LOG_CONTEXT_PAYMENTS,
                 'ttl' => Log::LOG_TTL_THREE_MONTHS,
                 'previous_data' => json_encode($previousData),
                 'updated_data' => json_encode($payment)
