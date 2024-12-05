@@ -541,48 +541,48 @@
         </div>
 </div>
 
-<!-- Planning Modal -->
-<div class="modal fade" id="planningModal" tabindex="-1" role="dialog" aria-labelledby="planningModalLabel" aria-hidden="true">
-    <div class="modal-dialog" role="document">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h5 class="modal-title" id="planningModalLabel">Add Planning</h5>
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                    <span aria-hidden="true">&times;</span>
-                </button>
-            </div>
-            <form role="form" method="POST" action="{{ route('reservations.planning.store', ['id' => $reservation->id]) }}" enctype="multipart/form-data">
-                @csrf
-                <div class="modal-body">
-                    <div class="row">
-                        <div class="col-md-6">
-                            <div class="form-group">
-                                <label for="start_time" class="form-control-label">Start Time</label>
-                                <input id="start_time" required class="bug-text-input" type="datetime-local" name="start_time">
-                            </div>
-                        </div>
-                        <div class="col-md-6">
-                            <div class="form-group">
-                                <label for="end_time" class="form-control-label">End Time</label>
-                                <input id="end_time" required class="bug-text-input" type="datetime-local" name="end_time">
-                            </div>
-                        </div>
-                        <div class="col-md-12">
-                            <div class="form-group">
-                                <label for="description" class="form-control-label">Description</label>
-                                <textarea id="description" required class="bug-text-input" name="description"></textarea>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="modal-footer">
-                    <button type="submit" class="btn btn-primary">Save</button>
-                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                </div>
-            </form>
-        </div>
-    </div>
-</div>
+    <!-- Planning Modal -->
+{{--    <div class="modal fade" id="planningModal" tabindex="-1" role="dialog" aria-labelledby="planningModalLabel" aria-hidden="true">--}}
+{{--        <div class="modal-dialog" role="document">--}}
+{{--            <div class="modal-content">--}}
+{{--                <div class="modal-header">--}}
+{{--                    <h5 class="modal-title" id="planningModalLabel">Add Planning</h5>--}}
+{{--                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">--}}
+{{--                        <span aria-hidden="true">&times;</span>--}}
+{{--                    </button>--}}
+{{--                </div>--}}
+{{--                <form role="form" method="POST" action="{{ route('reservations.planning.store', ['id' => $reservation->id]) }}" enctype="multipart/form-data">--}}
+{{--                    @csrf--}}
+{{--                    <div class="modal-body">--}}
+{{--                        <div class="row">--}}
+{{--                            <div class="col-md-6">--}}
+{{--                                <div class="form-group">--}}
+{{--                                    <label for="start_time" class="form-control-label">Start Time</label>--}}
+{{--                                    <input id="start_time" required class="bug-text-input" type="datetime-local" name="start_time">--}}
+{{--                                </div>--}}
+{{--                            </div>--}}
+{{--                            <div class="col-md-6">--}}
+{{--                                <div class="form-group">--}}
+{{--                                    <label for="end_time" class="form-control-label">End Time</label>--}}
+{{--                                    <input id="end_time" required class="bug-text-input" type="datetime-local" name="end_time">--}}
+{{--                                </div>--}}
+{{--                            </div>--}}
+{{--                            <div class="col-md-12">--}}
+{{--                                <div class="form-group">--}}
+{{--                                    <label for="description" class="form-control-label">Description</label>--}}
+{{--                                    <textarea id="description" required class="bug-text-input" name="description"></textarea>--}}
+{{--                                </div>--}}
+{{--                            </div>--}}
+{{--                        </div>--}}
+{{--                    </div>--}}
+{{--                    <div class="modal-footer">--}}
+{{--                        <button type="submit" class="btn btn-primary">Save</button>--}}
+{{--                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>--}}
+{{--                    </div>--}}
+{{--                </form>--}}
+{{--            </div>--}}
+{{--        </div>--}}
+{{--    </div>--}}
 
     <div class="modal fade" id="reservationModal" tabindex="-1" role="dialog" aria-labelledby="reservationModalLabel" aria-hidden="true">
         <div class="modal-dialog" role="document">

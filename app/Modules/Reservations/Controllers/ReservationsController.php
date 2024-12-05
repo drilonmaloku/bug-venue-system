@@ -22,11 +22,9 @@ use App\Modules\Decors\Services\DecorService;
 use App\Modules\Reservations\Exports\ReservationsExport;
 use App\Modules\Reservations\Models\ReservationCollaborator;
 use App\Modules\Reservations\Models\ReservationComment;
-use App\Modules\Reservations\Models\ReservationEvent;
 use App\Modules\Reservations\Models\ReservationStaff;
 use App\Modules\Reservations\Resources\ReservationListCommentResource;
 use App\Modules\Reservations\Services\DiscountReservationsServices;
-use App\Modules\Reservations\Services\collaboratorServices;
 use App\Modules\Reservations\Services\ReservationCollaboratorServices;
 use App\Modules\Reservations\Services\ReservationCommentServices;
 use App\Modules\Reservations\Services\ReservationStaffServices;
@@ -67,10 +65,7 @@ class ReservationsController extends Controller
         DiscountReservationsServices $discountService,
         DecorService $decorService,
         CollaboratorsService $collaboratorService,
-        ReservationCollaboratorServices $reservationcollaboratorService,
-
-
-        
+        ReservationCollaboratorServices $reservationcollaboratorService
     ) {
         $this->venuesService = $venuesService;
         $this->reservationsService = $reservationsService;
@@ -85,8 +80,6 @@ class ReservationsController extends Controller
         $this->decorService = $decorService;
         $this->collaboratorService = $collaboratorService;
         $this->reservationcollaboratorService = $reservationcollaboratorService;
-
-
 
     }
 
