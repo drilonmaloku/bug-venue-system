@@ -18,13 +18,13 @@ use Illuminate\Support\Facades\Notification;
 class DiscountReservationsServices
 {
     private $logService;
-private $clientService;
-      private $usersService;
+    private $clientService;
+    private $usersService;
+
     public function __construct()
     {
         $this->logService = new LogService();
-                $this->clientService = new ClientsService();
-
+        $this->clientService = new ClientsService();
         $this->usersService = app()->make(UsersService::class);
 
     }

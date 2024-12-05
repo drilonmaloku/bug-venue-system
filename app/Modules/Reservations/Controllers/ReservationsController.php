@@ -25,7 +25,6 @@ use App\Modules\Reservations\Models\ReservationComment;
 use App\Modules\Reservations\Models\ReservationStaff;
 use App\Modules\Reservations\Resources\ReservationListCommentResource;
 use App\Modules\Reservations\Services\DiscountReservationsServices;
-use App\Modules\Reservations\Services\collaboratorServices;
 use App\Modules\Reservations\Services\ReservationCollaboratorServices;
 use App\Modules\Reservations\Services\ReservationCommentServices;
 use App\Modules\Reservations\Services\ReservationStaffServices;
@@ -66,10 +65,7 @@ class ReservationsController extends Controller
         DiscountReservationsServices $discountService,
         DecorService $decorService,
         CollaboratorsService $collaboratorService,
-        ReservationCollaboratorServices $reservationcollaboratorService,
-
-
-        
+        ReservationCollaboratorServices $reservationcollaboratorService
     ) {
         $this->venuesService = $venuesService;
         $this->reservationsService = $reservationsService;
@@ -84,8 +80,6 @@ class ReservationsController extends Controller
         $this->decorService = $decorService;
         $this->collaboratorService = $collaboratorService;
         $this->reservationcollaboratorService = $reservationcollaboratorService;
-
-
 
     }
 
@@ -206,6 +200,8 @@ class ReservationsController extends Controller
             'users' => $this->userService->getStaffUsers(),
             'contract' => $this->reservationsService->generateReservationContract($reservation,$contractContent['contract']),
             'collaborators' => $this->collaboratorService->getAll(),
+            'planning' => json_decode($reservation->planning, true), 
+
         ]);
     }
 
@@ -221,6 +217,7 @@ class ReservationsController extends Controller
             'reservation' => $reservation,
             'reservation_client' => $reservation->client,
             'reservation_venue' => $reservation->venue,
+            'planning'=>$reservation->planning,
         ]]);
     }
 
@@ -256,6 +253,7 @@ class ReservationsController extends Controller
             'menus' => $this->menuService->getAll(request(), false),
             'decors' => $this->decorService->getAll(request(), false),
             'collaborators' =>  $this->collaboratorService->getAll(request(), false),
+            'planning' => json_decode($reservation->planning, true), 
 
         ]);
     }
@@ -810,6 +808,7 @@ class ReservationsController extends Controller
             return response()->json(['message' => 'Internal Server Error'], JsonResponse::HTTP_INTERNAL_SERVER_ERROR);
         }
     }
+   
 
     public function export(Request $request)
     {
