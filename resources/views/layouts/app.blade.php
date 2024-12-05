@@ -130,7 +130,7 @@
                                     {{__('dashboard.decors')}}
                                     </a>
                                 </li>
-                                      <li>
+                                <li>
                                     <a class="{{ Request::is(['collaborators',]) ? 'active' : '' }}" href="{{route('collaborators.index')}}">
                                     <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" fill="#000000" height="24" width="24" version="1.1" viewBox="0 0 297 297" enable-background="new 0 0 297 297">
                                     <g>
@@ -144,6 +144,7 @@
                                     Collaborators
                                     </a>
                                 </li>
+                          
                             </ul>
                         </li>
                         <li>

@@ -145,8 +145,22 @@
                                     <label for="example-text-input" class="form-control-label">{{__('reservations.create.client.additional_phone')}}</label>
                                     <input class="bug-text-input" type="text" name="client_additional_phone_number" >
                                 </div>
+                                </div>
                             </div>
-                </div>      
+                                  <div class="col-md-12">
+                            <div class="form-group">
+                                <label for="example-text-input" class="bug-label">Planifikimi*</label>
+                                <div id="planning-container">
+                                    <div class="planning-item">
+                                        <input class="bug-text-input" type="datetime-local" name="planning[0][start_time]" required>
+                                        <input class="bug-text-input" type="datetime-local" name="planning[0][end_time]" required>
+                                        <textarea class="bug-text-input" placeholder="Përshkrimi i planifikimit" rows="2" name="planning[0][description]"></textarea>
+                                    </div>
+                                </div>
+                                <button type="button" id="add-planning" class="hubers-btn">Shto planifikim</button>
+                            </div>
+                        </div>
+      
                         <hr>
                         <h6><strong>{{__('reservations.create.payment.information')}}:</strong></h6>
                         <div class="row">
@@ -321,4 +335,24 @@
             return true;
         }
     </script>
+
+    <script>
+    document.addEventListener('DOMContentLoaded', function() {
+        let planningCount = 1;
+        const container = document.getElementById('planning-container');
+        const addButton = document.getElementById('add-planning');
+
+        addButton.addEventListener('click', function() {
+            const newItem = document.createElement('div');
+            newItem.className = 'planning-item';
+            newItem.innerHTML = `
+                <input class="bug-text-input" type="datetime-local" name="planning[${planningCount}][start_time]" required>
+                <input class="bug-text-input" type="datetime-local" name="planning[${planningCount}][end_time]" required>
+                <textarea class="bug-text-input" placeholder="Përshkrimi i planifikimit" rows="2" name="planning[${planningCount}][description]"></textarea>
+            `;
+            container.appendChild(newItem);
+            planningCount++;
+        });
+    });
+</script>
 @endsection
