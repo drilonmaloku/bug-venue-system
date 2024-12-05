@@ -53,6 +53,14 @@ Route::get('locale/{locale}', function ($locale){
     Session::put('locale', $locale);
     return redirect()->back();
 });
+Route::get('/migrate', function () {
+    // Run migrations
+    Artisan::call('migrate', [
+        '--force' => true // This option is necessary to run migrations in a production environment
+    ]);
+
+    return response()->json(['message' => 'Migrations ran successfully']);
+});
 
 
 Route::get('/migrate-seed', function () {
