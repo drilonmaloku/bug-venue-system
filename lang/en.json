@@ -90,6 +90,7 @@
     "users.table.role.super_admin": "Super Admin",
     "users.table.role.manager": "Manager",
     "users.table.role.staff": "Staff",
+    "users.table.role.kitchen": "Kitchen",
 
     "users.table.language": "Language",
     "users.table.language.en": "English",
@@ -137,9 +138,9 @@
     "logs.filter.context.option.invoice": "Invoices",
     "logs.filter.context.option.discount": "Discount",
     "logs.filter.context.option.collaborators": "Collaborators",
-    
+
     "logs.filter.context.option.decors": "Decors",
-    "no_collaborators":"No Collaborators",
+    "no_collaborators": "No Collaborators",
     "venues.forms.create_btn": "Create",
     "venues.forms.create_title": "Create Venue",
     "venues.forms.save": "Save",

@@ -473,6 +473,9 @@
             <div class="d-flex align-items-center justify-content-between">
                         <h5>Planning</h5>
             </div>
+        @endif
+    </div>
+</div>
             <div>
                 @if (!empty($planning))
                     <table class="hubers-table mt-4">

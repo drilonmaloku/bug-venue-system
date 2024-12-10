@@ -79,7 +79,7 @@
                                         <option value="admin">Admin</option>
                                         <option value="super-admin" selected>Super Admin</option>
                                         <option value="manager">Manager</option>
-
+                                        <option value="kitchen">Kitchen</option>
                                     </select>
                                 </div>
                             </div>

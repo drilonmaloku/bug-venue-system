@@ -47,7 +47,7 @@
                             VMS
                         </a>
                     </div>
-                   
+        @role(['super-admin', 'system-admin', 'admin', 'manager', 'staff'])
                     <div class="hubers-navbar-hamburger-notifications">
                        <span id="notificationButton">
                             <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-bell"><path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9"/><path d="M13.73 21a2 2 0 0 1-3.46 0"/></svg>
@@ -62,10 +62,11 @@
                             <span></span>
                         </div>
                     </div>
+                    @endrole
                 </div>
-
                 <div class="hubers-navbar-links">
                     <ul>
+                        @role(['super-admin', 'system-admin', 'admin', 'manager', 'staff'])
                         <li>
                             <a class="{{ Request::is(['dashboard']) ? 'active' : '' }}" href="{{route('dashboard.index')}}">
                                 <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-monitor"><rect x="2" y="3" width="20" height="14" rx="2" ry="2"/><line x1="8" y1="21" x2="16" y2="21"/><line x1="12" y1="17" x2="12" y2="21"/></svg>
@@ -146,7 +147,9 @@
                                 </li>
                           
                             </ul>
+                             
                         </li>
+                        
                         <li>
                             <a class="{{ Request::is(['payments','payments/*']) ? 'active' : '' }}" href="{{route('payments.index')}}">
                                 <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-credit-card"><rect x="1" y="4" width="22" height="16" rx="2" ry="2"/><line x1="1" y1="10" x2="23" y2="10"/></svg>
@@ -181,7 +184,7 @@
                                         <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-server"><rect x="2" y="2" width="20" height="8" rx="2" ry="2"/><rect x="2" y="14" width="20" height="8" rx="2" ry="2"/><line x1="6" y1="6" x2="6.01" y2="6"/><line x1="6" y1="18" x2="6.01" y2="18"/></svg>
                                         {{__('dashboard.support_tickets')}}
                                     </a>
-                                </li>
+                                </li> @endrole
                                 @role(['super-admin', 'system-admin'])
                                     <li>
                                         <a class="{{ Request::is(['logs','logs/*']) ? 'active' : '' }}" href="{{ route('logs.index') }}">
@@ -189,9 +192,9 @@
                                             {{__('dashboard.logs')}}
                                         </a>
                                     </li>
-                                @endrole
-                            </ul>
-                        </li>
+                                </ul>
+                            </li>
+                            @endrole
 
 
                         @role(['super-admin', 'system-admin'])
@@ -218,6 +221,24 @@
                                 <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-map-pin"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>
                                 {{__('dashboard.locations')}}
                             </a>
+                        </li>
+                        @endrole
+                        
+                        @role('kitchen' )
+                         <li>
+                            <a class="{{ Request::is(['kitchen','kitchen/*']) ? 'active' : '' }}" href="{{route('kitchen.dashboard')}}">
+                            <svg width="26px" height="26px" viewBox="0 0 45 45" fill="none" xmlns="http://www.w3.org/2000/svg">
+                            <path d="M11 9.5H35C35.552 9.5 36 9.948 36 10.5V34.5C36 35.052 35.552 35.5 35 35.5H11C10.448 35.5 10 35.052 10 34.5V10.5C10 9.948 10.448 9.5 11 9.5Z" stroke="#3C3C3C" stroke-width="2"/>
+                            <path d="M36 17.5H10" stroke="#3C3C3C" stroke-width="2"/>
+                            <path d="M32 12.5C32.552 12.5 33 12.948 33 13.5C33 14.052 32.552 14.5 32 14.5C31.448 14.5 31 14.052 31 13.5C31 12.948 31.448 12.5 32 12.5Z" fill="#3C3C3C"/>
+                            <path d="M26 12.5C26.552 12.5 27 12.948 27 13.5C27 14.052 26.552 14.5 26 14.5C25.448 14.5 25 14.052 25 13.5C25 12.948 25.448 12.5 26 12.5Z" fill="#3C3C3C"/>
+                            <path d="M20 12.5C20.552 12.5 21 12.948 21 13.5C21 14.052 20.552 14.5 20 14.5C19.448 14.5 19 14.052 19 13.5C19 12.948 19.448 12.5 20 12.5Z" fill="#3C3C3C"/>
+                            <path d="M14 12.5C14.552 12.5 15 12.948 15 13.5C15 14.052 14.552 14.5 14 14.5C13.448 14.5 13 14.052 13 13.5C13 12.948 13.448 12.5 14 12.5Z" fill="#3C3C3C"/>
+                            <path d="M14 21.5H32V31.5H14V21.5Z" stroke="#3C3C3C" stroke-width="2"/>
+                            <path d="M36 17.5H10" stroke="#3C3C3C" stroke-width="2"/>
+                            </svg>                                
+                            Kitchen
+                        </a>
                         </li>
                         @endrole
                     </ul>

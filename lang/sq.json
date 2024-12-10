@@ -90,6 +90,7 @@
     "users.table.role.super_admin": "Super Admin",
     "users.table.role.manager": "Menagjer",
     "users.table.role.staff": "Staf",
+    "users.table.role.kitchen": "Kuzhina",
 
     "users.table.language": "Gjuha",
     "users.table.language.en": "Anglisht",
