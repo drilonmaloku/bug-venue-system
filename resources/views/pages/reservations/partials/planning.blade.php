@@ -41,34 +41,39 @@
             </div>
             <form role="form" method="POST" action="{{ route('reservations.updatePlanning', ['id' => $reservation->id]) }}" enctype="multipart/form-data">
                 @csrf
-                <div class="modal-body">
-                    @foreach ($planning as $index => $plan)
-                        <div plan-id="{{$index}}">
-                            <div class="row">
-                                <div class="col-md-3">
-                                    <div class="form-group">
-                                        <label for="">{{__('reservation.planning.start_time')}}</label>
-                                        <input class="bug-text-input" type="datetime-local" name="planning[{{ $index }}][start_time]" value="{{ $plan['start_time'] }}" required>
+               <div class="modal-body">
+                    @if (!empty($planning) && is_array($planning))
+                        @foreach ($planning as $index => $plan)
+                            <div class="planning-item" plan-id="{{ $index }}">
+                                <div class="row">
+                                    <div class="col-md-3">
+                                        <div class="form-group">
+                                            <label for="">{{ __('reservation.planning.start_time') }}</label>
+                                            <input class="bug-text-input" type="datetime-local" name="planning[{{ $index }}][start_time]" value="{{ $plan['start_time'] }}" required>
+                                        </div>
                                     </div>
-
-                                </div>
-                                <div class="col-md-3">
-                                    <div class="form-group">
-                                        <label for="">{{__('reservation.planning.end_time')}}</label>
-                                        <input class="bug-text-input" type="datetime-local" name="planning[{{ $index }}][end_time]" value="{{ $plan['end_time'] }}" required>
+                                    <div class="col-md-3">
+                                        <div class="form-group">
+                                            <label for="">{{ __('reservation.planning.end_time') }}</label>
+                                            <input class="bug-text-input" type="datetime-local" name="planning[{{ $index }}][end_time]" value="{{ $plan['end_time'] }}" required>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <label for="">{{ __('reservation.planning.description') }}</label>
+                                        <textarea class="bug-text-input" placeholder="Përshkrimi" rows="2" name="planning[{{ $index }}][description]">{{ $plan['description'] }}</textarea>
                                     </div>
                                 </div>
-                                <div class="col-md-6">
-                                    <label for="">{{__('reservation.planning.description')}}</label>
-                                    <textarea class="bug-text-input" placeholder="Përshkrimi" rows="2" name="planning[{{ $index }}][description]">{{ $plan['description'] }}</textarea>
+                                <div class="text-right mt-5">
+                                    <button type="button" class="btn hubers-btn danger btn-delete-plan" data-plan-id="{{ $index }}">
+                                        <i class="fa fa-trash"></i>
+                                    </button>
                                 </div>
+                                <hr>
                             </div>
-                            <a class="btn hubers-btn danger " data-toggle="modal" data-target="#deleteReservation">
-                                <i class="fa fa-trash"></i>
-                            </a>
-                        </div>
-                        <hr>
-                    @endforeach
+                        @endforeach
+                    @else
+                        <p>{{ __('reservation.planning.no_planning_found') }}</p>
+                    @endif
                 </div>
                 <div class="modal-footer">
                     <button type="submit" class="btn btn-primary">{{__('general.save_btn')}}</button>
@@ -78,3 +83,17 @@
         </div>
     </div>
 </div>
+
+<script>
+    document.addEventListener('click', function (event) {
+    if (event.target.closest('.btn-delete-plan')) {
+        const button = event.target.closest('.btn-delete-plan');
+        const planId = button.getAttribute('data-plan-id');
+        const planningItem = document.querySelector(`.planning-item[plan-id="${planId}"]`);
+        if (planningItem) {
+            planningItem.remove();
+        }
+    }
+});
+
+</script>

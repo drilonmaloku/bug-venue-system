@@ -372,18 +372,18 @@
     "contracts.contract": "Kontrata",
     "contracts.info": "Mund të përdorni vendmbushjet e mëposhtme që do të gjenerohen dinamikisht kur printoni një kontratë për një rezervim:",
 
-    "reservation.planning.title" : "Planifikimi",
-    "reservation.planning.empty" : "Nuk ka planifikim.",
-    "reservation.planning.start_time" : "Fillon",
-    "reservation.planning.end_time" : "Mbaron",
-    "reservation.planning.description" : "Përshkrimi",
-    "reservation.planning.modify" : "Modifiko",
-    "reservation.planning.modify_planning" : "Modifiko Planifikimin",
+    "reservation.planning.title": "Planifikimi",
+    "reservation.planning.empty": "Nuk ka planifikim.",
+    "reservation.planning.start_time": "Fillon",
+    "reservation.planning.end_time": "Mbaron",
+    "reservation.planning.description": "Përshkrimi",
+    "reservation.planning.modify": "Modifiko",
+    "reservation.planning.modify_planning": "Modifiko Planifikimin",
+    "reservation.planning.no_planning_found": "Nuk ka planifikim për këtë rezervim.",
 
-
-    "reservations.view.notes" : "Shënime",
-    "reservations.view.notes.empty" : "Nuk ka shënime.",
-    "reservations.view.notes.edit" : "Përditso shënimet",
-    "reservations.view.notes_modify" : "Modifiko"
-
+    "reservations.view.notes": "Shënime",
+    "reservations.view.notes.empty": "Nuk ka shënime.",
+    "reservations.view.notes.edit": "Përditso shënimet",
+    "reservations.view.notes_modify": "Modifiko",
+    "Remember Me": "Mbaj mend"
 }

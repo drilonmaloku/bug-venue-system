@@ -103,46 +103,50 @@
                                     </select>
                                 </div>
                             </div>
-                            <div class="vms_panel">
+                        <div class="vms_panel">
                                 <div class="d-flex align-items-center justify-content-between">
                                     <h5>Planning</h5>
                                 </div>
-                                <div id="planning-container">
-                                    @if (!empty($planning) && is_array($planning))
-                                        <table class="hubers-table mt-4">
-                                            <thead>
-                                                <tr>
-                                                    <th>Start Time</th>
-                                                    <th>End Time</th>
-                                                    <th>Description</th>
+                            <div id="planning-container">
+                                @if (!empty($planning) && is_array($planning))
+                                    <table class="hubers-table mt-4">
+                                        <thead>
+                                            <tr>
+                                                <th>Start Time</th>
+                                                <th>End Time</th>
+                                                <th>Description</th>
+                                                <th>Actions</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            @foreach ($planning as $index => $plan)
+                                                <tr data-plan-id="{{ $index }}">
+                                                    <td>
+                                                        <input class="bug-text-input" type="datetime-local" name="planning[{{ $index }}][start_time]" value="{{ $plan['start_time'] }}" required>
+                                                    </td>
+                                                    <td>
+                                                        <input class="bug-text-input" type="datetime-local" name="planning[{{ $index }}][end_time]" value="{{ $plan['end_time'] }}" required>
+                                                    </td>
+                                                    <td>
+                                                        <textarea class="bug-text-input" placeholder="Përshkrimi i planifikimit" rows="2" name="planning[{{ $index }}][description]">{{ $plan['description'] }}</textarea>
+                                                    </td>
+                                                    <td>
+                                                        <button type="button" class="hubers-btn danger btn-delete-plan" data-plan-id="{{ $index }}">
+                                                            <i class="fa fa-trash"></i>
+                                                        </button>
+                                                    </td>
                                                 </tr>
-                                            </thead>
-                                            <tbody>
-                                                @foreach ($planning as $index => $plan)
-                                                    <tr>
-                                                        <td>
-                                                            <input class="bug-text-input" type="datetime-local" name="planning[{{ $index }}][start_time]" value="{{ $plan['start_time'] }}" required>
-                                                        </td>
-                                                        <td>
-                                                            <input class="bug-text-input" type="datetime-local" name="planning[{{ $index }}][end_time]" value="{{ $plan['end_time'] }}" required>
-                                                        </td>
-                                                        <td>
-                                                            <textarea class="bug-text-input" placeholder="Përshkrimi i planifikimit" rows="2" name="planning[{{ $index }}][description]">{{ $plan['description'] }}</textarea>
-                                                        </td>
-                                                    </tr>
-                                                @endforeach
-                                            </tbody>
-                                        </table>
-                                    @else
-                                        <div class="hubers-empty-tab">
-                                            <h5 class="text-center">No plannings</h5>
-                                        </div>
-                                    @endif
-                                        <button type="button" id="add-planning" class="hubers-btn">Shto planifikim</button>
-                                </div>
-
-
+                                            @endforeach
+                                        </tbody>
+                                    </table>
+                                @else
+                                    <div class="hubers-empty-tab">
+                                        <h5 class="text-center">No plannings</h5>
+                                    </div>
+                                @endif
+                                <button type="button" id="add-planning" class="hubers-btn">Shto planifikim</button>
                             </div>
+                        </div>
 
                         <div class="col-md-6">
                             <div class="form-group">
@@ -252,7 +256,15 @@
 
                 });
             }
-
+            document.addEventListener('click', function (event) {
+                if (event.target.classList.contains('btn-delete-plan')) {
+                    const planId = event.target.getAttribute('data-plan-id');
+                    const row = document.querySelector(`tr[data-plan-id="${planId}"]`);
+                    if (row) {
+                        row.remove();
+                    }
+                }
+            });
             function updateMenuPrice() {
                 const selectedOption = menuSelect.options[menuSelect.selectedIndex];
                 const menuPrice = parseFloat(selectedOption.getAttribute('data-price')) || 0;

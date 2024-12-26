@@ -135,9 +135,9 @@
     "logs.filter.context.option.invoice": "Invoices",
     "logs.filter.context.option.discount": "Discount",
     "logs.filter.context.option.collaborators": "Collaborators",
-    
+
     "logs.filter.context.option.decors": "Decors",
-    "no_collaborators":"No Collaborators",
+    "no_collaborators": "No Collaborators",
     "venues.forms.create_btn": "Create",
     "venues.forms.create_title": "Create Venue",
     "venues.forms.save": "Save",
@@ -376,11 +376,13 @@
     "contracts.contract": "Contract",
     "contracts.info": "You can use the following placeholders that will be dynamically generated when printing a contract for a reservation:",
 
-    "reservation.planning.title" : "Planning",
-    "reservation.planning.empty" : "There is no planing",
-    "reservation.planning.start_time" : "Start Time",
-    "reservation.planning.end_time" : "End Time",
-    "reservation.planning.description" : "Description",
-    "reservation.planning.modify" : "Modify",
-    "reservation.planning.modify_planning" : "Modify Planning"
+    "reservation.planning.title": "Planning",
+    "reservation.planning.empty": "There is no planing",
+    "reservation.planning.start_time": "Start Time",
+    "reservation.planning.end_time": "End Time",
+    "reservation.planning.description": "Description",
+    "reservation.planning.modify": "Modify",
+    "reservation.planning.modify_planning": "Modify Planning",
+    "reservation.planning.no_planning_found": "No planning found",
+    "Remember Me": "Remember Me"
 }
