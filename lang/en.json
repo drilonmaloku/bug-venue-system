@@ -6,9 +6,7 @@
     "general.filter_btn": "Filter",
     "general.filter_reset_btn": "Reset",
     "general.delete_btn": "Delete",
-
     "dashboard.title": "Dashboard",
-
     "dashboard.dashboard": "Dashboard",
     "dashboard.reservations": "Reservations",
     "dashboard.expenses": "Expenses",
@@ -376,5 +374,13 @@
 
     "contracts.manage": "Manage Contract",
     "contracts.contract": "Contract",
-    "contracts.info": "You can use the following placeholders that will be dynamically generated when printing a contract for a reservation:"
+    "contracts.info": "You can use the following placeholders that will be dynamically generated when printing a contract for a reservation:",
+
+    "reservation.planning.title" : "Planning",
+    "reservation.planning.empty" : "There is no planing",
+    "reservation.planning.start_time" : "Start Time",
+    "reservation.planning.end_time" : "End Time",
+    "reservation.planning.description" : "Description",
+    "reservation.planning.modify" : "Modify",
+    "reservation.planning.modify_planning" : "Modify Planning"
 }

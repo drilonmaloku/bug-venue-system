@@ -1,18 +1,12 @@
 <?php namespace App\Modules\Reservations\Services;
 
-use App\Models\User;
 use App\Modules\Users\Services\UsersService;
-use App\Modules\Clients\Models\Client;
 use App\Modules\Clients\Services\ClientsService;
 use App\Modules\Reservations\Models\Reservation;
-use App\Modules\Venues\Models\Venue;
 use Illuminate\Http\Request;
 use App\Modules\Logs\Models\Log;
 use App\Modules\Logs\Services\LogService;
 use App\Modules\Reservations\Models\PricingStatusTracking;
-use App\Modules\Reservations\Models\ReservationStaff;
-use Illuminate\Support\Carbon;
-use Illuminate\Support\Facades\DB;
 use App\Modules\Reservations\Notifications\ReservationAddedNotification;
 use App\Modules\Reservations\Notifications\ReservationDeletedNotifiaction;
 use App\Modules\Reservations\Notifications\ReservationUpdatedNotification;
@@ -290,6 +284,18 @@ class ReservationsService
 
         return str_replace(array_keys($placeholders), array_values($placeholders), $contractContent);
 
+    }
+
+    public function updatePlanning($request,$reservation){
+        $reservation->planning = json_encode($request->input('planning'));
+        $reservation->save();
+        return $reservation;
+    }
+
+    public function updateNotes($request,$reservation){
+        $reservation->notes = json_encode($request->input('notes'));
+        $reservation->save();
+        return $reservation;
     }
    
 }

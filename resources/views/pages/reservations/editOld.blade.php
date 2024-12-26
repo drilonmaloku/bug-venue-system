@@ -103,6 +103,12 @@
                                     </select>
                                 </div>
                             </div>
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label for="example-text-input" class="form-control-label">{{__('reservations.edit.staff_expenses')}}*</label>
+                                <input id="staffExpenses" class="bug-text-input" type="number" name="staff_expenses" value="{{$reservation->staff_expenses}}" >
+                            </div>
+                        </div>
                             <div class="vms_panel">
                                 <div class="d-flex align-items-center justify-content-between">
                                     <h5>Planning</h5>
@@ -138,18 +144,10 @@
                                             <h5 class="text-center">No plannings</h5>
                                         </div>
                                     @endif
-                                        <button type="button" id="add-planning" class="hubers-btn">Shto planifikim</button>
                                 </div>
-
-
                             </div>
 
-                        <div class="col-md-6">
-                            <div class="form-group">
-                                <label for="example-text-input" class="form-control-label">{{__('reservations.edit.staff_expenses')}}*</label>
-                                <input id="staffExpenses" class="bug-text-input" type="number" name="staff_expenses" value="{{$reservation->staff_expenses}}" >
-                            </div>
-                        </div>
+
                         <div class="col-md-12">
                             <div class="form-group">
                                 <h5>{{__('reservations.edit.total')}}: <span id="totalPrice">0</span></h5>
@@ -313,24 +311,5 @@
             document.getElementById("submitBtn").disabled = true;
             return true;
         }
-    </script>
-    <script>
-        document.addEventListener('DOMContentLoaded', function() {
-            let planningCount = 1;
-            const container = document.getElementById('planning-container');
-            const addButton = document.getElementById('add-planning');
-
-            addButton.addEventListener('click', function() {
-                const newItem = document.createElement('div');
-                newItem.className = 'planning-item';
-                newItem.innerHTML = `
-                    <input class="bug-text-input" type="datetime-local" name="planning[${planningCount}][start_time]" required>
-                    <input class="bug-text-input" type="datetime-local" name="planning[${planningCount}][end_time]" required>
-                    <textarea class="bug-text-input" placeholder="Përshkrimi i planifikimit" rows="2" name="planning[${planningCount}][description]"></textarea>
-                `;
-                container.appendChild(newItem);
-                planningCount++;
-            });
-        });
     </script>
 @endsection
