@@ -53,7 +53,12 @@
                 </tr>
                 <tr>
                     <td>{{__('reservations.table.number_of_guests')}}</td>
-                    <td>{{ $reservation->number_of_guests }}</td>
+                    <td>
+                        <div class="d-flex justify-content-between align-items-center">
+                            {{ $reservation->number_of_guests }}
+                            <a class="hubers-btn" href="{{route('reservations.listGuests',['id' =>$reservation->id])}}">Menagjo</a>
+                        </div>
+                    </td>
                 </tr>
                 <tr>
                     <td>{{__('reservations.table.client')}}</td>

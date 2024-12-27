@@ -4,6 +4,7 @@ namespace App\Modules\Reservations\Controllers;
 
 use App\Modules\Clients\Services\ClientsService;
 use App\Modules\Menus\Services\MenuService;
+use App\Modules\Reservations\Services\ReservationGuestService;
 use App\Modules\Reservations\Services\ReservationService;
 use App\Modules\Payments\Services\PaymentsService;
 use App\Modules\Reservations\Models\Reservation;
@@ -51,6 +52,7 @@ class ReservationsController extends Controller
     private $decorService;
     private $collaboratorService;
     private $reservationcollaboratorService;
+    private $reservationGuestService;
 
     public function __construct(
         VenuesService $venuesService,
@@ -65,7 +67,8 @@ class ReservationsController extends Controller
         DiscountReservationsServices $discountService,
         DecorService $decorService,
         CollaboratorsService $collaboratorService,
-        ReservationCollaboratorServices $reservationcollaboratorService
+        ReservationCollaboratorServices $reservationcollaboratorService,
+        ReservationGuestService $reservationGuestService
     ) {
         $this->venuesService = $venuesService;
         $this->reservationsService = $reservationsService;
@@ -80,6 +83,7 @@ class ReservationsController extends Controller
         $this->decorService = $decorService;
         $this->collaboratorService = $collaboratorService;
         $this->reservationcollaboratorService = $reservationcollaboratorService;
+        $this->reservationGuestService = $reservationGuestService;
 
     }
 
@@ -832,4 +836,112 @@ class ReservationsController extends Controller
 
 
     }
+
+    public function listGuests(Request $request,$id){
+        $reservation = $this->reservationsService->getByID($id);
+        if (is_null($reservation)) {
+            return abort(404, 'Reservation Not Found');
+        }
+
+        return view('pages/reservations/manage-guests', [
+            'reservation' => $reservation,
+            'guests' => $reservation->guests,
+            'is_on_search' => count($request->all()),
+        ]);
+    }
+
+
+    public function addGuest(Request $request,$id){
+        $reservation = $this->reservationsService->getByID($id);
+        if (is_null($reservation)) {
+            return abort(404, 'Reservation Not Found');
+        }
+
+        $guest = $this->reservationGuestService->store($request,$reservation->id);
+
+        if($guest) {
+            Alert::success('Success!','U shtua me sukses');
+        }
+        return redirect()->back();
+    }
+
+
+    public function deleteGuest($id, $guestId)
+    {
+
+        $reservation = $this->reservationsService->getByID($id);
+        if (is_null($reservation)) {
+            return response()->json([
+                'message' => 'Reservation Not Found'
+            ], JsonResponse::HTTP_NOT_FOUND);
+        }
+
+        $guest = $this->reservationGuestService->getByID($guestId);
+        if (is_null($guest)) {
+            return response()->json([
+                'message' => 'Guest Not Found'
+            ], JsonResponse::HTTP_NOT_FOUND);
+        }
+
+
+        try {
+            $guestDeleted = $this->reservationGuestService->delete($guest);
+            if ($guestDeleted) {
+                Alert::success('Success!','U fshi me sukses');
+
+            }
+            return redirect()->back();
+        } catch (\Exception $e) {
+            return response()->json([
+                'message' => 'Internal Server Error'
+            ], JsonResponse::HTTP_INTERNAL_SERVER_ERROR);
+        }
+    }
+
+    public function updateGuestStatus(Request $request,$reservationId, $guestId)
+    {
+        $reservation = $this->reservationsService->getByID($reservationId);
+        if (is_null($reservation)) {
+            return abort(404, 'Reservation Not Found');
+        }
+        try {
+            $guest = $this->reservationGuestService->getByID($guestId);
+            $guestUpdated = $this->reservationGuestService->updateStatus($request,$guest);
+            if ($guestUpdated) {
+                Alert::success('Success!','U be update me sukses');
+            }
+            return redirect()->back();
+        } catch (\Exception $e) {
+            return response()->json([
+                'message' => 'Internal Server Error'
+            ], JsonResponse::HTTP_INTERNAL_SERVER_ERROR);
+        }
+
+
+    }
+
+    public function updateGuestCheckin(Request $request,$reservationId, $guestId)
+    {
+        $reservation = $this->reservationsService->getByID($reservationId);
+        if (is_null($reservation)) {
+            return abort(404, 'Reservation Not Found');
+        }
+        try {
+            $guest = $this->reservationGuestService->getByID($guestId);
+            $guestUpdated = $this->reservationGuestService->updateCheckInStatus($request,$guest);
+            if ($guestUpdated) {
+                Alert::success('Success!','U be update me sukses');
+            }
+            return redirect()->back();
+        } catch (\Exception $e) {
+            return response()->json([
+                'message' => 'Internal Server Error'
+            ], JsonResponse::HTTP_INTERNAL_SERVER_ERROR);
+        }
+
+
+    }
+
+
+
 }
