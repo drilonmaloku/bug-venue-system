@@ -384,6 +384,25 @@
     "reservations.view.notes" : "Shënime",
     "reservations.view.notes.empty" : "Nuk ka shënime.",
     "reservations.view.notes.edit" : "Përditso shënimet",
-    "reservations.view.notes_modify" : "Modifiko"
+    "reservations.view.notes_modify" : "Modifiko",
 
+    "guests.title" : "Të Ftuarit",
+    "guests.add" : "Shto të ftuar",
+    "guests.form.name" : "Emri",
+    "guests.form.email" : "Emaili",
+    "guests.form.phone_number" : "Telefoni",
+    "guests.form.guest_count" : "Numri I Personav",
+
+    "guests.table.name" : "Emri",
+    "guests.table.phone_number" : "Telefoni",
+    "guests.table.email" : "Emaili",
+    "guests.table.guest_count" : "Numri I Personav",
+    "guests.table.status" : "Statusi",
+    "guests.table.check_in_status" : "Checked In",
+
+    "guests.status.confirmed" : "Konfirmuar",
+    "guests.status.not_confirmed" : "Në pritje",
+    "guests.status.rejected" : "Anuluar",
+    "guests.check_in_status.checked" : "I regjistruar në vend",
+    "guests.check_in_status.not_checked" : "Nuk është regjistruar brenda"
 }
