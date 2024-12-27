@@ -157,7 +157,6 @@ class ReservationsService
         $reservation->date = $request->input('date');
         $reservation->description = $request->input('description');
         $reservation->menu_contents = $request->input('menu_contents');
-        $reservation->planning = json_encode($request->planning); 
         $client = $this->clientService->getByID($reservation->client->id);
         $this->clientService->update($request, $client);
 
