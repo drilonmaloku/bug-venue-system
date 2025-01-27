@@ -1,18 +1,12 @@
 <?php namespace App\Modules\Reservations\Services;
 
-use App\Models\User;
 use App\Modules\Users\Services\UsersService;
-use App\Modules\Clients\Models\Client;
 use App\Modules\Clients\Services\ClientsService;
 use App\Modules\Reservations\Models\Reservation;
-use App\Modules\Venues\Models\Venue;
 use Illuminate\Http\Request;
 use App\Modules\Logs\Models\Log;
 use App\Modules\Logs\Services\LogService;
 use App\Modules\Reservations\Models\PricingStatusTracking;
-use App\Modules\Reservations\Models\ReservationStaff;
-use Illuminate\Support\Carbon;
-use Illuminate\Support\Facades\DB;
 use App\Modules\Reservations\Notifications\ReservationAddedNotification;
 use App\Modules\Reservations\Notifications\ReservationDeletedNotifiaction;
 use App\Modules\Reservations\Notifications\ReservationUpdatedNotification;
@@ -128,6 +122,7 @@ class ReservationsService
             "total_payment" => $totalPayment,
             "menu_contents" => $request->input("menu_contents"),
             "staff_expenses" => 0,
+            "planning" => json_encode($request->input("planning")),
         ]);
         if($reservation){
             $this->logService->log([
@@ -152,18 +147,16 @@ class ReservationsService
      **/
     public function update($request, Reservation $reservation) {
 
-        // dd($request);
+        
         // Update the reservation with the new data from the request
         $reservation->number_of_guests = $request->input('number_of_guests');
         $reservation->menu_price = $request->input('menu_price');
         $reservation->manager_id = $request->input('manager_id');
         $reservation->decor_id = $request->input('decor_id');
-        $reservation->collaborator_id = $request->input('collaborator_id');
         $reservation->staff_expenses = $request->input('staff_expenses');
         $reservation->date = $request->input('date');
         $reservation->description = $request->input('description');
         $reservation->menu_contents = $request->input('menu_contents');
-
         $client = $this->clientService->getByID($reservation->client->id);
         $this->clientService->update($request, $client);
 
@@ -290,6 +283,18 @@ class ReservationsService
 
         return str_replace(array_keys($placeholders), array_values($placeholders), $contractContent);
 
+    }
+
+    public function updatePlanning($request,$reservation){
+        $reservation->planning = json_encode($request->input('planning'));
+        $reservation->save();
+        return $reservation;
+    }
+
+    public function updateNotes($request,$reservation){
+        $reservation->notes = json_encode($request->input('notes'));
+        $reservation->save();
+        return $reservation;
     }
    
 }

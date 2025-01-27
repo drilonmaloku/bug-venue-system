@@ -181,7 +181,12 @@
     border-radius: 6px;
     padding: 10px;
 }
-
+.planning-item {
+    display: flex;
+    gap: 10px;
+    margin-bottom: 20px;
+    margin-left: 0;
+}
 
 @media (max-width: 767px) {
     #notificationDropdown {
