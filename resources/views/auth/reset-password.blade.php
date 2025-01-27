@@ -4,7 +4,7 @@
     <div class="container position-sticky z-index-sticky top-0">
         <div class="row">
             <div class="col-12">
-                @include('layouts.navbars.guest.navbar')
+                @include('layouts.navbars.guest.navbar')test
             </div>
         </div>
     </div>
@@ -16,7 +16,7 @@
                         <div class="col-xl-4 col-lg-5 col-md-7 d-flex flex-column mx-lg-0 mx-auto">
                             <div class="card card-plain">
                                 <div class="card-header pb-0 text-start">
-                                    <h4 class="font-weight-bolder">Reset your password</h4>
+                                    <h4 class="font-weight-bolder">Reset your passwordtest</h4>
                                     <p class="mb-0">Enter your email and please wait a few seconds</p>
                                 </div>
                                 <div class="card-body">
