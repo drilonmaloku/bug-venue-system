@@ -46,8 +46,21 @@ Route::group(['middleware' => 'auth'], function () {
     Route::delete('/reservations/staff/{id}', [ReservationsController::class, 'deleteStaff'])->name('reservations.staff.delete');
 
     Route::post('/reservations/add-collaborator/{reservationId}', [ReservationsController::class, 'addCollaborator'])->name('reservations.addCollaborator');
-    Route::delete('reservations/{reservationId}/collaborators/{collaboratorId}', [ReservationsController::class, 'deleteCollaborator'])
-    ->name('reservations.delete-collaborator');
+    Route::delete('reservations/{reservationId}/collaborators/{collaboratorId}', [ReservationsController::class, 'deleteCollaborator'])->name('reservations.delete-collaborator');
+
+    Route::put('/reservations/update-planning/{id}', [ReservationsController::class, 'updatePlanning'])->name('reservations.updatePlanning');
+    Route::get('/reservations/edit-notes/{id}', [ReservationsController::class, 'editNotes'])->name('reservations.editNotes');
+
+    Route::put('/reservations/update-notes/{id}', [ReservationsController::class, 'updateNotes'])->name('reservations.updateNotes');
+
+
+
+    Route::get('/reservations/manage-guests/{id}', [ReservationsController::class, 'listGuests'])->name('reservations.listGuests');
+    Route::post('/reservations/manage-guests/{id}/add', [ReservationsController::class, 'addGuest'])->name('reservations.addGuest');
+    Route::put('/reservations/manage-guests/{reservationId}/update/{guestId}', [ReservationsController::class, 'updateGuest'])->name('reservations.updateGuest');
+    Route::delete('/reservations/manage-guests/{reservationId}/delete/{guestId}', [ReservationsController::class, 'deleteGuest'])->name('reservations.deleteGuest');
+    Route::patch('/reservations/manage-guests/{reservationId}/update-status/{guestId}', [ReservationsController::class, 'updateGuestStatus'])->name('reservations.updateGuestStatus');
+    Route::patch('/reservations/manage-guests/{reservationId}/update-checkin/{guestId}', [ReservationsController::class, 'updateGuestCheckin'])->name('reservations.updateGuestCheckin');
 
 });
 

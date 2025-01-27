@@ -6,9 +6,7 @@
     "general.filter_btn": "Filtro",
     "general.filter_reset_btn": "Reset",
     "general.delete_btn": "Fshij",
-
     "dashboard.title": "Dashboard",
-
     "dashboard.dashboard": "Dashboard",
     "dashboard.reservations": "Rezervimet",
     "dashboard.expenses": "Shpenzimet",
@@ -372,5 +370,41 @@
 
     "contracts.manage": "Menagjo Kontratën",
     "contracts.contract": "Kontrata",
-    "contracts.info": "Mund të përdorni vendmbushjet e mëposhtme që do të gjenerohen dinamikisht kur printoni një kontratë për një rezervim:"
+    "contracts.info": "Mund të përdorni vendmbushjet e mëposhtme që do të gjenerohen dinamikisht kur printoni një kontratë për një rezervim:",
+
+
+    "reservation.planning.title": "Planifikimi",
+    "reservation.planning.empty": "Nuk ka planifikim.",
+    "reservation.planning.start_time": "Fillon",
+    "reservation.planning.end_time": "Mbaron",
+    "reservation.planning.description": "Përshkrimi",
+    "reservation.planning.modify": "Modifiko",
+    "reservation.planning.modify_planning": "Modifiko Planifikimin",
+    "reservation.planning.no_planning_found": "Nuk ka planifikim për këtë rezervim.",
+
+    "reservations.view.notes": "Shënime",
+    "reservations.view.notes.empty": "Nuk ka shënime.",
+    "reservations.view.notes.edit": "Përditso shënimet",
+    "reservations.view.notes_modify": "Modifiko",
+    "Remember Me": "Mbaj mend",
+
+    "guests.title" : "Të Ftuarit",
+    "guests.add" : "Shto të ftuar",
+    "guests.form.name" : "Emri",
+    "guests.form.email" : "Emaili",
+    "guests.form.phone_number" : "Telefoni",
+    "guests.form.guest_count" : "Numri I Personav",
+
+    "guests.table.name" : "Emri",
+    "guests.table.phone_number" : "Telefoni",
+    "guests.table.email" : "Emaili",
+    "guests.table.guest_count" : "Numri I Personav",
+    "guests.table.status" : "Statusi",
+    "guests.table.check_in_status" : "Checked In",
+
+    "guests.status.confirmed" : "Konfirmuar",
+    "guests.status.not_confirmed" : "Në pritje",
+    "guests.status.rejected" : "Anuluar",
+    "guests.check_in_status.checked" : "I regjistruar në vend",
+    "guests.check_in_status.not_checked" : "Nuk është regjistruar brenda"
 }

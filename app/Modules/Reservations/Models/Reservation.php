@@ -88,6 +88,11 @@ class Reservation extends Model
         return $this->hasMany(Invoice::class);
     }
 
+    public function guests()
+    {
+        return $this->hasMany(ReservationGuest::class);
+    }
+
     public function discounts()
     {
         return $this->hasMany(Discount::class);
