@@ -46,7 +46,7 @@ Route::group(['middleware' => 'auth'], function () {
     Route::get('/profile/password', [UsersController::class, 'editPassword'])->name('profile.password-update');
 });
 
-Auth::routes(['register' => false, 'reset' => false, 'verify' => false]);
+Auth::routes(['register' => false, 'reset' => true, 'verify' => false]);
 
 
 Route::get('locale/{locale}', function ($locale){
