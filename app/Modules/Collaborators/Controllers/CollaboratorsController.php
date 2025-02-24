@@ -2,7 +2,7 @@
 
 namespace App\Modules\Collaborators\Controllers;
 
-use App\Modules\collaborators\Services\CollaboratorsService;
+use App\Modules\Collaborators\Services\CollaboratorsService;
 use App\Http\Controllers\Controller;
 use App\Modules\Logs\Services\LogService;
 use RealRashid\SweetAlert\Facades\Alert;
