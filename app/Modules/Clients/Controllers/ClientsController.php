@@ -6,6 +6,7 @@ use App\Modules\Clients\Services\ClientsService;
 use App\Modules\Logs\Models\Log;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
+use App\Modules\Clients\Imports\ClientsImport;
 use App\Modules\Clients\Models\Client;
 use App\Modules\Logs\Services\LogService;
 use Maatwebsite\Excel\Facades\Excel;
@@ -87,6 +88,52 @@ class ClientsController extends Controller
         ]);
         return Excel::download(new ClientsExport($clients), "clients-export.xlsx");
     }
+    public function import(Request $request)
+{
+    // Validate the uploaded file
+    $request->validate([
+        'file' => 'required|mimes:xlsx,xls',
+    ], [
+        'file.required' => 'Please select a file to import',
+        'file.mimes' => 'The file must be an Excel file (xlsx or xls)',
+    ]);
+
+    try {
+        // Get the uploaded file
+        $file = $request->file('file');
+        
+        // Process the Excel file
+        Excel::import(new ClientsImport, $file);
+        
+        // Log the successful import
+        $this->logService->log([
+            'message' => 'Clients were successfully imported from Excel',
+            'context' => Log::LOG_CONTEXT_CLIENTS,
+            'ttl'=> Log::LOG_TTL_THREE_MONTHS,
+        ]);
+        
+        alert()->success(__('clients.alert.import_success'))->autoclose(2000);
+        return redirect()->back();
+    } catch (\Maatwebsite\Excel\Validators\ValidationException $e) {
+        // Handle validation errors from the Excel import
+        $failures = $e->failures();
+        $errorMessage = 'Import failed. Please check your Excel file format.';
+        
+        alert()->error($errorMessage)->autoclose(3000);
+        return redirect()->back();
+    } catch (\Exception $e) {
+        // Handle other unexpected errors
+        $this->logService->log([
+            'message' => 'Client import failed: ' . $e->getMessage(),
+            'context' => Log::LOG_CONTEXT_CLIENTS,
+            'ttl'=> Log::LOG_TTL_THREE_MONTHS,
+            'error' => true,
+        ]);
+        
+        alert()->error(__('clients.alert.import_error'))->autoclose(2000);
+        return redirect()->back();
+    }
+}
     public function getClients(Request $request)
         {
             $search = $request->input('term');

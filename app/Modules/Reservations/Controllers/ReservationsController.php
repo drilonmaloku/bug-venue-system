@@ -36,6 +36,8 @@ use Illuminate\Validation\ValidationException;
 use PhpOffice\PhpWord\PhpWord;
 use RealRashid\SweetAlert\Facades\Alert;
 use Illuminate\Validation\Rule;
+use App\Modules\Reservations\Imports\ReservationsImport;
+use Illuminate\Support\Facades\DB;
 
 class ReservationsController extends Controller
 {
@@ -942,6 +944,161 @@ class ReservationsController extends Controller
 
     }
 
+    public function importPage()
+    {
+        return view('pages.reservations.import', [
+            'venues' => $this->venuesService->getVenues(),
+            'menus' => $this->menuService->getAll(request(), false),
+            'users' => $this->userService->getAll(request(), false),
+            'clients' => $this->clientsService->getAll(request(), false),
+        ]);
+    }
+    
+public function import(Request $request)
+{
+    $request->validate([
+        'file' => 'required|mimes:xlsx,xls',
+    ], [
+        'file.required' => 'Please select a file to import',
+        'file.mimes' => 'The file must be an Excel file (xlsx or xls)',
+    ]);
 
-
+    try {
+        // Check if the file has the correct structure
+        $reader = \PhpOffice\PhpSpreadsheet\IOFactory::createReader('Xlsx');
+        $reader->setReadDataOnly(true);
+        $spreadsheet = $reader->load($request->file('file'));
+        $worksheet = $spreadsheet->getActiveSheet();
+        
+        // Get the headers (first row)
+        $headers = [];
+        foreach ($worksheet->getRowIterator(1, 1) as $row) {
+            $cellIterator = $row->getCellIterator();
+            $cellIterator->setIterateOnlyExistingCells(false);
+            foreach ($cellIterator as $cell) {
+                $headers[] = $cell->getValue();
+            }
+        }
+        
+        // Check if required headers exist
+        $requiredHeaders = ['venue_id', 'client_id', 'menu_id', 'manager_id', 'menu_price', 
+                           'date', 'reservation_type', 'number_of_guests', 'current_payment', 'total_payment'];
+        $missingHeaders = [];
+        
+        foreach ($requiredHeaders as $header) {
+            if (!in_array($header, $headers)) {
+                $missingHeaders[] = $header;
+            }
+        }
+        
+        if (!empty($missingHeaders)) {
+            $errorMessage = 'Import failed. The following required headers are missing from your Excel file:<ul>';
+            foreach ($missingHeaders as $header) {
+                $errorMessage .= "<li>{$header}</li>";
+            }
+            $errorMessage .= '</ul>';
+            
+            // Extended alert with longer display time
+            alert()->error('Error!', $errorMessage)->persistent('Close')->autoClose(20000);
+            return redirect()->back();
+        }
+        
+        // If headers are correct, proceed with import
+        DB::beginTransaction();
+        
+        $import = new ReservationsImport();
+        $import->import($request->file('file'));
+        
+        // Check if there were any missing references
+        $missingVenues = $import->getMissingVenues();
+        $missingClients = $import->getMissingClients();
+        $missingMenus = $import->getMissingMenus();
+        $missingManagers = $import->getMissingManagers();
+        
+        $hasMissingReferences = !empty($missingVenues) || !empty($missingClients) || 
+                               !empty($missingMenus) || !empty($missingManagers);
+        
+        DB::commit();
+        
+        if ($hasMissingReferences) {
+            $warningMessage = 'Import completed, but with warnings:';
+            
+            if (!empty($missingVenues)) {
+                $warningMessage .= '<br><strong>Missing Venues:</strong><ul>';
+                foreach ($missingVenues as $message) {
+                    $warningMessage .= "<li>{$message}</li>";
+                }
+                $warningMessage .= '</ul>';
+            }
+            
+            if (!empty($missingClients)) {
+                $warningMessage .= '<br><strong>Missing Clients:</strong><ul>';
+                foreach ($missingClients as $message) {
+                    $warningMessage .= "<li>{$message}</li>";
+                }
+                $warningMessage .= '</ul>';
+            }
+            
+            if (!empty($missingMenus)) {
+                $warningMessage .= '<br><strong>Missing Menus:</strong><ul>';
+                foreach ($missingMenus as $message) {
+                    $warningMessage .= "<li>{$message}</li>";
+                }
+                $warningMessage .= '</ul>';
+            }
+            
+            if (!empty($missingManagers)) {
+                $warningMessage .= '<br><strong>Missing Managers:</strong><ul>';
+                foreach ($missingManagers as $message) {
+                    $warningMessage .= "<li>{$message}</li>";
+                }
+                $warningMessage .= '</ul>';
+            }
+            
+            // Extended alert with longer display time and persistent button
+            alert()->warning('Warning!', $warningMessage)->persistent('Close')->autoClose(30000);
+        } else {
+            alert()->success('Success!', 'All reservations were imported successfully')->autoClose(5000);
+        }
+        
+        return redirect()->route('reservations.index');
+    } catch (\Maatwebsite\Excel\Validators\ValidationException $e) {
+        DB::rollBack();
+        
+        $failures = $e->failures();
+        
+        // Group errors by row for cleaner display
+        $errorsByRow = [];
+        foreach ($failures as $failure) {
+            $row = $failure->row();
+            if (!isset($errorsByRow[$row])) {
+                $errorsByRow[$row] = [];
+            }
+            $errorsByRow[$row] = array_merge($errorsByRow[$row], $failure->errors());
+        }
+        
+        $errorMessage = 'Import failed. Please check the following rows:';
+        
+        $rowCount = 0;
+        foreach ($errorsByRow as $row => $errors) {
+            $errorMessage .= "<br>Row {$row}: " . implode(', ', $errors);
+            $rowCount++;
+            if ($rowCount >= 10 && count($errorsByRow) > 10) {
+                $errorMessage .= "<br>... and " . (count($errorsByRow) - 10) . " more rows with errors.";
+                break;
+            }
+        }
+        
+        alert()->error('Error!', $errorMessage)->persistent('Close')->autoClose(30000);
+        return redirect()->back()->withErrors(['import_error' => $errorMessage]);
+    } catch (\Exception $e) {
+        DB::rollBack();
+        
+        \Log::error('Reservation import error: ' . $e->getMessage());
+        
+        alert()->error('Error!', 'An unexpected error occurred during import: ' . $e->getMessage())
+               ->persistent('Close')->autoClose(15000);
+        return redirect()->back();
+    }
+}
 }
