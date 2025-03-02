@@ -88,6 +88,7 @@
     "users.table.role.super_admin": "Super Admin",
     "users.table.role.manager": "Menagjer",
     "users.table.role.staff": "Staf",
+    "users.table.role.kitchen": "Kuzhina",
 
     "users.table.language": "Gjuha",
     "users.table.language.en": "Anglisht",
@@ -176,6 +177,7 @@
     "payment.table.client": "Klienti",
     "payment.table.value": "Vlera",
     "payment.table.date": "Data",
+    "payment.table.payment_method": "Metoda e pagesës",
     "payment.table.reservation": "Rezervimi",
     "payment.table.description": "Shënime",
     "payment.forms.save": "Ruaj",
@@ -186,6 +188,8 @@
     "payment.title.update": "Përditso Pagesën",
     "payment.title.single": "Pagesa",
     "payment.title.information": "Informatat",
+    "payment.method.cash": "Kesh",
+    "payment.method.bank": "Bank",
 
     "reservations.status.planned": "Planifikuar",
     "reservations.status.finished": "Mbajtur",
@@ -286,8 +290,10 @@
     "reservations.view.payments.table.value": "Vlera",
     "reservations.view.payments.table.date": "Data",
     "reservations.view.payments.table.description": "Përshkrimi",
+    "reservations.view.payments.table.payment_method": "Metoda e Pagesës",
     "reservations.view.form.date": "Data e Pagesës",
     "reservations.view.form.value": "Vlera e Pagesës",
+    "reservations.view.form.payment_method": "Metoda e Pagesës",
     "reservations.view.form.notes": "Shënime",
     "reservations.view.delete.note": "A jeni i sigurt që dëshironi të fshini rezervimin, ky veprim nuk mund të kthehet?",
 

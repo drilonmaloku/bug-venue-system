@@ -88,6 +88,7 @@
     "users.table.role.super_admin": "Super Admin",
     "users.table.role.manager": "Manager",
     "users.table.role.staff": "Staff",
+    "users.table.role.kitchen": "Kitchen",
 
     "users.table.language": "Language",
     "users.table.language.en": "English",
@@ -178,6 +179,7 @@
     "payment.table.client": "Client",
     "payment.table.value": "Amount",
     "payment.table.date": "Date",
+    "payment.table.payment_method": "Payment Method",
     "payment.table.reservation": "Reservation",
     "payment.table.description": "Description",
     "payment.forms.save": "Save",
@@ -188,6 +190,8 @@
     "payment.title.update": "Update Payment",
     "payment.title.single": "Payment",
     "payment.title.information": "Information",
+    "payment.method.cash": "Cash",
+    "payment.method.bank": "Bank",
 
     "reservations.title": "Reservations",
     "reservations.create_btn": "Create",
@@ -284,8 +288,10 @@
     "reservations.view.payments.table.value": "Value",
     "reservations.view.payments.table.date": "Date",
     "reservations.view.payments.table.description": "Description",
+    "reservations.view.payments.table.payment_method": "Payment Method",
     "reservations.view.form.date": "Payment Date",
     "reservations.view.form.value": "Payment Value",
+    "reservations.view.form.payment_method": "Payment Method",
     "reservations.view.form.notes": "Notes",
 
     "reservations.view.update_status": "Update Status",

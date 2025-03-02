@@ -12,6 +12,7 @@
                     <th>ID</th>
                     <th>{{__('reservations.view.payments.table.value')}}</th>
                     <th>{{__('reservations.view.payments.table.date')}}</th>
+                    <th>{{__('reservations.view.payments.table.payment_method')}}</th>
                     <th>{{__('reservations.view.payments.table.description')}}</th>
                     <th width="40">
                     </th>
@@ -30,6 +31,9 @@
                         </td>
                         <td>
                             {{ $payment->date }}
+                        </td>
+                        <td>
+                            {{ $payment->paymentMethodLabel }}
                         </td>
                         <td>
                             {{ $payment->notes }}
@@ -94,6 +98,17 @@
                                        name="initial_payment_value">
                             </div>
                         </div>
+                        <div class="col-md-12">
+                            <div class="form-group">
+                                <label for="initial_payment_value" class="form-control-label">{{__('reservations.view.form.payment_method')}}</label>
+                                <select class="bug-text-input" name="payment_method">
+                                    <option value="">Selekto</option>
+                                    <option @if($payment->payment_method == 1) selected @endif value="1">{{__('payment.method.cash')}}</option>
+                                    <option @if($payment->payment_method == 2) selected @endif value="2">{{__('payment.method.bank')}}</option>
+                                </select>
+                            </div>
+                        </div>
+
                         <div class="col-md-12">
                             <div class="form-group">
                                 <label for="payment_notes" class="form-control-label">{{__('reservations.view.form.notes')}}</label>
