@@ -26,6 +26,16 @@
                             </div>
                             <div class="col-md-12">
                                 <div class="form-group">
+                                    <label for="example-text-input" class="bug-label">{{__('payment.table.payment_method')}}</label>
+                                    <select class="bug-text-input" name="payment_method">
+                                        <option value="">Selekto</option>
+                                        <option @if($payment->payment_method == 1) selected @endif value="1">{{__('payment.method.cash')}}</option>
+                                        <option @if($payment->payment_method == 2) selected @endif value="2">{{__('payment.method.bank')}}</option>
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="col-md-12">
+                                <div class="form-group">
                                     <label for="example-text-input" class="bug-label">{{__('payment.table.description')}}</label>
                                     <input class="bug-text-input" required type="text" name="notes" value="{{$payment->notes}}">
                                 </div>

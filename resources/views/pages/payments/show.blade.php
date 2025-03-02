@@ -36,6 +36,10 @@
                         <td>{{ $payment->value }}</td>
                     </tr>
                     <tr>
+                        <td>{{__('payment.table.payment_method')}}</td>
+                        <td>{{ $payment->paymentMethodLabel }}</td>
+                    </tr>
+                    <tr>
                         <td>{{__('payment.table.description')}}</td>
                         <td>{{ $payment->notes }}</td>
                     </tr>
