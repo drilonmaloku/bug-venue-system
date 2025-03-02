@@ -88,6 +88,7 @@
     "users.table.role.super_admin": "Super Admin",
     "users.table.role.manager": "Manager",
     "users.table.role.staff": "Staff",
+    "users.table.role.kitchen": "Kitchen",
 
     "users.table.language": "Language",
     "users.table.language.en": "English",
