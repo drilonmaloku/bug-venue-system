@@ -93,7 +93,7 @@
                 </tr>
                 <tr>
                     <td>{{__('reservations.table.menu')}}:</td>
-                    <td>{{ $reservation->menu_contents }}</td>
+                    <td>{!! $reservation->menu_contents !!}</td>
                 </tr>
                 <tr>
                     <td>{{__('reservations.table.total_services')}}:</td>

@@ -49,6 +49,7 @@
                         <th>{{__('clients.table.email')}}</th>
                         <th>{{__('clients.table.address')}}</th>
                         <th>{{__('clients.table.additional_phone_number')}}</th>
+                        <th>{{__('clients.table.personal_number')}}</th>
                         <th></th>
                     </tr>
                     </thead>
@@ -72,6 +73,9 @@
                             </td>
                             <td>
                                 {{$client->additional_phone_number}}
+                            </td>
+                            <td>
+                                {{$client->personal_number}}
                             </td>
                             <td>
                                 <div class="bug-table-item-options">

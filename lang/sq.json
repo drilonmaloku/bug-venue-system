@@ -32,6 +32,7 @@
     "clients.table.phone_number": "Telefoni",
     "clients.table.additional_phone_number": "Telefoni Opsional",
     "clients.table.address": "Adresa",
+    "clients.table.personal_number": "Numri Personal",
     "clients.table.not_found_with_search": "Nuk ka klienta sipas search",
     "clients.table.not_found_without_search": "Nuk ka klienta momentalisht",
     "clients.view.title": "Klienti",

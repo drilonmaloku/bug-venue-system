@@ -69,6 +69,9 @@
                         <div class="col-md-12">
                             <div class="form-group">
                                 <label for="example-text-input" class="form-control-label">{{__('reservations.create.menu_items')}}*</label>
+                                <textarea name="menu_contents" id="menuDescription" rows="10" >
+                                        {!! isset($reservation->menu_contents) ? $reservation->menu_contents : '' !!}
+                                </textarea>
                                 <textarea rows="6" id="menuContents" class="bug-text-input" required  name="menu_contents" >{{$reservation->menu_contents}}</textarea>
                             </div>
                         </div>
@@ -147,6 +150,13 @@
             </div>
         </div>
     </div>
+    <script src="https://cdn.ckeditor.com/4.22.0/standard/ckeditor.js"></script>
+
+    <script>
+        CKEDITOR.replace('menuDescription', {
+            height: 400
+        });
+    </script>
     <script>
         document.addEventListener('DOMContentLoaded', function() {
             const menuSelect = document.getElementById('menuId');

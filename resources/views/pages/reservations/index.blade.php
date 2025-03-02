@@ -165,6 +165,7 @@
                     @endforeach
                     </tbody>
                 </table>
+                {{$reservations->links()}}
             </div>
         @else
             <div class="hubers-empty-tab">

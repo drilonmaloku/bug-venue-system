@@ -91,7 +91,7 @@
                                 <a class="hubers-link" href="{{route('clients.view',['id'=>$payment->client->id])}}"> {{$payment->client->name}} </a>
                              </td>
                             <td>
-                                {{$payment->value}}
+                                {{$payment->value}}€
                             </td>
                             <td>
                                 {{$payment->date}}

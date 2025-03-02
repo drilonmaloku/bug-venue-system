@@ -36,7 +36,7 @@
                     </tr>
                     <tr>
                         <td>{{__('menu.table.description')}}</td>
-                        <td>{{ $menu->description }}</td>
+                        <td>{!! $menu->description !!}</td>
                     </tr>
                     </tbody>
                 </table>
