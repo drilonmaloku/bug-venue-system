@@ -86,6 +86,7 @@
                                     <option value="super-admin">{{__('users.table.role.super_admin')}}</option>
                                     <option value="manager">{{__('users.table.role.manager')}}</option>
                                     <option value="staff">{{__('users.table.role.staff')}}</option>
+                                    <option value="kitchen">{{__('users.table.role.kitchen')}}</option>
                                 </select>
 
                             </div>

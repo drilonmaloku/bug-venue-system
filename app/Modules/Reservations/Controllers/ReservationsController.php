@@ -5,7 +5,6 @@ namespace App\Modules\Reservations\Controllers;
 use App\Modules\Clients\Services\ClientsService;
 use App\Modules\Menus\Services\MenuService;
 use App\Modules\Reservations\Services\ReservationGuestService;
-use App\Modules\Reservations\Services\ReservationService;
 use App\Modules\Payments\Services\PaymentsService;
 use App\Modules\Reservations\Models\Reservation;
 use App\Modules\Reservations\Services\InvoicesServices;
@@ -15,7 +14,6 @@ use App\Modules\Venues\Services\VenuesService;
 use Illuminate\Http\Request;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Support\Carbon;
-use Inertia\Inertia;
 use Maatwebsite\Excel\Facades\Excel;
 use App\Http\Controllers\Controller;
 use App\Modules\Collaborators\Services\CollaboratorsService;
@@ -30,12 +28,11 @@ use App\Modules\Reservations\Services\ReservationCollaboratorServices;
 use App\Modules\Reservations\Services\ReservationCommentServices;
 use App\Modules\Reservations\Services\ReservationStaffServices;
 use App\Modules\Users\Services\UsersService;
-use Barryvdh\DomPDF\Facade\Pdf as FacadePdf;
-use Barryvdh\DomPDF\PDF;
 use Illuminate\Validation\ValidationException;
-use PhpOffice\PhpWord\PhpWord;
 use RealRashid\SweetAlert\Facades\Alert;
 use Illuminate\Validation\Rule;
+use App\Modules\Reservations\Imports\ReservationsImport;
+use Illuminate\Support\Facades\DB;
 
 class ReservationsController extends Controller
 {
@@ -942,6 +939,24 @@ class ReservationsController extends Controller
 
     }
 
+    public function importPage()
+    {
+        return view('pages.reservations.import', [
+            'venues' => $this->venuesService->getVenues(),
+            'menus' => $this->menuService->getAll(request(), false),
+            'users' => $this->userService->getAll(request(), false),
+            'clients' => $this->clientsService->getAll(request(), false),
+        ]);
+    }
+    
+    public function import(Request $request)
+    {
+        $request->validate([
+            'file' => 'required|mimes:xlsx,csv',
+        ]);
 
+        Excel::import(new ReservationsImport, $request->file('file'));
 
+        return redirect()->route('reservations.index')->withSuccessMessage('Rezervimet u bene import me sukses');
+    }
 }

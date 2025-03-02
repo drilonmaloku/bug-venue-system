@@ -26,6 +26,7 @@ class User extends Authenticatable
     const ROLE_MANAGER = "manager";
     const SYSTEM_ADMIN = "system-admin";
     const ROLE_STAFF = "staff";
+    const ROLE_KITCHEN = "kitchen";
 
 
 

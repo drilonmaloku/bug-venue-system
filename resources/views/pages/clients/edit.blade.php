@@ -41,6 +41,12 @@
                                     <input type="email" class="bug-text-input" name="email" value="{{$client->email}}" />
                                 </div>
                             </div>
+                            <div class="col-md-12">
+                                <div class="form-group">
+                                    <label for="example-text-input" class="bug-label">{{__('clients.table.personal_number')}}</label>
+                                    <input type="text" class="bug-text-input" name="personal_number" value="{{$client->personal_number}}" />
+                                </div>
+                            </div>
                         </div>
                         <button type="submit" class="hubers-btn">{{__('general.save_btn')}}</button>
                     </form>

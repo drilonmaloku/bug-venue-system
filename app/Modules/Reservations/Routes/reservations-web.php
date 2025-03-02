@@ -24,7 +24,8 @@ Route::group(['middleware' => 'auth'], function () {
     Route::get('/reservations/{id}/edit-invoice/{invoiceId}', [ReservationsController::class, 'editInvoice'])->name('reservations.invoice.edit');
     Route::get('/reservations/{id}/edit-payment/{paymentId}', [ReservationsController::class, 'editpayment'])->name('reservations.payment.edit');
     Route::put('/reservations/{id}/payment-update/{paymentId}', [ReservationsController::class, 'updatePayment'])->name('reservations.payment.update');
-
+    Route::get('/reservations/import/page', [ReservationsController::class, 'importPage'])->name('reservations.import.page');
+    Route::post('/reservations/import', [ReservationsController::class, 'import'])->name('reservations.import');
     Route::put('/reservations/{id}/invoices-update/{invoiceId}', [ReservationsController::class, 'updateInvoice'])->name('reservations.invoice.update');
     Route::delete('/reservations/{id}/invoices-delete/{invoiceId}', [ReservationsController::class, 'deleteInvoice'])->name('reservations.invoice.destroy');
 

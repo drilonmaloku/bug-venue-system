@@ -46,13 +46,11 @@
                             id="end_date"
                             name="end_date"
                             type="date"
-                          class="bug-text-input white medium"
-                          value="{{old('date',app('request')->input('end_date'))}}"
-
+                            class="bug-text-input white medium"
+                            value="{{old('date',app('request')->input('end_date'))}}"
                         />
                     </div>
                 </div>
-                
 
                 
                 <div class="hubers-filter-list-actions">
@@ -76,6 +74,8 @@
                         <th class="text-uppercase text-secondary text-sm font-weight-bolder opacity-7">
                             {{__('payment.table.date')}}</th>
                         <th class="text-uppercase text-secondary text-sm font-weight-bolder opacity-7">
+                            {{__('payment.table.payment_method')}}</th>
+                        <th class="text-uppercase text-secondary text-sm font-weight-bolder opacity-7">
                             {{__('payment.table.description')}}</th>
                         <th width="40" class="text-uppercase text-secondary text-sm font-weight-bolder opacity-7">
                         </th>
@@ -91,14 +91,18 @@
                                 <a class="hubers-link" href="{{route('clients.view',['id'=>$payment->client->id])}}"> {{$payment->client->name}} </a>
                              </td>
                             <td>
-                                {{$payment->value}}
+                                {{$payment->value}}€
                             </td>
                             <td>
                                 {{$payment->date}}
                             </td>
                             <td>
+                                {{ $payment->paymentMethodLabel }}
+                            </td>
+                            <td>
                                {{$payment->notes}}
                             </td>
+
                             <td>
                                 <div class="bug-table-item-options">
 

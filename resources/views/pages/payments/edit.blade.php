@@ -15,13 +15,22 @@
                                 <div class="form-group">
                                     <label for="example-text-input" class="bug-label">{{__('payment.table.value')}}*</label>
                                     <input class="bug-text-input" type="text" name="value" value="{{$payment->value}}">
-                                    
                                 </div>
                             </div>
                             <div class="col-md-12">
                                 <div class="form-group">
                                     <label for="example-text-input" class="bug-label">{{__('payment.table.date')}}*</label>
                                 <input class="bug-text-input" type="date" name="date" required id="dateInput" value="{{$payment->date}}">
+                                </div>
+                            </div>
+                            <div class="col-md-12">
+                                <div class="form-group">
+                                    <label for="example-text-input" class="bug-label">{{__('payment.table.payment_method')}}</label>
+                                    <select class="bug-text-input" name="payment_method">
+                                        <option value="">Selekto</option>
+                                        <option @if($payment->payment_method == 1) selected @endif value="1">{{__('payment.method.cash')}}</option>
+                                        <option @if($payment->payment_method == 2) selected @endif value="2">{{__('payment.method.bank')}}</option>
+                                    </select>
                                 </div>
                             </div>
                             <div class="col-md-12">

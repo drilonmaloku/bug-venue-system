@@ -29,4 +29,17 @@ class Payment extends Model
         return $this->belongsTo(Client::class);
     }
 
+    public function getPaymentMethodLabelAttribute()
+    {
+        $methods = [
+            1 => 'Cash',
+            2 => 'Bank',
+        ];
+        if(!$this->payment_method) {
+            return 'Cash';
+        }
+
+        return $methods[$this->payment_method] ?? 'Cash';
+    }
+
 }

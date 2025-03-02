@@ -63,7 +63,7 @@
                                 {{$menu->price}}
                             </td>
                             <td>
-                                {{$menu->description}}
+                                {!! $menu->description !!}
                             </td>
                             <td>
                                 <div class="bug-table-item-options">

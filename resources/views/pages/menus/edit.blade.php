@@ -17,11 +17,13 @@
                                     <input class="bug-text-input" placeholder="{{__('menu.table.name')}}*" type="text" required  name="name" value="{{$menu->name}}">
                                 </div>
                             </div>
+
                             <div class="col-md-12">
                                 <div class="form-group">
                                     <label for="example-text-input" class="bug-label">{{__('menu.table.description')}}</label>
-                                    <textarea class="bug-text-input" placeholder="{{__('menu.table.description')}}" type="text"  rows="4" name="description" value="{{$menu->description}}">{{$menu->description}}</textarea>
-
+                                    <textarea name="description" id="menuDescription" rows="10" >
+                                        {!! isset($menu->description) ? $menu->description : '' !!}
+                                    </textarea>
                                 </div>
                             </div>
                             <div class="col-md-12">
@@ -38,5 +40,13 @@
             </div>
         </div>
     </div>
+
+    <script src="https://cdn.ckeditor.com/4.22.0/standard/ckeditor.js"></script>
+
+    <script>
+        CKEDITOR.replace('menuDescription', {
+            height: 400
+        });
+    </script>
 
 @endsection

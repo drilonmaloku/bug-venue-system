@@ -114,6 +114,7 @@ class ReservationsService
             "manager_id" => $request->input("manager_id"),
             "decor_id" => $request->input("decor_id"),
             "menu_price" => $request->input("menu_price"),
+            "contract_date" => $request->input("contract_date"),
             "reservation_type" => $venueData[1],
             "date" => $date,
             "description" => $request->input("description"),
@@ -122,7 +123,7 @@ class ReservationsService
             "total_payment" => $totalPayment,
             "menu_contents" => $request->input("menu_contents"),
             "staff_expenses" => 0,
-            "planning" => json_encode($request->input("planning")),
+            "planning" => $request->input("planning") ? json_encode($request->input("planning")) : null,
         ]);
         if($reservation){
             $this->logService->log([

@@ -32,7 +32,8 @@ Route::get('/', function () {
     return redirect('/dashboard');
 })->middleware('auth');
 
-Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard.index')->middleware('auth');
+Route::get('/dashboard', [DashboardController::class, 'index'])
+    ->name('dashboard.index')->middleware('auth');
 Route::get('/dashboard/events', [DashboardController::class, 'fetchEvents'])->name('dashboard.events');
 
 

@@ -99,6 +99,7 @@ class PaymentsService
             "client_id" => $client_id,
             "value" => data_get($data, "initial_payment_value"),
             "notes" => data_get($data, "payment_notes"),
+            "payment_method" => data_get($data, "payment_method"),
             "date" => data_get($data, "payment_date"),
         ]);
 
@@ -121,6 +122,7 @@ class PaymentsService
             "client_id" => $client_id,
             "value" => data_get($data, "initial_payment_value"),
             "notes" => data_get($data, "payment_notes"),
+            "payment_method" => data_get($data, "payment_method"),
             "date" => data_get($data, "payment_date"),
         ]);
         $reservation = Reservation::findOrFail($reservation_id);
@@ -155,6 +157,7 @@ class PaymentsService
         $payment->value = $request->input('value');
         $payment->date = $request->input('date');
         $payment->notes = $request->input('notes');
+        $payment->payment_method = $request->input('payment_method');
         $paymentSaved = $payment->save();
 
         if ($paymentSaved) {
