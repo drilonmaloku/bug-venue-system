@@ -390,5 +390,14 @@
     "reservation.planning.modify": "Modify",
     "reservation.planning.modify_planning": "Modify Planning",
     "reservation.planning.no_planning_found": "No planning found",
-    "Remember Me": "Remember Me"
+    "Remember Me": "Remember Me",
+    "payment.forms.payment_method": "Payment Method",
+    "general.select_option": "Select Option",
+    "payment.forms.confirm_delete": "Confirm Delete",
+    "payment.forms.delete_confirmation_message": "Are you sure you want to delete this payment?",
+    "payment.forms.confirm_delete_btn": "Yes, Delete",
+    "general.cancel_btn": "Cancel",
+    "menu.forms.confirm_delete": "Confirm Delete Menu",
+    "menu.forms.delete_confirmation_message": "Are you sure you want to delete this menu?",
+    "menu.forms.confirm_delete_btn": "Yes, Delete Menu"
 }

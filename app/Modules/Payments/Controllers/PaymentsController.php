@@ -103,7 +103,6 @@ class PaymentsController extends Controller
     {
         $payment = $this->paymentsService->getByID($id);
 
-
         if (is_null($payment)) {
             return response()->json([
                 'message' => 'Payment Not Found'
