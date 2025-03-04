@@ -400,5 +400,9 @@
     "general.cancel_btn": "Cancel",
     "menu.forms.confirm_delete": "Confirm Delete Menu",
     "menu.forms.delete_confirmation_message": "Are you sure you want to delete this menu?",
-    "menu.forms.confirm_delete_btn": "Yes, Delete Menu"
+    "menu.forms.confirm_delete_btn": "Yes, Delete Menu",
+    "reservations.create.client.personal_number": "Personal Number",
+    "reservation.contract_date": "Contract Date",
+    "reservations.edit.client.personal_number": "Personal Number",
+    "reservations.import.title": "Import Reservations"
 }

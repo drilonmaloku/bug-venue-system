@@ -106,6 +106,12 @@
                                     </select>
                                 </div>
                             </div>
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label for="example-text-input" class="form-control-label">{{ __('reservation.contract_date')  }}</label>
+                                    <input class="bug-text-input" id="contract_date" type="date" name="contract_date" value="{{$reservation->contract_date}}">
+                                </div>
+                            </div>
                         <div class="col-md-6">
                             <div class="form-group">
                                 <label for="example-text-input" class="form-control-label">{{__('reservations.edit.staff_expenses')}}*</label>
@@ -136,6 +142,12 @@
                             <div class="form-group">
                                 <label for="example-text-input" class="form-control-label">{{__('reservations.edit.client.email')}}</label>
                                 <input class="bug-text-input" type="text" name="email" value="{{$reservation->client->email}}">
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label for="example-text-input" class="form-control-label">{{__('reservations.edit.client.personal_number')}}</label>
+                                <input class="bug-text-input" type="text" name="personal_number" value="{{$reservation->client->personal_number}}">
                             </div>
                         </div>
                         <div class="col-md-6">

@@ -421,5 +421,9 @@
     "general.cancel_btn": "Anulo",
     "menu.forms.confirm_delete": "Konfirmo Fshirjen e Menysë",
     "menu.forms.delete_confirmation_message": "A jeni të sigurt që dëshironi ta fshini këtë meny?",
-    "menu.forms.confirm_delete_btn": "Po, Fshije Menynë"
+    "menu.forms.confirm_delete_btn": "Po, Fshije Menynë",
+    "reservations.create.client.personal_number": "Numri Personal",
+    "reservation.contract_date": "Data e Kontratës",
+    "reservations.edit.client.personal_number": "Numri Personal",
+    "reservations.import.title": "Importo Rezervimet"
 }
