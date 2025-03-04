@@ -14,31 +14,37 @@
                 </div>
                 <table>
                     <thead>
-                    <tr>
-                        <th colspan="2">{{__('clients.table.information')}}:</th>
-                    </tr>
+                        <tr>
+                            <th colspan="2">{{__('clients.table.information')}}:</th>
+                        </tr>
                     </thead>
                     <tbody>
-                    <tr>
-                        <td>{{__('clients.table.name')}}</td>
-                        <td>{{ $client->name }}</td>
-                    </tr>
-                    <tr>
-                        <td>{{__('clients.table.phone_number')}}</td>
-                        <td>{{ $client->phone_number }}</td>
-                    </tr>
-                    <tr>
-                        <td>{{__('clients.table.address')}}</td>
-                        <td>{{ $client->address }}</td>
-                    </tr>
-                    <tr>
-                        <td>{{__('clients.table.email')}}</td>
-                        <td>{{ $client->email }}</td>
-                    </tr>
-                    <tr>
-                        <td>{{__('clients.table.additional_phone_number')}}</td>
-                        <td>{{ $client->additional_phone_number }}</td>
-                    </tr>
+                        <tr>
+                            <td>{{__('clients.table.name')}}</td>
+                            <td>{{ $client->name }}</td>
+                        </tr>
+                        <tr>
+                            <td>{{__('clients.table.phone_number')}}</td>
+                            <td>{{ $client->phone_number }}</td>
+                        </tr>
+                        <tr>
+                            <td>{{__('clients.table.address')}}</td>
+                            <td>{{ $client->address }}</td>
+                        </tr>
+                        <tr>
+                            <td>{{__('clients.table.email')}}</td>
+                            <td>{{ $client->email }}</td>
+                        </tr>
+                        <tr>
+                            <td>{{__('clients.table.additional_phone_number')}}</td>
+                            <td>{{ $client->additional_phone_number }}</td>
+                        </tr>
+                        <tr>
+                            <td>{{__('clients.table.personal_number')}}</td>
+                            <td>
+                                {{$client->personal_number}}
+                            </td>
+                        </tr>
                     </tbody>
                 </table>
             </div>

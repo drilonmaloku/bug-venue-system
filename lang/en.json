@@ -32,6 +32,7 @@
     "clients.table.phone_number": "Phone Number",
     "clients.table.additional_phone_number": "Additional Phone Number",
     "clients.table.address": "Address",
+    "clients.table.personal_number": "Personal Number",
     "clients.table.not_found_with_search": "No clients from search criteria",
     "clients.table.not_found_without_search": "No clients",
     "clients.view.title": "Clients",
