@@ -407,5 +407,7 @@
     "guests.status.not_confirmed" : "Në pritje",
     "guests.status.rejected" : "Anuluar",
     "guests.check_in_status.checked" : "I regjistruar në vend",
-    "guests.check_in_status.not_checked" : "Nuk është regjistruar brenda"
+    "guests.check_in_status.not_checked" : "Nuk është regjistruar brenda",
+    "passwords.sent": "Ju kemi dërguar linkun për rivendosjen e fjalëkalimit në email!",
+    "passwords.user": "Nuk u gjet asnjë llogari me këtë adresë email."
 }

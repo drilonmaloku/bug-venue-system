@@ -384,5 +384,7 @@
     "reservation.planning.modify": "Modify",
     "reservation.planning.modify_planning": "Modify Planning",
     "reservation.planning.no_planning_found": "No planning found",
-    "Remember Me": "Remember Me"
+    "Remember Me": "Remember Me",
+    "passwords.sent": "We have emailed your password reset link!",
+    "passwords.user": "No account found with this email address."
 }

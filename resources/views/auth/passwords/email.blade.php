@@ -11,11 +11,24 @@
                             Reset Password
                         </a>
                         <hr>
+                        
+                        @if (session('status'))
+                            <div class="alert alert-success" role="alert">
+                                {{ session('status') }}
+                            </div>
+                        @endif
+
+                        @error('email')
+                            <div class="alert alert-danger" role="alert">
+                                {{ $message }}
+                            </div>
+                        @enderror
+
                         <form method="POST" action="{{ route('password.email') }}">
                             @csrf
                             <div class="form-group">
                                 <label for="email" class="bug-label">Email*</label>
-                                <input id="email" type="text" class="bug-text-input @error('email') is-invalid @enderror" name="email" value="{{ old('email') }}" required  autofocus>
+                                <input id="email" type="text" class="bug-text-input" name="email" value="{{ old('email') }}" required autofocus>
                             </div>
                             <div class="form-group">
                                 <button type="submit" class="hubers-btn login-btn">
