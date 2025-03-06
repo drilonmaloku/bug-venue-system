@@ -379,7 +379,6 @@
     "contracts.contract": "Kontrata",
     "contracts.info": "Mund të përdorni vendmbushjet e mëposhtme që do të gjenerohen dinamikisht kur printoni një kontratë për një rezervim:",
 
-
     "reservation.planning.title": "Planifikimi",
     "reservation.planning.empty": "Nuk ka planifikim.",
     "reservation.planning.start_time": "Fillon",
@@ -395,7 +394,6 @@
     "reservations.view.notes_modify": "Modifiko",
     "Remember Me": "Mbaj mend",
 
-    
     "guests.title": "Të Ftuarit",
     "guests.add": "Shto të ftuar",
     "guests.form.name": "Emri",
@@ -403,7 +401,6 @@
     "guests.form.phone_number": "Telefoni",
     "guests.form.guest_count": "Numri I Personav",
 
-    
     "guests.table.name": "Emri",
     "guests.table.phone_number": "Telefoni",
     "guests.table.email": "Emaili",
@@ -429,7 +426,7 @@
     "reservation.contract_date": "Data e Kontratës",
     "reservations.edit.client.personal_number": "Numri Personal",
     "reservations.import.title": "Importo Rezervimet",
-    
+
     "guests.table": "Tavolina",
     "guests.table.table_number": "Numri i tavolines"
 }
