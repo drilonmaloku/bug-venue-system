@@ -428,5 +428,6 @@
     "reservations.import.title": "Importo Rezervimet",
 
     "guests.table": "Tavolina",
-    "guests.table.table_number": "Numri i tavolines"
+    "guests.table.table_number": "Numri i tavolines",
+    "guests.edit": "Edito"
 }

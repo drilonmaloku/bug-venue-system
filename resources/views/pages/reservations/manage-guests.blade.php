@@ -148,6 +148,9 @@
                             </td>
                             <td>
                                 <div class="bug-table-item-options">
+                                    <a href="#" class="bug-table-item-option" data-toggle="modal" data-target="#editGuestModal{{$guest->id}}">
+                                        <i class="fa fa-edit"></i>
+                                    </a>
                                     <form
                                             class="bug-table-item-option"
                                             action="{{ route('reservations.deleteGuest', ['reservationId' => $reservation->id, 'guestId' => $guest->id]) }}"
@@ -232,4 +235,60 @@
             </div>
         </div>
     </div>
+    @foreach($guests as $guest)
+        <div class="modal fade" id="editGuestModal{{$guest->id}}" tabindex="-1" role="dialog" aria-labelledby="editGuestModalLabel{{$guest->id}}" aria-hidden="true">
+            <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="editGuestModalLabel{{$guest->id}}">{{__('guests.edit')}}</h5>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <form role="form" method="POST" action="{{ route('reservations.updateGuest', ['reservationId' => $reservation->id, 'guestId' => $guest->id]) }}">
+                        @csrf
+                        @method('PUT')
+                        <div class="modal-body">
+                            <div class="row">
+                                <div class="col-md-12">
+                                    <div class="form-group">
+                                        <label for="editguest_name{{$guest->id}}" class="form-control-label">{{__('guests.form.name')}}*</label>
+                                        <input id="editguest_name{{$guest->id}}" required class="bug-text-input" type="text" name="name" value="{{ $guest->name }}">
+                                    </div>
+                                </div>
+                                <div class="col-md-12">
+                                    <div class="form-group">
+                                        <label for="editguest_table{{$guest->id}}" class="form-control-label">{{__('guests.table')}}*</label>
+                                        <input id="editguest_table{{$guest->id}}" required class="bug-text-input" type="text" name="table_number" value="{{ $guest->table_number }}">
+                                    </div>
+                                </div>
+                                <div class="col-md-12">
+                                    <div class="form-group">
+                                        <label for="editguest_email{{$guest->id}}" class="form-control-label">{{__('guests.form.email')}}</label>
+                                        <input id="editguest_email{{$guest->id}}" class="bug-text-input" type="email" name="email" value="{{ $guest->email }}">
+                                    </div>
+                                </div>
+                                <div class="col-md-12">
+                                    <div class="form-group">
+                                        <label for="editguest_phone{{$guest->id}}" class="form-control-label">{{__('guests.form.phone_number')}}</label>
+                                        <input id="editguest_phone{{$guest->id}}" class="bug-text-input" name="phone_number" value="{{ $guest->phone_number }}">
+                                    </div>
+                                </div>
+                                <div class="col-md-12">
+                                    <div class="form-group">
+                                        <label for="editguest_count{{$guest->id}}" class="form-control-label">{{__('guests.form.guest_count')}}</label>
+                                        <input id="editguest_count{{$guest->id}}" class="bug-text-input" type="number" name="guest_count" value="{{ $guest->guest_count }}">
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="submit" class="btn btn-primary">{{__('general.save_btn')}}</button>
+                            <button type="button" class="btn btn-secondary" data-dismiss="modal">{{__('general.close_btn')}}</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    @endforeach
 @endsection

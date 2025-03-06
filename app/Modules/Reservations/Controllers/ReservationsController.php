@@ -959,4 +959,28 @@ class ReservationsController extends Controller
 
         return redirect()->route('reservations.index')->withSuccessMessage('Rezervimet u bene import me sukses');
     }
+
+    public function updateGuest(Request $request, $reservationId, $guestId)
+    {
+        $guest = $this->reservationGuestService->getByID($guestId);
+        if (is_null($guest)) {
+            return redirect()->back()->withErrors(['error' => 'Guest not found.']);
+        }
+
+        $validated = $request->validate([
+            'name' => 'required|string',
+            'table_number' => 'required|string',
+            'email' => 'nullable|email',
+            'phone_number' => 'nullable|string',
+            'guest_count' => 'required|integer|min:1',
+        ]);
+
+        $updated = $this->reservationGuestService->update($guest, $validated);
+
+        if ($updated) {
+            Alert::success('Success!', 'Guest updated successfully.');
+        }
+
+        return redirect()->back();
+    }
 }
