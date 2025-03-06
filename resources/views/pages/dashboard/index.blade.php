@@ -238,7 +238,19 @@
         </div>
 
     </div>
-    
+    <script src="https://cdn.ckeditor.com/4.22.0/standard/ckeditor.js"></script>
+
+    <script>
+        CKEDITOR.replace('menuContents', {
+            height: 200,
+            removePlugins: 'elementspath', // Removes the bottom element path
+            resize_enabled: false,         // Disables resizing
+            toolbar: [                     // Defines a very basic toolbar
+                ['Bold', 'Italic', 'Underline'],
+                ['NumberedList', 'BulletedList'],
+            ]
+        });
+    </script>
     <script>
 
                                     
@@ -443,6 +455,9 @@
                 const menuContent = selectedOption.getAttribute('data-menu-contents') || "";
                 menuPriceInput.value = menuPrice;
                 menuContentsInput.value = menuContent;
+                if (CKEDITOR.instances.menuContents) {
+                    CKEDITOR.instances.menuContents.setData(menuContent);
+                }
                 updateTotalPrice();
             }
 
