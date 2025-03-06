@@ -96,9 +96,9 @@ class ReservationsController extends Controller
             'reservations' => $reservations,
             'is_on_search' => count($request->all()),
             'venues' => $this->venuesService->getVenues(),
-            'menus' => $this->menuService->getAll(request(), false),
-            'decors' => $this->decorService->getAll(request(), false),
-            'collaborators' => $this->collaboratorService->getAll(request(), false),
+            'menus' => $this->menuService->getAll(new Request(), false),
+            'decors' => $this->decorService->getAll(new Request(), false),
+            'collaborators' => $this->collaboratorService->getAll(new Request(), false),
         ]);
     }
 
