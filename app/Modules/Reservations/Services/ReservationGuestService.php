@@ -34,6 +34,7 @@ class ReservationGuestService
             "reservation_id" => $reservation_id,
             "name" => data_get($data, "name"),
             "email" => data_get($data, "email"),
+            "table_number" => data_get($data, "table_number"),
             "phone_number" => data_get($data, "phone_number"),
             "guest_count" => data_get($data, "guest_count"),
             "status" => 1,

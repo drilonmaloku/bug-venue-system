@@ -18,6 +18,7 @@
                         <th>{{__('guests.table.name')}}</th>
                         <th>{{__('guests.table.phone_number')}}</th>
                         <th>{{__('guests.table.email')}}</th>
+                        <th>{{ __('guests.table.table_number') }}</th>
                         <th>{{__('guests.table.guest_count')}}</th>
                         <th>{{__('guests.table.status')}}</th>
                         <th>{{__('guests.table.check_in_status')}}</th>
@@ -38,6 +39,9 @@
                             </td>
                             <td>
                                 {{$guest->email}}
+                            </td>
+                            <td>
+                                {{ $guest->table_number }}
                             </td>
                             <td>
                                 {{$guest->guest_count}}
@@ -191,6 +195,12 @@
                                 <div class="form-group">
                                     <label for="addguest_name" class="form-control-label">{{__('guests.form.name')}}*</label>
                                     <input id="addguest_name" required class="bug-text-input" type="text" name="name">
+                                </div>
+                            </div>
+                            <div class="col-md-12">
+                                <div class="form-group">
+                                    <label for="addguest_table" class="form-control-label">{{__('guests.table')}}*</label>
+                                    <input id="addguest_table" required class="bug-text-input" type="text" name="table_number">
                                 </div>
                             </div>
                             <div class="col-md-12">
