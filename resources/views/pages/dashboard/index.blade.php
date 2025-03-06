@@ -132,6 +132,10 @@
                                         <label for="example-text-input" class="form-control-label">{{__('reservations.create.client.email')}}</label>
                                         <input class="bug-text-input" type="text" name="client_email">
                                     </div>
+                                    <div class="form-group">
+                                        <label for="example-text-input" class="form-control-label">{{__('reservations.create.client.personal_number')}}</label>
+                                        <input class="bug-text-input" type="text" name="client_personal_number" >
+                                    </div>
                                 </div>
                                 <div class="col-md-6">
                                     <div class="form-group">
