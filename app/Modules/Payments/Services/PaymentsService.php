@@ -47,6 +47,19 @@ class PaymentsService
             });
         }
 
+        // Modified payment method filter
+        if ($request->has('payment_method') && $request->input('payment_method') != '') {
+            if ($request->input('payment_method') == '1') {
+                // For Cash payments, check for both 1 and null
+                $query->where(function($q) {
+                    $q->where('payment_method', 1)
+                      ->orWhereNull('payment_method');
+                });
+            } else {
+                // For Bank payments
+                $query->where('payment_method', $request->input('payment_method'));
+            }
+        }
 
         if ($request->filled('start_date')) {
             $startDate = $request->input('start_date');
