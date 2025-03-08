@@ -62,9 +62,9 @@
                             <div class="col-md-12">
                                 <div class="form-group">
                                     <label for="example-text-input" class="form-control-label">{{__('reservations.create.menu_items')}}*</label>
-                                    <textarea rows="6" id="menuContents" class="bug-text-input" required  name="menu_contents" >
-
+                                    <textarea name="menu_contents" id="menuContents" rows="10" >
                                     </textarea>
+
                                 </div>
                             </div>
                         </div>
@@ -95,6 +95,12 @@
                                             <option  value="{{$decor->id}}">{{$decor->name}}</option>
                                         @endforeach
                                     </select>
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label for="example-text-input" class="form-control-label">{{ __('reservation.contract_date')  }}</label>
+                                    <input class="bug-text-input" id="contract_date" type="date" name="contract_date" required>
                                 </div>
                             </div>
 
@@ -138,6 +144,10 @@
                                 <div class="form-group">
                                     <label for="example-text-input" class="form-control-label">{{__('reservations.create.client.email')}}</label>
                                     <input class="bug-text-input" type="text" name="client_email" >
+                                </div>
+                                <div class="form-group">
+                                    <label for="example-text-input" class="form-control-label">{{__('reservations.create.client.personal_number')}}</label>
+                                    <input class="bug-text-input" type="text" name="client_personal_number" >
                                 </div>
                             </div>
                             <div class="col-md-6">
@@ -191,6 +201,20 @@
             </div>
         </div>
     </div>
+    <script src="https://cdn.ckeditor.com/4.22.0/standard/ckeditor.js"></script>
+
+    <script>
+        CKEDITOR.replace('menuContents', {
+            height: 400,
+            removePlugins: 'elementspath', // Removes the bottom element path
+            resize_enabled: false,         // Disables resizing
+            toolbar: [                     // Defines a very basic toolbar
+                ['Bold', 'Italic', 'Underline'],
+                ['NumberedList', 'BulletedList'],
+            ]
+        });
+    </script>
+
     <script>
         $(document).ready(function() {
             $('#clientSearch').select2({
@@ -284,6 +308,10 @@
                 const menuContent = selectedOption.getAttribute('data-menu-contents') || "";
                 menuPriceInput.value = menuPrice;
                 menuContentsInput.value = menuContent;
+                if (CKEDITOR.instances.menuContents) {
+                    CKEDITOR.instances.menuContents.setData(menuContent);
+                }
+
                 updateTotalPrice();
             }
 

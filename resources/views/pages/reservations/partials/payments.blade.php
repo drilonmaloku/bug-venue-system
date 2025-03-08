@@ -103,8 +103,8 @@
                                 <label for="initial_payment_value" class="form-control-label">{{__('reservations.view.form.payment_method')}}</label>
                                 <select class="bug-text-input" name="payment_method">
                                     <option value="">Selekto</option>
-                                    <option @if($payment->payment_method == 1) selected @endif value="1">{{__('payment.method.cash')}}</option>
-                                    <option @if($payment->payment_method == 2) selected @endif value="2">{{__('payment.method.bank')}}</option>
+                                    <option value="1">{{__('payment.method.cash')}}</option>
+                                    <option value="2">{{__('payment.method.bank')}}</option>
                                 </select>
                             </div>
                         </div>

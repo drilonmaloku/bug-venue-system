@@ -96,9 +96,9 @@ class ReservationsController extends Controller
             'reservations' => $reservations,
             'is_on_search' => count($request->all()),
             'venues' => $this->venuesService->getVenues(),
-            'menus' => $this->menuService->getAll(request(), false),
-            'decors' => $this->decorService->getAll(request(), false),
-            'collaborators' => $this->collaboratorService->getAll(request(), false),
+            'menus' => $this->menuService->getAll(new Request(), false),
+            'decors' => $this->decorService->getAll(new Request(), false),
+            'collaborators' => $this->collaboratorService->getAll(new Request(), false),
         ]);
     }
 
@@ -229,7 +229,8 @@ class ReservationsController extends Controller
             'email' => $request->input('client_email'),
             'address' => $request->input('client_address'),
             'phone_number' => $request->input('client_phone_number'),
-            'additional_phone_number' => $request->input('client_additional_phone_number')
+            'additional_phone_number' => $request->input('client_additional_phone_number'),
+            'personal_number' => $request->input('client_personal_number'),
         ];
 
         $client = $this->clientsService->store($clientData);
@@ -532,13 +533,12 @@ class ReservationsController extends Controller
 
         $payment = $this->paymentsService->getByID($paymentId);
         if (is_null($payment)) {
-            return abort(404, 'Discount Not Found');
+            return abort(404, 'Payment Not Found');
         }
 
-        return view('pages/reservations/edit-payment', [
-            'payment' => $payment,
-            'reservation' => $reservation
-        ]);
+        session(['payment_return_url' => route('reservations.view', ['id' => $id])]);
+
+        return redirect()->route('payments.edit', ['id' => $paymentId]);
     }
 
     public function updatePayment(Request $request, $id, $paymentId)

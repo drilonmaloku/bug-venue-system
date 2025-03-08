@@ -35,13 +35,12 @@ class ReservationsService
         $perPage = $request->has('per_page') ? $request->input('per_page') : 25;
         $query = Reservation::query();
 
-        if ($request && $request->has("search") && $request->input("search") != '') {
-            $searchTerm = '%' . $request->input("search") . '%';
-
-            $query->where(function ($subquery) use ($searchTerm) {
-                $subquery->where('description', 'LIKE', $searchTerm)
-                    ->orWhere('current_payment', 'LIKE', $searchTerm);
-            });
+        if ($request->has('search') && !empty($request->search)) {
+            $searchTerm = $request->search;
+            $query->whereHas('client', function($q) use ($searchTerm) {
+                $q->where('name', 'LIKE', '%' . $searchTerm . '%');
+            })
+            ->orWhere('description', 'LIKE', '%' . $searchTerm . '%');
         }
 
         if ($request->filled('start_date')) {

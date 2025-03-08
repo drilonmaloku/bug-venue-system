@@ -71,6 +71,10 @@
                     <td>{{ $reservation->created_at }}</td>
                 </tr>
                 <tr>
+                    <td>{{ __('reservation.contract_date') }}</td>
+                    <td>{{ $reservation->contract_date }}</td> 
+                </tr>
+                <tr>
                     <td>{{__('reservations.table.time')}}:</td>
                     <td>{{ $reservation->reservation_type_name }}</td>
                 </tr>

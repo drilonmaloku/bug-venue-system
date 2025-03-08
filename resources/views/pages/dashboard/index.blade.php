@@ -132,6 +132,10 @@
                                         <label for="example-text-input" class="form-control-label">{{__('reservations.create.client.email')}}</label>
                                         <input class="bug-text-input" type="text" name="client_email">
                                     </div>
+                                    <div class="form-group">
+                                        <label for="example-text-input" class="form-control-label">{{__('reservations.create.client.personal_number')}}</label>
+                                        <input class="bug-text-input" type="text" name="client_personal_number" >
+                                    </div>
                                 </div>
                                 <div class="col-md-6">
                                     <div class="form-group">
@@ -234,7 +238,19 @@
         </div>
 
     </div>
-    
+    <script src="https://cdn.ckeditor.com/4.22.0/standard/ckeditor.js"></script>
+
+    <script>
+        CKEDITOR.replace('menuContents', {
+            height: 200,
+            removePlugins: 'elementspath', // Removes the bottom element path
+            resize_enabled: false,         // Disables resizing
+            toolbar: [                     // Defines a very basic toolbar
+                ['Bold', 'Italic', 'Underline'],
+                ['NumberedList', 'BulletedList'],
+            ]
+        });
+    </script>
     <script>
 
                                     
@@ -439,6 +455,9 @@
                 const menuContent = selectedOption.getAttribute('data-menu-contents') || "";
                 menuPriceInput.value = menuPrice;
                 menuContentsInput.value = menuContent;
+                if (CKEDITOR.instances.menuContents) {
+                    CKEDITOR.instances.menuContents.setData(menuContent);
+                }
                 updateTotalPrice();
             }
 

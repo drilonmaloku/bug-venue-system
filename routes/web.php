@@ -1,6 +1,6 @@
 <?php
 
-use App\Http\Controllers\NotificationPreferenceController;
+use App\Modules\NotificationsPreference\Controllers\NotificationPreferenceController;
 use App\Modules\Common\Controllers\DashboardController;
 use App\Modules\GoogleCalendar\Controllers\GoogleCalendarController;
 use Illuminate\Support\Facades\Artisan;
