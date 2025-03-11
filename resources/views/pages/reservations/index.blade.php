@@ -3,18 +3,10 @@
     {{__('reservations.title')}}
 @endsection
 @section('header-actions')
-    @if(count($menus) > 0 && count($venues) > 0)
     <a class="hubers-btn" href="{{route('reservations.create')}}">{{__('reservations.create_btn')}}</a>
-    @endif
 @endsection
 @section('content')
     <div class="vms_panel">
-        @if(count($menus) == 0 || count($venues) == 0)
-            <div class="hubers-notification big">
-                {{__('reservations.no_create_option')}}
-                <a class="hubers-btn" href="{{route('onboard.index')}}">Onboard</a>
-            </div>
-        @endif
         <form class="filter-items" action="/reservations" method="GET" >
             <div class="filter-options">
                 <div class="huber-filter-btn  @if ($is_on_search) active @endif">
@@ -133,7 +125,11 @@
                             </td>
                           
                             <td>
-                                <a class="hubers-link" href="{{route('venues.view',['id'=>$reservation->venue->id])}}"> {{$reservation->venue->name}} </a>
+                                @if($reservation->venue)
+                                    <a class="hubers-link" href="{{route('venues.view',['id'=>$reservation->venue->id])}}"> {{$reservation->venue->name}} </a>
+                                @else
+                                    {{ __('reservations.no_venue') }}
+                                @endif
                              </td>
                             <td>
                                {{$reservation->description}}
@@ -142,7 +138,11 @@
                                 {{$reservation->current_payment}}€ / {{$reservation->total_payment}}€
                             </td>
                              <td>
-                                <a class="hubers-link" href="{{route('clients.view',['id'=>$reservation->client->id])}}"> {{$reservation->client->name}} </a>
+                                @if($reservation->client)
+                                    <a class="hubers-link" href="{{route('clients.view',['id'=>$reservation->client->id])}}"> {{$reservation->client->name}} </a>
+                                @else
+                                    {{ __('reservations.no_client') }}
+                                @endif
                              </td>
                              <td>
                                 {{$reservation->totalInvoiceAmount}}

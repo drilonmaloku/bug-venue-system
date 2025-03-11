@@ -20,7 +20,7 @@
                             <div class="col-md-6">
                                 <div class="form-group">
                                     <label for="example-text-input" class="form-control-label">{{__('reservations.create.number_of_guests')}}*</label>
-                                    <input id="numberOfGuests" class="bug-text-input" type="number" placeholder="{{__('reservations.create.number_of_guests')}}*" name="number_of_guests" required>
+                                    <input id="numberOfGuests" class="bug-text-input" type="number" placeholder="{{__('reservations.create.number_of_guests')}}*" name="number_of_guests" >
                                 </div>
                             </div>
                         </div>
@@ -45,7 +45,7 @@
                             <div class="col-md-6">
                                 <div class="form-group">
                                     <label for="example-text-input" class="form-control-label">{{__('reservations.create.menu')}}*</label>
-                                    <select required id="menuId" class="bug-text-input" name="menu_id">
+                                    <select  id="menuId" class="bug-text-input" name="menu_id">
                                         <option value="">{{__('reservations.create.select_menu')}}</option>
                                         @foreach($menus as $menu)
                                             <option  data-price="{{$menu->price}}" value="{{$menu->id}}" data-menu-contents="{{$menu->description}}">{{$menu->name}},{{$menu->price}}</option>
@@ -56,13 +56,14 @@
                             <div class="col-md-6">
                                 <div class="form-group">
                                     <label for="example-text-input" class="form-control-label">{{__('reservations.create.menu_price')}}*</label>
-                                    <input id="menuPrice" class="bug-text-input" required type="number" name="menu_price" >
+                                    <input id="menuPrice" class="bug-text-input"  type="number" name="menu_price" >
                                 </div>
                             </div>
                             <div class="col-md-12">
                                 <div class="form-group">
                                     <label for="example-text-input" class="form-control-label">{{__('reservations.create.menu_items')}}*</label>
-                                    <textarea name="menu_contents" id="menuContents" rows="10" >
+                                    <textarea rows="6" id="menuContents" class="bug-text-input" required  name="menu_contents" >
+
                                     </textarea>
 
                                 </div>
@@ -78,7 +79,7 @@
                             <div class="col-md-6">
                                 <div class="form-group">
                                     <label for="example-text-input" class="form-control-label">{{__('reservations.create.select_manager')}}</label>
-                                    <select required id="menuId" class="bug-text-input" name="manager_id">
+                                    <select  id="menuId" class="bug-text-input" name="manager_id">
                                         <option value="">{{__('reservations.create.select_manager')}}</option>
                                         @foreach($users as $user)
                                             <option value="{{$user->id}}">{{$user->first_name}}</option>
@@ -100,7 +101,7 @@
                             <div class="col-md-6">
                                 <div class="form-group">
                                     <label for="example-text-input" class="form-control-label">{{ __('reservation.contract_date')  }}</label>
-                                    <input class="bug-text-input" id="contract_date" type="date" name="contract_date" required>
+                                    <input class="bug-text-input" id="contract_date" type="date" name="contract_date" >
                                 </div>
                             </div>
 
@@ -125,13 +126,13 @@
                             <div class="col-md-12">
                                 <div class="form-group">
                                     <label for="example-text-input" class="form-control-label">{{__('reservations.create.client.name')}}*</label>
-                                    <input class="bug-text-input" type="text" name="client_name" required >
+                                    <input class="bug-text-input" type="text" name="client_name"  >
                                 </div>
                             </div>
                             <div class="col-md-6">
                                 <div class="form-group">
                                     <label for="example-text-input" class="form-control-label">{{__('reservations.create.client.phone')}}*</label>
-                                    <input class="bug-text-input" type="text" required name="client_phone_number" >
+                                    <input class="bug-text-input" type="text"  name="client_phone_number" >
                                 </div>
                             </div>
                             <div class="col-md-6">
@@ -163,8 +164,8 @@
                                     <label for="example-text-input" class="bug-label">Planifikimi*</label>
                                     <div id="planning-container">
                                         <div class="planning-item">
-                                            <input class="bug-text-input" type="datetime-local" name="planning[0][start_time]" required>
-                                            <input class="bug-text-input" type="datetime-local" name="planning[0][end_time]" required>
+                                            <input class="bug-text-input" type="datetime-local" name="planning[0][start_time]" >
+                                            <input class="bug-text-input" type="datetime-local" name="planning[0][end_time]" >
                                             <textarea class="bug-text-input" placeholder="Përshkrimi i planifikimit" rows="2" name="planning[0][description]"></textarea>
                                         </div>
                                     </div>
@@ -179,13 +180,13 @@
                             <div class="col-md-6">
                                 <div class="form-group">
                                     <label for="example-text-input" class="form-control-label">{{__('reservations.create.payment.date')}}*</label>
-                                    <input class="bug-text-input" type="date" required name="payment_date">
+                                    <input class="bug-text-input" type="date"  name="payment_date">
                                 </div>
                             </div>
                             <div class="col-md-6">
                                 <div class="form-group">
                                     <label for="example-text-input" class="form-control-label">{{__('reservations.create.payment.amount')}}*</label>
-                                    <input class="bug-text-input" type="number" required name="initial_payment_value">
+                                    <input class="bug-text-input" type="number"  name="initial_payment_value">
                                 </div>
                             </div>
                             <div class="col-md-12">
@@ -373,8 +374,8 @@
                 const newItem = document.createElement('div');
                 newItem.className = 'planning-item';
                 newItem.innerHTML = `
-                    <input class="bug-text-input" type="datetime-local" name="planning[${planningCount}][start_time]" required>
-                    <input class="bug-text-input" type="datetime-local" name="planning[${planningCount}][end_time]" required>
+                    <input class="bug-text-input" type="datetime-local" name="planning[${planningCount}][start_time]" >
+                    <input class="bug-text-input" type="datetime-local" name="planning[${planningCount}][end_time]" >
                     <textarea class="bug-text-input" placeholder="Përshkrimi i planifikimit" rows="2" name="planning[${planningCount}][description]"></textarea>
                 `;
                 container.appendChild(newItem);

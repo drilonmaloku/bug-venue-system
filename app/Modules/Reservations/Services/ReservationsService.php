@@ -105,16 +105,18 @@ class ReservationsService
         $totalPayment = $numberOfGuests * $menuPrice;
         $date =  $request->input('date');
         $venueData = explode(",", $request->input('reservation'));
+        $venueId = !empty($venueData[0]) ? $venueData[0] : null; // Set to null if empty
+
         $reservation = Reservation::create([
             "location_id" => auth()->user()->getCurrentLocationId(),
             "client_id" => $clientId,
-            "venue_id" => $venueData[0],
+            "venue_id" => $venueId,
             "menu_id" => $request->input("menu_id"),
             "manager_id" => $request->input("manager_id"),
             "decor_id" => $request->input("decor_id"),
             "menu_price" => $request->input("menu_price"),
             "contract_date" => $request->input("contract_date"),
-            "reservation_type" => $venueData[1],
+            "reservation_type" => isset($venueData[1]) ? $venueData[1] : null,
             "date" => $date,
             "description" => $request->input("description"),
             "number_of_guests" =>$numberOfGuests,

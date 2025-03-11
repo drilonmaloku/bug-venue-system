@@ -223,7 +223,9 @@ class ReservationsController extends Controller
     }
 
     public function store(Request $request)
-    {
+{
+    $client = null;
+    if ($request->has('client_name') && $request->input('client_name')) {
         $clientData = [
             'name' => $request->input('client_name'),
             'email' => $request->input('client_email'),
@@ -234,13 +236,19 @@ class ReservationsController extends Controller
         ];
 
         $client = $this->clientsService->store($clientData);
-
-        $reservation = $this->reservationsService->store($request, $client->id);
-        if ($reservation && $request->input('initial_payment_value')  && $request->input('initial_payment_value')) {
-            $this->paymentsService->store($request, $reservation->id, $client->id);
-        }
-        return redirect()->to('reservations')->withSuccessMessage('Rezervimi u krijua me sukses');
     }
+
+    // Proceed with reservation creation regardless of client being created or not
+    $reservation = $this->reservationsService->store($request, $client ? $client->id : null);
+
+    if ($reservation && $request->input('initial_payment_value')) {
+        $this->paymentsService->store($request, $reservation->id, $client ? $client->id : null);
+    }
+
+    return redirect()->to('reservations')->withSuccessMessage('Rezervimi u krijua me sukses');
+}
+
+
 
     public function edit($id)
     {
