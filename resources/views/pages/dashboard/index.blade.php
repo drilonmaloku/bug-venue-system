@@ -2,8 +2,10 @@
 @section('header')
     {{__('dashboard.title')}}
 @endsection
+
 @section('content')
     <div class="vms_panel dashboard_panel">
+        
         @if(count($menus) == 0 || count($venues) == 0)
             <div class="hubers-notification big">
                 {{__('reservations.no_create_option')}}
@@ -236,7 +238,7 @@
                 </div>
             </div>
         </div>
-
+       
     </div>
     <script src="https://cdn.ckeditor.com/4.22.0/standard/ckeditor.js"></script>
 
@@ -318,7 +320,9 @@
                     fetch(`/reservations/json/${info.event.id}`)
                         .then(response => response.json())
                         .then(data => {
+                            console.log(data); // Log the entire response
                             const reservation = data.data.reservation;
+                            console.log(reservation); // Log the reservation object
                             const tableContent = `
                     <thead>
                         <tr>
@@ -376,6 +380,17 @@
                         <tr>
                             <td>{{__('reservations.table.total_amount')}}:</td>
                             <td>${reservation.total_payment}€</td>
+                            <td></td>
+
+                        </tr>
+                        <tr>
+                            <td>Menu:</td>
+                            <td>${reservation.menu ? reservation.menu.name : 'N/A'}</td>
+                            <td></td>
+                        </tr>
+                        <tr>
+                            <td>Menu content:</td>
+                            <td>${reservation.menu_contents}</td>
                             <td></td>
 
                         </tr>
@@ -515,5 +530,5 @@
         });
     </script>
 
-   
+
 @endsection

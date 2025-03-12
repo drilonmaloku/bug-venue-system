@@ -47,6 +47,11 @@
                             <td>{{__('users.table.language')}}</td>
                             <td>{{ $user->language == 'sq' ? __('users.table.language.sq') : __('users.table.language.en') }}</td>
                         </tr>
+                        <tr>
+                            <td>Template</td>
+                            <td>{{ $user->event_title_template }}</td>
+                        </tr>
+                        
                     </tbody>
                 </table>
             </div>

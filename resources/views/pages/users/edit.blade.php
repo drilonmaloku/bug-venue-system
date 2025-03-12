@@ -50,7 +50,6 @@
                                     </select>
                                 </div>
                             </div>
-                        
                         </div>
                         <button type="submit" class="hubers-btn">{{__('general.save_btn')}}</button>
 

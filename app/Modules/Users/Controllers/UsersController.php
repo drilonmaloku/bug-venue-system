@@ -126,11 +126,24 @@ class UsersController extends Controller
     }
 
     public function updateProfile(Request $request) {
+        $request->validate([
+            'username' => 'required|string|max:255',
+            'first_name' => 'required|string|max:255',
+            'last_name' => 'nullable|string|max:255',
+            'email' => 'required|email|max:255',
+            'phone' => 'nullable|string|max:255',
+            'language' => 'required|string|max:2',
+            'titleTemplate' => 'nullable|string|max:255',
+        ]);
 
-        $user = $this->usersService->update($request,auth()->user());
+        $user = $this->usersService->update($request, auth()->user());
 
-        return redirect()->to('profile')->withSuccessMessage('Perduruesi u be update me sukses');
+        if ($request->has('titleTemplate')) {
+            $user->event_title_template = $request->titleTemplate;
+            $user->save();
+        }
 
+        return redirect()->to('profile')->withSuccessMessage('Profile updated successfully.');
     }
 
     public function editPassword()

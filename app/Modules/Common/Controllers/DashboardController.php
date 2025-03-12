@@ -70,7 +70,7 @@ class DashboardController extends Controller
 
             return [
                 'id' => $reservation->id,
-                'title' => $reservation->client->name . ',' . $reservation->venue->name,
+                'title' => $this->formatEventTitle($reservation),
                 'start' => $reservation->date,
                 'end' => $reservation->date,
                 'color' => $color,
@@ -104,7 +104,7 @@ class DashboardController extends Controller
 
             return [
                 'id' => $reservation->id,
-                'title' => $reservation->client->name . ',' . $reservation->venue->name,
+                'title' => $this->formatEventTitle($reservation),
                 'start' => $reservation->date,
                 'end' => $reservation->date,
                 'color' => $color,
@@ -149,7 +149,7 @@ class DashboardController extends Controller
 
 
 
-        $query = Reservation::with('venue')->whereBetween('date', [$start, $end]);
+        $query = Reservation::with(['venue', 'client', 'menu'])->whereBetween('date', [$start, $end]);
 
         if($venueId) {
             $query->where('venue_id', $venueId);
@@ -161,7 +161,7 @@ class DashboardController extends Controller
             $color = isset($colors[$reservation->venue_id]) ? $colors[$reservation->venue_id] : '#000000'; // Default to black
             return [
                 'id' => $reservation->id,
-                'title' => $reservation->client->name . ',' . $reservation->venue->name,
+                'title' => $this->formatEventTitle($reservation),
                 'start' => $reservation->date,
                 'end' => $reservation->date,
                 'color' => $color,
@@ -172,8 +172,29 @@ class DashboardController extends Controller
         return response()->json($events);
     }
 
+    private function formatEventTitle($reservation) {
+        $user = Auth::user();
+        $template = $user->event_title_template ?? '{client_name}, {venue_name}, {menu}, {menu_price}';
 
+        $placeholders = [
+            '{client_name}' => $reservation->client->name ?? '', 
+            '{venue_name}' => $reservation->venue->name ?? '', 
+            '{menu}' => $reservation->menu->name ?? '', 
+            '{menu_price}' => $reservation->menu ? number_format($reservation->menu->price, 2) : '' 
+        ];
 
-
+        return strtr($template, $placeholders);
+    }
+    public function saveTitleTemplate(Request $request) {
+        $request->validate([
+            'titleTemplate' => 'required|string|max:255',
+        ]);
+    
+        $user = Auth::user();
+        $user->event_title_template = $request->titleTemplate;
+        $user->save();
+    
+        return redirect()->back()->with('success', 'Title template saved successfully.');
+    }
 
 }
