@@ -218,6 +218,7 @@ class ReservationsController extends Controller
             'reservation' => $reservation,
             'reservation_client' => $reservation->client,
             'reservation_venue' => $reservation->venue,
+            'reservation_menu' => $reservation->menu,
             'planning'=>$reservation->planning,
         ]]);
     }
