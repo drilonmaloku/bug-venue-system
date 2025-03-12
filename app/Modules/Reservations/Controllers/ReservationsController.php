@@ -277,6 +277,25 @@ class ReservationsController extends Controller
             ], JsonResponse::HTTP_NOT_FOUND);
         }
         try {
+            // Check if a client exists, if not create a new one
+            if (!$reservation->client_id && $request->has('name') && $request->input('name')) {
+                $clientData = [
+                    'name' => $request->input('name'),
+                    'email' => $request->input('email'),
+                    'address' => $request->input('address'),
+                    'phone_number' => $request->input('phone_number'),
+                    'additional_phone_number' => $request->input('additional_phone_number'),
+                    'personal_number' => $request->input('personal_number'),
+                ];
+
+                $client = $this->clientsService->store($clientData);
+                $reservation->client_id = $client->id; // Associate the new client with the reservation
+            } elseif ($reservation->client_id) {
+                // Update existing client
+                $client = $this->clientsService->getByID($reservation->client_id);
+                $this->clientsService->update($request, $client);
+            }
+
             $reservationUpdated = $this->reservationsService->update($request, $reservation);
 
             if ($reservationUpdated) {

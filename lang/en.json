@@ -391,6 +391,7 @@
     "reservation.planning.modify": "Modify",
     "reservation.planning.modify_planning": "Modify Planning",
     "reservation.planning.no_planning_found": "No planning found",
+    "reservation.planning.add_planning": "Add Planning",
     "Remember Me": "Remember Me",
     "payment.forms.payment_method": "Payment Method",
     "general.select_option": "Select Option",

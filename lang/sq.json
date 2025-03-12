@@ -386,6 +386,7 @@
     "reservation.planning.description": "Përshkrimi",
     "reservation.planning.modify": "Modifiko",
     "reservation.planning.modify_planning": "Modifiko Planifikimin",
+    "reservation.planning.add_planning": "Shto planifikim",
     "reservation.planning.no_planning_found": "Nuk ka planifikim për këtë rezervim.",
 
     "reservations.view.notes": "Shënime",

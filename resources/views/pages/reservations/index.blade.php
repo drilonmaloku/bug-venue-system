@@ -135,7 +135,7 @@
                                {{$reservation->description}}
                             </td>
                             <td>
-                                {{$reservation->current_payment}}€ / {{$reservation->total_payment}}€
+                                {{$reservation->current_payment ?? 0}}€ / {{$reservation->total_payment}}€
                             </td>
                              <td>
                                 @if($reservation->client)

@@ -46,9 +46,14 @@
                 </tr>
                 <tr>
                     <td>{{__('reservations.table.venue')}}</td>
-                    <td> <a class="hubers-link"
-                            href="{{ route('venues.view', ['id' => $reservation->venue->id]) }}">
-                            {{ $reservation->venue->name }} </a>
+                    <td>
+                        @if ($reservation->venue)
+                            <a class="hubers-link" href="{{ route('venues.view', ['id' => $reservation->venue->id]) }}">
+                                {{ $reservation->venue->name }}
+                            </a>
+                        @else
+                            {{ __('reservations.no_venue') }}
+                        @endif
                     </td>
                 </tr>
                 <tr>
@@ -63,7 +68,11 @@
                 <tr>
                     <td>{{__('reservations.table.client')}}</td>
                     <td>
-                        <a class="hubers-link" href="{{ route('clients.view', ['id' => $reservation->client->id]) }}">{{ $reservation->client->name }} </a>
+                        @if ($reservation->client)
+                            <a class="hubers-link" href="{{ route('clients.view', ['id' => $reservation->client->id]) }}">{{ $reservation->client->name }} </a>
+                        @else
+                            {{ __('reservations.no_client') }}
+                        @endif
                     </td>
                 </tr>
                 <tr>
@@ -109,7 +118,7 @@
                 </tr>
                 <tr>
                     <td>{{__('reservations.table.current_payment')}}:</td>
-                    <td>{{ $reservation->current_payment }}€</td>
+                    <td>{{ $reservation->current_payment ?? 0 }}€</td>
                 </tr>
                 <tr>
                     <td>{{__('reservations.table.payment_left')}}:</td>

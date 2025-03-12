@@ -157,14 +157,17 @@ class ReservationsService
         $reservation->decor_id = $request->input('decor_id');
         $reservation->staff_expenses = $request->input('staff_expenses');
         $reservation->date = $request->input('date');
+        $reservation->contract_date = $request->input('contract_date');
         $reservation->description = $request->input('description');
         $reservation->menu_contents = $request->input('menu_contents');
-        $client = $this->clientService->getByID($reservation->client->id);
-        $this->clientService->update($request, $client);
+        if ($reservation->client) {
+            $client = $this->clientService->getByID($reservation->client->id);
+            $this->clientService->update($request, $client);
+        }
 
         $venueData = explode(",", $request->input('reservation'));
-        $reservation->venue_id = $venueData[0];
-        $reservation->reservation_type = $venueData[1];
+        $reservation->venue_id = !empty($venueData[0]) ? $venueData[0] : null;
+        $reservation->reservation_type = isset($venueData[1]) ? $venueData[1] : null;
     
         // Calculate total payment
         $numberOfGuests = intval($request->input('number_of_guests'));
@@ -273,10 +276,10 @@ class ReservationsService
     public function generateReservationContract($reservation,$contractContent){
         $placeholders = [
             '{{data}}' => $reservation->date,
-            '{{klienti}}' => $reservation->client->name,
-            '{{klienti_telefoni}}' => $reservation->client->phone_number,
-            '{{salla}}' => $reservation->venue->name,
-            '{{menu}}' => $reservation->menu->name,
+            '{{klienti}}' => $reservation->client->name ?? 'N/A',
+            '{{klienti_telefoni}}' => $reservation->client->phone_number ?? 'N/A',
+            '{{salla}}' => $reservation->venue->name ?? 'N/A',
+            '{{menu}}' => $reservation->menu->name ?? 'N/A',
             '{{id}}' => $reservation->id,
             '{{qmimi_menus}}' => $reservation->menu_price,
             '{{numri_personav}}' => $reservation->number_of_guests,

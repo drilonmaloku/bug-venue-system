@@ -19,8 +19,8 @@
                             </div>
                             <div class="col-md-6">
                                 <div class="form-group">
-                                    <label for="example-text-input" class="form-control-label">{{__('reservations.create.number_of_guests')}}*</label>
-                                    <input id="numberOfGuests" class="bug-text-input" type="number" placeholder="{{__('reservations.create.number_of_guests')}}*" name="number_of_guests" >
+                                    <label for="example-text-input" class="form-control-label">{{__('reservations.create.number_of_guests')}}</label>
+                                    <input id="numberOfGuests" class="bug-text-input" type="number" placeholder="{{__('reservations.create.number_of_guests')}}" name="number_of_guests" >
                                 </div>
                             </div>
                         </div>
@@ -44,7 +44,7 @@
                         <div class="row">
                             <div class="col-md-6">
                                 <div class="form-group">
-                                    <label for="example-text-input" class="form-control-label">{{__('reservations.create.menu')}}*</label>
+                                    <label for="example-text-input" class="form-control-label">{{__('reservations.create.menu')}}</label>
                                     <select  id="menuId" class="bug-text-input" name="menu_id">
                                         <option value="">{{__('reservations.create.select_menu')}}</option>
                                         @foreach($menus as $menu)
@@ -55,13 +55,13 @@
                             </div>
                             <div class="col-md-6">
                                 <div class="form-group">
-                                    <label for="example-text-input" class="form-control-label">{{__('reservations.create.menu_price')}}*</label>
+                                    <label for="example-text-input" class="form-control-label">{{__('reservations.create.menu_price')}}</label>
                                     <input id="menuPrice" class="bug-text-input"  type="number" name="menu_price" >
                                 </div>
                             </div>
                             <div class="col-md-12">
                                 <div class="form-group">
-                                    <label for="example-text-input" class="form-control-label">{{__('reservations.create.menu_items')}}*</label>
+                                    <label for="example-text-input" class="form-control-label">{{__('reservations.create.menu_items')}}</label>
                                     <textarea rows="6" id="menuContents" class="bug-text-input" required  name="menu_contents" >
 
                                     </textarea>
@@ -125,13 +125,13 @@
                         <div class="row">
                             <div class="col-md-12">
                                 <div class="form-group">
-                                    <label for="example-text-input" class="form-control-label">{{__('reservations.create.client.name')}}*</label>
+                                    <label for="example-text-input" class="form-control-label">{{__('reservations.create.client.name')}}</label>
                                     <input class="bug-text-input" type="text" name="client_name"  >
                                 </div>
                             </div>
                             <div class="col-md-6">
                                 <div class="form-group">
-                                    <label for="example-text-input" class="form-control-label">{{__('reservations.create.client.phone')}}*</label>
+                                    <label for="example-text-input" class="form-control-label">{{__('reservations.create.client.phone')}}</label>
                                     <input class="bug-text-input" type="text"  name="client_phone_number" >
                                 </div>
                             </div>
@@ -161,7 +161,7 @@
                         <div class="row">
                             <div class="col-md-12">
                                 <div class="form-group">
-                                    <label for="example-text-input" class="bug-label">Planifikimi*</label>
+                                    <label for="example-text-input" class="bug-label">{{ __('reservation.planning.title') }}*</label>
                                     <div id="planning-container">
                                         <div class="planning-item">
                                             <input class="bug-text-input" type="datetime-local" name="planning[0][start_time]" >
