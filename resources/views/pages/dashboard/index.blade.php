@@ -320,9 +320,7 @@
                     fetch(`/reservations/json/${info.event.id}`)
                         .then(response => response.json())
                         .then(data => {
-                            console.log(data); // Log the entire response
                             const reservation = data.data.reservation;
-                            console.log(reservation); // Log the reservation object
                             const tableContent = `
                     <thead>
                         <tr>
