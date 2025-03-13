@@ -8,7 +8,6 @@ use App\Modules\Reservations\Models\Reservation;
 use App\Modules\Venues\Models\Venue;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Auth;
 
 class DashboardController extends Controller
 {
@@ -173,8 +172,7 @@ class DashboardController extends Controller
     }
 
     private function formatEventTitle($reservation) {
-        $user = Auth::user();
-        $template = $user->event_title_template ?? '{client_name}, {venue_name}, {menu}, {menu_price}';
+        $template = auth()->user()->userSettings->event_title_template ?? '{client_name}, {venue_name}, {menu}, {menu_price}';
 
         $placeholders = [
             '{client_name}' => $reservation->client->name ?? '', 
@@ -184,17 +182,6 @@ class DashboardController extends Controller
         ];
 
         return strtr($template, $placeholders);
-    }
-    public function saveTitleTemplate(Request $request) {
-        $request->validate([
-            'titleTemplate' => 'required|string|max:255',
-        ]);
-    
-        $user = Auth::user();
-        $user->event_title_template = $request->titleTemplate;
-        $user->save();
-    
-        return redirect()->back()->with('success', 'Title template saved successfully.');
     }
 
 }

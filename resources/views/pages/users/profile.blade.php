@@ -49,7 +49,7 @@
                         </tr>
                         <tr>
                             <td>Template</td>
-                            <td>{{ $user->event_title_template }}</td>
+                            <td>{{ $user->userSettings->event_title_template ?? ''}}</td>
                         </tr>
                         
                     </tbody>

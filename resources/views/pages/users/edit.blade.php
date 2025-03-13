@@ -50,6 +50,14 @@
                                     </select>
                                 </div>
                             </div>
+                            <div class="col-md-12">
+                                <div class="form-group">
+                                    <label for="titleTemplate">{{ __('Enter your event title template') }}</label>
+                                    <input type="text" id="titleTemplate" name="event_title_template" class="form-control"
+                                           value="{{ old('title_template', $user->userSettings->event_title_template ?? '{client_name}, {venue_name}, {menu}, {menu_price}') }}">
+                                    <small>{{ __('Use placeholders like {client_name}, {venue_name}, {menu}, {menu_price}') }}</small>
+                                </div>
+                            </div>
                         </div>
                         <button type="submit" class="hubers-btn">{{__('general.save_btn')}}</button>
 
