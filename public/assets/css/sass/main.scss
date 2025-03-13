@@ -187,3 +187,12 @@
     }
   }
 }
+
+
+.fc-event-title {
+  white-space: normal !important;  /* Allow text wrapping */
+  word-wrap: break-word; /* Ensure long words break */
+  overflow: hidden;
+  text-overflow: ellipsis; /* Add "..." for overflow */
+  display: block;
+}
