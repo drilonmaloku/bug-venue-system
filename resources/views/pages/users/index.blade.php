@@ -37,6 +37,7 @@
                             <option @if(app('request')->input('role') == 'super-admin') selected @endif value="super-admin">{{__('users.table.role.super_admin')}}</option>
                             <option @if(app('request')->input('role') == 'manager') selected @endif value="manager">{{__('users.table.role.manager')}}</option>
                             <option @if(app('request')->input('role') == 'staff') selected @endif value="staff">{{__('users.table.role.staff')}}</option>
+                            <option @if(app('request')->input('role') == 'kitchen') selected @endif value="kitchen">{{__('users.table.role.kitchen')}}</option>                            
                         </select>
                     </div>
                 </div>

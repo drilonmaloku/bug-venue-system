@@ -404,5 +404,15 @@
     "reservations.create.client.personal_number": "Personal Number",
     "reservation.contract_date": "Contract Date",
     "reservations.edit.client.personal_number": "Personal Number",
-    "reservations.import.title": "Import Reservations"
+    "reservations.import.title": "Import Reservations",
+    "kitchen.table.menu_name": "Menu Name",
+    "kitchen.table.menu_contents": "Menu Contents",
+    "kitchen.table.number_of_guests": "Number of Guests",
+    "kitchen.title": "Kitchen",
+    "kitchen.table.date": "Date",
+    "kitchen.table.filter.start_date": "Start Date",
+    "kitchen.table.filter.end_date": "End Date",
+    "kitchen.table.filter.menu": "Menu",
+    "kitchen.table.filter.select_menu": "Select Menu",
+    "kitchen.table.not_found_with_search": "No reservations found with search"
 }

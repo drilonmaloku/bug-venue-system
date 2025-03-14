@@ -425,5 +425,15 @@
     "reservations.create.client.personal_number": "Numri Personal",
     "reservation.contract_date": "Data e Kontratës",
     "reservations.edit.client.personal_number": "Numri Personal",
-    "reservations.import.title": "Importo Rezervimet"
+    "reservations.import.title": "Importo Rezervimet",
+    "kitchen.table.menu_name": "Emri i Menusë",
+    "kitchen.table.menu_contents": "Përmbajtja e Menusë",
+    "kitchen.table.number_of_guests": "Numri i të Ftuarve",
+    "kitchen.title": "Kuzhina",
+    "kitchen.table.date": "Data",
+    "kitchen.table.filter.start_date": "Data Startuese",
+    "kitchen.table.filter.end_date": "Data Mbaruese",
+    "kitchen.table.filter.menu": "Menu",
+    "kitchen.table.filter.select_menu": "Selekto Menu",
+    "kitchen.table.not_found_with_search": "Nuk ka rezervime sipas search"
 }
