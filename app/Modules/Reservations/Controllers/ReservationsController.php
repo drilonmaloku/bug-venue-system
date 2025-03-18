@@ -968,15 +968,7 @@ class ReservationsController extends Controller
             return redirect()->back()->withErrors(['error' => 'Guest not found.']);
         }
 
-        $validated = $request->validate([
-            'name' => 'required|string',
-            'table_number' => 'required|string',
-            'email' => 'nullable|email',
-            'phone_number' => 'nullable|string',
-            'guest_count' => 'required|integer|min:1',
-        ]);
-
-        $updated = $this->reservationGuestService->update($guest, $validated);
+        $updated = $this->reservationGuestService->update($guest, $request);
 
         if ($updated) {
             Alert::success('Success!', 'Guest updated successfully.');

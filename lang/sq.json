@@ -429,5 +429,7 @@
 
     "guests.table": "Tavolina",
     "guests.table.table_number": "Numri i tavolines",
-    "guests.edit": "Edito"
+    "guests.edit": "Edito",
+    "guests.not_found_with_search": "Nuk ka të ftuar momentalisht",
+    "guests.not_found_without_search": "Nuk ka të ftuar sipas search"
 }

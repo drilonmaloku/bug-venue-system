@@ -407,5 +407,7 @@
     "reservations.import.title": "Import Reservations",
     "guests.table": "Table",
     "guests.table.table_number": "Table Number",
-    "guests.edit": "Edit"
+    "guests.edit": "Edit",
+    "guests.not_found_with_search": "No guests registered",
+    "guests.not_found_without_search": "No guests based on the search criteria"
 }
