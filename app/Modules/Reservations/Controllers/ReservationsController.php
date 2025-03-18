@@ -960,4 +960,20 @@ class ReservationsController extends Controller
 
         return redirect()->route('reservations.index')->withSuccessMessage('Rezervimet u bene import me sukses');
     }
+
+    public function updateGuest(Request $request, $reservationId, $guestId)
+    {
+        $guest = $this->reservationGuestService->getByID($guestId);
+        if (is_null($guest)) {
+            return redirect()->back()->withErrors(['error' => 'Guest not found.']);
+        }
+
+        $updated = $this->reservationGuestService->update($guest, $request);
+
+        if ($updated) {
+            Alert::success('Success!', 'Guest updated successfully.');
+        }
+
+        return redirect()->back();
+    }
 }

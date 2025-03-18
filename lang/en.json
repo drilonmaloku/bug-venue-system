@@ -404,5 +404,10 @@
     "reservations.create.client.personal_number": "Personal Number",
     "reservation.contract_date": "Contract Date",
     "reservations.edit.client.personal_number": "Personal Number",
-    "reservations.import.title": "Import Reservations"
+    "reservations.import.title": "Import Reservations",
+    "guests.table": "Table",
+    "guests.table.table_number": "Table Number",
+    "guests.edit": "Edit",
+    "guests.not_found_with_search": "No guests registered",
+    "guests.not_found_without_search": "No guests based on the search criteria"
 }

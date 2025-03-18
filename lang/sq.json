@@ -425,5 +425,11 @@
     "reservations.create.client.personal_number": "Numri Personal",
     "reservation.contract_date": "Data e Kontratës",
     "reservations.edit.client.personal_number": "Numri Personal",
-    "reservations.import.title": "Importo Rezervimet"
+    "reservations.import.title": "Importo Rezervimet",
+
+    "guests.table": "Tavolina",
+    "guests.table.table_number": "Numri i tavolines",
+    "guests.edit": "Edito",
+    "guests.not_found_with_search": "Nuk ka të ftuar momentalisht",
+    "guests.not_found_without_search": "Nuk ka të ftuar sipas search"
 }

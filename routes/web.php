@@ -98,3 +98,5 @@ Route::patch('/notifications/preferences', [NotificationPreferenceController::cl
 Route::get('files/{path}', [\App\Modules\Files\Controllers\AppFileController::class, 'getFile'])
     ->where('path', '.*')->name('files.getFile');
 
+Route::put('/reservations/manage-guests/{reservationId}/update/{guestId}', 'ReservationsController@updateGuest')
+    ->name('reservations.updateGuest');
