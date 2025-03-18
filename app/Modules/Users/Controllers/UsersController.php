@@ -126,11 +126,9 @@ class UsersController extends Controller
     }
 
     public function updateProfile(Request $request) {
+        $user = $this->usersService->update($request, auth()->user());
 
-        $user = $this->usersService->update($request,auth()->user());
-
-        return redirect()->to('profile')->withSuccessMessage('Perduruesi u be update me sukses');
-
+        return redirect()->to('profile')->withSuccessMessage('Profile updated successfully.');
     }
 
     public function editPassword()

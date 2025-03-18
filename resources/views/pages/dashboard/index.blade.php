@@ -2,8 +2,10 @@
 @section('header')
     {{__('dashboard.title')}}
 @endsection
+
 @section('content')
     <div class="vms_panel dashboard_panel">
+        
         @if(count($menus) == 0 || count($venues) == 0)
             <div class="hubers-notification big">
                 {{__('reservations.no_create_option')}}
@@ -236,9 +238,21 @@
                 </div>
             </div>
         </div>
-
+       
     </div>
-    
+    <script src="https://cdn.ckeditor.com/4.22.0/standard/ckeditor.js"></script>
+
+    <script>
+        CKEDITOR.replace('menuContents', {
+            height: 200,
+            removePlugins: 'elementspath', // Removes the bottom element path
+            resize_enabled: false,         // Disables resizing
+            toolbar: [                     // Defines a very basic toolbar
+                ['Bold', 'Italic', 'Underline'],
+                ['NumberedList', 'BulletedList'],
+            ]
+        });
+    </script>
     <script>
 
                                     
@@ -367,6 +381,17 @@
                             <td></td>
 
                         </tr>
+                        <tr>
+                            <td>Menu:</td>
+                            <td>${reservation.menu ? reservation.menu.name : 'N/A'}</td>
+                            <td></td>
+                        </tr>
+                        <tr>
+                            <td>Menu content:</td>
+                            <td>${reservation.menu_contents}</td>
+                            <td></td>
+
+                        </tr>
                     </tbody>
                 `;
 
@@ -443,6 +468,9 @@
                 const menuContent = selectedOption.getAttribute('data-menu-contents') || "";
                 menuPriceInput.value = menuPrice;
                 menuContentsInput.value = menuContent;
+                if (CKEDITOR.instances.menuContents) {
+                    CKEDITOR.instances.menuContents.setData(menuContent);
+                }
                 updateTotalPrice();
             }
 
@@ -500,5 +528,5 @@
         });
     </script>
 
-   
+
 @endsection
