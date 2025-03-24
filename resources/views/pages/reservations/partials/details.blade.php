@@ -202,13 +202,10 @@
                         <div class="col-md-12">
                             <div class="form-group">
                                 <label for="example-text-input" class="form-control-label">{{__('reservations.view.select_status')}}*</label>
-
                                 <select required class="bug-text-input" name="status">
                                     <option value="">{{__('reservations.view.select_status')}}</option>
-                                    <option @if($reservation->status == 1) selected @endif value="1">{{__('reservations.status.planned')}}</option>
-                                    <option @if($reservation->status == 2) selected @endif value="2">{{__('reservations.status.finished')}}</option>
-                                    <option @if($reservation->status == 3) selected @endif value="3">{{__('reservations.status.canceled')}}</option>
-
+                                    <option @if($reservation->status == 1) selected @endif value="1">{{__('reservations.status.confirmed')}}</option>
+                                    <option @if($reservation->status == 2) selected @endif value="2">{{__('reservations.status.not_confirmed')}}</option>
                                 </select>
                             </div>
                         </div>

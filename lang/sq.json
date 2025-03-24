@@ -192,9 +192,14 @@
     "payment.method.cash": "Kesh",
     "payment.method.bank": "Bank",
 
+    "reservations.status.confirmed": "Konfirmuar",
+    "reservations.status.not_confirmed": "Në Pritje",
+    "reservations.status.canceled": "Anuluar",
+
     "reservations.status.planned": "Planifikuar",
     "reservations.status.finished": "Mbajtur",
     "reservations.status.canceled": "Anuluar",
+
 
     "reservations.view.update_status": "Përditso Statusin",
     "reservations.view.select_status": "Selekto Statusin",

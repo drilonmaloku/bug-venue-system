@@ -42,13 +42,10 @@ class Reservation extends Model
     public function getStatusLabelAttribute()
     {
         if($this->status == 1) {
-            return __('reservations.status.planned');
+            return __('reservations.status.confirmed');
         }
         if($this->status == 2) {
-            return __('reservations.status.finished');
-        }
-        if($this->status == 3) {
-            return __('reservations.status.canceled');
+            return __('reservations.status.not_confirmed');
         }
     }
 

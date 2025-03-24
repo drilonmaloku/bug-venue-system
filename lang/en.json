@@ -280,9 +280,8 @@
     "reservations.view.update_btn_title": "Update",
     "reservations.view.print_contract_btn_title": "Print",
 
-    "reservations.status.planned": "In Progress",
-    "reservations.status.finished": "Finished",
-    "reservations.status.canceled": "Canceled",
+    "reservations.status.confirmed": "Confirmed",
+    "reservations.status.not_confirmed": "On Hold",
 
     "reservations.view.add_payment": "Add Payment",
     "reservations.view.payments": "Payments",

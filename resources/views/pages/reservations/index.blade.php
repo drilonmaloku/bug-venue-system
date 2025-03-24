@@ -33,9 +33,8 @@
                         <label>{{__('reservations.table.filter.select_status')}}:</label>
                         <select class="hubers-select-input white medium" name="status" id="">
                             <option value="">{{__('reservations.table.filter.select_status')}}</option>
-                            <option @if(app('request')->input('status') == 1) selected @endif value="1">{{__('reservations.status.planned')}}</option>
-                            <option @if(app('request')->input('status') == 2) selected @endif value="2">{{__('reservations.status.finished')}}</option>
-                            <option @if(app('request')->input('status') == 3) selected @endif value="3">{{__('reservations.status.canceled')}}</option>
+                            <option @if(app('request')->input('status') == 1) selected @endif value="1">{{__('reservations.status.confirmed')}}</option>
+                            <option @if(app('request')->input('status') == 2) selected @endif value="2">{{__('reservations.status.not_confirmed')}}</option>
                         </select>
                     </div>
                     <div class="hubers-filter-group">
