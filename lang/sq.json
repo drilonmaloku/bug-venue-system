@@ -432,5 +432,8 @@
     "guests.table.table_number": "Numri i tavolines",
     "guests.edit": "Edito",
     "reservations.no_venue": "Nuk ka salla për këtë rezervim",
-    "reservations.no_client": "Nuk ka klient për këtë rezervim"
+    "reservations.no_client": "Nuk ka klient për këtë rezervim",
+    "guests.not_found_with_search": "Nuk ka të ftuar momentalisht",
+    "guests.not_found_without_search": "Nuk ka të ftuar sipas search"
+
 }

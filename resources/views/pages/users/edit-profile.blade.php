@@ -1,7 +1,9 @@
 @extends('layouts.app')
+
 @section('header')
 {{__('users.edit.title')}}: {{$user->first_name}} {{$user->last_name}}
 @endsection
+
 @section('content')
     <div class="vms_panel">
         <div class="container-fluid">
@@ -19,26 +21,26 @@
                             </div>
                             <div class="col-md-12">
                                 <div class="form-group">
-                                    <label for="example-text-input" class="bug-label">{{__('users.table.name')}}*</label>
-                                    <input class="bug-text-input" required type="text" name="first_name" value="{{$user->first_name}}">
+                                    <label for="example-text-input" class="bug-label">{{__('users.table.first_name')}}*</label>
+                                    <input class="bug-text-input" type="text" placeholder="Emri" name="first_name" value="{{$user->first_name}}">
                                 </div>
                             </div>
                             <div class="col-md-12">
                                 <div class="form-group">
-                                    <label for="example-text-input" class="bug-label">{{__('users.table.last_name')}}*</label>
-                                    <input class="bug-text-input" required type="text" name="last_name" value="{{$user->last_name}}">
+                                    <label for="example-text-input" class="bug-label">{{__('users.table.last_name')}}</label>
+                                    <input class="bug-text-input" type="text" placeholder="Mbiemri" name="last_name" value="{{$user->last_name}}">
                                 </div>
                             </div>
                             <div class="col-md-12">
                                 <div class="form-group">
                                     <label for="example-text-input" class="bug-label">{{__('users.table.email')}}*</label>
-                                    <input class="bug-text-input" type="text" name="email" value="{{$user->email}}">
+                                    <input class="bug-text-input" type="text" placeholder="Emaili" name="email" value="{{$user->email}}">
                                 </div>
                             </div>
                             <div class="col-md-12">
                                 <div class="form-group">
                                     <label for="example-text-input" class="bug-label">{{__('users.table.phone_number')}}</label>
-                                    <input class="bug-text-input" type="text" name="phone" value="{{$user->phone}}">
+                                    <input class="bug-text-input" placeholder="Telefoni" type="text" name="phone" value="{{$user->phone}}">
                                 </div>
                             </div>
                             <div class="col-md-12">
@@ -50,6 +52,14 @@
                                     </select>
                                 </div>
                             </div>
+                            <div class="col-md-12">
+                                <div class="form-group">
+                                    <label for="titleTemplate">{{ __('Enter your event title template') }}</label>
+                                    <input type="text" id="titleTemplate" name="event_title_template" class="form-control"
+                                           value="{{ old('title_template', $user->userSettings->event_title_template ?? '{client_name}, {venue_name}, {menu}, {menu_price}') }}">
+                                    <small>{{ __('Use placeholders like {client_name}, {venue_name}, {menu}, {menu_price}') }}</small>
+                                </div>
+                            </div>
                         </div>
                         <button type="submit" class="hubers-btn">{{__('general.save_btn')}}</button>
                     </form>
@@ -57,5 +67,4 @@
             </div>
         </div>
     </div>
-
 @endsection

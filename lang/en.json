@@ -410,5 +410,7 @@
     "guests.table.table_number": "Table Number",
     "guests.edit": "Edit",
     "reservations.no_venue": "No venue available",
-    "reservation.no_client": "No client available"
+    "reservation.no_client": "No client available",
+    "guests.not_found_with_search": "No guests registered",
+    "guests.not_found_without_search": "No guests based on the search criteria"
 }

@@ -218,6 +218,7 @@ class ReservationsController extends Controller
             'reservation' => $reservation,
             'reservation_client' => $reservation->client,
             'reservation_venue' => $reservation->venue,
+            'reservation_menu' => $reservation->menu,
             'planning'=>$reservation->planning,
         ]]);
     }
@@ -985,5 +986,21 @@ class ReservationsController extends Controller
         Excel::import(new ReservationsImport, $request->file('file'));
 
         return redirect()->route('reservations.index')->withSuccessMessage('Rezervimet u bene import me sukses');
+    }
+
+    public function updateGuest(Request $request, $reservationId, $guestId)
+    {
+        $guest = $this->reservationGuestService->getByID($guestId);
+        if (is_null($guest)) {
+            return redirect()->back()->withErrors(['error' => 'Guest not found.']);
+        }
+
+        $updated = $this->reservationGuestService->update($guest, $request);
+
+        if ($updated) {
+            Alert::success('Success!', 'Guest updated successfully.');
+        }
+
+        return redirect()->back();
     }
 }
