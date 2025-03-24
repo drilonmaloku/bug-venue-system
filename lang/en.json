@@ -280,9 +280,8 @@
     "reservations.view.update_btn_title": "Update",
     "reservations.view.print_contract_btn_title": "Print",
 
-    "reservations.status.planned": "In Progress",
-    "reservations.status.finished": "Finished",
-    "reservations.status.canceled": "Canceled",
+    "reservations.status.confirmed": "Confirmed",
+    "reservations.status.not_confirmed": "On Hold",
 
     "reservations.view.add_payment": "Add Payment",
     "reservations.view.payments": "Payments",
@@ -391,6 +390,7 @@
     "reservation.planning.modify": "Modify",
     "reservation.planning.modify_planning": "Modify Planning",
     "reservation.planning.no_planning_found": "No planning found",
+    "reservation.planning.add_planning": "Add Planning",
     "Remember Me": "Remember Me",
     "payment.forms.payment_method": "Payment Method",
     "general.select_option": "Select Option",
@@ -408,6 +408,8 @@
     "guests.table": "Table",
     "guests.table.table_number": "Table Number",
     "guests.edit": "Edit",
+    "reservations.no_venue": "No venue available",
+    "reservation.no_client": "No client available",
     "guests.not_found_with_search": "No guests registered",
     "guests.not_found_without_search": "No guests based on the search criteria"
 }
