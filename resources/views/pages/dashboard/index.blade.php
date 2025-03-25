@@ -540,24 +540,32 @@
                 <form id="syncFilterForm" onsubmit="handleSyncSubmit(event)">
                     <div class="modal-body">
                         <div class="form-group">
-                            <label>Date Range</label>
-                            <div class="row">
-                                <div class="col-md-6">
-                                    <input type="date" name="start_date" class="bug-text-input" required>
-                                </div>
-                                <div class="col-md-6">
-                                    <input type="date" name="end_date" class="bug-text-input" required>
+                            <label class="d-flex align-items-center">
+                                <input type="checkbox" id="syncAll" name="sync_all" class="bug-checkbox-input mr-2">
+                                Sync All Events
+                            </label>
+                        </div>
+                        <div id="filterOptions">
+                            <div class="form-group">
+                                <label>Date Range</label>
+                                <div class="row">
+                                    <div class="col-md-6">
+                                        <input type="date" name="start_date" class="bug-text-input" required>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <input type="date" name="end_date" class="bug-text-input" required>
+                                    </div>
                                 </div>
                             </div>
-                        </div>
-                        <div class="form-group">
-                            <label>Venues</label>
-                            <select name="venue_id" class="bug-text-input">
-                                <option value="">All Venues</option>
-                                @foreach($venues as $venue)
-                                    <option value="{{ $venue->id }}">{{ $venue->name }}</option>
-                                @endforeach
-                            </select>
+                            <div class="form-group">
+                                <label>Venues</label>
+                                <select name="venue_id" class="bug-text-input">
+                                    <option value="">All Venues</option>
+                                    @foreach($venues as $venue)
+                                        <option value="{{ $venue->id }}">{{ $venue->name }}</option>
+                                    @endforeach
+                                </select>
+                            </div>
                         </div>
                     </div>
                     <div class="modal-footer">
@@ -574,10 +582,26 @@
         $('#syncFilterModal').modal('show');
     }
 
+    // Add this new function to handle checkbox changes
+    function handleSyncAllChange() {
+        const syncAllCheckbox = document.getElementById('syncAll');
+        const filterOptions = document.getElementById('filterOptions');
+        const dateInputs = filterOptions.querySelectorAll('input[type="date"]');
+        
+        if (syncAllCheckbox.checked) {
+            filterOptions.style.display = 'none';
+            dateInputs.forEach(input => input.removeAttribute('required'));
+        } else {
+            filterOptions.style.display = 'block';
+            dateInputs.forEach(input => input.setAttribute('required', 'required'));
+        }
+    }
+
     function handleSyncSubmit(event) {
         event.preventDefault();
         const form = event.target;
         const formData = new FormData(form);
+        const syncAll = formData.get('sync_all') === 'on';
         
         // Show loading state
         const submitBtn = form.querySelector('button[type="submit"]');
@@ -585,7 +609,10 @@
         submitBtn.disabled = true;
         submitBtn.innerHTML = 'Syncing...';
 
-        fetch('/events/sync', {
+        // Choose the appropriate endpoint based on syncAll
+        const endpoint = syncAll ? '/events/sync-all' : '/events/sync';
+
+        fetch(endpoint, {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
@@ -600,7 +627,6 @@
         .then(response => response.json())
         .then(data => {
             if (data.redirect) {
-                // If we need to authenticate, redirect to Google
                 window.location.href = data.redirect;
                 return;
             }
@@ -613,13 +639,18 @@
                 Swal.fire({
                     icon: 'success',
                     title: 'Success!',
-                    text: 'Events synced successfully'
+                    text: data.message || 'Events synced successfully'
                 });
             } else {
                 throw new Error(data.message || 'Sync failed');
             }
         })
         .catch(error => {
+            if (error.message === 'Not authenticated with Google Calendar') {
+                window.location.href = '{{ route("google.auth") }}';
+                return;
+            }
+            
             Swal.fire({
                 icon: 'error',
                 title: 'Error!',
@@ -632,6 +663,12 @@
             submitBtn.innerHTML = originalBtnText;
         });
     }
+
+    // Add event listener for the checkbox
+    document.addEventListener('DOMContentLoaded', function() {
+        const syncAllCheckbox = document.getElementById('syncAll');
+        syncAllCheckbox.addEventListener('change', handleSyncAllChange);
+    });
     </script>
 
 @endsection

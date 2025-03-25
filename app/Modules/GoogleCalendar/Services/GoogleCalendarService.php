@@ -22,6 +22,7 @@ class GoogleCalendarService
         $this->client->setRedirectUri(config('services.google.redirect'));
         $this->client->addScope(Calendar::CALENDAR);
         $this->client->setAccessType('offline');
+        $this->client->setPrompt('consent');
     }
 
     public function authenticate($code)
@@ -38,8 +39,23 @@ class GoogleCalendarService
     public function setAccessToken()
     {
         if ($this->isAccessTokenSet()) {
-            $this->client->setAccessToken(session('google_access_token'));
+            $accessToken = session('google_access_token');
+            $this->client->setAccessToken($accessToken);
+
+            // Check if token is expired and refresh if needed
+            if ($this->client->isAccessTokenExpired()) {
+                if ($this->client->getRefreshToken()) {
+                    $accessToken = $this->client->fetchAccessTokenWithRefreshToken($this->client->getRefreshToken());
+                    session(['google_access_token' => $accessToken]);
+                } else {
+                    // If no refresh token, clear the session and force re-authentication
+                    session()->forget('google_access_token');
+                    return false;
+                }
+            }
+            return true;
         }
+        return false;
     }
 
     public function addOrUpdateEvent($eventData)

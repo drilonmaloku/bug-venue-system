@@ -40,34 +40,31 @@ class GoogleCalendarController extends Controller
     public function handleGoogleCallback(Request $request)
     {
         try {
-            $this->googleCalendarService->authenticate($request->get('code'));
+        $this->googleCalendarService->authenticate($request->get('code'));
             
-            // If we have stored sync parameters, redirect back to sync with those parameters
-            if (session()->has('sync_params')) {
-                $params = session('sync_params');
-                session()->forget('sync_params');
-                
-                // Redirect back to dashboard with success message
-                return redirect('/dashboard')->with('success', 'Successfully authenticated with Google Calendar');
+            // Store the refresh token if available
+            $accessToken = $this->googleCalendarService->client->getAccessToken();
+            if (isset($accessToken['refresh_token'])) {
+                session(['google_refresh_token' => $accessToken['refresh_token']]);
             }
-
-            return redirect('/dashboard');
+            
+            return redirect('/dashboard')->with('success', 'Successfully authenticated with Google Calendar');
         } catch (\Exception $e) {
-            return redirect('/dashboard')->with('error', 'Failed to authenticate with Google Calendar');
+            return redirect('/dashboard')->with('error', 'Failed to authenticate with Google Calendar: ' . $e->getMessage());
         }
     }
 
     public function syncEventsToGoogle(Request $request)
     {
-        if (!session()->has('google_access_token')) {
-            return response()->json([
-                'success' => false,
-                'message' => 'Not authenticated with Google Calendar',
-                'redirect' => route('google.auth')
-            ], 401);
-        }
-
         try {
+            if (!$this->googleCalendarService->setAccessToken()) {
+                return response()->json([
+                    'success' => false,
+                    'message' => 'Not authenticated with Google Calendar',
+                    'redirect' => route('google.auth')
+                ], 401);
+            }
+
             $query = Reservation::with(['client', 'venue']);
 
             // Apply date filters if provided
@@ -84,53 +81,138 @@ class GoogleCalendarController extends Controller
             }
 
             $reservations = $query->get();
+            $syncedCount = 0;
 
-            foreach ($reservations as $reservation) {
-                $title = "{$reservation->client->name}, Salla: {$reservation->venue->name}, Te Ftuar: {$reservation->number_of_guests}";
+        foreach ($reservations as $reservation) {
+                try {
+            $title = "{$reservation->client->name}, Salla: {$reservation->venue->name}, Te Ftuar: {$reservation->number_of_guests}";
 
-                $timeSlots = [
-                    1 => [
-                        'start' => '09:00',
-                        'end' => '23:45'
-                    ],
-                    2 => [
-                        'start' => '09:00',
-                        'end' => '14:00'
-                    ],
-                    3 => [
-                        'start' => '19:00',
-                        'end' => '23:45'
-                    ]
-                ];
-
-
-                $selectedSlot = $timeSlots[$reservation->reservation_type];
-
-                $startDateTime = "{$reservation->date}T{$selectedSlot['start']}:00+01:00";
-                $endDateTime = "{$reservation->date}T{$selectedSlot['end']}:00+01:00";
+            $timeSlots = [
+                1 => [
+                    'start' => '09:00',
+                    'end' => '23:45'
+                ],
+                2 => [
+                    'start' => '09:00',
+                    'end' => '14:00'
+                ],
+                3 => [
+                    'start' => '19:00',
+                    'end' => '23:45'
+                ]
+            ];
 
 
-                $eventData = [
-                    'title' => $title,
-                    'start' => $startDateTime,
-                    'end' => $endDateTime,
-                    'event_id' => $reservation->id,
-                    'date' => $reservation->date,
-                    'is_full_day' => $reservation->reservation_type == 1
-                ];
+            $selectedSlot = $timeSlots[$reservation->reservation_type];
+
+            $startDateTime = "{$reservation->date}T{$selectedSlot['start']}:00+01:00";
+            $endDateTime = "{$reservation->date}T{$selectedSlot['end']}:00+01:00";
+
+
+            $eventData = [
+                'title' => $title,
+                'start' => $startDateTime,
+                'end' => $endDateTime,
+                'event_id' => $reservation->id,
+                'date' => $reservation->date,
+                'is_full_day' => $reservation->reservation_type == 1
+            ];
 
 
 
-                $this->googleCalendarService->addOrUpdateEvent($eventData);
+            $this->googleCalendarService->addOrUpdateEvent($eventData);
+                    $syncedCount++;
+                } catch (\Exception $e) {
+                    \Log::error('Error syncing reservation: ' . $reservation->id, ['error' => $e->getMessage()]);
+                    continue;
+                }
             }
 
             return response()->json([
                 'success' => true,
-                'message' => 'Events synced successfully'
+                'message' => "Successfully synced {$syncedCount} events",
+                'data' => [
+                    'total_processed' => $reservations->count(),
+                    'successfully_synced' => $syncedCount
+                ]
             ]);
 
         } catch (\Exception $e) {
             \Log::error('Sync error:', ['error' => $e->getMessage()]);
+            return response()->json([
+                'success' => false,
+                'message' => 'Failed to sync events: ' . $e->getMessage()
+            ], 500);
+        }
+    }
+
+    public function syncAllEventsToGoogle()
+    {
+        try {
+            if (!$this->googleCalendarService->setAccessToken()) {
+                return response()->json([
+                    'success' => false,
+                    'message' => 'Not authenticated with Google Calendar',
+                    'redirect' => route('google.auth')
+                ], 401);
+            }
+
+            // Get all reservations
+            $reservations = Reservation::with(['client', 'venue'])->get();
+            $syncedCount = 0;
+
+            foreach ($reservations as $reservation) {
+                try {
+                    $title = "{$reservation->client->name}, Salla: {$reservation->venue->name}, Te Ftuar: {$reservation->number_of_guests}";
+
+                    $timeSlots = [
+                        1 => [
+                            'start' => '09:00',
+                            'end' => '23:45'
+                        ],
+                        2 => [
+                            'start' => '09:00',
+                            'end' => '14:00'
+                        ],
+                        3 => [
+                            'start' => '19:00',
+                            'end' => '23:45'
+                        ]
+                    ];
+
+                    $selectedSlot = $timeSlots[$reservation->reservation_type];
+
+                    $startDateTime = "{$reservation->date}T{$selectedSlot['start']}:00+01:00";
+                    $endDateTime = "{$reservation->date}T{$selectedSlot['end']}:00+01:00";
+
+                    $eventData = [
+                        'title' => $title,
+                        'start' => $startDateTime,
+                        'end' => $endDateTime,
+                        'event_id' => $reservation->id,
+                        'date' => $reservation->date,
+                        'is_full_day' => $reservation->reservation_type == 1
+                    ];
+
+                    $this->googleCalendarService->addOrUpdateEvent($eventData);
+                    $syncedCount++;
+                } catch (\Exception $e) {
+                    \Log::error('Error syncing reservation: ' . $reservation->id, ['error' => $e->getMessage()]);
+                    continue;
+                }
+            }
+
+            return response()->json([
+                'success' => true,
+                'message' => "Successfully synced {$syncedCount} events",
+                'data' => [
+                    'total_processed' => $reservations->count(),
+                    'successfully_synced' => $syncedCount
+                ]
+            ]);
+
+        } catch (\Exception $e) {
+            \Log::error('Sync all error:', ['error' => $e->getMessage()]);
             return response()->json([
                 'success' => false,
                 'message' => 'Failed to sync events: ' . $e->getMessage()
