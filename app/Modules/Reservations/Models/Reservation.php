@@ -12,6 +12,7 @@ use App\Modules\Venues\Models\Venue;
 use App\Scopes\CurrentLocationScope;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Str;
 
 class Reservation extends Model
 {
@@ -31,6 +32,11 @@ class Reservation extends Model
     protected static function booted()
     {
         static::addGlobalScope(new CurrentLocationScope);
+        
+        // Add UUID generation on creation
+        static::creating(function ($model) {
+            $model->uuid = (string) Str::uuid();
+        });
     }
 
     public function getReservationTypeNameAttribute()
