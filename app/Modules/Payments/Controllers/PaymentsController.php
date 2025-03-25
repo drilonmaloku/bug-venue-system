@@ -128,19 +128,16 @@ class PaymentsController extends Controller
     {
         $payment = $this->paymentsService->getByID($id);
         if (is_null($payment)) {
-            return response()->json([
-                'message' => 'Payment Not Found'
-            ], JsonResponse::HTTP_NOT_FOUND);
+            Alert::error('Error!', 'Payment Not Found');
+            return redirect()->to('payments');
         }
 
         try {
-
             $reservation = $payment->reservation;
 
             $paymentDeleted = $this->paymentsService->delete($payment);
             $previousData = $payment->attributesToArray();
             if ($paymentDeleted) {
-
                 $newCurrentPayment = $reservation->payments()->sum('value');
 
                 $reservation->current_payment = $newCurrentPayment;
@@ -152,16 +149,14 @@ class PaymentsController extends Controller
                     'ttl'=> Log::LOG_TTL_THREE_MONTHS,
                     'previous_data'=> json_encode($previousData)
                 ]);
-                return  redirect()->to('payments')->withSuccessMessage('Pagesa u fshi me sukses');
+                return redirect()->to('payments')->withSuccessMessage('Pagesa u fshi me sukses');
             }
 
-            return response()->json([
-                "message" => "Failed to delete existing Payment."
-            ], JsonResponse::HTTP_BAD_REQUEST);
+            Alert::error('Error!', 'Failed to delete existing Payment.');
+            return redirect()->to('payments');
         } catch (\Exception $e) {
-            return response()->json([
-                'message' => 'Internal Server Error'
-            ], 500);
+            Alert::error('Error!', 'Internal Server Error');
+            return redirect()->to('payments');
         }
     }
 
