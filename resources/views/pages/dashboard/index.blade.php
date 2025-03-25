@@ -14,7 +14,7 @@
         @endif
         <div>
             <div class="mb-2">
-                <a class="hubers-btn" href="/events/sync">Sync</a>
+                <a class="hubers-btn" href="#" onclick="openSyncModal(); return false;">Sync</a>
                 <select class="hubers-select-input" name="" id="venueSelector">
                     <option value=""> {{__('reservation.show_all_venues')}}</option>
                     @foreach($venues as $venue)
@@ -528,5 +528,110 @@
         });
     </script>
 
+    <div class="modal fade" id="syncFilterModal" tabindex="-1" role="dialog" aria-labelledby="syncFilterModalLabel" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="syncFilterModalLabel">Sync Filters</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <form id="syncFilterForm" onsubmit="handleSyncSubmit(event)">
+                    <div class="modal-body">
+                        <div class="form-group">
+                            <label>Date Range</label>
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <input type="date" name="start_date" class="bug-text-input" required>
+                                </div>
+                                <div class="col-md-6">
+                                    <input type="date" name="end_date" class="bug-text-input" required>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label>Venues</label>
+                            <select name="venue_id" class="bug-text-input">
+                                <option value="">All Venues</option>
+                                @foreach($venues as $venue)
+                                    <option value="{{ $venue->id }}">{{ $venue->name }}</option>
+                                @endforeach
+                            </select>
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                        <button type="submit" class="btn btn-primary">Sync Events</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <script>
+    function openSyncModal() {
+        $('#syncFilterModal').modal('show');
+    }
+
+    function handleSyncSubmit(event) {
+        event.preventDefault();
+        const form = event.target;
+        const formData = new FormData(form);
+        
+        // Show loading state
+        const submitBtn = form.querySelector('button[type="submit"]');
+        const originalBtnText = submitBtn.innerHTML;
+        submitBtn.disabled = true;
+        submitBtn.innerHTML = 'Syncing...';
+
+        fetch('/events/sync', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+                'X-CSRF-TOKEN': '{{ csrf_token() }}'
+            },
+            body: JSON.stringify({
+                start_date: formData.get('start_date'),
+                end_date: formData.get('end_date'),
+                venue_id: formData.get('venue_id')
+            })
+        })
+        .then(response => response.json())
+        .then(data => {
+            if (data.redirect) {
+                // If we need to authenticate, redirect to Google
+                window.location.href = data.redirect;
+                return;
+            }
+
+            // Hide modal
+            $('#syncFilterModal').modal('hide');
+            
+            // Show success message
+            if (data.success) {
+                Swal.fire({
+                    icon: 'success',
+                    title: 'Success!',
+                    text: 'Events synced successfully'
+                });
+            } else {
+                throw new Error(data.message || 'Sync failed');
+            }
+        })
+        .catch(error => {
+            Swal.fire({
+                icon: 'error',
+                title: 'Error!',
+                text: error.message || 'Failed to sync events'
+            });
+        })
+        .finally(() => {
+            // Reset button state
+            submitBtn.disabled = false;
+            submitBtn.innerHTML = originalBtnText;
+        });
+    }
+    </script>
 
 @endsection
