@@ -11,6 +11,7 @@ use App\Modules\Reservations\Notifications\ReservationAddedNotification;
 use App\Modules\Reservations\Notifications\ReservationDeletedNotifiaction;
 use App\Modules\Reservations\Notifications\ReservationUpdatedNotification;
 use Illuminate\Support\Facades\Notification;
+use App\Modules\Reservations\Notifications\ReservationUpdatedStatusNotification;
 
 
 
@@ -201,7 +202,7 @@ class ReservationsService
      * Updates existing Reservation status
      **/
     public function updateStatus($request, Reservation $reservation) {
-
+        
         $reservation->status = $request->input('status');
 
         $reservationSaved = $reservation->saveQuietly();
@@ -212,6 +213,13 @@ class ReservationsService
                 'context' => Log::LOG_CONTEXT_RESERVATIONS,
                 'ttl'=> Log::LOG_TTL_THREE_MONTHS,
             ]);
+             Notification::send(
+                 $this->usersService->getUsersForNotifications('reservation-updated-status'),
+                 new ReservationUpdatedStatusNotification(
+                     $reservation,
+                     auth()->user()
+                 )
+             );
         }
 
         return $reservationSaved;
