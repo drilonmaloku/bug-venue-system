@@ -6,6 +6,58 @@
     <a class="btn hubers-btn" data-toggle="modal" data-target="#addGuestModal">{{__('general.create_btn')}}</a>
 @endsection
 @section('content')
+    <div class="vms_panel mb-4">
+        <div class="row">
+            <div class="col-md-12">
+                <h5>{{__('guests.seating_plan')}}</h5>
+                @if($reservation->seating_plan_image)
+                    <div class="position-relative">
+                        <img src="{{ asset('storage/' . $reservation->seating_plan_image) }}" 
+                             class="img-fluid seating-plan-image" 
+                             alt="{{__('guests.seating_plan')}}">
+                        <form action="{{ route('reservations.deleteSeatingPlan', $reservation->id) }}" 
+                              method="POST" 
+                              class="delete-plan-form"
+                              onsubmit="return confirm('{{__('guests.confirm_delete_plan')}}');">
+                            @csrf
+                            @method('DELETE')
+                            <button type="submit" class="btn btn-danger btn-sm delete-plan-btn">
+                                <i class="fa fa-trash"></i> {{__('guests.delete_plan')}}
+                            </button>
+                        </form>
+                    </div>
+                @else
+                    <div class="text-center p-4 border rounded">
+                        <p>{{__('guests.no_seating_plan')}}</p>
+                    </div>
+                @endif
+                <form action="{{ route('reservations.updateSeatingPlan', $reservation->id) }}" 
+                      method="POST" 
+                      enctype="multipart/form-data" 
+                      class="mt-3">
+                    @csrf
+                    @method('PATCH')
+                    <div class="file-upload-wrapper">
+                        <div class="file-upload-container">
+                            <input type="file" 
+                                   name="seating_plan" 
+                                   id="seating_plan"
+                                   class="file-upload-input" 
+                                   accept="image/*">
+                            <label for="seating_plan" class="file-upload-label">
+                                <i class="fa fa-cloud-upload"></i>
+                                <span class="upload-text">{{__('guests.upload_plan')}}</span>
+                                <span class="file-name"></span>
+                            </label>
+                            <button type="submit" class="btn btn-primary upload-btn">
+                                <i class="fa fa-upload"></i> {{__('guests.upload_plan')}}
+                            </button>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
     <div class="vms_panel">
         @if(count($guests) > 0)
             <div class="table-responsive p-0">
@@ -292,3 +344,134 @@
         </div>
     @endforeach
 @endsection
+<style>
+    .seating-plan-image {
+        max-height: 400px;
+        width: auto;
+        margin: 0 auto;
+        display: block;
+        border: 2px solid #ddd;
+        border-radius: 4px;
+        padding: 10px;
+    }
+
+    .delete-plan-form {
+        position: absolute;
+        top: 10px;
+        right: 10px;
+    }
+
+    .delete-plan-btn {
+        opacity: 0.8;
+    }
+
+    .delete-plan-btn:hover {
+        opacity: 1;
+    }
+
+    .file-upload-wrapper {
+        margin: 20px 0;
+    }
+
+    .file-upload-container {
+        display: flex;
+        align-items: center;
+        gap: 15px;
+        background: #f8f9fa;
+        padding: 15px;
+        border-radius: 8px;
+        border: 2px dashed #dee2e6;
+        transition: all 0.3s ease;
+    }
+
+    .file-upload-container:hover {
+        border-color: #0d6efd;
+        background: #f1f3f5;
+    }
+
+    .file-upload-input {
+        display: none;
+    }
+
+    .file-upload-label {
+        flex: 1;
+        padding: 12px 20px;
+        background: white;
+        border-radius: 6px;
+        cursor: pointer;
+        display: flex;
+        align-items: center;
+        gap: 10px;
+        margin: 0;
+        box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+        transition: all 0.3s ease;
+    }
+
+    .file-upload-label:hover {
+        box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+    }
+
+    .file-upload-label i {
+        font-size: 1.5em;
+        color: #0d6efd;
+    }
+
+    .upload-text {
+        color: #6c757d;
+    }
+
+    .file-name {
+        color: #212529;
+        font-weight: 500;
+        margin-left: auto;
+    }
+
+    .upload-btn {
+        padding: 12px 25px;
+        display: flex;
+        align-items: center;
+        gap: 8px;
+        background: #0d6efd;
+        border: none;
+        border-radius: 6px;
+        transition: all 0.3s ease;
+    }
+
+    .upload-btn:hover {
+        background: #0b5ed7;
+        transform: translateY(-1px);
+    }
+
+    .upload-btn i {
+        font-size: 1.1em;
+    }
+
+    /* Responsive adjustments */
+    @media (max-width: 768px) {
+        .file-upload-container {
+            flex-direction: column;
+            gap: 10px;
+        }
+
+        .file-upload-label {
+            width: 100%;
+        }
+
+        .upload-btn {
+            width: 100%;
+            justify-content: center;
+        }
+    }
+</style>
+<script>
+document.getElementById('seating_plan').addEventListener('change', function(e) {
+    const fileName = e.target.files[0]?.name;
+    const fileNameElement = e.target.parentElement.querySelector('.file-name');
+    if (fileName) {
+        fileNameElement.textContent = fileName;
+    } else {
+        fileNameElement.textContent = '';
+    }
+});
+</script>
+

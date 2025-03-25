@@ -411,5 +411,12 @@
     "reservations.no_venue": "No venue available",
     "reservation.no_client": "No client available",
     "guests.not_found_with_search": "No guests registered",
-    "guests.not_found_without_search": "No guests based on the search criteria"
+    "guests.not_found_without_search": "No guests based on the search criteria",
+    "guests.seating_plan": "Seating Plan",
+    "guests.no_seating_plan": "No seating plan uploaded yet",
+    "guests.upload_plan": "Upload Plan",
+    "guests.seating_plan_updated": "Seating plan has been updated successfully",
+    "guests.delete_plan": "Delete Plan",
+    "guests.confirm_delete_plan": "Are you sure you want to delete this seating plan?",
+    "guests.plan_deleted": "Seating plan has been deleted successfully"
 }

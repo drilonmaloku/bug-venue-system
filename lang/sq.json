@@ -439,6 +439,12 @@
     "reservations.no_venue": "Nuk ka salla për këtë rezervim",
     "reservations.no_client": "Nuk ka klient për këtë rezervim",
     "guests.not_found_with_search": "Nuk ka të ftuar momentalisht",
-    "guests.not_found_without_search": "Nuk ka të ftuar sipas search"
-
+    "guests.not_found_without_search": "Nuk ka të ftuar sipas search",
+    "guests.seating_plan": "Plani i Ulëseve",
+    "guests.no_seating_plan": "Nuk është ngarkuar ende asnjë plan ulësesh",
+    "guests.upload_plan": "Ngarko Planin",
+    "guests.seating_plan_updated": "Plani i ulëseve u përditësua me sukses",
+    "guests.delete_plan": "Fshi Planin",
+    "guests.confirm_delete_plan": "A jeni të sigurt që dëshironi ta fshini këtë plan?",
+    "guests.plan_deleted": "Plani i ulëseve u fshi me sukses"
 }

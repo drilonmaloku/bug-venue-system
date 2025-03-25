@@ -63,5 +63,6 @@ Route::group(['middleware' => 'auth'], function () {
     Route::patch('/reservations/manage-guests/{reservationId}/update-status/{guestId}', [ReservationsController::class, 'updateGuestStatus'])->name('reservations.updateGuestStatus');
     Route::patch('/reservations/manage-guests/{reservationId}/update-checkin/{guestId}', [ReservationsController::class, 'updateGuestCheckin'])->name('reservations.updateGuestCheckin');
 
+    Route::patch('/reservations/{id}/seating-plan', [ReservationsController::class, 'updateSeatingPlan'])->name('reservations.updateSeatingPlan');
+    Route::delete('/reservations/{id}/seating-plan', [ReservationsController::class, 'deleteSeatingPlan'])->name('reservations.deleteSeatingPlan');
 });
-
