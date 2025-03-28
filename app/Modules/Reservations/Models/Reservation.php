@@ -12,6 +12,7 @@ use App\Modules\Venues\Models\Venue;
 use App\Scopes\CurrentLocationScope;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Str;
 
 class Reservation extends Model
 {
@@ -31,6 +32,11 @@ class Reservation extends Model
     protected static function booted()
     {
         static::addGlobalScope(new CurrentLocationScope);
+        
+        // Add UUID generation on creation
+        static::creating(function ($model) {
+            $model->uuid = (string) Str::uuid();
+        });
     }
 
     public function getReservationTypeNameAttribute()
@@ -42,13 +48,10 @@ class Reservation extends Model
     public function getStatusLabelAttribute()
     {
         if($this->status == 1) {
-            return __('reservations.status.planned');
+            return __('reservations.status.confirmed');
         }
         if($this->status == 2) {
-            return __('reservations.status.finished');
-        }
-        if($this->status == 3) {
-            return __('reservations.status.canceled');
+            return __('reservations.status.not_confirmed');
         }
     }
 

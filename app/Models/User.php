@@ -5,6 +5,7 @@ namespace App\Models;
 use App\Modules\Expenses\Models\Expense;
 use App\Modules\Location\Models\Location;
 use App\Modules\Users\Models\LocationUser;
+use App\Modules\Users\Models\UserSettings;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Illuminate\Database\Eloquent\SoftDeletes;
@@ -102,6 +103,7 @@ class User extends Authenticatable
                 'venue-added' => true,
                 'venue-updated' => true,
                 'venue-deleted' => true,
+                'reservation-updated-status' => true,
         ];
     }
 
@@ -178,6 +180,13 @@ class User extends Authenticatable
     {
         return $this->hasOne(NotificationPreference::class);
     }
+
+    public function userSettings()
+    {
+        return $this->hasOne(UserSettings::class);
+    }
+
+
 }
     
 

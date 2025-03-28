@@ -2,8 +2,10 @@
 @section('header')
     {{__('dashboard.title')}}
 @endsection
+
 @section('content')
     <div class="vms_panel dashboard_panel">
+        
         @if(count($menus) == 0 || count($venues) == 0)
             <div class="hubers-notification big">
                 {{__('reservations.no_create_option')}}
@@ -47,8 +49,8 @@
                                 </div>
                                 <div class="col-md-6">
                                     <div class="form-group">
-                                        <label for="example-text-input" class="form-control-label">{{__('reservations.create.number_of_guests')}}*</label>
-                                        <input id="numberOfGuests" class="bug-text-input" required type="number" name="number_of_guests" >
+                                        <label for="example-text-input" class="form-control-label">{{__('reservations.create.number_of_guests')}}</label>
+                                        <input id="numberOfGuests" class="bug-text-input" type="number" name="number_of_guests" >
                                     </div>
                                 </div>
                                 <div class="col-md-12">
@@ -72,8 +74,8 @@
                                 </div>
                                 <div class="col-md-6">
                                     <div class="form-group">
-                                        <label for="example-text-input" class="form-control-label">{{__('reservations.create.menu')}}*</label>
-                                        <select required id="menuId" class="bug-text-input" name="menu_id">
+                                        <label for="example-text-input" class="form-control-label">{{__('reservations.create.menu')}}</label>
+                                        <select id="menuId" class="bug-text-input" name="menu_id">
                                             <option value="">{{__('reservations.create.select_menu')}}</option>
                                             @foreach($menus as $menu)
                                                 <option  data-price="{{$menu->price}}" value="{{$menu->id}}" data-menu-contents="{{$menu->description}}">{{$menu->name}},{{$menu->price}}</option>
@@ -83,14 +85,14 @@
                                 </div>
                                 <div class="col-md-6">
                                     <div class="form-group">
-                                        <label for="example-text-input" class="form-control-label">{{__('reservations.create.menu_price')}}*</label>
-                                        <input id="menuPrice" class="bug-text-input" required type="number" name="menu_price" >
+                                        <label for="example-text-input" class="form-control-label">{{__('reservations.create.menu_price')}}</label>
+                                        <input id="menuPrice" class="bug-text-input" type="number" name="menu_price" >
                                     </div>
                                 </div>
                                 <div class="col-md-12">
                                     <div class="form-group">
-                                        <label for="example-text-input" class="form-control-label">{{__('reservations.create.menu_items')}}*</label>
-                                        <textarea rows="6" id="menuContents" class="bug-text-input" required  name="menu_contents"></textarea>
+                                        <label for="example-text-input" class="form-control-label">{{__('reservations.create.menu_items')}}</label>
+                                        <textarea rows="6" id="menuContents" class="bug-text-input"  name="menu_contents"></textarea>
                                     </div>
                                 </div>
 
@@ -112,13 +114,13 @@
                                 <div class="col-md-12">
                                     <div class="form-group">
                                         <label for="example-text-input" class="form-control-label">{{__('reservations.create.client.name')}}</label>
-                                        <input required class="bug-text-input" type="text" name="client_name">
+                                        <input  class="bug-text-input" type="text" name="client_name">
                                     </div>
                                 </div>
                                 <div class="col-md-6">
                                     <div class="form-group">
                                         <label for="example-text-input" class="form-control-label">{{__('reservations.create.client.phone')}}*</label>
-                                        <input required class="bug-text-input" type="text" name="client_phone_number">
+                                        <input class="bug-text-input" type="text" name="client_phone_number">
                                     </div>
                                 </div>
                                 <div class="col-md-6">
@@ -131,6 +133,10 @@
                                     <div class="form-group">
                                         <label for="example-text-input" class="form-control-label">{{__('reservations.create.client.email')}}</label>
                                         <input class="bug-text-input" type="text" name="client_email">
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="example-text-input" class="form-control-label">{{__('reservations.create.client.personal_number')}}</label>
+                                        <input class="bug-text-input" type="text" name="client_personal_number" >
                                     </div>
                                 </div>
                                 <div class="col-md-6">
@@ -146,7 +152,7 @@
                                 <div class="col-md-6">
                                     <div class="form-group">
                                         <label for="example-text-input" class="form-control-label">{{__('reservations.create.payment.date')}}</label>
-                                        <input required class="bug-text-input" type="date" name="payment_date">
+                                        <input  class="bug-text-input" type="date" name="payment_date">
                                     </div>
                                 </div>
                                 <div class="col-md-6">
@@ -232,9 +238,21 @@
                 </div>
             </div>
         </div>
-
+       
     </div>
-    
+    <script src="https://cdn.ckeditor.com/4.22.0/standard/ckeditor.js"></script>
+
+    <script>
+        CKEDITOR.replace('menuContents', {
+            height: 200,
+            removePlugins: 'elementspath', // Removes the bottom element path
+            resize_enabled: false,         // Disables resizing
+            toolbar: [                     // Defines a very basic toolbar
+                ['Bold', 'Italic', 'Underline'],
+                ['NumberedList', 'BulletedList'],
+            ]
+        });
+    </script>
     <script>
 
                                     
@@ -335,7 +353,7 @@
                         </tr>
                         <tr>
                             <td>{{__('reservations.table.client')}}</td>
-                            <td>${reservation.client.name}</td>
+                            <td>${reservation.client ? reservation.client.name : ""}</td>
                             <td></td>
 
                         </tr>
@@ -347,7 +365,7 @@
                         </tr>
                         <tr>
                             <td>{{__('reservations.table.current_payment')}}:</td>
-                            <td>${reservation.current_payment}€</td>
+                            <td>${reservation.current_payment ? reservation.current_payment : '0'}€</td>
                             <td></td>
 
                         </tr>
@@ -360,6 +378,17 @@
                         <tr>
                             <td>{{__('reservations.table.total_amount')}}:</td>
                             <td>${reservation.total_payment}€</td>
+                            <td></td>
+
+                        </tr>
+                        <tr>
+                            <td>Menu:</td>
+                            <td>${reservation.menu ? reservation.menu.name : 'N/A'}</td>
+                            <td></td>
+                        </tr>
+                        <tr>
+                            <td>Menu content:</td>
+                            <td>${reservation.menu_contents ? reservation.menu_contents : ''}</td>
                             <td></td>
 
                         </tr>
@@ -439,6 +468,9 @@
                 const menuContent = selectedOption.getAttribute('data-menu-contents') || "";
                 menuPriceInput.value = menuPrice;
                 menuContentsInput.value = menuContent;
+                if (CKEDITOR.instances.menuContents) {
+                    CKEDITOR.instances.menuContents.setData(menuContent);
+                }
                 updateTotalPrice();
             }
 
@@ -496,5 +528,5 @@
         });
     </script>
 
-   
+
 @endsection

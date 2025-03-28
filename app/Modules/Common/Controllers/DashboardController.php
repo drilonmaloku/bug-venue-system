@@ -8,7 +8,6 @@ use App\Modules\Reservations\Models\Reservation;
 use App\Modules\Venues\Models\Venue;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Auth;
 
 class DashboardController extends Controller
 {
@@ -35,7 +34,7 @@ class DashboardController extends Controller
 
             return [
                 'id' => $reservation->id,
-                'title' => $reservation->client->name . ',' . $reservation->venue->name,
+                'title' => $this->formatEventTitle($reservation),
                 'start' => $reservation->date,
                 'end' => $reservation->date,
                 'color' => $color,
@@ -70,7 +69,7 @@ class DashboardController extends Controller
 
             return [
                 'id' => $reservation->id,
-                'title' => $reservation->client->name . ',' . $reservation->venue->name,
+                'title' => $this->formatEventTitle($reservation),
                 'start' => $reservation->date,
                 'end' => $reservation->date,
                 'color' => $color,
@@ -104,7 +103,7 @@ class DashboardController extends Controller
 
             return [
                 'id' => $reservation->id,
-                'title' => $reservation->client->name . ',' . $reservation->venue->name,
+                'title' => $this->formatEventTitle($reservation),
                 'start' => $reservation->date,
                 'end' => $reservation->date,
                 'color' => $color,
@@ -161,7 +160,7 @@ class DashboardController extends Controller
             $color = isset($colors[$reservation->venue_id]) ? $colors[$reservation->venue_id] : '#000000'; // Default to black
             return [
                 'id' => $reservation->id,
-                'title' => $reservation->client->name . ',' . $reservation->venue->name,
+                'title' => $this->formatEventTitle($reservation),
                 'start' => $reservation->date,
                 'end' => $reservation->date,
                 'color' => $color,
@@ -172,8 +171,17 @@ class DashboardController extends Controller
         return response()->json($events);
     }
 
+    private function formatEventTitle($reservation) {
+        $template = auth()->user()->userSettings->event_title_template ?? '{client_name}, {venue_name}, {menu}, {menu_price}';
 
+        $placeholders = [
+            '{client_name}' => $reservation->client->name ?? '', 
+            '{venue_name}' => $reservation->venue->name ?? '', 
+            '{menu}' => $reservation->menu->name ?? '', 
+            '{menu_price}' => $reservation->menu ? number_format($reservation->menu->price, 2) : '' 
+        ];
 
-
+        return strtr($template, $placeholders);
+    }
 
 }

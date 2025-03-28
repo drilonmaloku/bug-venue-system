@@ -47,6 +47,10 @@ class PaymentsService
             });
         }
 
+        // Modified payment method filter
+        if ($request->filled('payment_method')) {
+            $query->where('payment_method', $request->input('payment_method'));
+        }
 
         if ($request->filled('start_date')) {
             $startDate = $request->input('start_date');

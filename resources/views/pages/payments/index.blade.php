@@ -50,6 +50,14 @@
                             value="{{old('date',app('request')->input('end_date'))}}"
                         />
                     </div>
+                    <div class="hubers-filter-group">
+                        <label>{{__('payment.forms.payment_method')}}:</label>
+                        <select name="payment_method" class="bug-text-input white medium">
+                            <option value="">{{__('general.select_option')}}</option>
+                            <option value="1" {{ request('payment_method') == '1' ? 'selected' : '' }}>{{ __('payment.method.cash') }}</option>
+                            <option value="2" {{ request('payment_method') == '2' ? 'selected' : '' }}>{{ __('payment.method.bank') }}</option>
+                        </select>
+                    </div>
                 </div>
 
                 

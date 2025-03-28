@@ -199,12 +199,24 @@ class UsersService
     }
 
     public function update($request, User $user) {
+
         $user->username = $request->input('username');
         $user->first_name = $request->input('first_name');
         $user->last_name = $request->input('last_name');
         $user->email = $request->input('email');
         $user->phone = $request->input('phone');
         $user->language = $request->input('language');
+
+        $user->userSettings()->updateOrCreate(
+            [
+                'location_id' => $user->getCurrentLocationId(),
+                'user_id' => $user->id
+            ],
+            [
+                'location_id' => $user->getCurrentLocationId(),
+                'event_title_template' => $request->input('event_title_template'),
+            ]
+        );
 
         $userSaved = $user->save();
 
@@ -234,7 +246,7 @@ class UsersService
         return $user->save();
     }
 
-    public static function getStaffUsers()
+    public function getStaffUsers()
     {
         return User::whereHas('roles', function ($query) {
             $query->where('name', 'staff');

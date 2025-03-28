@@ -192,9 +192,14 @@
     "payment.method.cash": "Kesh",
     "payment.method.bank": "Bank",
 
+    "reservations.status.confirmed": "Konfirmuar",
+    "reservations.status.not_confirmed": "Në Pritje",
+    "reservations.status.canceled": "Anuluar",
+
     "reservations.status.planned": "Planifikuar",
     "reservations.status.finished": "Mbajtur",
     "reservations.status.canceled": "Anuluar",
+
 
     "reservations.view.update_status": "Përditso Statusin",
     "reservations.view.select_status": "Selekto Statusin",
@@ -379,7 +384,6 @@
     "contracts.contract": "Kontrata",
     "contracts.info": "Mund të përdorni vendmbushjet e mëposhtme që do të gjenerohen dinamikisht kur printoni një kontratë për një rezervim:",
 
-
     "reservation.planning.title": "Planifikimi",
     "reservation.planning.empty": "Nuk ka planifikim.",
     "reservation.planning.start_time": "Fillon",
@@ -387,6 +391,7 @@
     "reservation.planning.description": "Përshkrimi",
     "reservation.planning.modify": "Modifiko",
     "reservation.planning.modify_planning": "Modifiko Planifikimin",
+    "reservation.planning.add_planning": "Shto planifikim",
     "reservation.planning.no_planning_found": "Nuk ka planifikim për këtë rezervim.",
 
     "reservations.view.notes": "Shënime",
@@ -395,23 +400,45 @@
     "reservations.view.notes_modify": "Modifiko",
     "Remember Me": "Mbaj mend",
 
-    "guests.title" : "Të Ftuarit",
-    "guests.add" : "Shto të ftuar",
-    "guests.form.name" : "Emri",
-    "guests.form.email" : "Emaili",
-    "guests.form.phone_number" : "Telefoni",
-    "guests.form.guest_count" : "Numri I Personav",
+    "guests.title": "Të Ftuarit",
+    "guests.add": "Shto të ftuar",
+    "guests.form.name": "Emri",
+    "guests.form.email": "Emaili",
+    "guests.form.phone_number": "Telefoni",
+    "guests.form.guest_count": "Numri I Personav",
 
-    "guests.table.name" : "Emri",
-    "guests.table.phone_number" : "Telefoni",
-    "guests.table.email" : "Emaili",
-    "guests.table.guest_count" : "Numri I Personav",
-    "guests.table.status" : "Statusi",
-    "guests.table.check_in_status" : "Checked In",
+    "guests.table.name": "Emri",
+    "guests.table.phone_number": "Telefoni",
+    "guests.table.email": "Emaili",
+    "guests.table.guest_count": "Numri I Personav",
+    "guests.table.status": "Statusi",
+    "guests.table.check_in_status": "Checked In",
 
-    "guests.status.confirmed" : "Konfirmuar",
-    "guests.status.not_confirmed" : "Në pritje",
-    "guests.status.rejected" : "Anuluar",
-    "guests.check_in_status.checked" : "I regjistruar në vend",
-    "guests.check_in_status.not_checked" : "Nuk është regjistruar brenda"
+    "guests.status.confirmed": "Konfirmuar",
+    "guests.status.not_confirmed": "Në pritje",
+    "guests.status.rejected": "Anuluar",
+    "guests.check_in_status.checked": "I regjistruar në vend",
+    "guests.check_in_status.not_checked": "Nuk është regjistruar brenda",
+    "payment.forms.payment_method": "Metoda e Pagesës",
+    "general.select_option": "Selekto Opsionin",
+    "payment.forms.confirm_delete": "Konfirmo Fshirjen",
+    "payment.forms.delete_confirmation_message": "A jeni të sigurt që dëshironi ta fshini këtë pagesë?",
+    "payment.forms.confirm_delete_btn": "Po, Fshije",
+    "general.cancel_btn": "Anulo",
+    "menu.forms.confirm_delete": "Konfirmo Fshirjen e Menysë",
+    "menu.forms.delete_confirmation_message": "A jeni të sigurt që dëshironi ta fshini këtë meny?",
+    "menu.forms.confirm_delete_btn": "Po, Fshije Menynë",
+    "reservations.create.client.personal_number": "Numri Personal",
+    "reservation.contract_date": "Data e Kontratës",
+    "reservations.edit.client.personal_number": "Numri Personal",
+    "reservations.import.title": "Importo Rezervimet",
+
+    "guests.table": "Tavolina",
+    "guests.table.table_number": "Numri i tavolines",
+    "guests.edit": "Edito",
+    "reservations.no_venue": "Nuk ka salla për këtë rezervim",
+    "reservations.no_client": "Nuk ka klient për këtë rezervim",
+    "guests.not_found_with_search": "Nuk ka të ftuar momentalisht",
+    "guests.not_found_without_search": "Nuk ka të ftuar sipas search"
+
 }

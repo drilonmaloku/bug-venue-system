@@ -5,6 +5,7 @@ namespace Database\Factories;
 use App\Modules\Clients\Models\Client;
 use App\Modules\Reservations\Models\Reservation;
 use Illuminate\Database\Eloquent\Factories\Factory;
+use Illuminate\Support\Str;
 
 
 /**
@@ -19,6 +20,7 @@ class ReservationFactory extends Factory
     {
 
         return [
+            'uuid' => Str::uuid(),
             'venue_id' => fake()->randomNumber(1,5),
             'client_id' => fake()->randomNumber(1,50),
             'menu_id' => fake()->randomNumber(1,2),

@@ -11,6 +11,7 @@ use App\Modules\Reservations\Notifications\ReservationAddedNotification;
 use App\Modules\Reservations\Notifications\ReservationDeletedNotifiaction;
 use App\Modules\Reservations\Notifications\ReservationUpdatedNotification;
 use Illuminate\Support\Facades\Notification;
+use App\Modules\Reservations\Notifications\ReservationUpdatedStatusNotification;
 
 
 
@@ -35,13 +36,12 @@ class ReservationsService
         $perPage = $request->has('per_page') ? $request->input('per_page') : 25;
         $query = Reservation::query();
 
-        if ($request && $request->has("search") && $request->input("search") != '') {
-            $searchTerm = '%' . $request->input("search") . '%';
-
-            $query->where(function ($subquery) use ($searchTerm) {
-                $subquery->where('description', 'LIKE', $searchTerm)
-                    ->orWhere('current_payment', 'LIKE', $searchTerm);
-            });
+        if ($request->has('search') && !empty($request->search)) {
+            $searchTerm = $request->search;
+            $query->whereHas('client', function($q) use ($searchTerm) {
+                $q->where('name', 'LIKE', '%' . $searchTerm . '%');
+            })
+            ->orWhere('description', 'LIKE', '%' . $searchTerm . '%');
         }
 
         if ($request->filled('start_date')) {
@@ -106,16 +106,18 @@ class ReservationsService
         $totalPayment = $numberOfGuests * $menuPrice;
         $date =  $request->input('date');
         $venueData = explode(",", $request->input('reservation'));
+        $venueId = !empty($venueData[0]) ? $venueData[0] : null; // Set to null if empty
+
         $reservation = Reservation::create([
             "location_id" => auth()->user()->getCurrentLocationId(),
             "client_id" => $clientId,
-            "venue_id" => $venueData[0],
+            "venue_id" => $venueId,
             "menu_id" => $request->input("menu_id"),
             "manager_id" => $request->input("manager_id"),
             "decor_id" => $request->input("decor_id"),
             "menu_price" => $request->input("menu_price"),
             "contract_date" => $request->input("contract_date"),
-            "reservation_type" => $venueData[1],
+            "reservation_type" => isset($venueData[1]) ? $venueData[1] : null,
             "date" => $date,
             "description" => $request->input("description"),
             "number_of_guests" =>$numberOfGuests,
@@ -156,14 +158,17 @@ class ReservationsService
         $reservation->decor_id = $request->input('decor_id');
         $reservation->staff_expenses = $request->input('staff_expenses');
         $reservation->date = $request->input('date');
+        $reservation->contract_date = $request->input('contract_date');
         $reservation->description = $request->input('description');
         $reservation->menu_contents = $request->input('menu_contents');
-        $client = $this->clientService->getByID($reservation->client->id);
-        $this->clientService->update($request, $client);
+        if ($reservation->client) {
+            $client = $this->clientService->getByID($reservation->client->id);
+            $this->clientService->update($request, $client);
+        }
 
         $venueData = explode(",", $request->input('reservation'));
-        $reservation->venue_id = $venueData[0];
-        $reservation->reservation_type = $venueData[1];
+        $reservation->venue_id = !empty($venueData[0]) ? $venueData[0] : null;
+        $reservation->reservation_type = isset($venueData[1]) ? $venueData[1] : null;
     
         // Calculate total payment
         $numberOfGuests = intval($request->input('number_of_guests'));
@@ -197,7 +202,7 @@ class ReservationsService
      * Updates existing Reservation status
      **/
     public function updateStatus($request, Reservation $reservation) {
-
+        
         $reservation->status = $request->input('status');
 
         $reservationSaved = $reservation->saveQuietly();
@@ -208,6 +213,13 @@ class ReservationsService
                 'context' => Log::LOG_CONTEXT_RESERVATIONS,
                 'ttl'=> Log::LOG_TTL_THREE_MONTHS,
             ]);
+             Notification::send(
+                 $this->usersService->getUsersForNotifications('reservation-updated-status'),
+                 new ReservationUpdatedStatusNotification(
+                     $reservation,
+                     auth()->user()
+                 )
+             );
         }
 
         return $reservationSaved;
@@ -272,10 +284,10 @@ class ReservationsService
     public function generateReservationContract($reservation,$contractContent){
         $placeholders = [
             '{{data}}' => $reservation->date,
-            '{{klienti}}' => $reservation->client->name,
-            '{{klienti_telefoni}}' => $reservation->client->phone_number,
-            '{{salla}}' => $reservation->venue->name,
-            '{{menu}}' => $reservation->menu->name,
+            '{{klienti}}' => $reservation->client->name ?? 'N/A',
+            '{{klienti_telefoni}}' => $reservation->client->phone_number ?? 'N/A',
+            '{{salla}}' => $reservation->venue->name ?? 'N/A',
+            '{{menu}}' => $reservation->menu->name ?? 'N/A',
             '{{id}}' => $reservation->id,
             '{{qmimi_menus}}' => $reservation->menu_price,
             '{{numri_personav}}' => $reservation->number_of_guests,
