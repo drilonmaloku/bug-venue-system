@@ -23,6 +23,7 @@
     "dashboard.settings": "Settings",
     "dashboard.contract": "Kontrata",
     "dashboard.decors": "Dekoret",
+    "dashboard.seating_plans": "Planet e Uljes",
     "clients.main.title": "Klientat",
     "clients.forms.update_title": "Përditso Klientin",
     "clients.filter.search": "Search",
@@ -199,7 +200,6 @@
     "reservations.status.planned": "Planifikuar",
     "reservations.status.finished": "Mbajtur",
     "reservations.status.canceled": "Anuluar",
-
 
     "reservations.view.update_status": "Përditso Statusin",
     "reservations.view.select_status": "Selekto Statusin",
@@ -439,6 +439,12 @@
     "reservations.no_venue": "Nuk ka salla për këtë rezervim",
     "reservations.no_client": "Nuk ka klient për këtë rezervim",
     "guests.not_found_with_search": "Nuk ka të ftuar momentalisht",
-    "guests.not_found_without_search": "Nuk ka të ftuar sipas search"
-
+    "guests.not_found_without_search": "Nuk ka të ftuar sipas search",
+    "reservations.table.seating_plan": "Planifikimi i ulseve",
+    "reservations.edit.select_seating_plan": "Selekto Planifikimin e Ulseve",
+    "guests.table.filter.select_status": "Selekto Statusin",
+    "guests.table.filter.check_in_status": "Selekto Statusin e Check In",
+    "guests.table.filter.select_check_in": "Selekto Statusin e Check In",
+    "guests.table.filter.checked_in": "Checked in",
+    "guests.table.filter.not_checked_in": "Not Checked in"
 }

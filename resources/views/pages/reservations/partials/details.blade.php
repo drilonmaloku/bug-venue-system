@@ -147,6 +147,17 @@
                         @endif
                     </td>
                 </tr>
+                <tr>
+                    <td>{{__('reservations.table.seating_plan')}}:</td>
+                    <td>
+                        @if ($reservation->seatingPlan)
+                            <a href="{{ route('seating-plans.view', $reservation->seatingPlan->id) }}">
+                                {{ $reservation->seatingPlan->name }}
+                            </a>
+                        @else
+                        @endif
+                    </td>
+                </tr>
 
 
                 </tbody>

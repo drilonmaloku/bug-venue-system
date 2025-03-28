@@ -50,7 +50,7 @@ class RouteServiceProvider extends ServiceProvider
             Route::middleware('web')->group(base_path('app/Modules/SupportTickets/Routes/support-web.php'));
             Route::middleware('web')->group(base_path('app/Modules/Settings/Routes/settings-web.php'));
             Route::middleware('web')->group(base_path('app/Modules/Onboard/Routes/onboard-web.php'));
-
+            Route::middleware('web')->group(base_path('app/Modules/SeatingPlans/Routes/seating-plans-web.php'));
 
         });
 

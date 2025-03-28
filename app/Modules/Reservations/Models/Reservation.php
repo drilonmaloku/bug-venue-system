@@ -9,6 +9,7 @@ use App\Modules\Decors\Models\Decor;
 use App\Modules\Menus\Models\Menu;
 use App\Modules\Payments\Models\Payment;
 use App\Modules\Venues\Models\Venue;
+use App\Modules\SeatingPlans\Models\SeatingPlan;
 use App\Scopes\CurrentLocationScope;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
@@ -41,7 +42,6 @@ class Reservation extends Model
 
     public function getReservationTypeNameAttribute()
     {
-
         return self::RESERVATION_TYPES[$this->reservation_type] ?? 'Unknown';
     }
 
@@ -67,9 +67,6 @@ class Reservation extends Model
             return 'canceled';
         }
     }
-
-
-
 
     public function venue()
     {
@@ -100,6 +97,7 @@ class Reservation extends Model
     {
         return $this->hasMany(Discount::class);
     }
+
     public function comments()
     {
         return $this->hasMany(ReservationComment::class);
@@ -128,8 +126,11 @@ class Reservation extends Model
     {
         return $this->belongsToMany(Collaborator::class, 'collaborator_reservation', 'reservation_id', 'collaborator_id');
     }
+    public function seatingPlan()
+{
+    return $this->belongsTo(SeatingPlan::class, 'seating_plan_id');
 
-
+}
 
     // Calculate total amount of invoices
     public function getTotalInvoiceAmountAttribute()
@@ -142,7 +143,6 @@ class Reservation extends Model
     {
         return $this->discounts->sum('amount');
     }
-
 
     public function updateReservationTracking($reservation)
     {
@@ -173,10 +173,7 @@ class Reservation extends Model
                 'total_payment' => ($currentReservation->number_of_guests * $currentReservation->menu_price) + ($totalInvoiceSum - $totalDiscountSum)
             ]
         );
-
     }
-
-
 
     public function reservationStaff()
     {

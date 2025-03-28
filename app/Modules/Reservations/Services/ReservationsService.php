@@ -73,6 +73,11 @@ class ReservationsService
             $menuId = $request->input('menu');
             $query->where('menu_id', $menuId); // Adjust 'venue_id' according to your actual column name
         }
+
+        if ($request->has('seating_plan') && $request->input('seating_plan') != '') {
+            $seatingPlanId = $request->input('seating_plan');
+            $query->where('seating_plan_id', $seatingPlanId);
+        }
         
         $query->orderBy('created_at', 'desc');
         return $query->paginate($perPage);
@@ -114,6 +119,7 @@ class ReservationsService
             "menu_id" => $request->input("menu_id"),
             "manager_id" => $request->input("manager_id"),
             "decor_id" => $request->input("decor_id"),
+            "seating_plan_id" => $request->input("seating_plan_id"),
             "menu_price" => $request->input("menu_price"),
             "contract_date" => $request->input("contract_date"),
             "reservation_type" => isset($venueData[1]) ? $venueData[1] : null,
@@ -155,6 +161,7 @@ class ReservationsService
         $reservation->menu_price = $request->input('menu_price');
         $reservation->manager_id = $request->input('manager_id');
         $reservation->decor_id = $request->input('decor_id');
+        $reservation->seating_plan_id = $request->input('seating_plan_id');
         $reservation->staff_expenses = $request->input('staff_expenses');
         $reservation->date = $request->input('date');
         $reservation->contract_date = $request->input('contract_date');

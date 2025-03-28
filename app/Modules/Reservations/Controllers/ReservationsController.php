@@ -11,6 +11,7 @@ use App\Modules\Reservations\Services\InvoicesServices;
 use App\Modules\Reservations\Services\ReservationsService;
 use App\Modules\Venues\Models\Venue;
 use App\Modules\Venues\Services\VenuesService;
+use App\Modules\SeatingPlans\Services\SeatingPlanService;
 use Illuminate\Http\Request;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Support\Carbon;
@@ -50,6 +51,7 @@ class ReservationsController extends Controller
     private $collaboratorService;
     private $reservationcollaboratorService;
     private $reservationGuestService;
+    private $seatingPlanService;
 
     public function __construct(
         VenuesService $venuesService,
@@ -65,7 +67,8 @@ class ReservationsController extends Controller
         DecorService $decorService,
         CollaboratorsService $collaboratorService,
         ReservationCollaboratorServices $reservationcollaboratorService,
-        ReservationGuestService $reservationGuestService
+        ReservationGuestService $reservationGuestService,
+        SeatingPlanService $seatingPlanService
     ) {
         $this->venuesService = $venuesService;
         $this->reservationsService = $reservationsService;
@@ -81,13 +84,11 @@ class ReservationsController extends Controller
         $this->collaboratorService = $collaboratorService;
         $this->reservationcollaboratorService = $reservationcollaboratorService;
         $this->reservationGuestService = $reservationGuestService;
-
+        $this->seatingPlanService = $seatingPlanService;
     }
 
     public function index(Request $request)
     {
-
-        
         $reservations = $this->reservationsService->getAll($request);
         if (session('success_message')) {
             Alert::success('Success!', session('success_message'));
@@ -98,6 +99,7 @@ class ReservationsController extends Controller
             'venues' => $this->venuesService->getVenues(),
             'menus' => $this->menuService->getAll(new Request(), false),
             'decors' => $this->decorService->getAll(new Request(), false),
+            'seatingPlans' => $this->seatingPlanService->getAll(new Request(), false),
             'collaborators' => $this->collaboratorService->getAll(new Request(), false),
         ]);
     }
@@ -110,8 +112,8 @@ class ReservationsController extends Controller
             'users' => $this->userService->getAll(request(), false),
             'clients' => $this->clientsService->getAll(request(), false),
             'decors' => $this->decorService->getAll(request(), false),
+            'seatingPlans' => $this->seatingPlanService->getAll(request(), false),
             'collaborators' => $this->collaboratorService->getAll(request(), false),
-
         ]);
     }
 
@@ -263,8 +265,10 @@ class ReservationsController extends Controller
             'venues' => $this->venuesService->getVenues(),
             'menus' => $this->menuService->getAll(request(), false),
             'decors' => $this->decorService->getAll(request(), false),
+            'seatingPlans' => $this->seatingPlanService->getAll(request(), false),
             'collaborators' =>  $this->collaboratorService->getAll(request(), false),
             'planning' => json_decode($reservation->planning, true), 
+            
 
         ]);
     }
@@ -868,10 +872,12 @@ class ReservationsController extends Controller
             return abort(404, 'Reservation Not Found');
         }
 
+        $guests = $this->reservationGuestService->getAll($request, $reservation->id);
+
         return view('pages/reservations/manage-guests', [
             'reservation' => $reservation,
-            'guests' => $reservation->guests,
-            'is_on_search' => count($request->all()),
+            'guests' => $guests,
+            'is_on_search' => count($request->all()) > 0,
         ]);
     }
 

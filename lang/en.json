@@ -23,6 +23,7 @@
     "dashboard.settings": "Settings",
     "dashboard.contract": "Contract",
     "dashboard.decors": "Decors",
+    "dashboard.seating_plans": "Seating Plans",
     "clients.main.title": "Clients",
     "clients.forms.update_title": "Update Client",
     "clients.filter.search": "Search",
@@ -411,5 +412,12 @@
     "reservations.no_venue": "No venue available",
     "reservation.no_client": "No client available",
     "guests.not_found_with_search": "No guests registered",
-    "guests.not_found_without_search": "No guests based on the search criteria"
+    "guests.not_found_without_search": "No guests based on the search criteria",
+    "reservations.table.seating_plan": "Seating Plan",
+    "reservations.edit.select_seating_plan": "Select Seating Plan",
+    "guests.table.filter.select_status": "Select Status",
+    "guests.table.filter.check_in_status:": "Check In Status",
+    "guests.table.filter.select_check_in": "Select Check In",
+    "guests.table.filter.checked_in": "Checked In",
+    "guests.table.filter.not_checked_in": "Not Checked In"
 }

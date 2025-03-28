@@ -101,7 +101,18 @@
                                     <select id="menuId" class="bug-text-input" name="decor_id">
                                         <option value="">{{__('reservations.table.filter.select_decor') }}</option>
                                         @foreach($decors as $decor)
-                                            <option  value="{{$decor->id}}">{{$decor->name}}</option>
+                                            <option value="{{$decor->id}}" {{ $decor->id == $reservation->decor_id ? 'selected' : '' }}>{{$decor->name}}</option>
+                                        @endforeach
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label for="example-text-input" class="form-control-label">{{__('reservations.edit.select_seating_plan') }}</label>
+                                    <select id="menuId" class="bug-text-input" name="seating_plan_id">
+                                        <option value="">{{__('reservations.edit.select_seating_plan') }}</option>
+                                        @foreach($seatingPlans as $seatingPlan)
+                                            <option value="{{$seatingPlan->id}}" {{ $seatingPlan->id == $reservation->seating_plan_id ? 'selected' : '' }}>{{$seatingPlan->name}}</option>
                                         @endforeach
                                     </select>
                                 </div>
