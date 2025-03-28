@@ -49,7 +49,7 @@ class ReservationUpdatedNotification extends Notification
     public function toArray(object $notifiable): array
     {
         return [
-            'message' =>  'Reservation me id: '.$this->reservation->id.' dhe emer:'.$this->reservation->name .' u be update nga perdoruesi: '.$this->user->name,
+            'message' =>  'Reservation me id: '.$this->reservation->id .' u be update nga perdoruesi: '.$this->user->name,
             'resource_type' => 'Reservation',
             'resource_uid' =>$this->reservation->id
         ];
