@@ -79,9 +79,10 @@ Route::get('/migrate-seed', function () {
     return response()->json(['message' => 'Migrations and seeding ran successfully']);
 });
 
-Route::get('/google/redirect', [GoogleCalendarController::class, 'redirectToGoogle'])->name('google.auth');
-Route::get('/google/callback', [GoogleCalendarController::class, 'handleGoogleCallback']);
-Route::get('/events/sync', [GoogleCalendarController::class, 'syncEventsToGoogle']);
+Route::get('/google/auth', [GoogleCalendarController::class, 'redirectToGoogle'])->name('google.auth');
+Route::get('/google/callback', [GoogleCalendarController::class, 'handleGoogleCallback'])->name('google.callback');
+Route::post('/events/sync', [GoogleCalendarController::class, 'syncEventsToGoogle'])->name('google.sync');
+Route::post('/events/sync-all', [GoogleCalendarController::class, 'syncAllEventsToGoogle'])->name('google.sync.all');
 
 
 Route::get('/notifications', [NotificationsController::class, 'archive'])->name('notification');
