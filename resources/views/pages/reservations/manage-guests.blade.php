@@ -7,8 +7,61 @@
 @endsection
 @section('content')
     <div class="vms_panel">
+       
+        @if($reservation->seatingPlan && $reservation->seatingPlan->image)
+            <div class="seating-plan-image mb-4">
+                <h6 class="mb-2">{{__('reservations.table.seating_plan')}}: {{ $reservation->seatingPlan->name }}</h6>
+                <div class="image-container" style="max-width: 800px; margin: 0 auto;">
+                    <img src="{{ $reservation->seatingPlan->image_url }}" alt="{{ $reservation->seatingPlan->name }}" class="img-fluid rounded shadow">
+                </div>
+            </div>
+        @endif
         @if(count($guests) > 0)
+        
             <div class="table-responsive p-0">
+                 <form class="filter-items" action="{{ route('reservations.listGuests', ['id' => $reservation->id]) }}" method="GET">
+            <div class="filter-options">
+                <div class="huber-filter-btn @if ($is_on_search) active @endif">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-filter vue-feather__content"><polygon points="22 3 2 3 10 12.46 10 19 14 21 14 12.46 22 3"></polygon></svg>
+                    <p>{{__('general.filter_title')}}</p>
+                    <span class="huber-filter-btn-arrow">
+                        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                            <path d="M6 9L12 15L18 9" stroke="black" stroke-width="2" stroke-linecap="round"
+                                  stroke-linejoin="round"/>
+                        </svg>
+                    </span>
+                </div>
+            </div>
+            <div class="hubers-filter-options @if ($is_on_search) active @endif">
+                <div class="hubers-filter-list-options">
+                    <div class="hubers-filter-group">
+                        <label>{{__('reservations.table.filter.search')}}:</label>
+                        <input placeholder="Search" class="bug-text-input white medium" type="text" name="search" value="{{ request('search') }}">
+                    </div>
+                    <div class="hubers-filter-group">
+                        <label>{{__('guests.table.filter.select_status')}}:</label>
+                        <select class="hubers-select-input white medium" name="status" id="">
+                            <option value="">{{__('guests.table.filter.select_status')}}</option>
+                            <option @if(app('request')->input('status') == 1) selected @endif value="1">{{__('guests.status.not_confirmed')}}</option>
+                            <option @if(app('request')->input('status') == 2) selected @endif value="2">{{__('guests.status.confirmed')}}</option>
+                            <option @if(app('request')->input('status') == 3) selected @endif value="3">{{__('guests.status.rejected')}}</option>
+                        </select>
+                    </div>
+                    <div class="hubers-filter-group">
+                        <label>{{__('guests.table.filter.check_in_status')}}:</label>
+                        <select class="hubers-select-input white medium" name="check_in_status" id="">
+                            <option value="">{{__('guests.table.filter.select_check_in')}}</option>
+                            <option @if(app('request')->input('check_in_status') == 1) selected @endif value="1">{{__('guests.table.filter.checked_in')}}</option>
+                            <option @if(app('request')->input('check_in_status') == 2) selected @endif value="2">{{__('guests.table.filter.not_checked_in')}}</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="hubers-filter-list-actions">
+                    <button type="submit" class="hubers-btn mr-2">{{__('general.filter_btn')}}</button>
+                    <a href="{{ route('reservations.listGuests', ['id' => $reservation->id]) }}" class="hubers-btn inverse">{{__('general.filter_reset_btn')}}</a>
+                </div>
+            </div>
+        </form>
                 <table class="bug-table">
                     <thead>
                     <tr>
@@ -235,6 +288,7 @@
             </div>
         </div>
     </div>
+    
     @foreach($guests as $guest)
         <div class="modal fade" id="editGuestModal{{$guest->id}}" tabindex="-1" role="dialog" aria-labelledby="editGuestModalLabel{{$guest->id}}" aria-hidden="true">
             <div class="modal-dialog" role="document">
@@ -249,7 +303,7 @@
                         @csrf
                         @method('PUT')
                         <div class="modal-body">
-                            <div class="row">
+                            <div class="row">                
                                 <div class="col-md-12">
                                     <div class="form-group">
                                         <label for="editguest_name{{$guest->id}}" class="form-control-label">{{__('guests.form.name')}}*</label>

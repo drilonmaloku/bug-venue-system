@@ -92,6 +92,12 @@
                                 </a>
                             </li>
                             <li>
+                                <a class="{{ Request::is(['seating-plans',]) ? 'active' : '' }}" href="{{route('seating-plans.index')}}">
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-grid"><rect x="3" y="3" width="7" height="7"/><rect x="14" y="3" width="7" height="7"/><rect x="14" y="14" width="7" height="7"/><rect x="3" y="14" width="7" height="7"/></svg>
+                                    {{__('dashboard.seating_plans')}}
+                                </a>
+                            </li>
+                            <li>
                                 <a class="{{ Request::is(['collaborators',]) ? 'active' : '' }}" href="{{route('collaborators.index')}}">
                                     <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" fill="#000000" height="24" width="24" version="1.1" viewBox="0 0 297 297" enable-background="new 0 0 297 297">
                                         <g>

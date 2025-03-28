@@ -5,6 +5,7 @@ use App\Modules\Reservations\Models\ReservationGuest;
 use App\Modules\Users\Services\UsersService;
 use App\Modules\Logs\Services\LogService;
 use App\Modules\Clients\Services\ClientsService;
+use Illuminate\Http\Request;
 
 
 
@@ -74,5 +75,30 @@ class ReservationGuestService
         $reservationGuest->is_checked_in = $request->input('check_in_status');
         $reservationGuestSaved = $reservationGuest->save();
         return $reservationGuestSaved;
+    }
+
+    public function getAll(Request $request, $paginated = true)
+    {
+        $perPage = $request->input('per_page', 10);
+        $query = ReservationGuest::query();
+
+        if ($request->has("search") && !empty($request->input("search"))) {
+            $searchTerm = '%' . $request->input("search") . '%';
+            $query->where(function ($subquery) use ($searchTerm) {
+                $subquery->where('name', 'LIKE', $searchTerm);
+            });
+        }
+
+        if ($request->has("status") && !empty($request->input("status"))) {
+            $query->where('status', $request->input("status"));
+        }
+
+        if ($request->has("check_in_status") && $request->input("check_in_status") !== '') {
+            $query->where('is_checked_in', $request->input("check_in_status"));
+        }
+
+        $query->orderBy('updated_at', 'desc');
+
+         return $paginated ? $query->paginate($perPage) : $query->get();
     }
 }
