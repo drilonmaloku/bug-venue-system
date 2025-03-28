@@ -2,14 +2,12 @@
 
 namespace App\Modules\Reservations\Notifications;
 
-
 use App\Models\User;
 use App\Modules\Reservations\Models\Reservation;
 use Illuminate\Bus\Queueable;
 use Illuminate\Notifications\Notification;
 
-
-class ReservationUpdatedNotification extends Notification
+class ReservationUpdatedStatusNotification extends Notification
 {
     //use Queueable;
 
@@ -18,7 +16,7 @@ class ReservationUpdatedNotification extends Notification
 
     /**
      * Create a new notification instance.
-     * @param Reservation $Reservation
+     * @param Reservation $reservation
      * @param User $user
      */
     public function __construct(
@@ -40,7 +38,6 @@ class ReservationUpdatedNotification extends Notification
         return ['database'];
     }
 
-
     /**
      * Get the array representation of the notification.
      *
@@ -49,9 +46,9 @@ class ReservationUpdatedNotification extends Notification
     public function toArray(object $notifiable): array
     {
         return [
-            'message' =>  'Reservation me id: '.$this->reservation->id .' u be update nga perdoruesi: '.$this->user->name,
+            'message' => 'Statusi i rezervimit me id: '.$this->reservation->id.' dhe emer: '.$this->reservation->name.' u ndryshua ne: '.$this->reservation->statusLabel.' nga perdoruesi: '.$this->user->name,
             'resource_type' => 'Reservation',
-            'resource_uid' =>$this->reservation->id
+            'resource_uid' => $this->reservation->id
         ];
     }
-}
+} 

@@ -103,6 +103,7 @@ class User extends Authenticatable
                 'venue-added' => true,
                 'venue-updated' => true,
                 'venue-deleted' => true,
+                'reservation-updated-status' => true,
         ];
     }
 
