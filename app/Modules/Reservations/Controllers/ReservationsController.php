@@ -33,6 +33,7 @@ use RealRashid\SweetAlert\Facades\Alert;
 use Illuminate\Validation\Rule;
 use App\Modules\Reservations\Imports\ReservationsImport;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Storage;
 
 class ReservationsController extends Controller
 {
@@ -1002,5 +1003,44 @@ class ReservationsController extends Controller
         }
 
         return redirect()->back();
+    }
+
+    public function updateSeatingPlan(Request $request, $id)
+    {
+        $request->validate([
+            'seating_plan' => 'required|image|mimes:jpeg,png,jpg,gif|max:2048'
+        ]);
+
+        $reservation = Reservation::findOrFail($id);
+        
+        if ($request->hasFile('seating_plan')) {
+            // Delete old image if exists
+            if ($reservation->seating_plan_image) {
+                Storage::disk('public')->delete($reservation->seating_plan_image);
+            }
+            
+            // Store new image
+            $path = $request->file('seating_plan')->store('seating-plans', 'public');
+            $reservation->seating_plan_image = $path;
+            $reservation->save();
+        }
+
+        return redirect()->back()->with('success', __('guests.seating_plan_updated'));
+    }
+
+    public function deleteSeatingPlan($id)
+    {
+        $reservation = Reservation::findOrFail($id);
+        
+        if ($reservation->seating_plan_image) {
+            // Delete the image file from storage
+            Storage::disk('public')->delete($reservation->seating_plan_image);
+            
+            // Remove the image reference from the database
+            $reservation->seating_plan_image = null;
+            $reservation->save();
+        }
+
+        return redirect()->back()->with('success', __('guests.plan_deleted'));
     }
 }

@@ -101,3 +101,4 @@ Route::get('files/{path}', [\App\Modules\Files\Controllers\AppFileController::cl
 
 Route::put('/reservations/manage-guests/{reservationId}/update/{guestId}', 'ReservationsController@updateGuest')
     ->name('reservations.updateGuest');
+
