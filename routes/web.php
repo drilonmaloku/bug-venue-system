@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\CreditsController;
 use App\Modules\NotificationsPreference\Controllers\NotificationPreferenceController;
 use App\Modules\Common\Controllers\DashboardController;
 use App\Modules\GoogleCalendar\Controllers\GoogleCalendarController;
@@ -8,6 +9,7 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 use App\Modules\Notifications\Controllers\NotificationsController;
 use App\Modules\Events\Controllers\EventsController;
+
 
 /*
 |--------------------------------------------------------------------------

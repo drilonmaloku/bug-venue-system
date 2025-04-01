@@ -51,7 +51,17 @@
                             <td>Template</td>
                             <td>{{ $user->userSettings->event_title_template ?? ''}}</td>
                         </tr>
-                        
+                        <tr>
+                            <td>{{__('users.table.credits')}}</td>
+                            <td>
+                                <div class="d-flex align-items-center">
+                                    <span class="mr-2">{{ number_format($user->credits ?? 0) }}</span>
+                                    <a href="{{ route('credits.index') }}" class="btn btn-sm btn-primary">
+                                        {{__('users.table.manage_credits')}}
+                                    </a>
+                                </div>
+                            </td>
+                        </tr>                        
                     </tbody>
                 </table>
             </div>
