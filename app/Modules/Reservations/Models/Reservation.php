@@ -100,6 +100,7 @@ class Reservation extends Model
     {
         return $this->hasMany(Discount::class);
     }
+
     public function comments()
     {
         return $this->hasMany(ReservationComment::class);
@@ -119,7 +120,8 @@ class Reservation extends Model
     {
         return $this->belongsTo(User::class,'manager_id');
     }
-       public function decor()
+
+    public function decor()
     {
         return $this->belongsTo(Decor::class,'decor_id');
     }
@@ -129,15 +131,11 @@ class Reservation extends Model
         return $this->belongsToMany(Collaborator::class, 'collaborator_reservation', 'reservation_id', 'collaborator_id');
     }
 
-
-
-    // Calculate total amount of invoices
     public function getTotalInvoiceAmountAttribute()
     {
         return $this->invoices->sum('amount');
     }
 
-    // Calculate total discount
     public function getTotalDiscountAmountAttribute()
     {
         return $this->discounts->sum('amount');
@@ -167,9 +165,11 @@ class Reservation extends Model
         $currentReservation = $this;
         $totalInvoiceSum = $currentReservation->invoices->sum('amount');
         $totalDiscountSum = $currentReservation->discounts->sum('amount');
+        $newCurrentPayment = $currentReservation->payments()->sum('value');
 
         return $currentReservation->update(
             [
+                'current_payment' => $newCurrentPayment,
                 'total_payment' => ($currentReservation->number_of_guests * $currentReservation->menu_price) + ($totalInvoiceSum - $totalDiscountSum)
             ]
         );

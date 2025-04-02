@@ -111,7 +111,9 @@ class PaymentsController extends Controller
 
         try {
 
-            $payment = $this->paymentsService->update($request, $payment);
+            $paymentSaved = $this->paymentsService->update($request, $payment);
+            $payment->reservation->updateTotalData();
+            
             return redirect()->to('payments')->withSuccessMessage('Pagesa u be update me sukses');
 
             return response()->json([
