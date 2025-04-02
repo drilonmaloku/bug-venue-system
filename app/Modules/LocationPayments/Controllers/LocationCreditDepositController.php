@@ -62,4 +62,24 @@ class LocationCreditDepositController extends Controller
     {
         return view('pages.location-payments.credit-deposits.process', ['location' => $location, 'deposit' => $deposit]);
     }
+
+    public function processStore(Request $request, Location $location, LocationCreditDeposit $deposit)
+    {
+        $request->validate([
+            'notes' => 'nullable|string',
+        ]);
+
+        $transaction = LocationCreditTransaction::create([
+            'location_id' => $location->id,
+            'location_credit_deposit_id' => $deposit->id,
+            'amount' => $deposit->amount,
+            'credits' => $deposit->credits,
+            'notes' => $request->notes,
+        ]);
+
+        $transaction->processTransaction();
+
+        return redirect()->route('location.credit-deposits.show', [$location, $deposit])
+            ->with('success', 'Payment processed successfully.');
+    }
 } 

@@ -54,11 +54,20 @@ class LocationPaymentsController extends Controller
             'notes' => $validated['notes']
         ]);
 
+        // Create invoice for the credit deposit
+        $invoice = $location->invoices()->create([
+            'credits' => $validated['credits'],
+            'invoice_number' => 'INV-' . strtoupper(uniqid()),
+            'status' => 'pending',
+            'description' => $validated['notes'],
+            'due_date' => now()->addDays(30), // Set due date to 30 days from now
+        ]);
+
         // Update location credits
         $location->increment('credits', $validated['credits']);
 
-        return redirect()->route('locations.edit', ['id' => $location->id])
-            ->with('success', 'Credits deposited successfully.');
+        return redirect()->route('location-payments.show', ['location' => $location])
+            ->with('success', 'Credits deposited successfully and invoice created.');
     }
 
     public function generateCreditDepositPdf($location_id)

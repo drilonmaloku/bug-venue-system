@@ -9,9 +9,6 @@
         <div class="row">
             <div class="col-md-8">
                 <div class="bug-table-item-options mb-4">
-                    <a class="hubers-btn mr-2" href="{{ route('location.invoices.create', ['location' => $location]) }}">
-                        <i class="fa fa-plus mr-2"></i> {{ __('New Invoice') }}
-                    </a>
                     <a class="hubers-btn mr-2" href="{{ route('location.credit-deposits.create', ['location' => $location]) }}">
                         <i class="fa fa-plus mr-2"></i> {{ __('New Credit Deposit') }}
                     </a>
@@ -64,12 +61,12 @@
                                         </tr>
                                     </thead>
                                     <tbody>
-                                        @foreach($location->invoices->take(5) as $invoice)
+                                        @foreach($location->invoices->where('status', 'pending') as $invoice)
                                             <tr>
                                                 <td>{{ $invoice->invoice_number }}</td>
                                                 <td>{{ $invoice->credits }}</td>
                                                 <td>
-                                                    <span class="badge badge-{{ $invoice->status === 'paid' ? 'success' : ($invoice->status === 'pending' ? 'warning' : 'danger') }}">
+                                                    <span class="badge badge-warning">
                                                         {{ ucfirst($invoice->status) }}
                                                     </span>
                                                 </td>
@@ -79,11 +76,15 @@
                                                         <a class="bug-table-item-option" href="{{ route('location.invoices.show', ['location' => $location, 'invoice' => $invoice]) }}">
                                                             <i class="fa fa-eye"></i>
                                                         </a>
-                                                        @if($invoice->status === 'pending')
-                                                            <a class="bug-table-item-option" href="{{ route('location.invoices.process', ['location' => $location, 'invoice' => $invoice]) }}">
-                                                                <i class="fa fa-money"></i>
-                                                            </a>
-                                                        @endif
+                                                        <form action="{{ route('location.invoices.mark-as-paid', ['location' => $location, 'invoice' => $invoice]) }}" 
+                                                              method="POST" 
+                                                              class="d-inline mark-as-paid-form"
+                                                              onsubmit="return confirm('Are you sure you want to mark this invoice as paid?');">
+                                                            @csrf
+                                                            <button type="submit" class="bug-table-item-option" style="background: none; border: none; padding: 0; cursor: pointer;">
+                                                                <i class="fa fa-check"></i>
+                                                            </button>
+                                                        </form>
                                                     </div>
                                                 </td>
                                             </tr>

@@ -16,6 +16,7 @@ Route::middleware(['auth'])->prefix('locations/{location}')->group(function () {
     Route::post('/invoices', [LocationInvoiceController::class, 'store'])->name('location.invoices.store');
     Route::get('/invoices/{invoice}', [LocationInvoiceController::class, 'show'])->name('location.invoices.show');
     Route::get('/invoices/{invoice}/pdf', [LocationInvoiceController::class, 'downloadPDF'])->name('location.invoices.pdf');
+    Route::post('/invoices/{invoice}/mark-as-paid', [LocationInvoiceController::class, 'markAsPaid'])->name('location.invoices.mark-as-paid');
 
     // Credit Deposits
     Route::get('/credit-deposits', [LocationCreditDepositController::class, 'index'])->name('location.credit-deposits.index');

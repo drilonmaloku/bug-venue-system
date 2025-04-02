@@ -37,7 +37,7 @@ class LocationInvoice extends Model
 
     public function generatePDF()
     {
-        $pdf = PDF::loadView('location-payments.invoices.pdf', [
+        $pdf = PDF::loadView('pages.location-payments.invoices.pdf', [
             'invoice' => $this,
             'location' => $this->location
         ]);
@@ -50,6 +50,12 @@ class LocationInvoice extends Model
         $this->update([
             'status' => 'paid',
             'paid_date' => now()
+        ]);
+
+        // Create payment record
+        $this->payments()->create([
+            'amount_paid' => $this->amount,
+            'payment_date' => now()
         ]);
     }
 
@@ -66,5 +72,15 @@ class LocationInvoice extends Model
     public function isCancelled(): bool
     {
         return $this->status === 'cancelled';
+    }
+
+    /**
+     * Get the amount in euros (1 credit = 1 euro)
+     *
+     * @return float
+     */
+    public function getAmountAttribute(): float
+    {
+        return (float) $this->credits;
     }
 } 

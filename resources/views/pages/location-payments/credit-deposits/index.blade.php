@@ -42,7 +42,7 @@
                                                 <span class="badge badge-warning">{{ __('Pending') }}</span>
                                             @endif
                                         </td>
-                                        <td>{{ $deposit->due_date->format('Y-m-d') }}</td>
+                                        <td>{{ $deposit->due_date ? $deposit->due_date->format('Y-m-d') : 'N/A' }}</td>
                                         <td>
                                             <a href="{{ route('location.credit-deposits.show', [$location, $deposit]) }}" 
                                                class="btn btn-sm btn-info">
@@ -54,7 +54,7 @@
                                                     {{ __('Process') }}
                                                 </a>
                                             @endif
-                                            <a href="{{ route('location.credit-deposits.download', [$location, $deposit]) }}" 
+                                            <a href="{{ route('location.credit-deposits.pdf', [$location, $deposit]) }}" 
                                                class="btn btn-sm btn-secondary">
                                                 {{ __('Download') }}
                                             </a>

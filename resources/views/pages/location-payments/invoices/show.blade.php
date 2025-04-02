@@ -22,12 +22,12 @@
                                     <td>{{ $invoice->invoice_number }}</td>
                                 </tr>
                                 <tr>
-                                    <th>{{__('dashboard.amount')}}</th>
-                                    <td>{{ number_format($invoice->amount, 2) }} {{__('general.currency')}}</td>
-                                </tr>
-                                <tr>
                                     <th>{{__('dashboard.credits')}}</th>
                                     <td>{{ $invoice->credits }}</td>
+                                </tr>
+                                <tr>
+                                    <th>{{__('dashboard.amount')}}</th>
+                                    <td>€{{ number_format($invoice->amount, 2) }}</td>
                                 </tr>
                                 <tr>
                                     <th>{{__('dashboard.status')}}</th>
@@ -87,10 +87,12 @@
                     <div class="row mt-4">
                         <div class="col-12">
                             @if($invoice->isPending())
+                                <form action="{{ route('location.invoices.mark-as-paid', [$location, $invoice]) }}" method="POST" class="d-inline">
+                                    @csrf
                                     <button type="submit" class="btn btn-success">
                                         <i class="fas fa-check"></i> {{__('dashboard.mark_as_paid')}}
                                     </button>
-                                
+                                </form>
                             @endif
                             <a href="{{ route('location.invoices.pdf', [$location, $invoice]) }}" class="btn btn-primary">
                                 <i class="fas fa-file-pdf"></i> {{__('dashboard.download_pdf')}}

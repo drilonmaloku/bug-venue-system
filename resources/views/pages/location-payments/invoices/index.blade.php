@@ -11,11 +11,6 @@
             <div class="card">
                 <div class="card-header">
                     <h3 class="card-title">{{__('dashboard.invoices')}}</h3>
-                    <div class="card-tools">
-                        <a href="{{ route('location.invoices.create', $location) }}" class="btn btn-primary">
-                            {{__('general.create_btn')}}
-                        </a>
-                    </div>
                 </div>
                 <div class="card-body">
                     <div class="table-responsive">
@@ -24,6 +19,7 @@
                                 <tr>
                                     <th>{{__('dashboard.invoice_number')}}</th>
                                     <th>{{__('dashboard.credits')}}</th>
+                                    <th>{{__('dashboard.amount')}}</th>
                                     <th>{{__('dashboard.status')}}</th>
                                     <th>{{__('dashboard.due_date')}}</th>
                                     <th>{{__('dashboard.actions')}}</th>
@@ -34,6 +30,7 @@
                                     <tr>
                                         <td>{{ $invoice->invoice_number }}</td>
                                         <td>{{ $invoice->credits }}</td>
+                                        <td>€{{ number_format($invoice->amount, 2) }}</td>
                                         <td>
                                             @switch($invoice->status)
                                                 @case('paid')

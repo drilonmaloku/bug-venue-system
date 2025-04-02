@@ -82,6 +82,10 @@
                 <td>{{ $invoice->credits }}</td>
             </tr>
             <tr>
+                <th>{{__('dashboard.amount')}}</th>
+                <td>€{{ number_format($invoice->amount, 2) }}</td>
+            </tr>
+            <tr>
                 <th>{{__('dashboard.status')}}</th>
                 <td>
                     <span class="status status-{{ $invoice->status }}">

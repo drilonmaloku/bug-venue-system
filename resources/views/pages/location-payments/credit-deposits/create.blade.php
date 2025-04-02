@@ -26,23 +26,6 @@
                             </div>
                             <div class="col-md-12">
                                 <div class="form-group">
-                                    <label for="payment_method" class="bug-label">Payment Method</label>
-                                    <select class="bug-text-input" required name="payment_method" id="payment_method">
-                                        <option value="cash">Cash</option>
-                                        <option value="bank_transfer">Bank Transfer</option>
-                                        <option value="credit_card">Credit Card</option>
-                                        <option value="other">Other</option>
-                                    </select>
-                                </div>
-                            </div>
-                            <div class="col-md-12">
-                                <div class="form-group">
-                                    <label for="transaction_id" class="bug-label">Transaction ID (Optional)</label>
-                                    <input class="bug-text-input" type="text" name="transaction_id" id="transaction_id">
-                                </div>
-                            </div>
-                            <div class="col-md-12">
-                                <div class="form-group">
                                     <label for="notes" class="bug-label">Notes (Optional)</label>
                                     <textarea class="bug-text-input" name="notes" id="notes" rows="3"></textarea>
                                 </div>

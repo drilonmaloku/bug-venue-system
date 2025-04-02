@@ -78,6 +78,29 @@ class LocationInvoiceController extends Controller
         return view('pages.location-payments.invoices.process', ['location' => $location, 'invoice' => $invoice]);
     }
 
+    public function processStore(Request $request, Location $location, LocationInvoice $invoice)
+    {
+        $request->validate([
+            'amount_paid' => 'required|numeric|min:0.01',
+            'payment_date' => 'required|date'
+        ]);
+
+        // Create payment record
+        $invoice->payments()->create([
+            'amount_paid' => $request->amount_paid,
+            'payment_date' => $request->payment_date
+        ]);
+
+        // If the total amount paid equals or exceeds the invoice amount, mark as paid
+        $totalPaid = $invoice->payments()->sum('amount_paid');
+        if ($totalPaid >= $invoice->amount) {
+            $invoice->markAsPaid();
+        }
+
+        return redirect()->route('location.invoices.show', [$location, $invoice])
+            ->with('success', 'Payment processed successfully.');
+    }
+
     public function markAsPaid(Location $location, LocationInvoice $invoice)
     {
         if ($invoice->isPaid()) {

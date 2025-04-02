@@ -69,4 +69,9 @@ class LocationCreditDeposit extends Model
     {
         return $this->status === 'cancelled';
     }
+
+    public function isOverdue(): bool
+    {
+        return $this->isPending() && $this->due_date->isPast();
+    }
 } 

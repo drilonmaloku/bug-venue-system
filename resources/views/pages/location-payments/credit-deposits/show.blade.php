@@ -27,7 +27,7 @@
                                     <span class="badge badge-warning">{{ __('Pending') }}</span>
                                 @endif
                             </p>
-                            <p><strong>{{ __('Due Date') }}:</strong> {{ $deposit->due_date->format('Y-m-d') }}</p>
+                            <p><strong>{{ __('Due Date') }}:</strong> {{ $deposit->due_date ? $deposit->due_date->format('Y-m-d') : 'N/A' }}</p>
                         </div>
                     </div>
 
@@ -40,13 +40,7 @@
                         </div>
                         <div class="col-md-6">
                             <h5>{{ __('Actions') }}</h5>
-                            @if(!$deposit->isCompleted())
-                                <a href="{{ route('location.credit-deposits.process', [$location, $deposit]) }}" 
-                                   class="btn btn-success mb-2">
-                                    {{ __('Process Payment') }}
-                                </a>
-                            @endif
-                            <a href="{{ route('location.credit-deposits.download', [$location, $deposit]) }}" 
+                            <a href="{{ route('location.credit-deposits.pdf', [$location, $deposit]) }}" 
                                class="btn btn-secondary mb-2">
                                 {{ __('Download PDF') }}
                             </a>
@@ -68,8 +62,6 @@
                                                 <th>{{ __('Date') }}</th>
                                                 <th>{{ __('Amount') }}</th>
                                                 <th>{{ __('Credits') }}</th>
-                                                <th>{{ __('Payment Method') }}</th>
-                                                <th>{{ __('Transaction ID') }}</th>
                                             </tr>
                                         </thead>
                                         <tbody>
@@ -78,8 +70,6 @@
                                                     <td>{{ $transaction->created_at->format('Y-m-d H:i') }}</td>
                                                     <td>{{ number_format($transaction->amount, 2) }}</td>
                                                     <td>{{ $transaction->credits }}</td>
-                                                    <td>{{ $transaction->payment_method }}</td>
-                                                    <td>{{ $transaction->transaction_id }}</td>
                                                 </tr>
                                             @endforeach
                                         </tbody>
