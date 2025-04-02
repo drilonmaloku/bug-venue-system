@@ -34,5 +34,6 @@ class Kernel extends ConsoleKernel
      */
     protected $commands = [
         Commands\AddRole::class,
+        \App\Console\Commands\GenerateReservationUuids::class,
     ];
 }

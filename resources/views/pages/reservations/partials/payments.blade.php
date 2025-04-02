@@ -86,14 +86,14 @@
                     <div class="row">
                         <div class="col-md-6">
                             <div class="form-group">
-                                <label for="payment_date" class="form-control-label">{{__('reservations.view.form.date')}}</label>
+                                <label for="payment_date" class="form-control-label">{{__('reservations.view.form.date')}}*</label>
                                 <input id="payment_date" required class="bug-text-input" type="date"
                                        name="payment_date">
                             </div>
                         </div>
                         <div class="col-md-6">
                             <div class="form-group">
-                                <label for="initial_payment_value" class="form-control-label">{{__('reservations.view.form.value')}}</label>
+                                <label for="initial_payment_value" class="form-control-label">{{__('reservations.view.form.value')}}*</label>
                                 <input id="initial_payment_value" required class="bug-text-input" type="number"
                                        name="initial_payment_value">
                             </div>
@@ -112,7 +112,7 @@
                         <div class="col-md-12">
                             <div class="form-group">
                                 <label for="payment_notes" class="form-control-label">{{__('reservations.view.form.notes')}}</label>
-                                <textarea id="payment_notes" required class="bug-text-input" name="payment_notes"></textarea>
+                                <textarea id="payment_notes" class="bug-text-input" name="payment_notes"></textarea>
                             </div>
                         </div>
                     </div>

@@ -12,6 +12,7 @@ use App\Modules\Venues\Models\Venue;
 use App\Scopes\CurrentLocationScope;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Str;
 
 class Reservation extends Model
 {
@@ -31,6 +32,11 @@ class Reservation extends Model
     protected static function booted()
     {
         static::addGlobalScope(new CurrentLocationScope);
+        
+        // Add UUID generation on creation
+        static::creating(function ($model) {
+            $model->uuid = (string) Str::uuid();
+        });
     }
 
     public function getReservationTypeNameAttribute()
@@ -42,13 +48,10 @@ class Reservation extends Model
     public function getStatusLabelAttribute()
     {
         if($this->status == 1) {
-            return __('reservations.status.planned');
+            return __('reservations.status.confirmed');
         }
         if($this->status == 2) {
-            return __('reservations.status.finished');
-        }
-        if($this->status == 3) {
-            return __('reservations.status.canceled');
+            return __('reservations.status.not_confirmed');
         }
     }
 
@@ -97,6 +100,7 @@ class Reservation extends Model
     {
         return $this->hasMany(Discount::class);
     }
+
     public function comments()
     {
         return $this->hasMany(ReservationComment::class);
@@ -116,7 +120,8 @@ class Reservation extends Model
     {
         return $this->belongsTo(User::class,'manager_id');
     }
-       public function decor()
+
+    public function decor()
     {
         return $this->belongsTo(Decor::class,'decor_id');
     }
@@ -126,15 +131,11 @@ class Reservation extends Model
         return $this->belongsToMany(Collaborator::class, 'collaborator_reservation', 'reservation_id', 'collaborator_id');
     }
 
-
-
-    // Calculate total amount of invoices
     public function getTotalInvoiceAmountAttribute()
     {
         return $this->invoices->sum('amount');
     }
 
-    // Calculate total discount
     public function getTotalDiscountAmountAttribute()
     {
         return $this->discounts->sum('amount');
@@ -164,9 +165,11 @@ class Reservation extends Model
         $currentReservation = $this;
         $totalInvoiceSum = $currentReservation->invoices->sum('amount');
         $totalDiscountSum = $currentReservation->discounts->sum('amount');
+        $newCurrentPayment = $currentReservation->payments()->sum('value');
 
         return $currentReservation->update(
             [
+                'current_payment' => $newCurrentPayment,
                 'total_payment' => ($currentReservation->number_of_guests * $currentReservation->menu_price) + ($totalInvoiceSum - $totalDiscountSum)
             ]
         );

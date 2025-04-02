@@ -192,9 +192,14 @@
     "payment.method.cash": "Kesh",
     "payment.method.bank": "Bank",
 
+    "reservations.status.confirmed": "Konfirmuar",
+    "reservations.status.not_confirmed": "Në Pritje",
+    "reservations.status.canceled": "Anuluar",
+
     "reservations.status.planned": "Planifikuar",
     "reservations.status.finished": "Mbajtur",
     "reservations.status.canceled": "Anuluar",
+
 
     "reservations.view.update_status": "Përditso Statusin",
     "reservations.view.select_status": "Selekto Statusin",
@@ -386,6 +391,7 @@
     "reservation.planning.description": "Përshkrimi",
     "reservation.planning.modify": "Modifiko",
     "reservation.planning.modify_planning": "Modifiko Planifikimin",
+    "reservation.planning.add_planning": "Shto planifikim",
     "reservation.planning.no_planning_found": "Nuk ka planifikim për këtë rezervim.",
 
     "reservations.view.notes": "Shënime",
@@ -425,5 +431,14 @@
     "reservations.create.client.personal_number": "Numri Personal",
     "reservation.contract_date": "Data e Kontratës",
     "reservations.edit.client.personal_number": "Numri Personal",
-    "reservations.import.title": "Importo Rezervimet"
+    "reservations.import.title": "Importo Rezervimet",
+
+    "guests.table": "Tavolina",
+    "guests.table.table_number": "Numri i tavolines",
+    "guests.edit": "Edito",
+    "reservations.no_venue": "Nuk ka salla për këtë rezervim",
+    "reservations.no_client": "Nuk ka klient për këtë rezervim",
+    "guests.not_found_with_search": "Nuk ka të ftuar momentalisht",
+    "guests.not_found_without_search": "Nuk ka të ftuar sipas search"
+
 }

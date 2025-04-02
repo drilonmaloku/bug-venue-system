@@ -35,6 +35,12 @@
                         Fshij Rezervim
                     </label>
                     <label>
+                        <input type="hidden" name="preferences[reservation-updated-status]" value="0">
+                        <input type="checkbox"
+                               name="preferences[reservation-updated-status]" {{ isset($preferences['reservation-updated-status']) && $preferences['reservation-updated-status'] ? 'checked' : '' }}>
+                        Përditso Statusin e Rezervimit
+                    </label>
+                    <label>
                         <input type="hidden" name="preferences[comment-added]" value="0">
                         <input type="checkbox"
                                name="preferences[comment-added]" {{ (isset($preferences['comment-added']) && $preferences['comment-added']) ? 'checked' : '' }}>
@@ -88,6 +94,7 @@
                                name="preferences[invoices-deleted]" {{ isset($preferences['invoices-deleted']) && $preferences['invoices-deleted'] ? 'checked' : '' }}>
                         Invoices Deleted
                     </label>
+
                 </div>
             </div>
 

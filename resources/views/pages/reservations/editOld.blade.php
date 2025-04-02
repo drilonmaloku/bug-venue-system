@@ -141,7 +141,7 @@
                                         </table>
                                     @else
                                         <div class="hubers-empty-tab">
-                                            <h5 class="text-center">No plannings</h5>
+                                            <h5 class="text-center">{{ __('reservation.planning.empty') }}</h5>
                                         </div>
                                     @endif
                                 </div>

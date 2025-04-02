@@ -6,11 +6,7 @@
 
 @section('content')
 
-  <div class="vms_panel notification-panel">
-    <h5>Notifications List:</h5>
-    <hr>
-    
-    <ul>
+  <div class="vms_panel">
       @foreach ($notifications as $notification)
         <div class="allnotifications">
           
@@ -46,7 +42,6 @@
           
         </div>
       @endforeach
-    </ul>
   </div>
 @endsection
 
