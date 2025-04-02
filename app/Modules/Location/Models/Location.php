@@ -5,6 +5,7 @@ use App\Modules\Settings\Models\LocationSettings;
 use App\Modules\LocationPayments\Models\LocationInvoice;
 use App\Modules\LocationPayments\Models\LocationPayment;
 use App\Modules\LocationPayments\Models\LocationCreditDeposit;
+use App\Modules\LocationPayments\Models\LocationCreditTransaction;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\HasMany;
@@ -29,7 +30,6 @@ class Location extends Model
             ]);
         });
     }
-
 
     public function user()
     {

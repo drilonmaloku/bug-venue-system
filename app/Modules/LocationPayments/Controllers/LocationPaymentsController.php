@@ -5,8 +5,8 @@ namespace App\Modules\LocationPayments\Controllers;
 use App\Http\Controllers\Controller;
 use App\Modules\Location\Models\Location;
 use Illuminate\Http\Request;
-use App\Modules\Location\Models\LocationCreditDeposit;
-use App\Modules\Location\Models\LocationCreditTransaction;
+use App\Modules\LocationPayments\Models\LocationCreditDeposit;
+use App\Modules\LocationPayments\Models\LocationCreditTransaction;
 use Barryvdh\DomPDF\Facade\Pdf;
 
 class LocationPaymentsController extends Controller
@@ -59,8 +59,8 @@ class LocationPaymentsController extends Controller
             'credits' => $validated['credits'],
             'invoice_number' => 'INV-' . strtoupper(uniqid()),
             'status' => 'pending',
-            'description' => $validated['notes'],
-            'due_date' => now()->addDays(30), // Set due date to 30 days from now
+            'description' => __('dashboard.credit_deposit') . ': ' . $validated['notes'],
+            'due_date' => now()->addDays(30)
         ]);
 
         // Update location credits
