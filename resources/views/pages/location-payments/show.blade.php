@@ -1,103 +1,148 @@
 @extends('layouts.app')
 
 @section('header')
-    {{ __('Location Payments') }} - {{ $location->name }}
+    {{__('dashboard.location_payments')}}: {{ $location->name }}
 @endsection
 
 @section('content')
     <div class="vms_panel">
         <div class="row">
             <div class="col-md-8">
-                <div class="bug-table-item-options mb-4">
-                    <a class="hubers-btn mr-2" href="{{ route('location.credit-deposits.create', ['location' => $location]) }}">
-                        <i class="fa fa-plus mr-2"></i> {{ __('New Credit Deposit') }}
+                <div class="bug-table-item-options">
+                    <a class="hubers-btn mr-2" href="{{ route('location-payments.credit-deposit.create', ['location_id' => $location->id]) }}">
+                        <i class="fa fa-plus mr-2"></i> {{ __('Credit Deposit') }}
                     </a>
-                    <a class="hubers-btn mr-2" href="{{ route('location-payments.index') }}">
-                        <i class="fa fa-arrow-left mr-2"></i> {{ __('Back to List') }}
+                    <a class="bug-table-item-option ml-2" href="{{ route('locations.edit', ['id' => $location->id]) }}">
+                        <i class="fa fa-edit"></i>
                     </a>
                 </div>
 
-                <div class="card mb-4">
-                    <div class="card-header">
-                        <h5 class="mb-0">{{ __('Location Information') }}</h5>
-                    </div>
-                    <div class="card-body">
-                        <table class="bug-table">
-                            <tr>
-                                <th>{{ __('Owner') }}</th>
-                                <td>{{ $location->user->first_name }}</td>
-                            </tr>
-                            <tr>
-                                <th>{{ __('Credits') }}</th>
-                                <td>{{ $location->credits }}</td>
-                            </tr>
-                            <tr>
-                                <th>{{ __('Pending Invoices') }}</th>
-                                <td>{{ $location->invoices->where('status', 'pending')->count() }}</td>
-                            </tr>
-                            <tr>
-                                <th>{{ __('Paid Invoices') }}</th>
-                                <td>{{ $location->invoices->where('status', 'paid')->count() }}</td>
-                            </tr>
-                        </table>
-                    </div>
-                </div>
+                <table>
+                    <thead>
+                        <tr>
+                            <th colspan="2">{{__('dashboard.location_info')}}</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>{{__('dashboard.name')}}</td>
+                            <td>{{ $location->name }}</td>
+                        </tr>
+                        <tr>
+                            <td>{{__('dashboard.credits')}}</td>
+                            <td>{{ $location->credits }}</td>
+                        </tr>
+                    </tbody>
+                </table>
 
-                <div class="card">
-                    <div class="card-header">
-                        <h5 class="mb-0">{{ __('Recent Invoices') }}</h5>
-                    </div>
-                    <div class="card-body">
-                        @if($location->invoices->count() > 0)
-                            <div class="table-responsive">
-                                <table class="bug-table">
-                                    <thead>
+                <div class="mt-4">
+                    <h4>{{__('dashboard.invoices')}}</h4>
+                    @if(count($location->invoices) > 0)
+                        <div class="table-responsive p-0">
+                            <table class="bug-table">
+                                <thead>
+                                    <tr>
+                                        <th>{{__('dashboard.invoice_number')}}</th>
+                                        <th>{{__('dashboard.credits')}}</th>
+                                        <th>{{__('dashboard.status')}}</th>
+                                        <th>{{__('dashboard.due_date')}}</th>
+                                        <th>{{__('dashboard.actions')}}</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    @foreach($location->invoices as $invoice)
                                         <tr>
-                                            <th>{{ __('Invoice Number') }}</th>
-                                            <th>{{ __('Credits') }}</th>
-                                            <th>{{ __('Status') }}</th>
-                                            <th>{{ __('Due Date') }}</th>
-                                            <th>{{ __('Actions') }}</th>
+                                            <td>{{ $invoice->invoice_number }}</td>
+                                            <td>{{ $invoice->credits }}</td>
+                                            <td>
+                                                @switch($invoice->status)
+                                                    @case('paid')
+                                                        <span class="badge badge-success">{{__('dashboard.paid')}}</span>
+                                                        @break
+                                                    @case('pending')
+                                                        <span class="badge badge-warning">{{__('dashboard.pending')}}</span>
+                                                        @break
+                                                    @case('cancelled')
+                                                        <span class="badge badge-danger">{{__('dashboard.cancelled')}}</span>
+                                                        @break
+                                                @endswitch
+                                            </td>
+                                            <td>{{ $invoice->due_date->format('Y-m-d') }}</td>
+                                            <td>
+                                                <div class="bug-table-item-options">
+                                                    <a class="bug-table-item-option" href="{{ route('location.invoices.show', [$location, $invoice]) }}">
+                                                        <i class="fa fa-eye"></i>
+                                                    </a>
+                                                    <a class="bug-table-item-option" href="{{ route('location.invoices.pdf', [$location, $invoice]) }}">
+                                                        <i class="fa fa-download"></i>
+                                                    </a>
+                                                </div>
+                                            </td>
                                         </tr>
-                                    </thead>
-                                    <tbody>
-                                        @foreach($location->invoices->where('status', 'pending') as $invoice)
-                                            <tr>
-                                                <td>{{ $invoice->invoice_number }}</td>
-                                                <td>{{ $invoice->credits }}</td>
-                                                <td>
-                                                    <span class="badge badge-warning">
-                                                        {{ ucfirst($invoice->status) }}
-                                                    </span>
-                                                </td>
-                                                <td>{{ $invoice->due_date->format('d/m/Y') }}</td>
-                                                <td>
-                                                    <div class="bug-table-item-options">
-                                                        <a class="bug-table-item-option" href="{{ route('location.invoices.show', ['location' => $location, 'invoice' => $invoice]) }}">
-                                                            <i class="fa fa-eye"></i>
-                                                        </a>
-                                                        <form action="{{ route('location.invoices.mark-as-paid', ['location' => $location, 'invoice' => $invoice]) }}" 
-                                                              method="POST" 
-                                                              class="d-inline mark-as-paid-form"
-                                                              onsubmit="return confirm('Are you sure you want to mark this invoice as paid?');">
-                                                            @csrf
-                                                            <button type="submit" class="bug-table-item-option" style="background: none; border: none; padding: 0; cursor: pointer;">
-                                                                <i class="fa fa-check"></i>
-                                                            </button>
-                                                        </form>
-                                                    </div>
-                                                </td>
-                                            </tr>
-                                        @endforeach
-                                    </tbody>
-                                </table>
-                            </div>
-                        @else
-                            <div class="text-center">
-                                <p>{{ __('No invoices found') }}</p>
-                            </div>
-                        @endif
-                    </div>
+                                    @endforeach
+                                </tbody>
+                            </table>
+                        </div>
+                    @else
+                        <div class="hubers-empty-tab">
+                            <h5 class="text-center">{{__('dashboard.no_invoices')}}</h5>
+                        </div>
+                    @endif
+                </div>
+
+                <div class="mt-4">
+                    <h4>{{__('dashboard.credit_deposits')}}</h4>
+                    @if(count($location->creditDeposits) > 0)
+                        <div class="table-responsive p-0">
+                            <table class="bug-table">
+                                <thead>
+                                    <tr>
+                                        <th>{{__('dashboard.deposit')}}</th>
+                                        <th>{{__('dashboard.credits')}}</th>
+                                        <th>{{__('dashboard.status')}}</th>
+                                        <th>{{__('dashboard.date')}}</th>
+                                        <th>{{__('dashboard.actions')}}</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    @foreach($location->creditDeposits as $deposit)
+                                        <tr>
+                                            <td>{{ $deposit->deposit_number }}</td>
+                                            <td>{{ $deposit->credits }}</td>
+                                            <td>
+                                                @switch($deposit->status)
+                                                    @case('completed')
+                                                        <span class="badge badge-success">{{__('dashboard.paid')}}</span>
+                                                        @break
+                                                    @case('pending')
+                                                        <span class="badge badge-warning">{{__('dashboard.pending')}}</span>
+                                                        @break
+                                                    @case('cancelled')
+                                                        <span class="badge badge-danger">{{__('dashboard.cancelled')}}</span>
+                                                        @break
+                                                @endswitch
+                                            </td>
+                                            <td>{{ $deposit->created_at->format('Y-m-d') }}</td>
+                                            <td>
+                                                <div class="bug-table-item-options">
+                                                    <a class="bug-table-item-option" href="{{ route('location.credit-deposits.show', [$location, $deposit]) }}">
+                                                        <i class="fa fa-eye"></i>
+                                                    </a>
+                                                    <a class="bug-table-item-option" href="{{ route('location.credit-deposits.pdf', [$location, $deposit]) }}">
+                                                        <i class="fa fa-download"></i>
+                                                    </a>
+                                                </div>
+                                            </td>
+                                        </tr>
+                                    @endforeach
+                                </tbody>
+                            </table>
+                        </div>
+                    @else
+                        <div class="hubers-empty-tab">
+                            <h5 class="text-center">{{__('dashboard.no_credit_transactions')}}</h5>
+                        </div>
+                    @endif
                 </div>
             </div>
         </div>

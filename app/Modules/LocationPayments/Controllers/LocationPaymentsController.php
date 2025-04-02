@@ -70,18 +70,5 @@ class LocationPaymentsController extends Controller
             ->with('success', 'Credits deposited successfully and invoice created.');
     }
 
-    public function generateCreditDepositPdf($location_id)
-    {
-        $location = Location::findOrFail($location_id);
-        $deposits = LocationCreditDeposit::where('location_id', $location_id)
-            ->orderBy('created_at', 'desc')
-            ->get();
-
-        $pdf = PDF::loadView('pdf.credit-deposit', [
-            'location' => $location,
-            'deposits' => $deposits
-        ]);
-
-        return $pdf->download('credit-deposits-' . $location->name . '.pdf');
-    }
+   
 } 

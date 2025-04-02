@@ -1,110 +1,123 @@
 @extends('layouts.app')
 
 @section('header')
-{{__('dashboard.invoice_details')}}
+    {{__('dashboard.invoice_details')}}: {{ $invoice->invoice_number }}
 @endsection
 
 @section('content')
-<div class="container-fluid">
-    <div class="row">
-        <div class="col-12">
-            <div class="card">
-                <div class="card-header">
-                    <h3 class="card-title">{{__('dashboard.invoice_details')}}</h3>
+    <div class="vms_panel">
+        <div class="row">
+            <div class="col-md-8">
+                <div class="bug-table-item-options">
+                    <a class="bug-table-item-option ml-2" href="{{ route('location.invoices.index', $location) }}">
+                        <i class="fa fa-arrow-left"></i>
+                    </a>
+                    @if($invoice->isPending())
+                        <form action="{{ route('location.invoices.mark-as-paid', [$location, $invoice]) }}" method="POST" class="d-inline">
+                            @csrf
+                            <button type="submit" class="bug-table-item-option">
+                                <i class="fa fa-check"></i>
+                            </button>
+                        </form>
+                    @endif
+                    <a class="bug-table-item-option ml-2" href="{{ route('location.invoices.pdf', [$location, $invoice]) }}">
+                        <i class="fa fa-download"></i>
+                    </a>
                 </div>
-                <div class="card-body">
-                    <div class="row">
-                        <div class="col-md-6">
-                            <h5>{{__('dashboard.invoice_info')}}</h5>
-                            <table class="table">
-                                <tr>
-                                    <th>{{__('dashboard.invoice_number')}}</th>
-                                    <td>{{ $invoice->invoice_number }}</td>
-                                </tr>
-                                <tr>
-                                    <th>{{__('dashboard.credits')}}</th>
-                                    <td>{{ $invoice->credits }}</td>
-                                </tr>
-                                <tr>
-                                    <th>{{__('dashboard.amount')}}</th>
-                                    <td>€{{ number_format($invoice->amount, 2) }}</td>
-                                </tr>
-                                <tr>
-                                    <th>{{__('dashboard.status')}}</th>
-                                    <td>
-                                        @switch($invoice->status)
-                                            @case('paid')
-                                                <span class="badge badge-success">{{__('dashboard.paid')}}</span>
-                                                @break
-                                            @case('pending')
-                                                <span class="badge badge-warning">{{__('dashboard.pending')}}</span>
-                                                @break
-                                            @case('cancelled')
-                                                <span class="badge badge-danger">{{__('dashboard.cancelled')}}</span>
-                                                @break
-                                        @endswitch
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <th>{{__('dashboard.due_date')}}</th>
-                                    <td>{{ $invoice->due_date->format('d/m/Y') }}</td>
-                                </tr>
-                                @if($invoice->paid_date)
-                                <tr>
-                                    <th>{{__('dashboard.paid_date')}}</th>
-                                    <td>{{ $invoice->paid_date->format('d/m/Y') }}</td>
-                                </tr>
-                                @endif
-                                <tr>
-                                    <th>{{__('dashboard.description')}}</th>
-                                    <td>{{ $invoice->description }}</td>
-                                </tr>
-                            </table>
-                        </div>
-                        <div class="col-md-6">
-                            <h5>{{__('dashboard.location_info')}}</h5>
-                            <table class="table">
-                                <tr>
-                                    <th>{{__('dashboard.name')}}</th>
-                                    <td>{{ $location->name }}</td>
-                                </tr>
-                                <tr>
-                                    <th>{{__('dashboard.address')}}</th>
-                                    <td>{{ $location->address }}</td>
-                                </tr>
-                                <tr>
-                                    <th>{{__('dashboard.phone')}}</th>
-                                    <td>{{ $location->phone }}</td>
-                                </tr>
-                                <tr>
-                                    <th>{{__('dashboard.email')}}</th>
-                                    <td>{{ $location->email }}</td>
-                                </tr>
-                            </table>
-                        </div>
-                    </div>
 
-                    <div class="row mt-4">
-                        <div class="col-12">
-                            @if($invoice->isPending())
-                                <form action="{{ route('location.invoices.mark-as-paid', [$location, $invoice]) }}" method="POST" class="d-inline">
-                                    @csrf
-                                    <button type="submit" class="btn btn-success">
-                                        <i class="fas fa-check"></i> {{__('dashboard.mark_as_paid')}}
-                                    </button>
-                                </form>
-                            @endif
-                            <a href="{{ route('location.invoices.pdf', [$location, $invoice]) }}" class="btn btn-primary">
-                                <i class="fas fa-file-pdf"></i> {{__('dashboard.download_pdf')}}
-                            </a>
-                            <a href="{{ route('location.invoices.index', $location) }}" class="btn btn-secondary">
-                                {{__('general.back_btn')}}
-                            </a>
+                <table>
+                    <thead>
+                        <tr>
+                            <th colspan="2">{{__('dashboard.invoice_info')}}</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>{{__('dashboard.invoice_number')}}</td>
+                            <td>{{ $invoice->invoice_number }}</td>
+                        </tr>
+                        <tr>
+                            <td>{{__('dashboard.credits')}}</td>
+                            <td>{{ $invoice->credits }}</td>
+                        </tr>
+                        <tr>
+                            <td>{{__('dashboard.status')}}</td>
+                            <td>
+                                @switch($invoice->status)
+                                    @case('paid')
+                                        <span class="badge badge-success">{{__('dashboard.paid')}}</span>
+                                        @break
+                                    @case('pending')
+                                        <span class="badge badge-warning">{{__('dashboard.pending')}}</span>
+                                        @break
+                                    @case('cancelled')
+                                        <span class="badge badge-danger">{{__('dashboard.cancelled')}}</span>
+                                        @break
+                                @endswitch
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>{{__('dashboard.due_date')}}</td>
+                            <td>{{ $invoice->due_date->format('Y-m-d') }}</td>
+                        </tr>
+                        @if($invoice->paid_date)
+                            <tr>
+                                <td>{{__('dashboard.paid_date')}}</td>
+                                <td>{{ $invoice->paid_date->format('Y-m-d') }}</td>
+                            </tr>
+                        @endif
+                        <tr>
+                            <td>{{__('dashboard.description')}}</td>
+                            <td>{{ $invoice->description }}</td>
+                        </tr>
+                    </tbody>
+                </table>
+
+                <div class="mt-4">
+                    <h4>{{__('dashboard.location_info')}}</h4>
+                    <table>
+                        <thead>
+                            <tr>
+                                <th colspan="2">{{__('dashboard.location_info')}}</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>{{__('dashboard.name')}}</td>
+                                <td>{{ $location->name }}</td>
+                            </tr>
+                            <tr>
+                                <td>{{__('dashboard.credits')}}</td>
+                                <td>{{ $location->credits }}</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+
+                @if($invoice->payments->count() > 0)
+                    <div class="mt-4">
+                        <h4>{{__('dashboard.payments')}}</h4>
+                        <div class="table-responsive p-0">
+                            <table class="bug-table">
+                                <thead>
+                                    <tr>
+                                        <th>{{__('dashboard.amount_paid')}}</th>
+                                        <th>{{__('dashboard.payment_date')}}</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    @foreach($invoice->payments as $payment)
+                                        <tr>
+                                            <td>€{{ number_format($payment->amount_paid, 2) }}</td>
+                                            <td>{{ $payment->payment_date->format('Y-m-d') }}</td>
+                                        </tr>
+                                    @endforeach
+                                </tbody>
+                            </table>
                         </div>
                     </div>
-                </div>
+                @endif
             </div>
         </div>
     </div>
-</div>
 @endsection 

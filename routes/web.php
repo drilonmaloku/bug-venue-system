@@ -1,6 +1,5 @@
 <?php
 
-use App\Http\Controllers\CreditsController;
 use App\Modules\NotificationsPreference\Controllers\NotificationPreferenceController;
 use App\Modules\Common\Controllers\DashboardController;
 use App\Modules\GoogleCalendar\Controllers\GoogleCalendarController;

@@ -18,9 +18,6 @@
                     <a class="hubers-btn mr-2" href="{{ route('location-payments.credit-deposit.create', ['location_id' => $location->id]) }}">
                         <i class="fa fa-plus mr-2"></i> {{ __('Credit Deposit') }}
                     </a>
-                    <a class="hubers-btn mr-2" href="{{ route('location-payments.credit-deposit.pdf', ['location_id' => $location->id]) }}">
-                        <i class="fa fa-file-pdf-o mr-2"></i>{{ __('Generate PDF') }} 
-                    </a>
                     <a class="bug-table-item-option ml-2" href="{{ route('locations.edit', ['id' => $location->id]) }}">
                         <i class="fa fa-edit"></i>
                     </a>
