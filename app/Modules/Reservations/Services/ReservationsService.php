@@ -110,7 +110,6 @@ class ReservationsService
         $reservation = Reservation::create([
             "location_id" => auth()->user()->getCurrentLocationId(),
             "client_id" => $clientId,
-            "uuid" => Str::uuid()->toString(),
             "venue_id" => $venueId,
             "menu_id" => $request->input("menu_id"),
             "manager_id" => $request->input("manager_id"),
