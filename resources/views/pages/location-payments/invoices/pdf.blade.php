@@ -1,141 +1,150 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <meta charset="utf-8">
-    <title>{{__('dashboard.invoice')}} #{{ $invoice->invoice_number }}</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+    <title>{{__('dashboard.invoice')}} {{ $invoice->invoice_number }}</title>
     <style>
         body {
-            font-family: Arial, sans-serif;
-            font-size: 14px;
-            line-height: 1.6;
+            font-family: DejaVu Sans, sans-serif;
+            font-size: 12px;
+            line-height: 1.4;
+            color: #333;
         }
         .header {
             text-align: center;
             margin-bottom: 30px;
         }
-        .invoice-info {
+        .invoice-title {
+            font-size: 24px;
+            font-weight: bold;
+            margin-bottom: 10px;
+        }
+        .invoice-number {
+            font-size: 16px;
+            color: #666;
+        }
+        .info-section {
             margin-bottom: 30px;
         }
-        .invoice-info table {
-            width: 100%;
-            border-collapse: collapse;
+        .info-section h3 {
+            font-size: 16px;
+            margin-bottom: 10px;
+            color: #333;
         }
-        .invoice-info th {
-            text-align: left;
-            width: 150px;
-            padding: 8px;
+        .info-grid {
+            display: grid;
+            grid-template-columns: 150px 1fr;
+            gap: 10px;
         }
-        .invoice-info td {
-            padding: 8px;
+        .info-label {
+            font-weight: bold;
+            color: #666;
         }
-        .location-info {
-            margin-bottom: 30px;
-        }
-        .location-info table {
-            width: 100%;
-            border-collapse: collapse;
-        }
-        .location-info th {
-            text-align: left;
-            width: 150px;
-            padding: 8px;
-        }
-        .location-info td {
-            padding: 8px;
-        }
-        .status {
-            padding: 5px 10px;
+        .status-badge {
+            display: inline-block;
+            padding: 4px 8px;
             border-radius: 4px;
+            font-size: 12px;
             font-weight: bold;
         }
         .status-paid {
-            color: #28a745;
+            background-color: #28a745;
+            color: white;
         }
         .status-pending {
-            color: #ffc107;
+            background-color: #ffc107;
+            color: #000;
         }
         .status-cancelled {
-            color: #dc3545;
+            background-color: #dc3545;
+            color: white;
         }
         .footer {
             margin-top: 50px;
             text-align: center;
-            font-size: 12px;
+            font-size: 10px;
             color: #666;
         }
     </style>
 </head>
 <body>
     <div class="header">
-        <h1>{{__('dashboard.invoice')}} #{{ $invoice->invoice_number }}</h1>
+        <div class="invoice-title">{{__('dashboard.invoice')}}</div>
+        <div class="invoice-number">{{ $invoice->invoice_number }}</div>
     </div>
 
-    <div class="invoice-info">
+    <div class="info-section">
         <h3>{{__('dashboard.invoice_info')}}</h3>
-        <table>
-            <tr>
-                <th>{{__('dashboard.invoice_number')}}</th>
-                <td>{{ $invoice->invoice_number }}</td>
-            </tr>
-            <tr>
-                <th>{{__('dashboard.credits')}}</th>
-                <td>{{ $invoice->credits }}</td>
-            </tr>
-            <tr>
-                <th>{{__('dashboard.amount')}}</th>
-                <td>€{{ number_format($invoice->amount, 2) }}</td>
-            </tr>
-            <tr>
-                <th>{{__('dashboard.status')}}</th>
-                <td>
-                    <span class="status status-{{ $invoice->status }}">
-                        {{__('dashboard.' . $invoice->status)}}
-                    </span>
-                </td>
-            </tr>
-            <tr>
-                <th>{{__('dashboard.due_date')}}</th>
-                <td>{{ $invoice->due_date->format('d/m/Y') }}</td>
-            </tr>
+        <div class="info-grid">
+            <div class="info-label">{{__('dashboard.invoice_number')}}:</div>
+            <div>{{ $invoice->invoice_number }}</div>
+            
+            <div class="info-label">{{__('dashboard.credits')}}:</div>
+            <div>{{ $invoice->credits }}</div>
+            
+            <div class="info-label">{{__('dashboard.status')}}:</div>
+            <div>
+                @switch($invoice->status)
+                    @case('paid')
+                        <span class="status-badge status-paid">{{__('dashboard.paid')}}</span>
+                        @break
+                    @case('pending')
+                        <span class="status-badge status-pending">{{__('dashboard.pending')}}</span>
+                        @break
+                    @case('cancelled')
+                        <span class="status-badge status-cancelled">{{__('dashboard.cancelled')}}</span>
+                        @break
+                @endswitch
+            </div>
+            
+            <div class="info-label">{{__('dashboard.due_date')}}:</div>
+            <div>{{ $invoice->due_date->format('Y-m-d') }}</div>
+            
             @if($invoice->paid_date)
-            <tr>
-                <th>{{__('dashboard.paid_date')}}</th>
-                <td>{{ $invoice->paid_date->format('d/m/Y') }}</td>
-            </tr>
+                <div class="info-label">{{__('dashboard.paid_date')}}:</div>
+                <div>{{ $invoice->paid_date->format('Y-m-d') }}</div>
             @endif
-            @if($invoice->description)
-            <tr>
-                <th>{{__('dashboard.description')}}</th>
-                <td>{{ $invoice->description }}</td>
-            </tr>
-            @endif
-        </table>
+            
+            <div class="info-label">{{__('dashboard.description')}}:</div>
+            <div>{{ $invoice->description }}</div>
+        </div>
     </div>
 
-    <div class="location-info">
+    <div class="info-section">
         <h3>{{__('dashboard.location_info')}}</h3>
-        <table>
-            <tr>
-                <th>{{__('dashboard.name')}}</th>
-                <td>{{ $location->name }}</td>
-            </tr>
-            <tr>
-                <th>{{__('dashboard.address')}}</th>
-                <td>{{ $location->address }}</td>
-            </tr>
-            <tr>
-                <th>{{__('dashboard.phone')}}</th>
-                <td>{{ $location->phone }}</td>
-            </tr>
-            <tr>
-                <th>{{__('dashboard.email')}}</th>
-                <td>{{ $location->email }}</td>
-            </tr>
-        </table>
+        <div class="info-grid">
+            <div class="info-label">{{__('dashboard.name')}}:</div>
+            <div>{{ $location->name }}</div>
+            
+            <div class="info-label">{{__('dashboard.credits')}}:</div>
+            <div>{{ $location->credits }}</div>
+        </div>
     </div>
+
+    @if($invoice->payments->count() > 0)
+        <div class="info-section">
+            <h3>{{__('dashboard.payments')}}</h3>
+            <table style="width: 100%; border-collapse: collapse;">
+                <thead>
+                    <tr style="background-color: #f8f9fa;">
+                        <th style="text-align: left; padding: 8px; border-bottom: 1px solid #dee2e6;">{{__('dashboard.amount_paid')}}</th>
+                        <th style="text-align: left; padding: 8px; border-bottom: 1px solid #dee2e6;">{{__('dashboard.payment_date')}}</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach($invoice->payments as $payment)
+                        <tr>
+                            <td style="padding: 8px; border-bottom: 1px solid #dee2e6;">€{{ number_format($payment->amount_paid, 2) }}</td>
+                            <td style="padding: 8px; border-bottom: 1px solid #dee2e6;">{{ $payment->payment_date->format('Y-m-d') }}</td>
+                        </tr>
+                    @endforeach
+                </tbody>
+            </table>
+        </div>
+    @endif
 
     <div class="footer">
-        {{__('dashboard.generated_on')}}: {{ now()->format('d/m/Y H:i:s') }}
+        {{__('dashboard.computer_generated')}}
     </div>
 </body>
 </html> 

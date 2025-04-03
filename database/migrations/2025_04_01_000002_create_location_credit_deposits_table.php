@@ -12,8 +12,13 @@ return new class extends Migration
             $table->id();
             $table->string('deposit_number')->unique();
             $table->foreignId('location_id')->constrained()->onDelete('cascade');
+            $table->decimal('amount', 10, 2);
             $table->integer('credits');
-            $table->text('notes')->nullable();
+            $table->string('status')->default('pending');
+            $table->text('description')->nullable();
+            $table->date('due_date');
+            $table->date('completed_date')->nullable();
+            $table->string('payment_method')->nullable();
             $table->timestamps();
         });
     }

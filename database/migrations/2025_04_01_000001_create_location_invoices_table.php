@@ -17,6 +17,7 @@ return new class extends Migration
             $table->text('description')->nullable();
             $table->date('due_date');
             $table->date('paid_date')->nullable();
+            $table->unsignedBigInteger('location_credit_deposit_id')->nullable();
             $table->timestamps();
         });
     }
@@ -25,4 +26,4 @@ return new class extends Migration
     {
         Schema::dropIfExists('location_invoices');
     }
-}; 
+};

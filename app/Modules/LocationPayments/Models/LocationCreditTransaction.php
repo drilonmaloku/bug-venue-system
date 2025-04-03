@@ -19,7 +19,8 @@ class LocationCreditTransaction extends Model
     ];
 
     protected $casts = [
-        'amount' => 'decimal:2'
+        'amount' => 'decimal:2',
+        'payment_method' => 'string'
     ];
 
     public function location(): BelongsTo

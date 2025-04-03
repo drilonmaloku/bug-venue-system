@@ -32,6 +32,7 @@ class LocationCreditDepositController extends Controller
         $request->validate([
             'transaction_id' => 'nullable|string',
             'notes' => 'nullable|string',
+            'payment_method' => 'required|in:cash,gift'
         ]);
 
         $transaction = LocationCreditTransaction::create([
@@ -41,6 +42,7 @@ class LocationCreditDepositController extends Controller
             'credits' => $deposit->credits,
             'transaction_id' => $request->transaction_id,
             'notes' => $request->notes,
+            'payment_method' => $request->payment_method
         ]);
 
         $transaction->processTransaction();
@@ -52,10 +54,37 @@ class LocationCreditDepositController extends Controller
         ]);
     }
 
-    public function index(Location $location)
+    public function index(Location $location = null)
     {
-        $deposits = $location->creditDeposits()->latest()->paginate(10);
-        return view('pages.location-payments.credit-deposits.index', ['location' => $location, 'deposits' => $deposits]);
+        if (auth()->user()->hasRole('system-admin')) {
+            // For system admin, show all deposits from all locations
+            $deposits = LocationCreditDeposit::with('location')
+                ->latest()
+                ->paginate(10);
+            
+            return view('pages.location-payments.credit-deposits.index', [
+                'deposits' => $deposits,
+                'is_system_admin' => true
+            ]);
+        } else {
+            // For regular users, show only deposits from their location
+            if (!$location) {
+                $location = auth()->user()->getCurrentLocation();
+                if (!$location) {
+                    return redirect()->back()->with('error', 'You do not have access to any location');
+                }
+            }
+            
+            $deposits = $location->creditDeposits()
+                ->latest()
+                ->paginate(10);
+            
+            return view('pages.location-payments.credit-deposits.index', [
+                'deposits' => $deposits,
+                'location' => $location,
+                'is_system_admin' => false
+            ]);
+        }
     }
 
     public function process(Location $location, LocationCreditDeposit $deposit)
@@ -81,5 +110,31 @@ class LocationCreditDepositController extends Controller
 
         return redirect()->route('location.credit-deposits.show', [$location, $deposit])
             ->with('success', 'Payment processed successfully.');
+    }
+
+    public function transactions(Location $location)
+    {
+        $transactions = LocationCreditTransaction::where('location_id', $location->id)
+            ->with(['deposit', 'location'])
+            ->latest()
+            ->paginate(10);
+
+        return view('pages.location-payments.credit-transactions.index', [
+            'location' => $location,
+            'transactions' => $transactions
+        ]);
+    }
+
+    public function markAsCompleted(Location $location, LocationCreditDeposit $deposit)
+    {
+        if ($deposit->isCompleted()) {
+            return redirect()->route('location.credit-deposits.show', [$location, $deposit])
+                ->with('error', 'Credit deposit is already marked as completed.');
+        }
+
+        $deposit->markAsCompleted();
+
+        return redirect()->route('location.credit-deposits.show', [$location, $deposit])
+            ->with('success', 'Credit deposit marked as completed successfully.');
     }
 } 

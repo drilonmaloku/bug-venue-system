@@ -11,10 +11,43 @@ use Illuminate\Support\Str;
 
 class LocationInvoiceController extends Controller
 {
-    public function index(Location $location)
+    public function index(Request $request, Location $location = null)
     {
-        $invoices = $location->invoices()->latest()->paginate(10);
-        return view('pages.location-payments.invoices.index', ['location' => $location, 'invoices' => $invoices]);
+        // Check if we're accessing the "all invoices" route
+        $isAllInvoicesRoute = $request->route()->getName() === 'location-payments.invoices.all';
+
+        if ($isAllInvoicesRoute && auth()->user()->hasRole('system-admin')) {
+            // For system admin viewing all invoices
+            $invoices = LocationInvoice::with('location')
+                                     ->latest()
+                                     ->paginate(10);
+            
+            return view('pages.location-payments.invoices.index', [
+                'invoices' => $invoices,
+                'is_on_search' => false,
+                'is_system_admin' => true
+            ]);
+        } else {
+            // For location-specific invoices
+            if (!$location) {
+                $location = auth()->user()->getCurrentLocation();
+                if (!$location) {
+                    return redirect()->back()->with('error', 'You do not have access to any location');
+                }
+            }
+            
+            // Filter by the specific location
+            $invoices = LocationInvoice::where('location_id', $location->id)
+                                     ->latest()
+                                     ->paginate(10);
+            
+            return view('pages.location-payments.invoices.index', [
+                'invoices' => $invoices,
+                'location' => $location,
+                'is_on_search' => false,
+                'is_system_admin' => auth()->user()->hasRole('system-admin')
+            ]);
+        }
     }
 
     public function create(Location $location)
@@ -109,6 +142,11 @@ class LocationInvoiceController extends Controller
         }
 
         $invoice->markAsPaid();
+
+        // If this invoice is associated with a credit deposit, mark it as completed
+        if ($invoice->creditDeposit) {
+            $invoice->creditDeposit->markAsCompleted();
+        }
 
         return redirect()->route('location.invoices.show', [$location, $invoice])
             ->with('success', 'Invoice marked as paid successfully.');

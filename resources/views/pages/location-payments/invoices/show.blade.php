@@ -12,7 +12,7 @@
                     <a class="bug-table-item-option ml-2" href="{{ route('location.invoices.index', $location) }}">
                         <i class="fa fa-arrow-left"></i>
                     </a>
-                    @if($invoice->isPending())
+                    @if($invoice->isPending() && auth()->user()->hasRole('system-admin'))
                         <form action="{{ route('location.invoices.mark-as-paid', [$location, $invoice]) }}" method="POST" class="d-inline">
                             @csrf
                             <button type="submit" class="bug-table-item-option">
@@ -39,6 +39,10 @@
                         <tr>
                             <td>{{__('dashboard.credits')}}</td>
                             <td>{{ $invoice->credits }}</td>
+                        </tr>
+                        <tr>
+                            <td>{{__('dashboard.amount')}}</td>
+                            <td>€{{ number_format($invoice->amount, 2) }}</td>
                         </tr>
                         <tr>
                             <td>{{__('dashboard.status')}}</td>

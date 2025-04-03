@@ -9,7 +9,7 @@
         <div class="row">
             <div class="col-md-8">
                 <div class="bug-table-item-options">
-                    <a class="hubers-btn mr-2" href="{{ route('location-payments.credit-deposit.create', ['location_id' => $location->id]) }}">
+                    <a class="hubers-btn mr-2" href="{{ route('location-payments.credit-deposits.create', ['location' => $location->id]) }}">
                         <i class="fa fa-plus mr-2"></i> {{ __('Credit Deposit') }}
                     </a>
                     <a class="bug-table-item-option ml-2" href="{{ route('locations.edit', ['id' => $location->id]) }}">

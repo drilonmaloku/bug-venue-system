@@ -486,11 +486,19 @@
     "dashboard.payment_processed": "Pagesa u procesua me sukses",
     "dashboard.invoice_marked_paid": "Fatura u shënua si e paguar me sukses",
     "dashboard.invoice_already_paid": "Fatura është tashmë e shënuar si e paguar",
+    "dashboard.no_credit_deposits": "Nuk ka depozita krediti",
+    "dashboard.deposit_number": "Numri i Depozitës",
 
     "general.currency": "€",
     "general.view": "Shiko",
     "general.download": "Shkarko",
     "general.back_btn": "Kthehu",
     "dashboard.invoice": "Faturë",
-    "dashboard.generated_on": "Gjeneruar më"
+    "dashboard.generated_on": "Gjeneruar më",
+    "dashboard.billing": "Faturat",
+    "dashboard.credit_transactions": "Transaksionet e Kredive",
+    "dashboard.completed": "E perfunduar",
+    "dashboard.my_payments": "Pagesat e Mia",
+    "dashboard.invoice_payments": "Pagesat e Faturës",
+    "dashboard.payment_date": "Data e Pagesës"
 }

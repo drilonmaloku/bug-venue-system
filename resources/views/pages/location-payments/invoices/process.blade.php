@@ -82,7 +82,7 @@
                         </div>
                     </form>
 
-                    @if($invoice->isPending())
+                    @if($invoice->isPending() && auth()->user()->hasRole('system-admin'))
                         <form action="{{ route('location.invoices.mark-as-paid', [$location, $invoice]) }}" method="POST" class="d-inline mt-3">
                             @csrf
                             <button type="submit" class="btn btn-success">

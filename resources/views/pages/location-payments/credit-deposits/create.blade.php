@@ -9,13 +9,23 @@
         <div class="container-fluid">
             <div class="row">
                 <div class="col-md-8">
-                    <form role="form" method="POST" action="{{ route('location-payments.credit-deposit.store', ['location_id' => $location->id]) }}" onsubmit="return disableSubmitButton()">
+                    <form role="form" method="POST" action="{{ route('location-payments.credit-deposits.store', ['location' => $location->id]) }}" onsubmit="return disableSubmitButton()">
                         @csrf
                         <div class="row">
                             <div class="col-md-12">
                                 <div class="form-group">
-                                    <label for="amount" class="bug-label">Amount</label>
-                                    <input class="bug-text-input" required type="number" step="0.01" name="amount" id="amount">
+                                    <label for="payment_method" class="bug-label">Payment Method</label>
+                                    <select class="bug-text-input" required name="payment_method" id="payment_method" onchange="toggleAmountField()">
+                                        <option value="">Select Payment Method</option>
+                                        <option value="cash">Cash</option>
+                                        <option value="gift">Gift</option>
+                                    </select>
+                                </div>
+                            </div>
+                            <div id="amountField" class="col-md-12">
+                                <div class="form-group">
+                                    <label for="amount" class="bug-label">Amount (Optional - will be set equal to credits)</label>
+                                    <input class="bug-text-input" type="number" step="0.01" name="amount" id="amount">
                                 </div>
                             </div>
                             <div class="col-md-12">
@@ -48,5 +58,22 @@
             document.getElementById("submitBtn").disabled = true;
             return true;
         }
+
+        function toggleAmountField() {
+            const paymentMethod = document.getElementById('payment_method').value;
+            const amountField = document.getElementById('amountField');
+            
+            if (paymentMethod === 'gift') {
+                amountField.style.display = 'none';
+                document.getElementById('amount').value = '';
+            } else {
+                amountField.style.display = 'block';
+            }
+        }
+
+        // Initialize the form state
+        document.addEventListener('DOMContentLoaded', function() {
+            toggleAmountField();
+        });
     </script>
 @endsection

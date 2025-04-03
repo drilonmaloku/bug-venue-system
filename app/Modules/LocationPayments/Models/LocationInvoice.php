@@ -35,6 +35,11 @@ class LocationInvoice extends Model
         return $this->hasMany(LocationPayment::class);
     }
 
+    public function creditDeposit(): BelongsTo
+    {
+        return $this->belongsTo(LocationCreditDeposit::class, 'location_credit_deposit_id');
+    }
+
     public function generatePDF()
     {
         $pdf = PDF::loadView('pages.location-payments.invoices.pdf', [

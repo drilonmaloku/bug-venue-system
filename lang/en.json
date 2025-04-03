@@ -67,6 +67,8 @@
     "dashboard.payment_processed": "Payment processed successfully",
     "dashboard.invoice_marked_paid": "Invoice marked as paid successfully",
     "dashboard.invoice_already_paid": "Invoice is already marked as paid",
+    "dashboard.no_credit_deposits": "No credit deposits",
+    "dashboard.deposit_number": "Deposit Number",
     "clients.main.title": "Clients",
     "clients.forms.update_title": "Update Client",
     "clients.filter.search": "Search",
@@ -463,5 +465,10 @@
     "general.download": "Download",
     "general.back_btn": "Back",
     "dashboard.invoice": "Invoice",
-    "dashboard.generated_on": "Generated on"
+    "dashboard.generated_on": "Generated on",
+    "dashboard.billing": "Billing",
+    "dashboard.credit_transactions": "Credit Transactions",
+    "dashboard.completed": "Completed",
+    "dashboard.my_payments": "My Payments",
+    "dashboard.invoice_payments": "Invoice Payments"
 }
