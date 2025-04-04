@@ -68,17 +68,6 @@ class LocationPaymentsController extends Controller
             'payment_method' => $validated['payment_method']
         ]);
 
-        // Create invoice for the credit deposit
-        $invoice = LocationInvoice::create([
-            'location_id' => $location->id,
-            'credits' => $validated['credits'],
-            'invoice_number' => 'INV-' . strtoupper(uniqid()),
-            'status' => 'pending',
-            'description' => 'Credit deposit invoice',
-            'due_date' => now()->addDays(30),
-            'location_credit_deposit_id' => $creditDeposit->id
-        ]);
-
         // Update location credits
         $location->increment('credits', $validated['credits']);
 

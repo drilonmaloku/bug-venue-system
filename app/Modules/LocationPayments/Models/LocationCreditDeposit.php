@@ -6,6 +6,7 @@ use App\Modules\Location\Models\Location;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasMany;
+use Illuminate\Database\Eloquent\Relations\HasOne;
 use Barryvdh\DomPDF\Facade\Pdf;
 
 class LocationCreditDeposit extends Model
@@ -36,6 +37,11 @@ class LocationCreditDeposit extends Model
     public function transactions(): HasMany
     {
         return $this->hasMany(LocationCreditTransaction::class, 'location_credit_deposit_id');
+    }
+
+    public function invoice(): HasOne
+    {
+        return $this->hasOne(LocationInvoice::class, 'location_credit_deposit_id');
     }
 
     public function generatePDF()

@@ -2,7 +2,7 @@
 
 namespace App\Modules\LocationPayments\Models;
 
-use App\Models\Location;
+use App\Modules\Location\Models\Location;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 

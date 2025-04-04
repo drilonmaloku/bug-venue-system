@@ -8,12 +8,6 @@
     <div class="vms_panel">
         <div class="row">
             <div class="col-md-8">
-                <div class="bug-table-item-options">
-                    <a class="bug-table-item-option" href="{{ route('location-payments.show', ['location' => $location->id]) }}">
-                        <i class="fa fa-arrow-left"></i>
-                    </a>
-                </div>
-
                 <div class="mt-4">
                     <h4>{{__('dashboard.invoice_payments')}}</h4>
                     @if(count($location->invoices->where('status', 'paid')) > 0)
@@ -24,7 +18,7 @@
                                         <th>{{__('dashboard.invoice_number')}}</th>
                                         <th>{{__('dashboard.amount')}}</th>
                                         <th>{{__('dashboard.payment_date')}}</th>
-                                        <th>{{__('dashboard.actions')}}</th>
+                                        <th width="120" class="text-end">{{__('dashboard.actions')}}</th>
                                     </tr>
                                 </thead>
                                 <tbody>
@@ -68,7 +62,7 @@
                                         <th>{{__('dashboard.amount')}}</th>
                                         <th>{{__('dashboard.credits')}}</th>
                                         <th>{{__('dashboard.completed_date')}}</th>
-                                        <th>{{__('dashboard.actions')}}</th>
+                                        <th width="120" class="text-end">{{__('dashboard.actions')}}</th>
                                     </tr>
                                 </thead>
                                 <tbody>
@@ -83,9 +77,7 @@
                                                     <a class="bug-table-item-option" href="{{ route('location.credit-deposits.show', [$location, $deposit]) }}">
                                                         <i class="fa fa-eye"></i>
                                                     </a>
-                                                    <a class="bug-table-item-option" href="{{ route('location.credit-deposits.pdf', [$location, $deposit]) }}">
-                                                        <i class="fa fa-download"></i>
-                                                    </a>
+                                                    
                                                 </div>
                                             </td>
                                         </tr>

@@ -20,9 +20,6 @@
                             </button>
                         </form>
                     @endif
-                    <a class="bug-table-item-option" href="{{ route('location.credit-deposits.pdf', [$location, $deposit]) }}">
-                        <i class="fa fa-download"></i>
-                    </a>
                 </div>
 
                 <table>

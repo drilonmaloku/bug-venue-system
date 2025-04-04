@@ -8,6 +8,7 @@ use App\Modules\LocationPayments\Models\LocationInvoice;
 use App\Modules\LocationPayments\Models\LocationPayment;
 use Illuminate\Http\Request;
 use Illuminate\Support\Str;
+use App\Jobs\GenerateInvoicesForCreditDeposits;
 
 class LocationInvoiceController extends Controller
 {
@@ -16,16 +17,44 @@ class LocationInvoiceController extends Controller
         // Check if we're accessing the "all invoices" route
         $isAllInvoicesRoute = $request->route()->getName() === 'location-payments.invoices.all';
 
+        $query = LocationInvoice::with('location')->latest();
+
+        // Apply filters
+        if ($request->filled('invoice_number')) {
+            $query->where('invoice_number', 'like', '%' . $request->invoice_number . '%');
+        }
+
+        if ($request->filled('status')) {
+            $query->where('status', $request->status);
+        }
+
+        if ($request->filled('due_date_from')) {
+            $query->whereDate('due_date', '>=', $request->due_date_from);
+        }
+
+        if ($request->filled('due_date_to')) {
+            $query->whereDate('due_date', '<=', $request->due_date_to);
+        }
+
         if ($isAllInvoicesRoute && auth()->user()->hasRole('system-admin')) {
             // For system admin viewing all invoices
-            $invoices = LocationInvoice::with('location')
-                                     ->latest()
-                                     ->paginate(10);
+            $selectedLocation = null;
+            if ($request->filled('location')) {
+                $query->whereHas('location', function($q) use ($request) {
+                    $q->where('name', 'like', '%' . $request->location . '%');
+                });
+                
+                // Try to find the exact location if the search term matches a location name
+                $selectedLocation = Location::where('name', 'like', '%' . $request->location . '%')->first();
+            }
+            
+            $invoices = $query->paginate(10);
             
             return view('pages.location-payments.invoices.index', [
                 'invoices' => $invoices,
-                'is_on_search' => false,
-                'is_system_admin' => true
+                'is_on_search' => $request->hasAny(['invoice_number', 'location', 'status', 'due_date_from', 'due_date_to']),
+                'is_system_admin' => true,
+                'location' => $selectedLocation
             ]);
         } else {
             // For location-specific invoices
@@ -37,14 +66,13 @@ class LocationInvoiceController extends Controller
             }
             
             // Filter by the specific location
-            $invoices = LocationInvoice::where('location_id', $location->id)
-                                     ->latest()
-                                     ->paginate(10);
+            $query->where('location_id', $location->id);
+            $invoices = $query->paginate(10);
             
             return view('pages.location-payments.invoices.index', [
                 'invoices' => $invoices,
                 'location' => $location,
-                'is_on_search' => false,
+                'is_on_search' => $request->hasAny(['invoice_number', 'status', 'due_date_from', 'due_date_to']),
                 'is_system_admin' => auth()->user()->hasRole('system-admin')
             ]);
         }
@@ -143,12 +171,15 @@ class LocationInvoiceController extends Controller
 
         $invoice->markAsPaid();
 
-        // If this invoice is associated with a credit deposit, mark it as completed
-        if ($invoice->creditDeposit) {
-            $invoice->creditDeposit->markAsCompleted();
-        }
-
         return redirect()->route('location.invoices.show', [$location, $invoice])
             ->with('success', 'Invoice marked as paid successfully.');
+    }
+
+    public function generateInvoicesForCreditDeposits()
+    {
+        // Dispatch the job to generate invoices for credit deposits
+        GenerateInvoicesForCreditDeposits::dispatch();
+
+        return redirect()->back()->with('success', 'Invoice generation job has been queued.');
     }
 } 

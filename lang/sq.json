@@ -23,6 +23,7 @@
     "dashboard.settings": "Settings",
     "dashboard.contract": "Kontrata",
     "dashboard.decors": "Dekoret",
+    "dashboard.credits": "Kreditët",
     "clients.main.title": "Klientat",
     "clients.forms.update_title": "Përditso Klientin",
     "clients.filter.search": "Search",
@@ -198,7 +199,6 @@
 
     "reservations.status.planned": "Planifikuar",
     "reservations.status.finished": "Mbajtur",
-    "reservations.status.canceled": "Anuluar",
 
     "reservations.view.update_status": "Përditso Statusin",
     "reservations.view.select_status": "Selekto Statusin",
@@ -440,7 +440,6 @@
     "guests.not_found_with_search": "Nuk ka të ftuar momentalisht",
     "guests.not_found_without_search": "Nuk ka të ftuar sipas search",
 
-    "dashboard.credits": "Kreditët",
     "dashboard.current_credits": "Kreditët Aktualë",
     "dashboard.total_credits_used": "Totali i Kredive të Përdorura",
     "dashboard.deposit_credits": "Depozito Kreditët",
@@ -500,5 +499,14 @@
     "dashboard.completed": "E perfunduar",
     "dashboard.my_payments": "Pagesat e Mia",
     "dashboard.invoice_payments": "Pagesat e Faturës",
-    "dashboard.payment_date": "Data e Pagesës"
+    "dashboard.completed_date": "Data e Perfundimit",
+    "payment.method.gift": "Dhuratë",
+    "dashboard.payment_method": "Metoda e Pagesës",
+    "general.from": "Nga",
+    "general.to": "Në",
+    "dashboard.notes": "Shënime",
+    "dashboard.create_invoice": "Krijo Faturë",
+    "dashboard.generate_invoices_for_credit_deposits": "Gjenero Fatura për Depozitat e Kredive",
+    "dashboard.transactions": "Transaksionet",
+    "dashboard.deposit_info": "Informacioni i Depozitës"
 }

@@ -82,20 +82,11 @@
             <div class="info-label">{{__('dashboard.credits')}}:</div>
             <div>{{ $invoice->credits }}</div>
             
+            <div class="info-label">{{__('dashboard.amount')}}:</div>
+            <div>€{{ number_format($invoice->amount, 2) }}</div>
+            
             <div class="info-label">{{__('dashboard.status')}}:</div>
-            <div>
-                @switch($invoice->status)
-                    @case('paid')
-                        <span class="status-badge status-paid">{{__('dashboard.paid')}}</span>
-                        @break
-                    @case('pending')
-                        <span class="status-badge status-pending">{{__('dashboard.pending')}}</span>
-                        @break
-                    @case('cancelled')
-                        <span class="status-badge status-cancelled">{{__('dashboard.cancelled')}}</span>
-                        @break
-                @endswitch
-            </div>
+            <div>{{__('dashboard.' . $invoice->status) }}</div>
             
             <div class="info-label">{{__('dashboard.due_date')}}:</div>
             <div>{{ $invoice->due_date->format('Y-m-d') }}</div>
@@ -143,8 +134,6 @@
         </div>
     @endif
 
-    <div class="footer">
-        {{__('dashboard.computer_generated')}}
-    </div>
+    
 </body>
 </html> 
