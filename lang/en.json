@@ -282,6 +282,7 @@
 
     "reservations.status.confirmed": "Confirmed",
     "reservations.status.not_confirmed": "On Hold",
+    "reservations.status.canceled": "Canceled",
 
     "reservations.view.add_payment": "Add Payment",
     "reservations.view.payments": "Payments",

@@ -53,6 +53,9 @@ class Reservation extends Model
         if($this->status == 2) {
             return __('reservations.status.not_confirmed');
         }
+        if($this->status == 3) {
+            return __('reservations.status.canceled');
+        }
     }
 
     public function getStatusClassAttribute()
