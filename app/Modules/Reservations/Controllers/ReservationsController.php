@@ -33,6 +33,7 @@ use RealRashid\SweetAlert\Facades\Alert;
 use Illuminate\Validation\Rule;
 use App\Modules\Reservations\Imports\ReservationsImport;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Database\Eloquent\ModelNotFoundException;
 
 class ReservationsController extends Controller
 {
@@ -1009,57 +1010,54 @@ class ReservationsController extends Controller
 
     public function updateDate(Request $request, $id)
     {
-        $reservation = Reservation::findOrFail($id);
-        
-        if ($reservation->status != 3) {
-            return redirect()->back()->with('error', 'Only canceled reservations can have their date updated.');
-        }
-        
-        // Check if the date has actually changed
-        $dateChanged = $reservation->date != $request->date;
-        
-        if ($dateChanged) {
-            // Check venue availability for the new date
-            $date = Carbon::createFromFormat('Y-m-d', $request->date)->format('Y-m-d');
-            $existingReservations = Reservation::where('date', $date)
-                ->where('venue_id', $reservation->venue_id)
-                ->where('id', '!=', $reservation->id)
-                ->get();
+        try {
+            // Validate the request
+            $validated = $request->validate([
+                'date' => 'required|date|after_or_equal:today',
+            ]);
+
+            $reservation = Reservation::findOrFail($id);
             
-            // Check for conflicts based on reservation type
-            $hasConflict = false;
-            foreach ($existingReservations as $existingReservation) {
-                // If either reservation is full day (type 1), there's a conflict
-                if ($existingReservation->reservation_type == 1 || $reservation->reservation_type == 1) {
-                    $hasConflict = true;
-                    break;
-                }
-                
-                // If both reservations are morning (type 2), there's a conflict
-                if ($existingReservation->reservation_type == 2 && $reservation->reservation_type == 2) {
-                    $hasConflict = true;
-                    break;
-                }
-                
-                // If both reservations are evening (type 3), there's a conflict
-                if ($existingReservation->reservation_type == 3 && $reservation->reservation_type == 3) {
-                    $hasConflict = true;
-                    break;
-                }
+            // Check if reservation is canceled
+            if ($reservation->status != 3) {
+                return redirect()->back()->with('error', __('reservations.errors.only_canceled_can_update_date'));
             }
             
-            if ($hasConflict) {
-                return redirect()->back()->with('error', 'This date and time slot is already booked for this venue.');
-            }
+            // Check if the date has actually changed
+            $dateChanged = $reservation->date != $validated['date'];
             
-            // Update the reservation date and status
-            $reservation->date = $request->date;
-            $reservation->status = 1; // Change status to confirmed
-            $reservation->save();
-            return redirect()->back()->with('success', 'Date updated and status changed to confirmed successfully.');
-        } else {
-            $reservation->save();
-            return redirect()->back()->with('success', 'Date remains the same.');
+            if ($dateChanged) {
+                // Check for conflicts using the service method
+                $hasConflict = $this->reservationsService->checkReservationConflict(
+                    $validated['date'],
+                    $reservation->venue_id,
+                    $reservation->reservation_type,
+                    $reservation->id
+                );
+                
+                if ($hasConflict) {
+                    return redirect()->back()->with('error', __('reservations.errors.date_time_slot_booked'));
+                }
+                
+                // Update the reservation date and status
+                $reservation->date = $validated['date'];
+                $reservation->status = 1; // Change status to confirmed
+                $reservation->save();
+
+                return redirect()->back()->with('success', __('reservations.messages.date_updated_confirmed'));
+            }
+
+            return redirect()->back()->with('success', __('reservations.messages.date_unchanged'));
+            
+        } catch (ValidationException $e) {
+            return redirect()->back()
+                ->withErrors($e->errors())
+                ->withInput();
+        } catch (ModelNotFoundException $e) {
+            return redirect()->back()->with('error', __('reservations.errors.reservation_not_found'));
+        } catch (\Exception $e) {
+            \Log::error('Error updating reservation date: ' . $e->getMessage());
+            return redirect()->back()->with('error', __('reservations.errors.general_error'));
         }
     }
 }

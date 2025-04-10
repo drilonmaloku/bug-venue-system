@@ -308,5 +308,37 @@ class ReservationsService
         $reservation->save();
         return $reservation;
     }
+
+    public function checkReservationConflict($date, $venueId, $reservationType, $excludeReservationId = null)
+    {
+        $query = Reservation::where('date', $date)
+            ->where('venue_id', $venueId)
+            ->where('status', '!=', 3); // Exclude canceled reservations
+
+        if ($excludeReservationId) {
+            $query->where('id', '!=', $excludeReservationId);
+        }
+
+        $existingReservations = $query->get();
+
+        foreach ($existingReservations as $existingReservation) {
+            // If either reservation is full day (type 1), there's a conflict
+            if ($existingReservation->reservation_type == 1 || $reservationType == 1) {
+                return true;
+            }
+            
+            // If both reservations are morning (type 2), there's a conflict
+            if ($existingReservation->reservation_type == 2 && $reservationType == 2) {
+                return true;
+            }
+            
+            // If both reservations are evening (type 3), there's a conflict
+            if ($existingReservation->reservation_type == 3 && $reservationType == 3) {
+                return true;
+            }
+        }
+
+        return false;
+    }
    
 }

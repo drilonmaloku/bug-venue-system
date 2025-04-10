@@ -194,7 +194,6 @@
 
     "reservations.status.confirmed": "Konfirmuar",
     "reservations.status.not_confirmed": "Në Pritje",
-    "reservations.status.canceled": "Anuluar",
 
     "reservations.status.planned": "Planifikuar",
     "reservations.status.finished": "Mbajtur",
@@ -439,6 +438,13 @@
     "reservations.no_venue": "Nuk ka salla për këtë rezervim",
     "reservations.no_client": "Nuk ka klient për këtë rezervim",
     "guests.not_found_with_search": "Nuk ka të ftuar momentalisht",
-    "guests.not_found_without_search": "Nuk ka të ftuar sipas search"
+    "guests.not_found_without_search": "Nuk ka të ftuar sipas search",
 
+    "reservations.errors.only_canceled_can_update_date": "Vetëm rezervimet e anuluara mund të përditësojnë datën.",
+    "reservations.errors.date_time_slot_booked": "Kjo datë dhe kohë është e zënë për këtë sallë.",
+    "reservations.errors.reservation_not_found": "Rezervimi nuk u gjet.",
+    "reservations.errors.general_error": "Ndodhi një gabim gjatë përditësimit të rezervimit.",
+
+    "reservations.messages.date_updated_confirmed": "Data u përditësua dhe statusi u ndryshua në të konfirmuar.",
+    "reservations.messages.date_unchanged": "Data mbeti e njëjtë."
 }
