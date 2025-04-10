@@ -508,5 +508,6 @@
     "dashboard.create_invoice": "Krijo Faturë",
     "dashboard.generate_invoices_for_credit_deposits": "Gjenero Fatura për Depozitat e Kredive",
     "dashboard.transactions": "Transaksionet",
-    "dashboard.deposit_info": "Informacioni i Depozitës"
+    "dashboard.deposit_info": "Informacioni i Depozitës",
+    "dashboard.no_invoice_payments": "Nuk ka pagesa të faturës"
 }

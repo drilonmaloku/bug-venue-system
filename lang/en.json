@@ -252,4 +252,5 @@
     "general.from": "From",
     "general.to": "To",
     "dashboard.generate_invoices_for_credit_deposits": "Generate Invoices for Credit Deposits",
+    "dashboard.no_invoice_payments": "No invoice payments found"
 }

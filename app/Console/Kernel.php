@@ -13,6 +13,7 @@ class Kernel extends ConsoleKernel
     protected function schedule(Schedule $schedule): void
     {
         $schedule->command('notifications:delete-expired')->daily();
+        $schedule->command('invoices:generate-monthly')->monthlyOn(1, '08:00'); // Run 1st day of month at 8:00 AM
 
         // $schedule->command('inspire')->hourly();
     }
