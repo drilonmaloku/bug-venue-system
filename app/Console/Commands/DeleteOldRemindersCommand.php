@@ -12,7 +12,7 @@ class DeleteOldRemindersCommand extends Command
      *
      * @var string
      */
-    protected $signature = 'reminders:delete-old';
+    protected $signature = 'reminders:cleanup';
 
     /**
      * The console command description.

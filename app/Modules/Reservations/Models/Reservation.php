@@ -13,6 +13,7 @@ use App\Scopes\CurrentLocationScope;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Str;
+use App\Modules\Reminders\Models\Reminder;
 
 class Reservation extends Model
 {
@@ -188,6 +189,6 @@ class Reservation extends Model
      */
     public function reminders()
     {
-        return $this->hasMany(\App\Modules\Reminders\Models\Reminder::class, 'reservation_id');
+        return $this->hasMany(Reminder::class, 'reservation_id');
     }
 }
