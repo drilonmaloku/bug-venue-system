@@ -13,6 +13,7 @@ class Kernel extends ConsoleKernel
     protected function schedule(Schedule $schedule): void
     {
         $schedule->command('notifications:delete-expired')->daily();
+        $schedule->command('reminders:process')->everyFiveMinutes();
 
         // $schedule->command('inspire')->hourly();
     }
@@ -35,5 +36,6 @@ class Kernel extends ConsoleKernel
     protected $commands = [
         Commands\AddRole::class,
         \App\Console\Commands\GenerateReservationUuids::class,
+        \App\Console\Commands\ProcessRemindersCommand::class
     ];
 }

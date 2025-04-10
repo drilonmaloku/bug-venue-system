@@ -14,6 +14,7 @@
     @include('pages.reservations.partials.comments',['reservation' => $reservation])
     @include('pages.reservations.partials.staff',['reservation' => $reservation])
     @include('pages.reservations.partials.notes',['reservation' => $reservation])
+    @include('pages.reservations.partials.reminders',['reservation' => $reservation])
 
 @endsection
 

@@ -182,4 +182,12 @@ class Reservation extends Model
     {
         return $this->hasMany(ReservationStaff::class, 'reservation_id');
     }
+
+    /**
+     * Get the reminders for the reservation.
+     */
+    public function reminders()
+    {
+        return $this->hasMany(\App\Modules\Reminders\Models\Reminder::class, 'reservation_id');
+    }
 }
