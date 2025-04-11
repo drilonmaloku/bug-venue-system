@@ -10,17 +10,20 @@
 
 @section('header-actions')
     @if($is_system_admin)
-    <form action="{{ route('location-payments.invoices.generate-for-credit-deposits') }}" method="POST" class="d-inline">
-            @if(isset($location))
-                <a class="hubers-btn mr-0" href="{{ route('location.invoices.create', $location) }}">
-                    <i class="fa fa-plus mr-2"></i> {{__('dashboard.create_invoice')}}
-                </a>
-            @endif
-            @csrf
-            <button type="submit" class="hubers-btn">
-                <i class="fa fa-sync-alt mr-2"></i> {{__('dashboard.generate_invoices_for_credit_deposits')}}
-            </button>
-        </form>
+        @if(isset($location))
+            <a class="hubers-btn mr-2" href="{{ route('location.invoices.create', $location) }}">
+                <i class="fa fa-plus mr-2"></i> {{__('dashboard.create_invoice')}}
+            </a>
+        @endif
+    @else
+        @if($location && $invoices->where('status', 'pending')->count() > 0)
+            <form action="{{ route('location.invoices.pay-all-pending', $location) }}" method="POST" class="d-inline ml-2">
+                @csrf
+                <button type="submit" class="hubers-btn warning" onclick="return confirm('{{ __('dashboard.confirm_pay_all_pending') }}');">
+                    <i class="fa fa-check-double mr-2"></i> {{ __('dashboard.pay_all_pending_invoices') }}
+                </button>
+            </form>
+        @endif
     @endif
 @endsection
 
@@ -44,12 +47,7 @@
                         <label>{{__('dashboard.invoice_number')}}:</label>
                         <input placeholder="{{__('dashboard.invoice_number')}}" class="bug-text-input white medium" type="text" name="invoice_number" value="{{ request('invoice_number') }}">
                     </div>
-                    @if($is_system_admin)
-                    <div class="hubers-filter-group">
-                        <label>{{__('dashboard.locations')}}:</label>
-                        <input placeholder="{{__('dashboard.locations')}}" class="bug-text-input white medium" type="text" name="location" value="{{ request('location') }}">
-                    </div>
-                    @endif
+                    
                     <div class="hubers-filter-group">
                         <label>{{__('dashboard.status')}}:</label>
                         <select class="hubers-select-input white medium" name="status">

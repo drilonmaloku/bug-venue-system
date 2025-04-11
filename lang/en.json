@@ -251,6 +251,7 @@
     "payment.method.gift": "Gift",
     "general.from": "From",
     "general.to": "To",
-    "dashboard.generate_invoices_for_credit_deposits": "Generate Invoices for Credit Deposits",
-    "dashboard.no_invoice_payments": "No invoice payments found"
+    "dashboard.no_invoice_payments": "No invoice payments found",
+    "dashboard.pay_all_pending_invoices": "Pay All Pending Invoices",
+    "dashboard.confirm_pay_all_pending": "Are you sure you want to pay all pending invoices with available credits?"
 }

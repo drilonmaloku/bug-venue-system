@@ -506,8 +506,9 @@
     "general.to": "Në",
     "dashboard.notes": "Shënime",
     "dashboard.create_invoice": "Krijo Faturë",
-    "dashboard.generate_invoices_for_credit_deposits": "Gjenero Fatura për Depozitat e Kredive",
     "dashboard.transactions": "Transaksionet",
     "dashboard.deposit_info": "Informacioni i Depozitës",
-    "dashboard.no_invoice_payments": "Nuk ka pagesa të faturës"
+    "dashboard.no_invoice_payments": "Nuk ka pagesa të faturës",
+    "dashboard.pay_all_pending_invoices": "Paguaj e të gjitha faturat në pritje",
+    "dashboard.confirm_pay_all_pending": "A jeni të sigurt që dëshironi të paguani të gjitha faturat në pritje me kredite të disponueshme?"
 }

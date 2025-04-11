@@ -282,8 +282,8 @@
                         </span>
                     </div>
                 </li>
-                @endif --}}
-
+                
+            
             <div class="hubers-navbar-logout">
                 <form action="{{ route('logout') }}" method="POST">
                     @csrf
@@ -293,6 +293,7 @@
                     </button>
                 </form>
             </div>
+            --}}
         </div>
     </div>
     <div>
@@ -315,6 +316,19 @@
                             {{__('dashboard.credits')}}: {{ number_format(auth()->user()->getCurrentLocation()->credits ?? 0) }}
                         </span>
                     </div>
+                </li>
+                @php
+                    // Re-fetch location or assume $currentLocation is available if needed
+                    $currentLocation = $currentLocation ?? auth()->user()->getCurrentLocation(); 
+                    $pendingInvoiceTotal = $currentLocation->invoices()->where('status', 'pending')->sum('credits');
+                @endphp
+                <li class="d-flex align-items-center text-decoration-none p-2 fs-5 lh-base text-dark fw-normal rounded mb-0">
+                     <a href="{{ route('location.invoices.index', ['location' => $currentLocation->id, 'status' => 'pending']) }}" class="hubers-menu-item text-dark text-decoration-none">
+                        <span>
+                            <i class="fa fa-file-invoice-dollar"></i> 
+                            {{__('dashboard.pending')}} {{__('dashboard.invoices')}}: €{{ number_format($pendingInvoiceTotal, 2) }}
+                        </span>
+                    </a>
                 </li>
                 @endif
                 <div class="hubers-navbar-logout">

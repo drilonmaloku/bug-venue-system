@@ -54,8 +54,7 @@ class LocationPaymentsController extends Controller
             'notes' => $validated['notes'],
             'deposit_number' => 'DEP-' . strtoupper(uniqid()),
             'payment_method' => $validated['payment_method'],
-            'due_date' => now()->addDays(30), // Set due date to 30 days from now
-            'status' => 'pending'
+            'due_date' => now()->addDays(30) // Set due date to 30 days from now
         ]);
 
         // Create credit transaction record

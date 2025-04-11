@@ -175,6 +175,59 @@ class LocationInvoiceController extends Controller
             ->with('success', 'Invoice marked as paid successfully.');
     }
 
+    public function payAllPending(Request $request, Location $location)
+    {
+        $availableCredits = $location->credits;
+        $pendingInvoices = $location->invoices()
+                                 ->where('status', 'pending')
+                                 ->orderBy('due_date', 'asc') // Pay oldest first
+                                 ->get();
+
+        if ($pendingInvoices->isEmpty()) {
+            return redirect()->back()->with('info', 'No pending invoices to pay.');
+        }
+
+        if ($availableCredits <= 0) {
+            return redirect()->back()->with('error', 'Not enough credits to pay any invoices.');
+        }
+
+        $paidInvoiceCount = 0;
+        $creditsUsed = 0;
+
+        foreach ($pendingInvoices as $invoice) {
+            $invoiceAmount = $invoice->credits; // Amount is based on credits
+
+            if ($availableCredits >= $invoiceAmount) {
+                // Sufficient credits to pay this invoice
+                $availableCredits -= $invoiceAmount;
+                $creditsUsed += $invoiceAmount;
+                
+                // Mark invoice as paid (using the existing method)
+                $invoice->markAsPaid(); 
+                $paidInvoiceCount++;
+
+                // No need to create a separate payment record here as markAsPaid handles it.
+                // Also, no need to create a credit transaction, as this is payment *using* credits.
+
+            } else {
+                // Not enough credits for this invoice, stop processing
+                break;
+            }
+        }
+
+        // Update the location's credit balance in the database
+        if ($creditsUsed > 0) {
+            $location->decrement('credits', $creditsUsed);
+        }
+
+        if ($paidInvoiceCount > 0) {
+            return redirect()->back()->with('success', "Successfully paid {$paidInvoiceCount} pending invoice(s) using {$creditsUsed} credits.");
+        } else {
+            // This case might happen if the first invoice is already more than available credits
+            return redirect()->back()->with('error', 'Not enough credits to pay the oldest pending invoice.');
+        }
+    }
+
     public function generateInvoicesForCreditDeposits()
     {
         // Dispatch the job to generate invoices for credit deposits

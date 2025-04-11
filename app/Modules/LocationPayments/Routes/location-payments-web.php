@@ -44,13 +44,13 @@ Route::prefix('location-payments')->group(function () {
             Route::get('/invoices/{invoice}/process', [LocationInvoiceController::class, 'process'])->name('location.invoices.process');
             Route::post('/invoices/{invoice}/process', [LocationInvoiceController::class, 'processStore'])->name('location.invoices.process.store');
             Route::post('/invoices/{invoice}/mark-as-paid', [LocationInvoiceController::class, 'markAsPaid'])->name('location.invoices.mark-as-paid');
+            Route::post('/invoices/pay-all-pending', [LocationInvoiceController::class, 'payAllPending'])->name('location.invoices.pay-all-pending');
 
             // Credit Deposits
             Route::get('/credit-deposits', [LocationCreditDepositController::class, 'index'])->name('location.credit-deposits.index');
             Route::get('/credit-deposits/create', [LocationCreditDepositController::class, 'create'])->name('location.credit-deposits.create');
             Route::post('/credit-deposits', [LocationCreditDepositController::class, 'store'])->name('location.credit-deposits.store');
             Route::get('/credit-deposits/{deposit}', [LocationCreditDepositController::class, 'show'])->name('location.credit-deposits.show');
-            Route::post('/credit-deposits/{deposit}/mark-as-completed', [LocationCreditDepositController::class, 'markAsCompleted'])->name('location.credit-deposits.mark-as-completed');
 
             // Credit Transactions
             Route::get('/credit-transactions', [LocationCreditDepositController::class, 'transactions'])->name('credit-transactions.index');

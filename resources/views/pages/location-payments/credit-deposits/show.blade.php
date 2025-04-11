@@ -12,14 +12,6 @@
                     <a class="bug-table-item-option" href="{{ route('location.credit-deposits.index', $location) }}">
                         <i class="fa fa-arrow-left"></i>
                     </a>
-                    @if($deposit->isPending())
-                        <form action="{{ route('location.credit-deposits.mark-as-completed', [$location, $deposit]) }}" method="POST" class="d-inline">
-                            @csrf
-                            <button type="submit" class="bug-table-item-option">
-                                <i class="fa fa-check"></i>
-                            </button>
-                        </form>
-                    @endif
                 </div>
 
                 <table>
@@ -37,24 +29,7 @@
                             <td>{{__('dashboard.credits')}}</td>
                             <td>{{ $deposit->credits }}</td>
                         </tr>
-                        <tr>
-                            <td>{{__('dashboard.status')}}</td>
-                            <td>
-                                @switch($deposit->status)
-                                    @case('completed')
-                                        <span class="badge badge-success">{{__('dashboard.completed')}}</span>
-                                        @break
-                                    @case('pending')
-                                        <span class="badge badge-warning">{{__('dashboard.pending')}}</span>
-                                        @break
-                                    @case('cancelled')
-                                        <span class="badge badge-danger">{{__('dashboard.cancelled')}}</span>
-                                        @break
-                                    @default
-                                        <span class="badge badge-secondary">{{ $deposit->status }}</span>
-                                @endswitch
-                            </td>
-                        </tr>
+                        
                         <tr>
                             <td>{{__('dashboard.due_date')}}</td>
                             <td>{{ $deposit->due_date ? $deposit->due_date->format('Y-m-d') : '-' }}</td>

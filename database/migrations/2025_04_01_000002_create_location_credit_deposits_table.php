@@ -14,7 +14,6 @@ return new class extends Migration
             $table->foreignId('location_id')->constrained()->onDelete('cascade');
             $table->decimal('amount', 10, 2);
             $table->integer('credits');
-            $table->string('status')->default('pending');
             $table->text('description')->nullable();
             $table->date('due_date');
             $table->date('completed_date')->nullable();

@@ -30,22 +30,6 @@
                                     <td>€{{ number_format($deposit->amount, 2) }}</td>
                                 </tr>
                                 <tr>
-                                    <th>{{__('dashboard.status')}}</th>
-                                    <td>
-                                        @switch($deposit->status)
-                                            @case('completed')
-                                                <span class="badge badge-success">{{__('dashboard.completed')}}</span>
-                                                @break
-                                            @case('pending')
-                                                <span class="badge badge-warning">{{__('dashboard.pending')}}</span>
-                                                @break
-                                            @case('cancelled')
-                                                <span class="badge badge-danger">{{__('dashboard.cancelled')}}</span>
-                                                @break
-                                        @endswitch
-                                    </td>
-                                </tr>
-                                <tr>
                                     <th>{{__('dashboard.due_date')}}</th>
                                     <td>{{ $deposit->due_date->format('d/m/Y') }}</td>
                                 </tr>
@@ -81,15 +65,6 @@
                             </a>
                         </div>
                     </form>
-
-                    @if($deposit->isPending() && auth()->user()->hasRole('system-admin'))
-                        <form action="{{ route('location.credit-deposits.mark-as-completed', [$location, $deposit]) }}" method="POST" class="d-inline mt-3">
-                            @csrf
-                            <button type="submit" class="btn btn-success">
-                                <i class="fas fa-check"></i> {{__('dashboard.mark_as_completed')}}
-                            </button>
-                        </form>
-                    @endif
                 </div>
             </div>
         </div>

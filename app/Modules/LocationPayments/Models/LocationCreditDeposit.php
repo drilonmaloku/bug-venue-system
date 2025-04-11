@@ -15,12 +15,11 @@ class LocationCreditDeposit extends Model
         'location_id',
         'amount',
         'credits',
-        'payment_method',
         'deposit_number',
-        'status',
         'description',
         'due_date',
-        'completed_date'
+        'completed_date',
+        'payment_method'
     ];
 
     protected $casts = [
@@ -57,28 +56,7 @@ class LocationCreditDeposit extends Model
     public function markAsCompleted()
     {
         $this->update([
-            'status' => 'completed',
             'completed_date' => now()
         ]);
-    }
-
-    public function isCompleted(): bool
-    {
-        return $this->status === 'completed';
-    }
-
-    public function isPending(): bool
-    {
-        return $this->status === 'pending';
-    }
-
-    public function isCancelled(): bool
-    {
-        return $this->status === 'cancelled';
-    }
-
-    public function isOverdue(): bool
-    {
-        return $this->isPending() && $this->due_date->isPast();
     }
 } 

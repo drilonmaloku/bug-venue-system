@@ -34,15 +34,7 @@
                         <input placeholder="{{__('dashboard.locations')}}" class="bug-text-input white medium" type="text" name="location" value="{{ request('location') }}">
                     </div>
                     @endif
-                    <div class="hubers-filter-group">
-                        <label>{{__('dashboard.status')}}:</label>
-                        <select class="hubers-select-input white medium" name="status">
-                            <option value="">{{__('general.filter_title')}}</option>
-                            <option value="pending" {{ request('status') == 'pending' ? 'selected' : '' }}>{{__('dashboard.pending')}}</option>
-                            <option value="completed" {{ request('status') == 'completed' ? 'selected' : '' }}>{{__('dashboard.completed')}}</option>
-                            <option value="cancelled" {{ request('status') == 'cancelled' ? 'selected' : '' }}>{{__('dashboard.cancelled')}}</option>
-                        </select>
-                    </div>
+                   
                     <div class="hubers-filter-group">
                         <label>{{__('dashboard.due_date')}} {{__('general.from')}}:</label>
                         <input class="bug-text-input white medium" type="date" name="due_date_from" value="{{ request('due_date_from') }}">
@@ -69,7 +61,6 @@
                             @endif
                             <th>{{__('dashboard.credits')}}</th>
                             <th>{{__('dashboard.amount')}}</th>
-                            <th>{{__('dashboard.status')}}</th>
                             <th>{{__('dashboard.due_date')}}</th>
                             <th width="120" class="text-end">{{__('dashboard.actions')}}</th>
                         </tr>
@@ -83,21 +74,6 @@
                                 @endif
                                 <td>{{ $deposit->credits }}</td>
                                 <td>€{{ number_format($deposit->amount, 2) }}</td>
-                                <td>
-                                    @switch($deposit->status)
-                                        @case('completed')
-                                            <span class="badge badge-success">{{__('dashboard.completed')}}</span>
-                                            @break
-                                        @case('pending')
-                                            <span class="badge badge-warning">{{__('dashboard.pending')}}</span>
-                                            @break
-                                        @case('cancelled')
-                                            <span class="badge badge-danger">{{__('dashboard.cancelled')}}</span>
-                                            @break
-                                        @default
-                                            <span class="badge badge-secondary">{{ $deposit->status }}</span>
-                                    @endswitch
-                                </td>
                                 <td>{{ $deposit->due_date ? $deposit->due_date->format('Y-m-d') : '-' }}</td>
                                 <td>
                                     <div class="bug-table-item-options">
