@@ -116,6 +116,76 @@
                         </a>
                     </li>
                     <li>
+                        <div class="hubers-menu-item submenu-opener">
+                            <span class="{{ Request::is(['location-payments','location-payments/*', 'invoices','invoices/*', 'credit-transactions','credit-transactions/*', 'locations/*/invoices', 'locations/*/invoices/*', 'locations/*/payments', 'locations/*/credit-transactions', 'locations/*/credit-transactions/*']) ? 'active' : '' }}">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-file-text"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path><polyline points="14 2 14 8 20 8"></polyline><line x1="16" y1="13" x2="8" y2="13"></line><line x1="16" y1="17" x2="8" y2="17"></line><polyline points="10 9 9 9 8 9"></polyline></svg>
+                                {{__('dashboard.billing')}}
+                            </span>
+                        </div>
+                        <span class="submenu-opener submenu-opener-icon">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-chevron-down"><polyline points="6 9 12 15 18 9"/></svg>
+                        </span>
+                        <ul class="hubers-submenu">
+                            @role('system-admin')
+                            <li>
+                                <a class="{{ Request::is(['location-payments']) ? 'active' : '' }}" href="{{route('location-payments.index')}}">
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-file-text">
+                                        <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path>
+                                        <polyline points="14 2 14 8 20 8"></polyline>
+                                        <line x1="16" y1="13" x2="8" y2="13"></line>
+                                        <line x1="16" y1="17" x2="8" y2="17"></line>
+                                        <polyline points="10 9 9 9 8 9"></polyline>
+                                    </svg>
+                                    {{__('dashboard.location_payments')}}
+                                </a>
+                            </li>
+                            @endrole
+                            @unlessrole('system-admin')
+                            <li>
+                                <a class="{{ Request::is('locations/*/payments') && !Request::is('locations/*/payments/*') ? 'active' : '' }}"
+                                   href="{{ auth()->user()->getCurrentLocation() ? route('location.payments.index', ['location' => auth()->user()->getCurrentLocation()]) : '#' }}">
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-credit-card">
+                                        <rect x="1" y="4" width="22" height="16" rx="2" ry="2"/>
+                                        <line x1="1" y1="10" x2="23" y2="10"/>
+                                    </svg>
+                                    {{__('dashboard.my_payments')}}
+                                </a>
+                            </li>
+                            @endunlessrole
+                            <li>
+                                <a class="{{ (Request::is('location-payments/invoices') || Request::is('location-payments/invoices/*') || Request::is('locations/*/invoices') || Request::is('locations/*/invoices/*')) ? 'active' : '' }}"
+                                   href="{{ auth()->user()->hasRole('system-admin') ?
+                                          route('location-payments.invoices.all') :
+                                          (auth()->user()->getCurrentLocation() ?
+                                           route('location.invoices.index', ['location' => auth()->user()->getCurrentLocation()]) :
+                                           '#') }}">
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-file-text">
+                                        <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path>
+                                        <polyline points="14 2 14 8 20 8"></polyline>
+                                        <line x1="16" y1="13" x2="8" y2="13"></line>
+                                        <line x1="16" y1="17" x2="8" y2="17"></line>
+                                        <polyline points="10 9 9 9 8 9"></polyline>
+                                    </svg>
+                                    {{__('dashboard.invoices')}}
+                                </a>
+                            </li>
+                            <li>
+                                <a class="{{ (Request::is('location-payments/credit-transactions') || Request::is('location-payments/credit-transactions/*') || Request::is('locations/*/credit-transactions') || Request::is('locations/*/credit-transactions/*')) ? 'active' : '' }}"
+                                   href="{{ auth()->user()->hasRole('system-admin') ?
+                                          route('location-payments.credit-transactions.all') :
+                                          (auth()->user()->getCurrentLocation() ?
+                                           route('credit-transactions.index', ['location' => auth()->user()->getCurrentLocation()]) :
+                                           '#') }}">
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-credit-card">
+                                        <rect x="1" y="4" width="22" height="16" rx="2" ry="2"/>
+                                        <line x1="1" y1="10" x2="23" y2="10"/>
+                                    </svg>
+                                    {{__('dashboard.credit_transactions')}}
+                                </a>
+                            </li>
+                        </ul>
+                    </li>
+                    <li>
                         <a class="{{ Request::is(['expenses','expenses/*']) ? 'active' : '' }}" href="{{route('expenses.index')}}">
                             <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-dollar-sign"><line x1="12" y1="1" x2="12" y2="23"/><path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"/></svg>
                             {{__('dashboard.expenses')}}
@@ -188,9 +258,32 @@
                                 {{__('dashboard.locations')}}
                             </a>
                         </li>
-                    @endrole
 
-            </ul>
+                    @endrole
+                </ul>
+                {{-- TODO ADD in responsive like logout  --}}
+                {{-- @if(auth()->user()->getCurrentLocation())
+                <li class="d-flex align-items-center text-decoration-none p-2 fs-5 lh-base text-dark fw-normal rounded mb-0">
+                    <div class="hubers-menu-item">
+                        <span>
+                        <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" fill="#000000" height="24px" width="24px" version="1.1" id="Capa_1" viewBox="0 0 489.9 489.9" xml:space="preserve">
+                            <g>
+                                <g>
+                                    <path d="M183.85,216.3c33.8-43.1,86.3-70.8,145.4-70.8c8.8,0,17.5,0.6,26.1,1.8v-39.4c-26.7,24-95.9,41.1-177.2,41.1    c-80.8,0-149.8-16.9-176.8-40.8l0,50.7C14.85,214.2,181.95,216.4,183.85,216.3z"/>
+                                    <path d="M1.25,198.5L1.15,250c6.5,28.6,66.8,51.8,144.9,56.9c3-24.3,10.8-47.2,22.4-67.6C91.75,238,27.05,221.5,1.25,198.5z"/>
+                                    <path d="M1.15,290l-0.1,49c0.3-0.3,0.6-0.6,0.9-0.8c1.9,31.6,69.4,57.5,156.1,61.2c-8.7-21.4-13.4-44.7-13.4-69.2v-0.1    C78.45,326,24.15,310.6,1.15,290z"/>
+                                    <path d="M169.55,422.7c-78.2-1.3-143.9-18.6-168.5-42.2l-0.1,46.2c0,34.8,79.3,63,177.2,63c18.7,0,36.7-1,53.6-2.9    C206.15,470.8,184.75,448.8,169.55,422.7z"/>
+                                    <ellipse cx="178.15" cy="62.9" rx="177.4" ry="62.9"/>
+                                    <path d="M329.25,170.2c-88.3,0-159.9,71.6-159.9,159.9s71.6,159.8,159.9,159.8s159.9-71.6,159.9-159.9S417.55,170.2,329.25,170.2z     M343.85,415.4v10.1c0,8.1-6.5,14.6-14.6,14.6s-14.6-6.5-14.6-14.6v-10.1c-8.5-2.6-16.4-7.3-22.6-13.9c-5.5-5.9-5.2-15.1,0.6-20.6    c5.9-5.5,14.8-4.9,20.6,0.6c6.4,6.1,17,6.8,17.5,6.8c11.3-0.8,20.3-10.3,20.3-21.8c0-12-9.8-21.9-21.8-21.9c-28.1,0-51-22.9-51-51    c0-23.1,15.4-42.6,36.4-48.9v-10.1c0-8.1,6.5-14.6,14.6-14.6s14.6,6.5,14.6,14.6v10.1c8.5,2.6,16.4,7.3,22.6,13.9    c5.5,5.9,5.2,15.1-0.6,20.6c-5.9,5.5-15.6,5.7-20.6-0.6c-5.3-6.7-17-6.8-17.5-6.8c-11.3,0.8-20.3,10.3-20.3,21.8    c0,12,9.8,21.9,21.8,21.9c28.1,0,51,22.9,51,51C380.25,389.6,364.85,409.1,343.85,415.4z"/>
+                                </g>
+                            </g>
+                            </svg>
+                            {{__('dashboard.credits')}}: {{ number_format(auth()->user()->getCurrentLocation()->credits ?? 0) }}
+                        </span>
+                    </div>
+                </li>
+                
+            
             <div class="hubers-navbar-logout">
                 <form action="{{ route('logout') }}" method="POST">
                     @csrf
@@ -200,15 +293,52 @@
                     </button>
                 </form>
             </div>
+            --}}
         </div>
     </div>
-    <div class="hubers-navbar-logout">
-        <form action="{{ route('logout') }}" method="POST">
-            @csrf
-            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-log-out"><path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"/><polyline points="16 17 21 12 16 7"/><line x1="21" y1="12" x2="9" y2="12"/></svg>
-            <button type="submit">
-                Log Out
-            </button>
-        </form>
+    <div>
+        @if(auth()->user()->getCurrentLocation())
+                <li class="d-flex align-items-center text-decoration-none p-2 fs-5 lh-base text-dark fw-normal rounded mb-0">
+                    <div class="hubers-menu-item">
+                        <span>
+                        <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" fill="#000000" height="24px" width="24px" version="1.1" id="Capa_1" viewBox="0 0 489.9 489.9" xml:space="preserve">
+                            <g>
+                                <g>
+                                    <path d="M183.85,216.3c33.8-43.1,86.3-70.8,145.4-70.8c8.8,0,17.5,0.6,26.1,1.8v-39.4c-26.7,24-95.9,41.1-177.2,41.1    c-80.8,0-149.8-16.9-176.8-40.8l0,50.7C14.85,214.2,181.95,216.4,183.85,216.3z"/>
+                                    <path d="M1.25,198.5L1.15,250c6.5,28.6,66.8,51.8,144.9,56.9c3-24.3,10.8-47.2,22.4-67.6C91.75,238,27.05,221.5,1.25,198.5z"/>
+                                    <path d="M1.15,290l-0.1,49c0.3-0.3,0.6-0.6,0.9-0.8c1.9,31.6,69.4,57.5,156.1,61.2c-8.7-21.4-13.4-44.7-13.4-69.2v-0.1    C78.45,326,24.15,310.6,1.15,290z"/>
+                                    <path d="M169.55,422.7c-78.2-1.3-143.9-18.6-168.5-42.2l-0.1,46.2c0,34.8,79.3,63,177.2,63c18.7,0,36.7-1,53.6-2.9    C206.15,470.8,184.75,448.8,169.55,422.7z"/>
+                                    <ellipse cx="178.15" cy="62.9" rx="177.4" ry="62.9"/>
+                                    <path d="M329.25,170.2c-88.3,0-159.9,71.6-159.9,159.9s71.6,159.8,159.9,159.8s159.9-71.6,159.9-159.9S417.55,170.2,329.25,170.2z     M343.85,415.4v10.1c0,8.1-6.5,14.6-14.6,14.6s-14.6-6.5-14.6-14.6v-10.1c-8.5-2.6-16.4-7.3-22.6-13.9c-5.5-5.9-5.2-15.1,0.6-20.6    c5.9-5.5,14.8-4.9,20.6,0.6c6.4,6.1,17,6.8,17.5,6.8c11.3-0.8,20.3-10.3,20.3-21.8c0-12-9.8-21.9-21.8-21.9c-28.1,0-51-22.9-51-51    c0-23.1,15.4-42.6,36.4-48.9v-10.1c0-8.1,6.5-14.6,14.6-14.6s14.6,6.5,14.6,14.6v10.1c8.5,2.6,16.4,7.3,22.6,13.9    c5.5,5.9,5.2,15.1-0.6,20.6c-5.9,5.5-15.6,5.7-20.6-0.6c-5.3-6.7-17-6.8-17.5-6.8c-11.3,0.8-20.3,10.3-20.3,21.8    c0,12,9.8,21.9,21.8,21.9c28.1,0,51,22.9,51,51C380.25,389.6,364.85,409.1,343.85,415.4z"/>
+                                </g>
+                            </g>
+                            </svg>
+                            {{__('dashboard.credits')}}: {{ number_format(auth()->user()->getCurrentLocation()->credits ?? 0) }}
+                        </span>
+                    </div>
+                </li>
+                @php
+                    // Re-fetch location or assume $currentLocation is available if needed
+                    $currentLocation = $currentLocation ?? auth()->user()->getCurrentLocation(); 
+                    $pendingInvoiceTotal = $currentLocation->invoices()->where('status', 'pending')->sum('credits');
+                @endphp
+                <li class="d-flex align-items-center text-decoration-none p-2 fs-5 lh-base text-dark fw-normal rounded mb-0">
+                     <a href="{{ route('location.invoices.index', ['location' => $currentLocation->id, 'status' => 'pending']) }}" class="hubers-menu-item text-dark text-decoration-none">
+                        <span>
+                            <i class="fa fa-file-invoice-dollar"></i> 
+                            {{__('dashboard.pending')}} {{__('dashboard.invoices')}}: €{{ number_format($pendingInvoiceTotal, 2) }}
+                        </span>
+                    </a>
+                </li>
+                @endif
+                <div class="hubers-navbar-logout">
+                    <form action="{{ route('logout') }}" method="POST">
+                        @csrf
+                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-log-out"><path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"/><polyline points="16 17 21 12 16 7"/><line x1="21" y1="12" x2="9" y2="12"/></svg>
+                        <button type="submit">
+                            Log Out
+                        </button>
+                    </form>
+                </div>
     </div>
 </div>

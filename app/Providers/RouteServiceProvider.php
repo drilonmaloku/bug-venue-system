@@ -39,6 +39,7 @@ class RouteServiceProvider extends ServiceProvider
             Route::middleware('web')->group(base_path('app/Modules/Location/Routes/location-web.php'));
             Route::middleware('web')->group(base_path('app/Modules/Logs/Routes/logs-web.php'));
             Route::middleware('web')->group(base_path('app/Modules/Menus/Routes/menus-web.php'));
+            Route::middleware('web')->group(base_path('app/Modules/LocationPayments/Routes/location-payments-web.php'));
             Route::middleware('web')->group(base_path('app/Modules/Decors/Routes/decors-web.php'));
             Route::middleware('web')->group(base_path('app/Modules/Collaborators/Routes/collaborators-web.php'));
             Route::middleware('web')->group(base_path('app/Modules/Payments/Routes/payments-web.php'));
@@ -50,10 +51,6 @@ class RouteServiceProvider extends ServiceProvider
             Route::middleware('web')->group(base_path('app/Modules/SupportTickets/Routes/support-web.php'));
             Route::middleware('web')->group(base_path('app/Modules/Settings/Routes/settings-web.php'));
             Route::middleware('web')->group(base_path('app/Modules/Onboard/Routes/onboard-web.php'));
-
-
         });
-
-        
     }
 }

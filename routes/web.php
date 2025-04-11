@@ -9,6 +9,7 @@ use Illuminate\Support\Facades\Route;
 use App\Modules\Notifications\Controllers\NotificationsController;
 use App\Modules\Events\Controllers\EventsController;
 
+
 /*
 |--------------------------------------------------------------------------
 | Web Routes

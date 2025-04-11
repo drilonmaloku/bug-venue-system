@@ -50,8 +50,7 @@
                         <tr>
                             <td>Template</td>
                             <td>{{ $user->userSettings->event_title_template ?? ''}}</td>
-                        </tr>
-                        
+                        </tr>                                      
                     </tbody>
                 </table>
             </div>

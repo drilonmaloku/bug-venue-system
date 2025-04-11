@@ -15,6 +15,12 @@
         <div class="row">
             <div class="col-md-8">
                 <div class="bug-table-item-options">
+                    <a class="hubers-btn mr-2" href="{{ route('location-payments.credit-deposits.create', ['location' => $location->id]) }}">
+                        <i class="fa fa-plus mr-2"></i> {{ __('Credit Deposit') }}
+                    </a>
+                    <a class="hubers-btn mr-2" href="{{ route('location-payments.show', ['location' => $location->id]) }}">
+                        <i class="fa fa-money mr-2"></i> {{ __('dashboard.my_payments') }}
+                    </a>
                     <a class="bug-table-item-option ml-2" href="{{ route('locations.edit', ['id' => $location->id]) }}">
                         <i class="fa fa-edit"></i>
                     </a>
@@ -47,8 +53,10 @@
                             <td>Owner</td>
                             <td>{{ $location->user->first_name }}</td>
                         </tr>
-
-
+                        <tr>
+                            <td>Credits</td>
+                            <td>{{ $location->credits }}</td>
+                        </tr>
                     </tbody>
                 </table>
 

@@ -9,7 +9,6 @@ Përditso location: {{$location->name}}
         <div class="container-fluid">
             <div class="row">
                 <div class="col-md-8">
-                    
                     <form role="form" method="POST" action="{{ route('locations.update',['id'=>$location->id]) }}"   enctype="multipart/form-data" onsubmit="return disableSubmitButton()">
                         @csrf
                         @method('PUT')

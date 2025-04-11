@@ -1,0 +1,62 @@
+<?php
+
+namespace App\Modules\LocationPayments\Models;
+
+use App\Modules\Location\Models\Location;
+use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\Relations\HasMany;
+use Illuminate\Database\Eloquent\Relations\HasOne;
+use Barryvdh\DomPDF\Facade\Pdf;
+
+class LocationCreditDeposit extends Model
+{
+    protected $fillable = [
+        'location_id',
+        'amount',
+        'credits',
+        'deposit_number',
+        'description',
+        'due_date',
+        'completed_date',
+        'payment_method'
+    ];
+
+    protected $casts = [
+        'amount' => 'decimal:2',
+        'due_date' => 'date',
+        'completed_date' => 'date'
+    ];
+
+    public function location(): BelongsTo
+    {
+        return $this->belongsTo(Location::class);
+    }
+
+    public function transactions(): HasMany
+    {
+        return $this->hasMany(LocationCreditTransaction::class, 'location_credit_deposit_id');
+    }
+
+    public function invoice(): HasOne
+    {
+        return $this->hasOne(LocationInvoice::class, 'location_credit_deposit_id');
+    }
+
+    public function generatePDF()
+    {
+        $pdf = PDF::loadView('pdf.credit-deposit', [
+            'deposit' => $this,
+            'location' => $this->location
+        ]);
+
+        return $pdf;
+    }
+
+    public function markAsCompleted()
+    {
+        $this->update([
+            'completed_date' => now()
+        ]);
+    }
+} 
