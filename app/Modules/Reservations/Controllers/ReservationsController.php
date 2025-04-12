@@ -33,7 +33,6 @@ use RealRashid\SweetAlert\Facades\Alert;
 use Illuminate\Validation\Rule;
 use App\Modules\Reservations\Imports\ReservationsImport;
 use Illuminate\Support\Facades\DB;
-use Illuminate\Database\Eloquent\ModelNotFoundException;
 
 class ReservationsController extends Controller
 {
