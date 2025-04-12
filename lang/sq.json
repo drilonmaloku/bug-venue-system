@@ -137,6 +137,7 @@
     "logs.filter.context.option.invoice": "Sherbimet",
     "logs.filter.context.option.discount": "Zbritjet",
     "logs.filter.context.option.collaborators": "Bashkpuntort",
+    "logs.filter.context.option.location": "Lokacioni",
     "logs.filter.context.option.decors": "Dekoret",
     "venues.forms.create_btn": "Krijo",
     "venues.forms.create_title": "Krijo Sallë",
@@ -399,6 +400,7 @@
     "reservations.view.notes_modify": "Modifiko",
     "Remember Me": "Mbaj mend",
 
+
     "guests.title": "Të Ftuarit",
     "guests.add": "Shto të ftuar",
     "guests.form.name": "Emri",
@@ -446,5 +448,7 @@
     "reservations.errors.general_error": "Ndodhi një gabim gjatë përditësimit të rezervimit.",
 
     "reservations.messages.date_updated_confirmed": "Data u përditësua dhe statusi u ndryshua në të konfirmuar.",
-    "reservations.messages.date_unchanged": "Data mbeti e njëjtë."
+    "reservations.messages.date_unchanged": "Data mbeti e njëjtë.",
+    "passwords.sent": "Ju kemi dërguar linkun për rivendosjen e fjalëkalimit në email!",
+    "passwords.user": "Nuk u gjet asnjë llogari me këtë adresë email."
 }

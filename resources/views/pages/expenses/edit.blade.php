@@ -22,7 +22,7 @@
                             <div class="col-md-12">
                                 <div class="form-group">
                                     <label for="example-text-input" class="bug-label">{{__('expenses.table.description')}}*</label>
-                                    <input class="bug-text-input" placeholder="{{__('expenses.table.description')}}*"   name="description" required value="{{$expense->description}}"></input>
+                                    <textarea class="bug-text-input" placeholder="{{__('expenses.table.description')}}*" name="description" required value="{{$expense->description}}"></textarea>
                                 </div>
                             </div>
                             <div class="col-md-12">
