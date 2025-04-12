@@ -43,18 +43,7 @@
                 <tr>
                     <td>{{__('reservations.table.date')}}</td>
                     <td>
-                        @if($reservation->status == 3)
-                            <form action="{{ route('reservations.updateDate', ['id' => $reservation->id]) }}" method="POST" class="d-inline">
-                                @csrf
-                                @method('PUT')
-                                <input type="date" name="date" value="{{ $reservation->date }}" class="bug-text-input" style="width: auto;">
-                                <button type="submit" class="hubers-btn small ml-2">
-                                    <i class="fa fa-save"></i>
-                                </button>
-                            </form>
-                        @else
-                            {{ $reservation->date }}
-                        @endif
+                        {{ $reservation->date }}
                     </td>
                 </tr>
                 <tr>

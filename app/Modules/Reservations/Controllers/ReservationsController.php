@@ -124,7 +124,7 @@ class ReservationsController extends Controller
 
         $date = Carbon::createFromFormat('Y-m-d', $request->input('date'))->format('Y-m-d');
         $reservations = Reservation::where('date', $date)
-            ->where('status', '!=', 3) // Exclude canceled reservations
+            ->where('status', '!=',3)
             ->get();
             
         if ($isEdit && $currentReservation) {
@@ -1006,58 +1006,5 @@ class ReservationsController extends Controller
         }
 
         return redirect()->back();
-    }
-
-    public function updateDate(Request $request, $id)
-    {
-        try {
-            // Validate the request
-            $validated = $request->validate([
-                'date' => 'required|date|after_or_equal:today',
-            ]);
-
-            $reservation = Reservation::findOrFail($id);
-            
-            // Check if reservation is canceled
-            if ($reservation->status != 3) {
-                return redirect()->back()->with('error', __('reservations.errors.only_canceled_can_update_date'));
-            }
-            
-            // Check if the date has actually changed
-            $dateChanged = $reservation->date != $validated['date'];
-            
-            if ($dateChanged) {
-                // Check for conflicts using the service method
-                $hasConflict = $this->reservationsService->checkReservationConflict(
-                    $validated['date'],
-                    $reservation->venue_id,
-                    $reservation->reservation_type,
-                    $reservation->id
-                );
-                
-                if ($hasConflict) {
-                    return redirect()->back()->with('error', __('reservations.errors.date_time_slot_booked'));
-                }
-                
-                // Update the reservation date and status
-                $reservation->date = $validated['date'];
-                $reservation->status = 1; // Change status to confirmed
-                $reservation->save();
-
-                return redirect()->back()->with('success', __('reservations.messages.date_updated_confirmed'));
-            }
-
-            return redirect()->back()->with('success', __('reservations.messages.date_unchanged'));
-            
-        } catch (ValidationException $e) {
-            return redirect()->back()
-                ->withErrors($e->errors())
-                ->withInput();
-        } catch (ModelNotFoundException $e) {
-            return redirect()->back()->with('error', __('reservations.errors.reservation_not_found'));
-        } catch (\Exception $e) {
-            \Log::error('Error updating reservation date: ' . $e->getMessage());
-            return redirect()->back()->with('error', __('reservations.errors.general_error'));
-        }
     }
 }

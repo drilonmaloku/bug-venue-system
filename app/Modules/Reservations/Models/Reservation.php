@@ -29,6 +29,11 @@ class Reservation extends Model
         3 => 'Mbrëmje',
     ];
 
+    const RESERVATION_STATUS_CONFIRMED = 1;
+    const RESERVATION_STATUS_ON_HOLD = 2;
+    const RESERVATION_STATUS_CANCELED = 1;
+
+
     protected static function booted()
     {
         static::addGlobalScope(new CurrentLocationScope);
