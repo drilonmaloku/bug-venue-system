@@ -1,7 +1,9 @@
 <?php
 
+
 use App\Http\Controllers\Auth\ResetPasswordController;
-use App\Http\Controllers\NotificationPreferenceController;
+use App\Modules\NotificationsPreference\Controllers\NotificationPreferenceController;
+
 use App\Modules\Common\Controllers\DashboardController;
 use App\Modules\GoogleCalendar\Controllers\GoogleCalendarController;
 use Illuminate\Support\Facades\Artisan;
@@ -32,7 +34,8 @@ Route::get('/', function () {
     return redirect('/dashboard');
 })->middleware('auth');
 
-Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard.index')->middleware('auth');
+Route::get('/dashboard', [DashboardController::class, 'index'])
+    ->name('dashboard.index')->middleware('auth');
 Route::get('/dashboard/events', [DashboardController::class, 'fetchEvents'])->name('dashboard.events');
 
 
@@ -78,9 +81,10 @@ Route::get('/migrate-seed', function () {
     return response()->json(['message' => 'Migrations and seeding ran successfully']);
 });
 
-Route::get('/google/redirect', [GoogleCalendarController::class, 'redirectToGoogle'])->name('google.auth');
-Route::get('/google/callback', [GoogleCalendarController::class, 'handleGoogleCallback']);
-Route::get('/events/sync', [GoogleCalendarController::class, 'syncEventsToGoogle']);
+Route::get('/google/auth', [GoogleCalendarController::class, 'redirectToGoogle'])->name('google.auth');
+Route::get('/google/callback', [GoogleCalendarController::class, 'handleGoogleCallback'])->name('google.callback');
+Route::post('/events/sync', [GoogleCalendarController::class, 'syncEventsToGoogle'])->name('google.sync');
+Route::post('/events/sync-all', [GoogleCalendarController::class, 'syncAllEventsToGoogle'])->name('google.sync.all');
 
 
 Route::get('/notifications', [NotificationsController::class, 'archive'])->name('notification');
@@ -102,3 +106,7 @@ Route::get('password/reset', [ResetPasswordController::class, 'showLinkRequestFo
 Route::post('password/email', [ResetPasswordController::class, 'sendResetLinkEmail'])->name('password.email');
 Route::get('password/reset/{token}', [ResetPasswordController::class, 'showResetForm'])->name('password.reset');
 Route::post('password/reset', [ResetPasswordController::class, 'reset'])->name('password.update');
+
+Route::put('/reservations/manage-guests/{reservationId}/update/{guestId}', 'ReservationsController@updateGuest')
+    ->name('reservations.updateGuest');
+

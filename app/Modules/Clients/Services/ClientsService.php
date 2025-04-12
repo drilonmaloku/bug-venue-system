@@ -70,6 +70,7 @@ class ClientsService
             "phone_number" => data_get($data, "phone_number"),
             "address" => data_get($data, "address"),
             "additional_phone_number" => data_get($data, "additional_phone_number"),
+            "personal_number" => data_get($data, "personal_number"),
         ]);
 
         if($client){
@@ -92,6 +93,7 @@ class ClientsService
         $client->phone_number = $request->input('phone_number');
         $client->additional_phone_number = $request->input('additional_phone_number');
         $client->address = $request->input('address');
+        $client->personal_number = data_get($request, "personal_number");
         $clientSaved = $client->save();
 
         if($clientSaved){

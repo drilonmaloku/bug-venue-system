@@ -4,8 +4,6 @@ declare(strict_types=1);
 
 namespace App\Modules\Reservations\Observers;
 
-use App\Modules\Logs\Models\Log;
-use App\Modules\Groups\Models\Group;
 use App\Modules\Logs\Services\LogService;
 use App\Modules\Reservations\Models\PricingStatusTracking;
 use App\Modules\Reservations\Models\Reservation;

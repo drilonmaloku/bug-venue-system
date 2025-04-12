@@ -42,13 +42,20 @@
                 </tr>
                 <tr>
                     <td>{{__('reservations.table.date')}}</td>
-                    <td>{{ $reservation->date }}</td>
+                    <td>
+                        {{ $reservation->date }}
+                    </td>
                 </tr>
                 <tr>
                     <td>{{__('reservations.table.venue')}}</td>
-                    <td> <a class="hubers-link"
-                            href="{{ route('venues.view', ['id' => $reservation->venue->id]) }}">
-                            {{ $reservation->venue->name }} </a>
+                    <td>
+                        @if ($reservation->venue)
+                            <a class="hubers-link" href="{{ route('venues.view', ['id' => $reservation->venue->id]) }}">
+                                {{ $reservation->venue->name }}
+                            </a>
+                        @else
+                            {{ __('reservations.no_venue') }}
+                        @endif
                     </td>
                 </tr>
                 <tr>
@@ -63,12 +70,20 @@
                 <tr>
                     <td>{{__('reservations.table.client')}}</td>
                     <td>
-                        <a class="hubers-link" href="{{ route('clients.view', ['id' => $reservation->client->id]) }}">{{ $reservation->client->name }} </a>
+                        @if ($reservation->client)
+                            <a class="hubers-link" href="{{ route('clients.view', ['id' => $reservation->client->id]) }}">{{ $reservation->client->name }} </a>
+                        @else
+                            {{ __('reservations.no_client') }}
+                        @endif
                     </td>
                 </tr>
                 <tr>
                     <td>{{__('reservations.table.created_date')}}</td>
                     <td>{{ $reservation->created_at }}</td>
+                </tr>
+                <tr>
+                    <td>{{ __('reservation.contract_date') }}</td>
+                    <td>{{ $reservation->contract_date }}</td> 
                 </tr>
                 <tr>
                     <td>{{__('reservations.table.time')}}:</td>
@@ -93,7 +108,7 @@
                 </tr>
                 <tr>
                     <td>{{__('reservations.table.menu')}}:</td>
-                    <td>{{ $reservation->menu_contents }}</td>
+                    <td>{!! $reservation->menu_contents !!}</td>
                 </tr>
                 <tr>
                     <td>{{__('reservations.table.total_services')}}:</td>
@@ -105,7 +120,7 @@
                 </tr>
                 <tr>
                     <td>{{__('reservations.table.current_payment')}}:</td>
-                    <td>{{ $reservation->current_payment }}€</td>
+                    <td>{{ $reservation->current_payment ?? 0 }}€</td>
                 </tr>
                 <tr>
                     <td>{{__('reservations.table.payment_left')}}:</td>
@@ -189,13 +204,11 @@
                         <div class="col-md-12">
                             <div class="form-group">
                                 <label for="example-text-input" class="form-control-label">{{__('reservations.view.select_status')}}*</label>
-
                                 <select required class="bug-text-input" name="status">
                                     <option value="">{{__('reservations.view.select_status')}}</option>
-                                    <option @if($reservation->status == 1) selected @endif value="1">{{__('reservations.status.planned')}}</option>
-                                    <option @if($reservation->status == 2) selected @endif value="2">{{__('reservations.status.finished')}}</option>
+                                    <option @if($reservation->status == 1) selected @endif value="1">{{__('reservations.status.confirmed')}}</option>
+                                    <option @if($reservation->status == 2) selected @endif value="2">{{__('reservations.status.not_confirmed')}}</option>
                                     <option @if($reservation->status == 3) selected @endif value="3">{{__('reservations.status.canceled')}}</option>
-
                                 </select>
                             </div>
                         </div>

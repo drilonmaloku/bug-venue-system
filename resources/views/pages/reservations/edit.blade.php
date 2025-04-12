@@ -22,8 +22,8 @@
                         </div>
                         <div class="col-md-6">
                             <div class="form-group">
-                                <label for="example-text-input" class="form-control-label">{{__('reservations.edit.number_of_guests')}}*</label>
-                                <input id="numberOfGuests" class="bug-text-input" type="number" name="number_of_guests" required value="{{$reservation->number_of_guests}}" >
+                                <label for="example-text-input" class="form-control-label">{{__('reservations.edit.number_of_guests')}}</label>
+                                <input id="numberOfGuests" class="bug-text-input" type="number" name="number_of_guests"  value="{{$reservation->number_of_guests}}" >
                             </div>
                         </div>
                     </div>
@@ -51,7 +51,7 @@
                     <div class="row">
                         <div class="col-md-6">
                             <div class="form-group">
-                                <label for="example-text-input" class="form-control-label">{{__('reservations.edit.menu')}}*</label>
+                                <label for="example-text-input" class="form-control-label">{{__('reservations.edit.menu')}}</label>
                                 <select id="menuId" class="bug-text-input" name="menu_id">
                                     <option value="">{{__('reservations.edit.select_menu')}}</option>
                                     @foreach($menus as $menu)
@@ -62,14 +62,17 @@
                         </div>
                         <div class="col-md-6">
                             <div class="form-group">
-                                <label for="example-text-input" class="form-control-label">{{__('reservations.edit.menu_price')}}*</label>
+                                <label for="example-text-input" class="form-control-label">{{__('reservations.edit.menu_price')}}</label>
                                 <input id="menuPrice" class="bug-text-input" type="number" name="menu_price" value="{{$reservation->menu_price}}" >
                             </div>
                         </div>
                         <div class="col-md-12">
                             <div class="form-group">
-                                <label for="example-text-input" class="form-control-label">{{__('reservations.create.menu_items')}}*</label>
-                                <textarea rows="6" id="menuContents" class="bug-text-input" required  name="menu_contents" >{{$reservation->menu_contents}}</textarea>
+                                <label for="example-text-input" class="form-control-label">{{__('reservations.create.menu_items')}}</label>
+                                <textarea name="menu_contents" id="menuDescription" rows="10" >
+                                        {!! isset($reservation->menu_contents) ? $reservation->menu_contents : '' !!}
+                                </textarea>
+                                <textarea rows="6" id="menuContents" class="bug-text-input"   name="menu_contents" >{{$reservation->menu_contents}}</textarea>
                             </div>
                         </div>
                     </div>
@@ -83,7 +86,7 @@
                         </div>
                         <div class="col-md-6">
                             <div class="form-group">
-                                <label for="example-text-input" class="form-control-label">{{__('reservations.edit.select_manager')}}*</label>
+                                <label for="example-text-input" class="form-control-label">{{__('reservations.edit.select_manager')}}</label>
                                 <select  class="bug-text-input" name="manager_id">
                                     <option value="">{{__('reservations.edit.select_manager')}}</option>
                                     @foreach($users as $user)
@@ -103,9 +106,15 @@
                                     </select>
                                 </div>
                             </div>
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label for="example-text-input" class="form-control-label">{{ __('reservation.contract_date')  }}</label>
+                                    <input class="bug-text-input" id="contract_date" type="date" name="contract_date" value="{{$reservation->contract_date}}">
+                                </div>
+                            </div>
                         <div class="col-md-6">
                             <div class="form-group">
-                                <label for="example-text-input" class="form-control-label">{{__('reservations.edit.staff_expenses')}}*</label>
+                                <label for="example-text-input" class="form-control-label">{{__('reservations.edit.staff_expenses')}}</label>
                                 <input id="staffExpenses" class="bug-text-input" type="number" name="staff_expenses" value="{{$reservation->staff_expenses}}" >
                             </div>
                         </div>
@@ -120,25 +129,31 @@
                         <div class="col-md-6">
                             <div class="form-group">
                                 <label for="example-text-input" class="form-control-label">{{__('reservations.edit.client.name')}}*</label>
-                                <input class="bug-text-input" type="text" name="name" value="{{$reservation->client->name}}">
+                                <input class="bug-text-input" type="text" name="name" value="{{$reservation->client->name ?? ''}}">
                             </div>
                         </div>
                         <div class="col-md-6">
                             <div class="form-group">
-                                <label for="example-text-input" class="form-control-label">{{__('reservations.edit.client.phone')}}*</label>
-                                <input class="bug-text-input" type="text" name="phone_number" value="{{$reservation->client->phone_number}}">
+                                <label for="example-text-input" class="form-control-label">{{__('reservations.edit.client.phone')}}</label>
+                                <input class="bug-text-input" type="text" name="phone_number" value="{{$reservation->client->phone_number ?? ''}}">
                             </div>
                         </div>
                         <div class="col-md-6">
                             <div class="form-group">
                                 <label for="example-text-input" class="form-control-label">{{__('reservations.edit.client.email')}}</label>
-                                <input class="bug-text-input" type="text" name="email" value="{{$reservation->client->email}}">
+                                <input class="bug-text-input" type="text" name="email" value="{{$reservation->client->email ?? ''}}">
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label for="example-text-input" class="form-control-label">{{__('reservations.edit.client.personal_number')}}</label>
+                                <input class="bug-text-input" type="text" name="personal_number" value="{{$reservation->client->personal_number ?? ''}}">
                             </div>
                         </div>
                         <div class="col-md-6">
                             <div class="form-group">
                                 <label for="example-text-input" class="form-control-label">{{__('reservations.edit.client.additional_phone')}}</label>
-                                <input class="bug-text-input" type="text" name="additional_phone_number" value="{{$reservation->client->additional_phone_number}}">
+                                <input class="bug-text-input" type="text" name="additional_phone_number" value="{{$reservation->client->additional_phone_number ?? ''}}">
                             </div>
                         </div>
                     </div>
@@ -147,6 +162,13 @@
             </div>
         </div>
     </div>
+    <script src="https://cdn.ckeditor.com/4.22.0/standard/ckeditor.js"></script>
+
+    <script>
+        CKEDITOR.replace('menuDescription', {
+            height: 400
+        });
+    </script>
     <script>
         document.addEventListener('DOMContentLoaded', function() {
             const menuSelect = document.getElementById('menuId');
@@ -291,8 +313,8 @@
                 const newItem = document.createElement('div');
                 newItem.className = 'planning-item';
                 newItem.innerHTML = `
-                    <input class="bug-text-input" type="datetime-local" name="planning[${planningCount}][start_time]" required>
-                    <input class="bug-text-input" type="datetime-local" name="planning[${planningCount}][end_time]" required>
+                    <input class="bug-text-input" type="datetime-local" name="planning[${planningCount}][start_time]" >
+                    <input class="bug-text-input" type="datetime-local" name="planning[${planningCount}][end_time]" >
                     <textarea class="bug-text-input" placeholder="Përshkrimi i planifikimit" rows="2" name="planning[${planningCount}][description]"></textarea>
                 `;
                 container.appendChild(newItem);

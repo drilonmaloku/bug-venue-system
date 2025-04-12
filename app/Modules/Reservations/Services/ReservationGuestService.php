@@ -34,6 +34,7 @@ class ReservationGuestService
             "reservation_id" => $reservation_id,
             "name" => data_get($data, "name"),
             "email" => data_get($data, "email"),
+            "table_number" => data_get($data, "table_number"),
             "phone_number" => data_get($data, "phone_number"),
             "guest_count" => data_get($data, "guest_count"),
             "status" => 1,
@@ -42,19 +43,15 @@ class ReservationGuestService
         return $reservationGuest;
     }
 
-    public function update($request, ReservationGuest $reservationGuest)
+    public function update($guest, $data)
     {
-        $previousData = $reservationGuest->attributesToArray();
-
-        $reservationGuest->amount = $request->input('discount');
-        $reservationGuest->date = $request->input('date');
-        $reservationGuest->description = $request->input('description');
-        $reservationGuestSaved = $reservationGuest->save();
-
-
-
-    
-        return $reservationGuestSaved;
+        return $guest->update([
+            'name' => $data['name'],
+            'table_number' => $data['table_number'],
+            'email' => $data['email'],
+            'phone_number' => $data['phone_number'],
+            'guest_count' => $data['guest_count'],
+        ]);
     }
 
     public function delete(ReservationGuest $reservationGuest)

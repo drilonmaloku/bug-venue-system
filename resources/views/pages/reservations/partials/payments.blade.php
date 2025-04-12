@@ -12,6 +12,7 @@
                     <th>ID</th>
                     <th>{{__('reservations.view.payments.table.value')}}</th>
                     <th>{{__('reservations.view.payments.table.date')}}</th>
+                    <th>{{__('reservations.view.payments.table.payment_method')}}</th>
                     <th>{{__('reservations.view.payments.table.description')}}</th>
                     <th width="40">
                     </th>
@@ -30,6 +31,9 @@
                         </td>
                         <td>
                             {{ $payment->date }}
+                        </td>
+                        <td>
+                            {{ $payment->paymentMethodLabel }}
                         </td>
                         <td>
                             {{ $payment->notes }}
@@ -82,22 +86,33 @@
                     <div class="row">
                         <div class="col-md-6">
                             <div class="form-group">
-                                <label for="payment_date" class="form-control-label">{{__('reservations.view.form.date')}}</label>
+                                <label for="payment_date" class="form-control-label">{{__('reservations.view.form.date')}}*</label>
                                 <input id="payment_date" required class="bug-text-input" type="date"
                                        name="payment_date">
                             </div>
                         </div>
                         <div class="col-md-6">
                             <div class="form-group">
-                                <label for="initial_payment_value" class="form-control-label">{{__('reservations.view.form.value')}}</label>
+                                <label for="initial_payment_value" class="form-control-label">{{__('reservations.view.form.value')}}*</label>
                                 <input id="initial_payment_value" required class="bug-text-input" type="number"
                                        name="initial_payment_value">
                             </div>
                         </div>
                         <div class="col-md-12">
                             <div class="form-group">
+                                <label for="initial_payment_value" class="form-control-label">{{__('reservations.view.form.payment_method')}}</label>
+                                <select class="bug-text-input" name="payment_method">
+                                    <option value="">Selekto</option>
+                                    <option value="1">{{__('payment.method.cash')}}</option>
+                                    <option value="2">{{__('payment.method.bank')}}</option>
+                                </select>
+                            </div>
+                        </div>
+
+                        <div class="col-md-12">
+                            <div class="form-group">
                                 <label for="payment_notes" class="form-control-label">{{__('reservations.view.form.notes')}}</label>
-                                <textarea id="payment_notes" required class="bug-text-input" name="payment_notes"></textarea>
+                                <textarea id="payment_notes" class="bug-text-input" name="payment_notes"></textarea>
                             </div>
                         </div>
                     </div>

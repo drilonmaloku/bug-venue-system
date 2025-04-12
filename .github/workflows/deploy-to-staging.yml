@@ -3,22 +3,26 @@ on:
     branches:
       - staging
 name: 🚀 Deploy to Staging
+
 jobs:
   web-deploy:
     name: 🎉 Deploy
     runs-on: ubuntu-latest
-    steps:
-    - name: 🚚 Get latest code
-      uses: actions/checkout@v2
 
-    - name: 📂 Sync files
-      uses: SamKirkland/FTP-Deploy-Action@4.3.2
-      with:
-        server: premium236.web-hosting.com
-        username: drilon@vms-ks.com
-        password: Drilonmaloku1!
-        server-dir: /stagevmsks/
-        exclude: |
-          **/.git*
-          **/.git*/**
-          vendor/**
+    environment: Staging
+
+    steps:
+      - name: 🚚 Get latest code
+        uses: actions/checkout@v2
+
+      - name: 📂 Sync files
+        uses: SamKirkland/FTP-Deploy-Action@4.3.2
+        with:
+          server: ${{ secrets.STAGE_SERVER_IP }}
+          username: ${{ secrets.STAGE_SERVER_USERNAME }}
+          password: ${{ secrets.STAGE_SERVER_PASSWORD }}
+          server-dir: /webapp/
+          exclude: |
+            **/.git*
+            **/.git*/**
+            vendor/**

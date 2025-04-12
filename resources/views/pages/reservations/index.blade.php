@@ -3,18 +3,10 @@
     {{__('reservations.title')}}
 @endsection
 @section('header-actions')
-    @if(count($menus) > 0 && count($venues) > 0)
     <a class="hubers-btn" href="{{route('reservations.create')}}">{{__('reservations.create_btn')}}</a>
-    @endif
 @endsection
 @section('content')
     <div class="vms_panel">
-        @if(count($menus) == 0 || count($venues) == 0)
-            <div class="hubers-notification big">
-                {{__('reservations.no_create_option')}}
-                <a class="hubers-btn" href="{{route('onboard.index')}}">Onboard</a>
-            </div>
-        @endif
         <form class="filter-items" action="/reservations" method="GET" >
             <div class="filter-options">
                 <div class="huber-filter-btn  @if ($is_on_search) active @endif">
@@ -27,7 +19,7 @@
                         </svg>
                     </span>
                 </div>
-                <div class="export-options" onclick="exportOptions.export('/reservations/export','reservations-export.xlsx')">
+                 <div class="export-options" onclick="exportOptions.export('/reservations/export','reservations-export.xlsx')">
                     <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-file-text"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/><polyline points="10 9 9 9 8 9"/></svg>
                 </div>
             </div>
@@ -41,9 +33,8 @@
                         <label>{{__('reservations.table.filter.select_status')}}:</label>
                         <select class="hubers-select-input white medium" name="status" id="">
                             <option value="">{{__('reservations.table.filter.select_status')}}</option>
-                            <option @if(app('request')->input('status') == 1) selected @endif value="1">{{__('reservations.status.planned')}}</option>
-                            <option @if(app('request')->input('status') == 2) selected @endif value="2">{{__('reservations.status.finished')}}</option>
-                            <option @if(app('request')->input('status') == 3) selected @endif value="3">{{__('reservations.status.canceled')}}</option>
+                            <option @if(app('request')->input('status') == 1) selected @endif value="1">{{__('reservations.status.confirmed')}}</option>
+                            <option @if(app('request')->input('status') == 2) selected @endif value="2">{{__('reservations.status.not_confirmed')}}</option>
                         </select>
                     </div>
                     <div class="hubers-filter-group">
@@ -133,16 +124,24 @@
                             </td>
                           
                             <td>
-                                <a class="hubers-link" href="{{route('venues.view',['id'=>$reservation->venue->id])}}"> {{$reservation->venue->name}} </a>
+                                @if($reservation->venue)
+                                    <a class="hubers-link" href="{{route('venues.view',['id'=>$reservation->venue->id])}}"> {{$reservation->venue->name}} </a>
+                                @else
+                                    {{ __('reservations.no_venue') }}
+                                @endif
                              </td>
                             <td>
                                {{$reservation->description}}
                             </td>
                             <td>
-                                {{$reservation->current_payment}}€ / {{$reservation->total_payment}}€
+                                {{$reservation->current_payment ?? 0}}€ / {{$reservation->total_payment}}€
                             </td>
                              <td>
-                                <a class="hubers-link" href="{{route('clients.view',['id'=>$reservation->client->id])}}"> {{$reservation->client->name}} </a>
+                                @if($reservation->client)
+                                    <a class="hubers-link" href="{{route('clients.view',['id'=>$reservation->client->id])}}"> {{$reservation->client->name}} </a>
+                                @else
+                                    {{ __('reservations.no_client') }}
+                                @endif
                              </td>
                              <td>
                                 {{$reservation->totalInvoiceAmount}}
@@ -165,6 +164,7 @@
                     @endforeach
                     </tbody>
                 </table>
+                {{$reservations->links()}}
             </div>
         @else
             <div class="hubers-empty-tab">

@@ -5,6 +5,7 @@ namespace App\Models;
 use App\Modules\Expenses\Models\Expense;
 use App\Modules\Location\Models\Location;
 use App\Modules\Users\Models\LocationUser;
+use App\Modules\Users\Models\UserSettings;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Illuminate\Database\Eloquent\SoftDeletes;
@@ -27,6 +28,7 @@ class User extends Authenticatable
     const ROLE_MANAGER = "manager";
     const SYSTEM_ADMIN = "system-admin";
     const ROLE_STAFF = "staff";
+    const ROLE_KITCHEN = "kitchen";
 
 
 
@@ -102,6 +104,7 @@ class User extends Authenticatable
                 'venue-added' => true,
                 'venue-updated' => true,
                 'venue-deleted' => true,
+                'reservation-updated-status' => true,
         ];
     }
 
@@ -179,6 +182,7 @@ class User extends Authenticatable
         return $this->hasOne(NotificationPreference::class);
     }
 
+
     /**
      * Send the password reset notification.
      *
@@ -189,6 +193,14 @@ class User extends Authenticatable
     {
         $this->notify(new ResetPasswordNotification($token));
     }
+
+    public function userSettings()
+    {
+        return $this->hasOne(UserSettings::class);
+    }
+
+
+
 }
     
 

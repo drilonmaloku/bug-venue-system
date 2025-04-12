@@ -25,9 +25,6 @@ class PaymentsService
         $this->usersService = app()->make(UsersService::class);
     }
 
-    /**
-     * Gets the list of payments
-     **/
     public function getAll(Request $request)
     {
         $perPage = $request->has('per_page') ? $request->input('per_page') : 25;
@@ -47,6 +44,10 @@ class PaymentsService
             });
         }
 
+        // Modified payment method filter
+        if ($request->filled('payment_method')) {
+            $query->where('payment_method', $request->input('payment_method'));
+        }
 
         if ($request->filled('start_date')) {
             $startDate = $request->input('start_date');
@@ -70,27 +71,16 @@ class PaymentsService
         return $query->paginate($perPage);
     }
 
-    /**
-     * Get Payment by ID
-     * @param int|array $id
-     **/
     public function getByID($id)
     {
         return Payment::find($id);
     }
 
-    /**
-     * Get Payments by ID
-     * @param int|array $id
-     **/
     public function getByIds($ids)
     {
         return Payment::whereIn('id', $ids)->get();
     }
 
-    /**
-     * Stores new Payment
-     **/
     public function store($data, $reservation_id, $client_id)
     {
         $payment = Payment::create([
@@ -99,6 +89,7 @@ class PaymentsService
             "client_id" => $client_id,
             "value" => data_get($data, "initial_payment_value"),
             "notes" => data_get($data, "payment_notes"),
+            "payment_method" => data_get($data, "payment_method"),
             "date" => data_get($data, "payment_date"),
         ]);
 
@@ -121,6 +112,7 @@ class PaymentsService
             "client_id" => $client_id,
             "value" => data_get($data, "initial_payment_value"),
             "notes" => data_get($data, "payment_notes"),
+            "payment_method" => data_get($data, "payment_method"),
             "date" => data_get($data, "payment_date"),
         ]);
         $reservation = Reservation::findOrFail($reservation_id);
@@ -146,15 +138,13 @@ class PaymentsService
         return $payment;
     }
 
-    /**
-     * Updates existing Venue
-     **/
     public function update($request, Payment $payment)
     {
         $previousData = $payment->attributesToArray();
         $payment->value = $request->input('value');
         $payment->date = $request->input('date');
         $payment->notes = $request->input('notes');
+        $payment->payment_method = $request->input('payment_method');
         $paymentSaved = $payment->save();
 
         if ($paymentSaved) {
@@ -185,7 +175,6 @@ class PaymentsService
 {
     return Payment::where('reservation_id', $reservationId)->get();
 }
-
 
     public function delete(Payment $payment)
     {

@@ -8,9 +8,9 @@
             <table class="hubers-table mt-4">
                 <thead>
                 <tr>
-                    <th>{{__('"reservations.view.comments.table.user"')}}</th>
-                    <th>{{__('"reservations.view.comments.table.comment"')}}</th>
-                    <th>{{__('"reservations.view.comments.table.date"')}}</th>
+                    <th>{{__("reservations.view.comments.table.user")}}</th>
+                    <th>{{__("reservations.view.comments.table.comment")}}</th>
+                    <th>{{__("reservations.view.comments.table.date")}}</th>
                     <th width="60"></th>
                 </tr>
                 </thead>
@@ -19,13 +19,13 @@
                     <tr>
                         <td>{{ $comment->user->first_name }}</td>
                         <td>
-                            <p>{{ $comment->comment }}</p>
+                            <p class="mb-0">{{ $comment->comment }}</p>
                         </td>
                         <td>{{ $comment->created_at->format('d/m/Y') }}</td>
                         <td>
                             @if ($comment->user_id == auth()->id())
                                 <div class="hubers-item-options">
-                                    <form action="{{ route('reservations.comment.delete', $comment->id) }}"
+                                    <form class="mb-0" action="{{ route('reservations.comment.delete', $comment->id) }}"
                                           method="POST">
                                         @csrf
                                         @method('DELETE')

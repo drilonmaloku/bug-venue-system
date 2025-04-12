@@ -55,24 +55,24 @@ class ReservationCommentServices
      * Stores new Reservation Comment
      **/
     public function storeComment($request, $reservation)
-{
-    $reservationComment = (new ReservationComment())->create([
-        "location_id" => auth()->user()->getCurrentLocationId(),
-        "comment" => data_get($request, "comment"),
-        "reservation_id" => $reservation->id,
-        "user_id" => auth()->user()->id,
-    ]);
+    {
+        $reservationComment = ReservationComment::create([
+            "location_id" => auth()->user()->getCurrentLocationId(),
+            "comment" => data_get($request, "comment"),
+            "reservation_id" => $reservation->id,
+            "user_id" => auth()->user()->id,
+        ]);
 
-    Notification::send(
-        $this->usersService->getUsersForNotifications('comment-added'),
-        new CommentAddedNotification(
-            $reservationComment, 
-            auth()->user()
-        )
-    );
+        Notification::send(
+            $this->usersService->getUsersForNotifications('comment-added'),
+            new CommentAddedNotification(
+                $reservationComment,
+                auth()->user()
+            )
+        );
 
-    return $reservationComment;
-}
+        return $reservationComment;
+    }
 
 
    public function deleteComment(ReservationComment $reservationComment) {
