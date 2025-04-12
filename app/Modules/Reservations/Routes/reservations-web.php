@@ -63,5 +63,7 @@ Route::group(['middleware' => 'auth'], function () {
     Route::patch('/reservations/manage-guests/{reservationId}/update-status/{guestId}', [ReservationsController::class, 'updateGuestStatus'])->name('reservations.updateGuestStatus');
     Route::patch('/reservations/manage-guests/{reservationId}/update-checkin/{guestId}', [ReservationsController::class, 'updateGuestCheckin'])->name('reservations.updateGuestCheckin');
 
+    Route::put('reservations/{id}/update-date', [ReservationsController::class, 'updateDate'])->name('reservations.updateDate');
+
 });
 

@@ -25,9 +25,6 @@ class PaymentsService
         $this->usersService = app()->make(UsersService::class);
     }
 
-    /**
-     * Gets the list of payments
-     **/
     public function getAll(Request $request)
     {
         $perPage = $request->has('per_page') ? $request->input('per_page') : 25;
@@ -74,27 +71,16 @@ class PaymentsService
         return $query->paginate($perPage);
     }
 
-    /**
-     * Get Payment by ID
-     * @param int|array $id
-     **/
     public function getByID($id)
     {
         return Payment::find($id);
     }
 
-    /**
-     * Get Payments by ID
-     * @param int|array $id
-     **/
     public function getByIds($ids)
     {
         return Payment::whereIn('id', $ids)->get();
     }
 
-    /**
-     * Stores new Payment
-     **/
     public function store($data, $reservation_id, $client_id)
     {
         $payment = Payment::create([
@@ -152,9 +138,6 @@ class PaymentsService
         return $payment;
     }
 
-    /**
-     * Updates existing Venue
-     **/
     public function update($request, Payment $payment)
     {
         $previousData = $payment->attributesToArray();
@@ -165,9 +148,13 @@ class PaymentsService
         $paymentSaved = $payment->save();
 
         if ($paymentSaved) {
+            $reservation = Reservation::findOrFail($payment->reservation_id);
+            $reservation->current_payment = $reservation->payments->sum('value'); // Sum of all payments
+            $reservation->save(); 
+
             $this->logService->log([
                 'message' => 'Pagesa u përditësua me sukses',
-                'context' => Log::LOG_CONTEXT_CLIENTS,
+                'context' => Log::LOG_CONTEXT_PAYMENTS,
                 'ttl' => Log::LOG_TTL_THREE_MONTHS,
                 'previous_data' => json_encode($previousData),
                 'updated_data' => json_encode($payment)
@@ -188,7 +175,6 @@ class PaymentsService
 {
     return Payment::where('reservation_id', $reservationId)->get();
 }
-
 
     public function delete(Payment $payment)
     {

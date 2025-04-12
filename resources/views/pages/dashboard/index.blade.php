@@ -14,7 +14,7 @@
         @endif
         <div>
             <div class="mb-2">
-                <a class="hubers-btn" href="/events/sync">Sync</a>
+                <a class="hubers-btn" href="#" onclick="openSyncModal(); return false;">Sync</a>
                 <select class="hubers-select-input" name="" id="venueSelector">
                     <option value=""> {{__('reservation.show_all_venues')}}</option>
                     @foreach($venues as $venue)
@@ -49,8 +49,8 @@
                                 </div>
                                 <div class="col-md-6">
                                     <div class="form-group">
-                                        <label for="example-text-input" class="form-control-label">{{__('reservations.create.number_of_guests')}}*</label>
-                                        <input id="numberOfGuests" class="bug-text-input" required type="number" name="number_of_guests" >
+                                        <label for="example-text-input" class="form-control-label">{{__('reservations.create.number_of_guests')}}</label>
+                                        <input id="numberOfGuests" class="bug-text-input" type="number" name="number_of_guests" >
                                     </div>
                                 </div>
                                 <div class="col-md-12">
@@ -74,8 +74,8 @@
                                 </div>
                                 <div class="col-md-6">
                                     <div class="form-group">
-                                        <label for="example-text-input" class="form-control-label">{{__('reservations.create.menu')}}*</label>
-                                        <select required id="menuId" class="bug-text-input" name="menu_id">
+                                        <label for="example-text-input" class="form-control-label">{{__('reservations.create.menu')}}</label>
+                                        <select id="menuId" class="bug-text-input" name="menu_id">
                                             <option value="">{{__('reservations.create.select_menu')}}</option>
                                             @foreach($menus as $menu)
                                                 <option  data-price="{{$menu->price}}" value="{{$menu->id}}" data-menu-contents="{{$menu->description}}">{{$menu->name}},{{$menu->price}}</option>
@@ -85,14 +85,14 @@
                                 </div>
                                 <div class="col-md-6">
                                     <div class="form-group">
-                                        <label for="example-text-input" class="form-control-label">{{__('reservations.create.menu_price')}}*</label>
-                                        <input id="menuPrice" class="bug-text-input" required type="number" name="menu_price" >
+                                        <label for="example-text-input" class="form-control-label">{{__('reservations.create.menu_price')}}</label>
+                                        <input id="menuPrice" class="bug-text-input" type="number" name="menu_price" >
                                     </div>
                                 </div>
                                 <div class="col-md-12">
                                     <div class="form-group">
-                                        <label for="example-text-input" class="form-control-label">{{__('reservations.create.menu_items')}}*</label>
-                                        <textarea rows="6" id="menuContents" class="bug-text-input" required  name="menu_contents"></textarea>
+                                        <label for="example-text-input" class="form-control-label">{{__('reservations.create.menu_items')}}</label>
+                                        <textarea rows="6" id="menuContents" class="bug-text-input"  name="menu_contents"></textarea>
                                     </div>
                                 </div>
 
@@ -114,13 +114,13 @@
                                 <div class="col-md-12">
                                     <div class="form-group">
                                         <label for="example-text-input" class="form-control-label">{{__('reservations.create.client.name')}}</label>
-                                        <input required class="bug-text-input" type="text" name="client_name">
+                                        <input  class="bug-text-input" type="text" name="client_name">
                                     </div>
                                 </div>
                                 <div class="col-md-6">
                                     <div class="form-group">
                                         <label for="example-text-input" class="form-control-label">{{__('reservations.create.client.phone')}}*</label>
-                                        <input required class="bug-text-input" type="text" name="client_phone_number">
+                                        <input class="bug-text-input" type="text" name="client_phone_number">
                                     </div>
                                 </div>
                                 <div class="col-md-6">
@@ -152,7 +152,7 @@
                                 <div class="col-md-6">
                                     <div class="form-group">
                                         <label for="example-text-input" class="form-control-label">{{__('reservations.create.payment.date')}}</label>
-                                        <input required class="bug-text-input" type="date" name="payment_date">
+                                        <input  class="bug-text-input" type="date" name="payment_date">
                                     </div>
                                 </div>
                                 <div class="col-md-6">
@@ -353,7 +353,7 @@
                         </tr>
                         <tr>
                             <td>{{__('reservations.table.client')}}</td>
-                            <td>${reservation.client.name}</td>
+                            <td>${reservation.client ? reservation.client.name : ""}</td>
                             <td></td>
 
                         </tr>
@@ -365,7 +365,7 @@
                         </tr>
                         <tr>
                             <td>{{__('reservations.table.current_payment')}}:</td>
-                            <td>${reservation.current_payment}€</td>
+                            <td>${reservation.current_payment ? reservation.current_payment : '0'}€</td>
                             <td></td>
 
                         </tr>
@@ -388,7 +388,7 @@
                         </tr>
                         <tr>
                             <td>Menu content:</td>
-                            <td>${reservation.menu_contents}</td>
+                            <td>${reservation.menu_contents ? reservation.menu_contents : ''}</td>
                             <td></td>
 
                         </tr>
@@ -528,5 +528,147 @@
         });
     </script>
 
+    <div class="modal fade" id="syncFilterModal" tabindex="-1" role="dialog" aria-labelledby="syncFilterModalLabel" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="syncFilterModalLabel">Sync Filters</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <form id="syncFilterForm" onsubmit="handleSyncSubmit(event)">
+                    <div class="modal-body">
+                        <div class="form-group">
+                            <label class="d-flex align-items-center">
+                                <input type="checkbox" id="syncAll" name="sync_all" class="bug-checkbox-input mr-2">
+                                Sync All Events
+                            </label>
+                        </div>
+                        <div id="filterOptions">
+                            <div class="form-group">
+                                <label>Date Range</label>
+                                <div class="row">
+                                    <div class="col-md-6">
+                                        <input type="date" name="start_date" class="bug-text-input" required>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <input type="date" name="end_date" class="bug-text-input" required>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label>Venues</label>
+                                <select name="venue_id" class="bug-text-input">
+                                    <option value="">All Venues</option>
+                                    @foreach($venues as $venue)
+                                        <option value="{{ $venue->id }}">{{ $venue->name }}</option>
+                                    @endforeach
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                        <button type="submit" class="btn btn-primary">Sync Events</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <script>
+    function openSyncModal() {
+        $('#syncFilterModal').modal('show');
+    }
+
+    // Add this new function to handle checkbox changes
+    function handleSyncAllChange() {
+        const syncAllCheckbox = document.getElementById('syncAll');
+        const filterOptions = document.getElementById('filterOptions');
+        const dateInputs = filterOptions.querySelectorAll('input[type="date"]');
+        
+        if (syncAllCheckbox.checked) {
+            filterOptions.style.display = 'none';
+            dateInputs.forEach(input => input.removeAttribute('required'));
+        } else {
+            filterOptions.style.display = 'block';
+            dateInputs.forEach(input => input.setAttribute('required', 'required'));
+        }
+    }
+
+    function handleSyncSubmit(event) {
+        event.preventDefault();
+        const form = event.target;
+        const formData = new FormData(form);
+        const syncAll = formData.get('sync_all') === 'on';
+        
+        // Show loading state
+        const submitBtn = form.querySelector('button[type="submit"]');
+        const originalBtnText = submitBtn.innerHTML;
+        submitBtn.disabled = true;
+        submitBtn.innerHTML = 'Syncing...';
+
+        // Choose the appropriate endpoint based on syncAll
+        const endpoint = syncAll ? '/events/sync-all' : '/events/sync';
+
+        fetch(endpoint, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+                'X-CSRF-TOKEN': '{{ csrf_token() }}'
+            },
+            body: JSON.stringify({
+                start_date: formData.get('start_date'),
+                end_date: formData.get('end_date'),
+                venue_id: formData.get('venue_id')
+            })
+        })
+        .then(response => response.json())
+        .then(data => {
+            if (data.redirect) {
+                window.location.href = data.redirect;
+                return;
+            }
+
+            // Hide modal
+            $('#syncFilterModal').modal('hide');
+            
+            // Show success message
+            if (data.success) {
+                Swal.fire({
+                    icon: 'success',
+                    title: 'Success!',
+                    text: data.message || 'Events synced successfully'
+                });
+            } else {
+                throw new Error(data.message || 'Sync failed');
+            }
+        })
+        .catch(error => {
+            if (error.message === 'Not authenticated with Google Calendar') {
+                window.location.href = '{{ route("google.auth") }}';
+                return;
+            }
+            
+            Swal.fire({
+                icon: 'error',
+                title: 'Error!',
+                text: error.message || 'Failed to sync events'
+            });
+        })
+        .finally(() => {
+            // Reset button state
+            submitBtn.disabled = false;
+            submitBtn.innerHTML = originalBtnText;
+        });
+    }
+
+    // Add event listener for the checkbox
+    document.addEventListener('DOMContentLoaded', function() {
+        const syncAllCheckbox = document.getElementById('syncAll');
+        syncAllCheckbox.addEventListener('change', handleSyncAllChange);
+    });
+    </script>
 
 @endsection

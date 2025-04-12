@@ -122,7 +122,10 @@ class ReservationsController extends Controller
         $isEdit = $currentReservation ? true : false;
 
         $date = Carbon::createFromFormat('Y-m-d', $request->input('date'))->format('Y-m-d');
-        $reservations = Reservation::where('date', $date)->get();
+        $reservations = Reservation::where('date', $date)
+            ->where('status', '!=',3)
+            ->get();
+            
         if ($isEdit && $currentReservation) {
             $reservations = $reservations->filter(function ($reservation) use ($currentReservation) {
                 return $reservation->id !== $currentReservation->id;
@@ -224,7 +227,9 @@ class ReservationsController extends Controller
     }
 
     public function store(Request $request)
-    {
+{
+    $client = null;
+    if ($request->has('client_name') && $request->input('client_name')) {
         $clientData = [
             'name' => $request->input('client_name'),
             'email' => $request->input('client_email'),
@@ -235,13 +240,19 @@ class ReservationsController extends Controller
         ];
 
         $client = $this->clientsService->store($clientData);
-
-        $reservation = $this->reservationsService->store($request, $client->id);
-        if ($reservation && $request->input('initial_payment_value')  && $request->input('initial_payment_value')) {
-            $this->paymentsService->store($request, $reservation->id, $client->id);
-        }
-        return redirect()->to('reservations')->withSuccessMessage('Rezervimi u krijua me sukses');
     }
+
+    // Proceed with reservation creation regardless of client being created or not
+    $reservation = $this->reservationsService->store($request, $client ? $client->id : null);
+
+    if ($reservation && $request->input('initial_payment_value')) {
+        $this->paymentsService->store($request, $reservation->id, $client ? $client->id : null);
+    }
+
+    return redirect()->to('reservations')->withSuccessMessage('Rezervimi u krijua me sukses');
+}
+
+
 
     public function edit($id)
     {
@@ -270,6 +281,25 @@ class ReservationsController extends Controller
             ], JsonResponse::HTTP_NOT_FOUND);
         }
         try {
+            // Check if a client exists, if not create a new one
+            if (!$reservation->client_id && $request->has('name') && $request->input('name')) {
+                $clientData = [
+                    'name' => $request->input('name'),
+                    'email' => $request->input('email'),
+                    'address' => $request->input('address'),
+                    'phone_number' => $request->input('phone_number'),
+                    'additional_phone_number' => $request->input('additional_phone_number'),
+                    'personal_number' => $request->input('personal_number'),
+                ];
+
+                $client = $this->clientsService->store($clientData);
+                $reservation->client_id = $client->id; // Associate the new client with the reservation
+            } elseif ($reservation->client_id) {
+                // Update existing client
+                $client = $this->clientsService->getByID($reservation->client_id);
+                $this->clientsService->update($request, $client);
+            }
+
             $reservationUpdated = $this->reservationsService->update($request, $reservation);
 
             if ($reservationUpdated) {
@@ -959,5 +989,21 @@ class ReservationsController extends Controller
         Excel::import(new ReservationsImport, $request->file('file'));
 
         return redirect()->route('reservations.index')->withSuccessMessage('Rezervimet u bene import me sukses');
+    }
+
+    public function updateGuest(Request $request, $reservationId, $guestId)
+    {
+        $guest = $this->reservationGuestService->getByID($guestId);
+        if (is_null($guest)) {
+            return redirect()->back()->withErrors(['error' => 'Guest not found.']);
+        }
+
+        $updated = $this->reservationGuestService->update($guest, $request);
+
+        if ($updated) {
+            Alert::success('Success!', 'Guest updated successfully.');
+        }
+
+        return redirect()->back();
     }
 }

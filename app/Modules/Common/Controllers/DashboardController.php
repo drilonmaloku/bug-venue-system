@@ -34,7 +34,7 @@ class DashboardController extends Controller
 
             return [
                 'id' => $reservation->id,
-                'title' => $reservation->client->name . ',' . $reservation->venue->name,
+                'title' => $this->formatEventTitle($reservation),
                 'start' => $reservation->date,
                 'end' => $reservation->date,
                 'color' => $color,

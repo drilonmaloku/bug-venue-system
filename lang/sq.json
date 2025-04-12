@@ -137,6 +137,7 @@
     "logs.filter.context.option.invoice": "Sherbimet",
     "logs.filter.context.option.discount": "Zbritjet",
     "logs.filter.context.option.collaborators": "Bashkpuntort",
+    "logs.filter.context.option.location": "Lokacioni",
     "logs.filter.context.option.decors": "Dekoret",
     "venues.forms.create_btn": "Krijo",
     "venues.forms.create_title": "Krijo Sallë",
@@ -192,9 +193,13 @@
     "payment.method.cash": "Kesh",
     "payment.method.bank": "Bank",
 
+    "reservations.status.confirmed": "Konfirmuar",
+    "reservations.status.not_confirmed": "Në Pritje",
+
     "reservations.status.planned": "Planifikuar",
     "reservations.status.finished": "Mbajtur",
     "reservations.status.canceled": "Anuluar",
+
 
     "reservations.view.update_status": "Përditso Statusin",
     "reservations.view.select_status": "Selekto Statusin",
@@ -386,6 +391,7 @@
     "reservation.planning.description": "Përshkrimi",
     "reservation.planning.modify": "Modifiko",
     "reservation.planning.modify_planning": "Modifiko Planifikimin",
+    "reservation.planning.add_planning": "Shto planifikim",
     "reservation.planning.no_planning_found": "Nuk ka planifikim për këtë rezervim.",
 
     "reservations.view.notes": "Shënime",
@@ -393,6 +399,7 @@
     "reservations.view.notes.edit": "Përditso shënimet",
     "reservations.view.notes_modify": "Modifiko",
     "Remember Me": "Mbaj mend",
+
 
     "guests.title": "Të Ftuarit",
     "guests.add": "Shto të ftuar",
@@ -426,6 +433,24 @@
     "reservation.contract_date": "Data e Kontratës",
     "reservations.edit.client.personal_number": "Numri Personal",
     "reservations.import.title": "Importo Rezervimet",
+
+    "guests.table": "Tavolina",
+    "guests.table.table_number": "Numri i tavolines",
+    "guests.edit": "Edito",
+    "reservations.no_venue": "Nuk ka salla për këtë rezervim",
+    "reservations.no_client": "Nuk ka klient për këtë rezervim",
+    "guests.not_found_with_search": "Nuk ka të ftuar momentalisht",
+    "guests.not_found_without_search": "Nuk ka të ftuar sipas search",
+
+    "reservations.errors.only_canceled_can_update_date": "Vetëm rezervimet e anuluara mund të përditësojnë datën.",
+    "reservations.errors.date_time_slot_booked": "Kjo datë dhe kohë është e zënë për këtë sallë.",
+    "reservations.errors.reservation_not_found": "Rezervimi nuk u gjet.",
+    "reservations.errors.general_error": "Ndodhi një gabim gjatë përditësimit të rezervimit.",
+
+    "reservations.messages.date_updated_confirmed": "Data u përditësua dhe statusi u ndryshua në të konfirmuar.",
+    "reservations.messages.date_unchanged": "Data mbeti e njëjtë.",
+    "passwords.sent": "Ju kemi dërguar linkun për rivendosjen e fjalëkalimit në email!",
+    "passwords.user": "Nuk u gjet asnjë llogari me këtë adresë email.",
     "kitchen.table.menu_name": "Emri i Menusë",
     "kitchen.table.menu_contents": "Përmbajtja e Menusë",
     "kitchen.table.number_of_guests": "Numri i të Ftuarve",

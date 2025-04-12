@@ -7,13 +7,13 @@
     <div class="vms_panel">
         <div class="row">
         <div class="col-md-8">
-                <button class="btn btn-danger btn-sm ms-auto mb-0" data-toggle="modal" data-target="#deleteModal">
-                    <i class="fa fa-trash"></i> {{__('payment.forms.delete')}}
-                </button>
-               <div class="bug-table-item-options">
-                    <a class="bug-table-item-option" href="{{route('payments.edit',['id'=>$payment->id])}}">
+            <div class="bug-table-item-options">
+                    <a class="bug-table-item-option mr-2" href="{{route('payments.edit',['id'=>$payment->id])}}">
                         <i class="fa fa-edit"></i>
                     </a>
+                    <button class="bug-table-item-option danger " data-toggle="modal" data-target="#deleteModal">
+                        <i class="fa fa-trash"></i> 
+                    </button>
                 </div>
                 <div class="bug-table-item-options">
                 <table>
