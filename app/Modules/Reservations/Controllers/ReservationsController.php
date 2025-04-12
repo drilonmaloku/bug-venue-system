@@ -122,7 +122,10 @@ class ReservationsController extends Controller
         $isEdit = $currentReservation ? true : false;
 
         $date = Carbon::createFromFormat('Y-m-d', $request->input('date'))->format('Y-m-d');
-        $reservations = Reservation::where('date', $date)->get();
+        $reservations = Reservation::where('date', $date)
+            ->where('status', '!=',3)
+            ->get();
+            
         if ($isEdit && $currentReservation) {
             $reservations = $reservations->filter(function ($reservation) use ($currentReservation) {
                 return $reservation->id !== $currentReservation->id;
