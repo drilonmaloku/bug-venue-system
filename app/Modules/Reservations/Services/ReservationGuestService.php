@@ -27,10 +27,11 @@ class ReservationGuestService
         return ReservationGuest::find($id);
     }
 
-    public function store($data, $reservation_id)
+    public function store($data, $reservation_id,$currentlocationId = null)
     {
+        $locationId = $currentlocationId ? $currentlocationId : auth()->user()->getCurrentLocationId();
         $reservationGuest = ReservationGuest::create([
-            "location_id" => auth()->user()->getCurrentLocationId(),
+            "location_id" => $locationId,
             "reservation_id" => $reservation_id,
             "name" => data_get($data, "name"),
             "email" => data_get($data, "email"),

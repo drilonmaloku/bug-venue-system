@@ -14,6 +14,8 @@ use App\Modules\Venues\Services\VenuesService;
 use Illuminate\Http\Request;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Support\Carbon;
+use Illuminate\Support\Facades\App;
+use Illuminate\Support\Facades\Session;
 use Maatwebsite\Excel\Facades\Excel;
 use App\Http\Controllers\Controller;
 use App\Modules\Collaborators\Services\CollaboratorsService;
@@ -251,8 +253,6 @@ class ReservationsController extends Controller
 
     return redirect()->to('reservations')->withSuccessMessage('Rezervimi u krijua me sukses');
 }
-
-
 
     public function edit($id)
     {
@@ -1005,5 +1005,19 @@ class ReservationsController extends Controller
         }
 
         return redirect()->back();
+    }
+
+    public function showGuestMode($uuid) {
+        App::setLocale('sq');
+        $reservation = Reservation::where('uuid',$uuid)->get()->first();
+
+        if (is_null($reservation)) {
+            return abort(404, 'Reservation Not Found');
+        }
+
+        return view('pages/reservations/show-guest', [
+            'reservation' => $reservation,
+            'guests' => $reservation->guests,
+        ]);
     }
 }
