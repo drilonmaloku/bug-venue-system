@@ -88,7 +88,6 @@
                                     <option value="staff">{{__('users.table.role.staff')}}</option>
                                     <option value="kitchen">{{__('users.table.role.kitchen')}}</option>
                                 </select>
-
                             </div>
                         </div>
                     </div>
