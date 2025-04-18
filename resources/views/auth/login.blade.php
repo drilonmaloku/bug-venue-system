@@ -58,6 +58,11 @@
                                     {{ __('Login') }}
                                 </button>
                             </div>
+                            <div class="form-group text-center">
+                                <a href="{{ route('password.request') }}" class="forgot-password-link">
+                                    {{ __('Forgot Your Password?') }}
+                                </a>
+                            </div>
                         </form>
                     </div>
                 </div>

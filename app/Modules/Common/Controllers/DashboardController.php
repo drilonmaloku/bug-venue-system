@@ -8,13 +8,14 @@ use App\Modules\Reservations\Models\Reservation;
 use App\Modules\Venues\Models\Venue;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
+use Illuminate\Support\Carbon;
 
 class DashboardController extends Controller
 {
 
     public function index()
     {
-  
+
         $reservations = Reservation::with('venue')->get();
         $venues = Venue::all(); // Assuming you have a Venue model
 
@@ -41,6 +42,9 @@ class DashboardController extends Controller
             ];
         });
 
+        if(auth()->user()->hasRole('kitchen')) {
+          return $this->getKitchenDashboard();
+        }
         return view('pages.dashboard.index', [
             'venues' => $venues,
             'events' => $events->toArray(),
@@ -50,36 +54,17 @@ class DashboardController extends Controller
 
 
     public function getKitchenDashboard(){
-        $reservations = Reservation::with('venue')->get();
-        $venues = Venue::all(); // Assuming you have a Venue model
+        $today = Carbon::today();
+        $nextWeek = Carbon::today()->addWeeks(2);
 
-        $colors = [
-            1 => '#ff6961', // Coral
-            2 => '#77dd77', // Pastel Green
-            3 => '#aec6cf', // Light Blue
-            4 => '#f49ac2', // Orchid Pink
-            5 => '#f0e68c', // Khaki
-            6 => '#ffb347', // Orange
-            // Add more colors as needed
-        ];
+        $reservations = Reservation::with('menu')
+            ->whereDate('date', $today) // Today's reservations
+            ->orWhereBetween('date', [$today->copy()->addDay(), $nextWeek]) // Next 7 days
+            ->get();
 
-        $events = $reservations->map(function ($reservation) use ($colors) {
-            // Use the venue's ID to get the color
-            $color = isset($colors[$reservation->venue_id]) ? $colors[$reservation->venue_id] : '#000000'; // Default to black
-
-            return [
-                'id' => $reservation->id,
-                'title' => $this->formatEventTitle($reservation),
-                'start' => $reservation->date,
-                'end' => $reservation->date,
-                'color' => $color,
-            ];
-        });
-
-        return view('pages.dashboard.index', [
-            'venues' => $venues,
-            'events' => $events->toArray(),
+        return view('pages.dashboard.kitchen', [
             'menus' => Menu::all(),
+            'reservations' => $reservations,
         ]);
     }
 

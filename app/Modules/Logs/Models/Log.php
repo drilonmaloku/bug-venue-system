@@ -17,7 +17,7 @@ class Log extends Model
     const LOG_CONTEXT_DSCOUNT = 9;
     const LOG_CONTEXT_DECOR = 10;
     const LOG_CONTEXT_COLLABORATORS = 11;
-
+    const LOG_CONTEXT_LOCATIONS = 12;
     const LOG_CONTEXT_COMMON = 99;
 
 
@@ -90,6 +90,10 @@ class Log extends Model
          else if($log->context == 11) {
             return 'Bashkpuntoret';
         }
+        else if($log->context == 12) {
+            return 'Locationi';
+        }
+        
     }
 
 }

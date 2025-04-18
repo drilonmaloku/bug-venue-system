@@ -31,7 +31,7 @@
                             <span class="password-input-toggle-icon"><i class="fa fa-eye"></i></span>
                         </div>
 
-                    <div class="col-md-12 mt-2">
+                    <div class="col-md-12 mt-2 pl-0">
                         <button type="submit" class="hubers-btn">{{__('general.save_btn')}}</button>
                     </div>
                 </form>

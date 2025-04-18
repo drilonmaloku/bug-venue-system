@@ -137,6 +137,7 @@
     "logs.filter.context.option.invoice": "Sherbimet",
     "logs.filter.context.option.discount": "Zbritjet",
     "logs.filter.context.option.collaborators": "Bashkpuntort",
+    "logs.filter.context.option.location": "Lokacioni",
     "logs.filter.context.option.decors": "Dekoret",
     "venues.forms.create_btn": "Krijo",
     "venues.forms.create_title": "Krijo Sallë",
@@ -194,7 +195,6 @@
 
     "reservations.status.confirmed": "Konfirmuar",
     "reservations.status.not_confirmed": "Në Pritje",
-    "reservations.status.canceled": "Anuluar",
 
     "reservations.status.planned": "Planifikuar",
     "reservations.status.finished": "Mbajtur",
@@ -400,6 +400,7 @@
     "reservations.view.notes_modify": "Modifiko",
     "Remember Me": "Mbaj mend",
 
+
     "guests.title": "Të Ftuarit",
     "guests.add": "Shto të ftuar",
     "guests.form.name": "Emri",
@@ -439,6 +440,15 @@
     "reservations.no_venue": "Nuk ka salla për këtë rezervim",
     "reservations.no_client": "Nuk ka klient për këtë rezervim",
     "guests.not_found_with_search": "Nuk ka të ftuar momentalisht",
-    "guests.not_found_without_search": "Nuk ka të ftuar sipas search"
+    "guests.not_found_without_search": "Nuk ka të ftuar sipas search",
 
+    "reservations.errors.only_canceled_can_update_date": "Vetëm rezervimet e anuluara mund të përditësojnë datën.",
+    "reservations.errors.date_time_slot_booked": "Kjo datë dhe kohë është e zënë për këtë sallë.",
+    "reservations.errors.reservation_not_found": "Rezervimi nuk u gjet.",
+    "reservations.errors.general_error": "Ndodhi një gabim gjatë përditësimit të rezervimit.",
+
+    "reservations.messages.date_updated_confirmed": "Data u përditësua dhe statusi u ndryshua në të konfirmuar.",
+    "reservations.messages.date_unchanged": "Data mbeti e njëjtë.",
+    "passwords.sent": "Ju kemi dërguar linkun për rivendosjen e fjalëkalimit në email!",
+    "passwords.user": "Nuk u gjet asnjë llogari me këtë adresë email."
 }

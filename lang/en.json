@@ -282,6 +282,9 @@
 
     "reservations.status.confirmed": "Confirmed",
     "reservations.status.not_confirmed": "On Hold",
+    "reservations.status.canceled": "Canceled",
+    "reservations.status.planned": "Planned",
+    "reservations.status.finished": "Held",
 
     "reservations.view.add_payment": "Add Payment",
     "reservations.view.payments": "Payments",
@@ -390,6 +393,8 @@
     "reservation.planning.modify": "Modify",
     "reservation.planning.modify_planning": "Modify Planning",
     "reservation.planning.no_planning_found": "No planning found",
+    "passwords.sent": "We have emailed your password reset link!",
+    "passwords.user": "No account found with this email address.",
     "reservation.planning.add_planning": "Add Planning",
     "Remember Me": "Remember Me",
     "payment.forms.payment_method": "Payment Method",
@@ -411,5 +416,13 @@
     "reservations.no_venue": "No venue available",
     "reservation.no_client": "No client available",
     "guests.not_found_with_search": "No guests registered",
-    "guests.not_found_without_search": "No guests based on the search criteria"
+    "guests.not_found_without_search": "No guests based on the search criteria",
+    "reservations.errors.only_canceled_can_update_date": "Only canceled reservations can update the date.",
+    "reservations.errors.date_time_slot_booked": "This date and time slot is already booked for this venue.",
+    "reservations.errors.reservation_not_found": "Reservation not found.",
+    "reservations.errors.general_error": "An error occurred while updating the reservation.",
+
+    "reservations.messages.date_updated_confirmed": "Date updated and status changed to confirmed.",
+    "reservations.messages.date_unchanged": "Date remained unchanged."
+
 }

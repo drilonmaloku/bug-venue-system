@@ -3,6 +3,7 @@
 declare(strict_types=1);
 
 use App\Modules\Reservations\Controllers\ReservationsController;
+use App\Modules\Reservations\Controllers\ReservationsGuestController;
 use App\Modules\Reservations\Models\ReservationCollaborator;
 use App\Modules\Reservations\Services\ReservationCollaboratorServices;
 use Illuminate\Support\Facades\Route;
@@ -63,5 +64,13 @@ Route::group(['middleware' => 'auth'], function () {
     Route::patch('/reservations/manage-guests/{reservationId}/update-status/{guestId}', [ReservationsController::class, 'updateGuestStatus'])->name('reservations.updateGuestStatus');
     Route::patch('/reservations/manage-guests/{reservationId}/update-checkin/{guestId}', [ReservationsController::class, 'updateGuestCheckin'])->name('reservations.updateGuestCheckin');
 
+    Route::put('reservations/{id}/update-date', [ReservationsController::class, 'updateDate'])->name('reservations.updateDate');
+
 });
+
+Route::get('/reservation-item/{uuid}', [ReservationsGuestController::class, 'listGuests'])->name('reservations-guests.showGuestMode');
+Route::post('/reservation-item/{uuid}/add', [ReservationsGuestController::class, 'addGuest'])->name('reservations-guests.addGuest');
+Route::put('/reservation-item/{uuid}/update/{guestId}', [ReservationsController::class, 'updateGuest'])->name('reservations-guests.updateGuest');
+Route::delete('/reservation-item/{uuid}/delete/{guestId}', [ReservationsGuestController::class, 'deleteGuest'])->name('reservations-guests.deleteGuest');
+Route::patch('/reservation-item/{uuid}/update-status/{guestId}', [ReservationsController::class, 'updateGuestStatus'])->name('reservations-guests.updateGuestStatus');
 
