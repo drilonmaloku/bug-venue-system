@@ -29,9 +29,7 @@ class RouteServiceProvider extends ServiceProvider
         });
 
         $this->routes(function () {
-            Route::middleware('api')
-                ->prefix('api')
-                ->group(base_path('routes/api.php'));
+            Route::middleware('api')->prefix('api')->group(base_path('routes/api.php'));
 
             Route::middleware('web')->group(base_path('routes/web.php'));
             Route::middleware('web')->group(base_path('app/Modules/Clients/Routes/clients-web.php'));
@@ -51,7 +49,6 @@ class RouteServiceProvider extends ServiceProvider
             Route::middleware('web')->group(base_path('app/Modules/Settings/Routes/settings-web.php'));
             Route::middleware('web')->group(base_path('app/Modules/Onboard/Routes/onboard-web.php'));
             Route::middleware('web')->group(base_path('app/Modules/Reminders/Routes/reminders-web.php'));
-
 
         });
 

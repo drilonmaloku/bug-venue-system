@@ -42,7 +42,9 @@
                 </tr>
                 <tr>
                     <td>{{__('reservations.table.date')}}</td>
-                    <td>{{ $reservation->date }}</td>
+                    <td>
+                        {{ $reservation->date }}
+                    </td>
                 </tr>
                 <tr>
                     <td>{{__('reservations.table.venue')}}</td>
@@ -206,6 +208,7 @@
                                     <option value="">{{__('reservations.view.select_status')}}</option>
                                     <option @if($reservation->status == 1) selected @endif value="1">{{__('reservations.status.confirmed')}}</option>
                                     <option @if($reservation->status == 2) selected @endif value="2">{{__('reservations.status.not_confirmed')}}</option>
+                                    <option @if($reservation->status == 3) selected @endif value="3">{{__('reservations.status.canceled')}}</option>
                                 </select>
                             </div>
                         </div>

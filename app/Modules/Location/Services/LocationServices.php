@@ -64,7 +64,7 @@ class LocationServices
         if($location){
             $this->logService->log([
                 'message' => 'Location është krijuar me sukses',
-                'context' => Log::LOG_CONTEXT_CLIENTS,
+                'context' => Log::LOG_CONTEXT_LOCATIONS,
                 'ttl'=> Log::LOG_TTL_THREE_MONTHS,
             ]);
         }
@@ -84,7 +84,7 @@ class LocationServices
         if($locationSaved){
             $this->logService->log([
                 'message' => 'Location u përditësua me sukses',
-                'context' => Log::LOG_CONTEXT_CLIENTS,
+                'context' => Log::LOG_CONTEXT_LOCATIONS,
                 'ttl'=> Log::LOG_TTL_THREE_MONTHS,
             ]);
         }
@@ -99,7 +99,7 @@ class LocationServices
         if($locationSaved){
             $this->logService->log([
                 'message' => 'Location u deaktivizua me sukses',
-                'context' => Log::LOG_CONTEXT_CLIENTS,
+                'context' => Log::LOG_CONTEXT_LOCATIONS,
                 'ttl'=> Log::LOG_TTL_THREE_MONTHS,
             ]);
         }

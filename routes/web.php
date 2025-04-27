@@ -1,6 +1,9 @@
 <?php
 
+
+use App\Http\Controllers\Auth\ResetPasswordController;
 use App\Modules\NotificationsPreference\Controllers\NotificationPreferenceController;
+
 use App\Modules\Common\Controllers\DashboardController;
 use App\Modules\GoogleCalendar\Controllers\GoogleCalendarController;
 use Illuminate\Support\Facades\Artisan;
@@ -46,7 +49,7 @@ Route::group(['middleware' => 'auth'], function () {
     Route::get('/profile/password', [UsersController::class, 'editPassword'])->name('profile.password-update');
 });
 
-Auth::routes(['register' => false, 'reset' => false, 'verify' => false]);
+Auth::routes(['register' => false, 'reset' => true, 'verify' => false]);
 
 
 Route::get('locale/{locale}', function ($locale){
@@ -98,6 +101,11 @@ Route::patch('/notifications/preferences', [NotificationPreferenceController::cl
 Route::get('files/{path}', [\App\Modules\Files\Controllers\AppFileController::class, 'getFile'])
     ->where('path', '.*')->name('files.getFile');
 
+
+Route::get('password/reset', [ResetPasswordController::class, 'showLinkRequestForm'])->name('password.request');
+Route::post('password/email', [ResetPasswordController::class, 'sendResetLinkEmail'])->name('password.email');
+Route::get('password/reset/{token}', [ResetPasswordController::class, 'showResetForm'])->name('password.reset');
+Route::post('password/reset', [ResetPasswordController::class, 'reset'])->name('password.update');
+
 Route::put('/reservations/manage-guests/{reservationId}/update/{guestId}', 'ReservationsController@updateGuest')
     ->name('reservations.updateGuest');
-

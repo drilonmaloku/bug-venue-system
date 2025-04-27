@@ -160,6 +160,10 @@
     border: 1px solid rgb(207, 216, 220);
     border-radius: 12px;
   }
+
+  &.no-navbar {
+    padding-left: 0;
+  }
 }
 .hubers-body-content {
   padding-top: 24px;
