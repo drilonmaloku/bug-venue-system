@@ -8,7 +8,7 @@
         <div class="row">
             <div class="col-md-8">
                 <div class="bug-table-item-options">
-                    <a class="bug-table-item-option mr-2" href="{{ route('reminders.edit', ['reservationId' => $reservation->id, 'id' => $reminder->id]) }}">
+                    <a class="bug-table-item-option mr-2" href="{{ route('reminders.edit', ['reservation' => $reservation->id, 'reminder' => $reminder->id]) }}">
                         <i class="fa fa-edit"></i>
                     </a>
                     <button class="bug-table-item-option danger" data-toggle="modal" data-target="#deleteModal">
@@ -88,7 +88,7 @@
                     {{__('reminders.confirm_delete')}}
                 </div>
                 <div class="modal-footer">
-                    <form action="{{ route('reminders.destroy', ['reservationId' => $reservation->id, 'id' => $reminder->id]) }}" method="POST">
+                    <form action="{{ route('reminders.destroy', ['reservation' => $reservation->id, 'reminder' => $reminder->id]) }}" method="POST">
                         @csrf
                         @method('DELETE')
                         <button type="button" class="btn btn-secondary" data-dismiss="modal">{{__('general.cancel_btn')}}</button>

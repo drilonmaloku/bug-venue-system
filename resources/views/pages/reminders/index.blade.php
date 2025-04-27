@@ -96,7 +96,7 @@
     function deleteReminder(id) {
         if (confirm('{{__('reminders.confirm_delete')}}')) {
             const form = document.getElementById('delete-form');
-            form.action = "{{ route('reminders.destroy', ['reservationId' => $reservation->id, 'id' => ':id']) }}".replace(':id', id);
+            form.action = "{{ route('reminders.destroy', ['reservation' => $reservation->id, 'id' => ':id']) }}".replace(':id', id);
             form.submit();
         }
     }

@@ -6,12 +6,9 @@
     <div class="vms_panel">
         <div class="d-flex justify-content-between align-items-center mb-4">
             <h4>{{__('reminders.reservation_title')}}: {{$reservation->title}} ({{$reservation->date}})</h4>
-            <a href="{{route('reminders.index', ['reservationId' => $reservation->id])}}" class="hubers-btn inverse">
-                <i class="fa fa-arrow-left mr-2"></i> {{__('general.back_to_reminders')}}
-            </a>
         </div>
 
-        <form action="{{ route('reminders.store', ['reservationId' => $reservation->id]) }}" method="POST">
+        <form action="{{ route('reminders.store', ['reservation' => $reservation->id]) }}" method="POST">
             @csrf
             <div class="row">
                  <div class="col-md-8">

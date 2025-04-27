@@ -1,7 +1,7 @@
 <div class="vms_panel">
     <div class="d-flex justify-content-between align-items-center mb-4">
         <h5>{{__('reminders.title')}}:</h5>
-        <a href="{{ route('reminders.create', ['reservationId' => $reservation->id]) }}" class="hubers-btn">
+        <a href="{{ route('reminders.create', ['reservation' => $reservation->id]) }}" class="hubers-btn">
             <i class="fa fa-plus mr-2"></i> {{__('reminders.create_btn')}}
         </a>
     </div>
@@ -42,7 +42,7 @@
                                 <a href="{{ route('reminders.show', ['reservation' => $reservation->id, 'reminder' => $reminder->id]) }}" class="bug-table-item-option">
                                     <i class="fa fa-eye"></i>
                                 </a>
-                                <form class="mb-0 d-inline" action="{{ route('reminders.destroy', ['reservationId' => $reservation->id, 'id' => $reminder->id]) }}" method="POST">
+                                <form class="mb-0 d-inline" action="{{ route('reminders.destroy', ['reservation' => $reservation->id, 'reminder' => $reminder->id]) }}" method="POST">
                                     @csrf
                                     @method('DELETE')
                                     <button type="submit" class="bug-table-item-option text-danger border-0">
