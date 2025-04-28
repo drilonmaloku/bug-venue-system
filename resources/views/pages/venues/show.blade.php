@@ -85,7 +85,7 @@
                                 {{$reservation->current_payment}} $
                             </td>
                             <td>
-                                {{$reservation->client->name}}
+                                {{$reservation->client ? $reservation->client->name : ''}}
                             </td>
                             <td>
                                 <div class="d-flex px-3">

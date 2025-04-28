@@ -109,8 +109,3 @@ Route::post('password/reset', [ResetPasswordController::class, 'reset'])->name('
 
 Route::put('/reservations/manage-guests/{reservationId}/update/{guestId}', 'ReservationsController@updateGuest')
     ->name('reservations.updateGuest');
-
-
-
-
-

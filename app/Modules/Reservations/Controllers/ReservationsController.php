@@ -207,7 +207,7 @@ class ReservationsController extends Controller
             'contract' => $this->reservationsService->generateReservationContract($reservation,$contractContent['contract']),
             'collaborators' => $this->collaboratorService->getAll(),
             'planning' => json_decode($reservation->planning, true), 
-
+            'hasReminders' => true,
         ]);
     }
 
