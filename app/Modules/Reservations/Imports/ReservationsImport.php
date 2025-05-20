@@ -28,7 +28,7 @@ class ReservationsImport implements ToModel,WithHeadingRow
         $paymentsService = app()->make(PaymentsService::class);
 
 
-        $paymentMethod = $row['metoda_e_pageses'] ?? 1;
+        $paymentMethod = $row['prepayment_type'] ?? 1;
 
         if($paymentMethod == 'Kesh' || $paymentMethod == 'Cash') {
             $paymentMethod =1;
@@ -43,24 +43,24 @@ class ReservationsImport implements ToModel,WithHeadingRow
         $menu = Menu::where('name', $row['menu'])->first();
 
         $requestData = new Request([
-            'client_name'  => $row['emri'] . ' '. $row['mbiemri'] ?? null,
+            'client_name'  => $row['client_first_name'] . ' '. $row['client_last_name'] ?? null,
             'client_email' => null,
-            'client_address' => $row['adresa'] ?? null,
-            'client_phone_number' => $row['nr_i_telefonit'] ?? null,
-            'client_personal_number' => $row['nr_personal'] ?? null,
+            'client_address' => $row['client_address'] ?? null,
+            'client_phone_number' => $row['client_phone'] ?? null,
+            'client_personal_number' => $row['client_id_number'] ?? null,
             'client_additional_phone_number' => null,
-            "initial_payment_value" => $row['pagesa_te_kryera'] ?? null,
+            "initial_payment_value" => $row['prepayment_amount'] ?? null,
             "payment_notes" => null,
             "payment_method" => $paymentMethod,
-            "payment_date" => $this->convertExcelDate($row['data_e_pageses']) ?? null,
-            "number_of_guests" => $row['numri_i_te_ftuarve'] ?? null,
+            "payment_date" => $this->convertExcelDate($row['prepayment_date']) ?? null,
+            "number_of_guests" => $row['number_of_guests'] ?? null,
             "reservation" => "1,3",
             "menu_contents" => $menu->description,
-            "comment" => $row['koment'] ?? null,
-            "menu_price" => $row['qmimi_per_person'] ?? null,
+            "comment" => $row['comment'] ?? null,
+            "menu_price" => $row['menu_price'] ?? null,
             "menu_id" => $menu->id,
-            "date" => $this->convertExcelDate($row['data_e_dasmes']) ?? null,
-            "contract_date" => $this->convertExcelDate($row['data_e_kontrates']) ?? null,
+            "date" => $this->convertExcelDate($row['date']) ?? null,
+            "contract_date" => $this->convertExcelDate($row['contract_date']) ?? null,
         ]);
 
 
@@ -81,7 +81,7 @@ class ReservationsImport implements ToModel,WithHeadingRow
         if ($reservation && $requestData->input('initial_payment_value')  && $requestData->input('initial_payment_value')) {
            $paymentsService->store($requestData, $reservation->id, $client->id);
         }
-        if($row['koment']){
+        if($row['comment']){
             $reservationCommentServices->storeComment($requestData,$reservation);
         }
 
