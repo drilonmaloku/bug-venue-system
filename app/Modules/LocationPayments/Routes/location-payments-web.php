@@ -13,9 +13,7 @@ Route::prefix('location-payments')->group(function () {
     Route::middleware(['role:system-admin'])->group(function () {
         Route::get('/', [LocationPaymentsController::class, 'index'])->name('location-payments.index');
         Route::get('/{location}', [LocationPaymentsController::class, 'show'])->name('location-payments.show');
-        
-        // Main Location Payments Routes
-        // Credit Deposits
+
         Route::get('/credit-deposits/all', [LocationCreditDepositController::class, 'index'])->name('location-payments.credit-deposits.all');
         Route::get('/{location}/credit-deposits/create', [LocationPaymentsController::class, 'createCreditDeposit'])->name('location-payments.credit-deposits.create');
         Route::post('/{location}/credit-deposits', [LocationPaymentsController::class, 'storeCreditDeposit'])->name('location-payments.credit-deposits.store');

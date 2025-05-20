@@ -87,14 +87,13 @@ class LocationInvoiceController extends Controller
     {
         $request->validate([
             'credits' => 'required|integer|min:1',
-            'description' => 'nullable|string',
-            'due_date' => 'required|date|after:today',
+            'description' => 'nullable|string'
         ]);
 
         $invoice = LocationInvoice::create([
             'location_id' => $location->id,
             'credits' => $request->credits,
-            'invoice_number' => 'INV-' . Str::upper(Str::random(8)),
+            'invoice_number' => 'INV-' . Str::upper(Str::random(12)),
             'description' => $request->description,
             'due_date' => $request->due_date,
         ]);
