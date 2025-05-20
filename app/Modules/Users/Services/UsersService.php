@@ -203,7 +203,6 @@ class UsersService
         $user->username = $request->input('username');
         $user->first_name = $request->input('first_name');
         $user->last_name = $request->input('last_name');
-        $user->email = $request->input('email');
         $user->phone = $request->input('phone');
         $user->language = $request->input('language');
 

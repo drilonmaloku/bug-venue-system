@@ -31,12 +31,7 @@
                                     <input class="bug-text-input" type="text" placeholder="Mbiemri" name="last_name" value="{{$user->last_name}}">
                                 </div>
                             </div>
-                            <div class="col-md-12">
-                                <div class="form-group">
-                                    <label for="example-text-input" class="bug-label">{{__('users.table.email')}}*</label>
-                                    <input class="bug-text-input" type="text" placeholder="Emaili" name="email" value="{{$user->email}}">
-                                </div>
-                            </div>
+
                             <div class="col-md-12">
                                 <div class="form-group">
                                     <label for="example-text-input" class="bug-label">{{__('users.table.phone_number')}}</label>
