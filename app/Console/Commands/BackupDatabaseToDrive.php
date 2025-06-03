@@ -18,7 +18,10 @@ class BackupDatabaseToDrive extends Command
         $this->info("Creating database backup...");
 
         // Run only the database backup
-        Artisan::call('backup:run', ['--only-db' => true]);
+        Artisan::call('backup:run', [
+            '--only-db' => true,
+            '--disable-notifications' => true,
+        ]);
 
         $this->info("Backup created. Uploading to Google Drive...");
 
