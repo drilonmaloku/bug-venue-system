@@ -15,7 +15,7 @@ class Kernel extends ConsoleKernel
         $schedule->command('notifications:delete-expired')->daily();
         $schedule->command('reminders:process')->everyFiveMinutes();
         $schedule->command('reminders:cleanup')->daily();
-        $schedule->command('backup:database-to-drive')->dailyAt("00:25");
+        $schedule->command('backup:database-to-drive')->dailyAt("00:32");
         // $schedule->command('inspire')->hourly();
     }
 
