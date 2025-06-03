@@ -31,8 +31,14 @@ class DashboardController extends Controller
 
         $events = $reservations->map(function ($reservation) use ($colors) {
             // Use the venue's ID to get the color
-            $color = isset($colors[$reservation->venue_id]) ? $colors[$reservation->venue_id] : '#000000'; // Default to black
-
+            //$color = isset($colors[$reservation->venue_id]) ? $colors[$reservation->venue_id] : '#000000'; // Default to black
+            $color = '#b42318';
+            if($reservation->status == 1) {
+                $color = '#36a536';
+            }
+            else if($reservation->status == 2) {
+                $color = '#000000';
+            }
             return [
                 'id' => $reservation->id,
                 'title' => $this->formatEventTitle($reservation),
@@ -84,7 +90,13 @@ class DashboardController extends Controller
 
         $events = $reservations->map(function ($reservation) use ($colors) {
             // Use the venue's ID to get the color
-            $color = isset($colors[$reservation->venue_id]) ? $colors[$reservation->venue_id] : '#000000'; // Default to black
+            $color = '#b42318';
+            if($reservation->status == 1) {
+                $color = '#36a536';
+            }
+            else if($reservation->status == 2) {
+                $color = '#000000';
+            }
 
             return [
                 'id' => $reservation->id,
@@ -142,7 +154,14 @@ class DashboardController extends Controller
 
         $events = $reservations->map(function ($reservation)  use ($colors){
 
-            $color = isset($colors[$reservation->venue_id]) ? $colors[$reservation->venue_id] : '#000000'; // Default to black
+            $color = '#b42318';
+            if($reservation->status == 1) {
+                $color = '#36a536';
+            }
+            else if($reservation->status == 2) {
+                $color = '#000000';
+            }
+
             return [
                 'id' => $reservation->id,
                 'title' => $this->formatEventTitle($reservation),
