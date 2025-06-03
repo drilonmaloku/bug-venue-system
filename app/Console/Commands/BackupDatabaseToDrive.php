@@ -22,7 +22,7 @@ class BackupDatabaseToDrive extends Command
 
         $this->info("Backup created. Uploading to Google Drive...");
 
-        $backupPath = storage_path('/app/VMS');
+        $backupPath = storage_path('/app/backups/VMS');
         $latestBackup = collect(scandir($backupPath))
             ->filter(fn($file) => str_ends_with($file, '.zip'))
             ->sortDesc()
