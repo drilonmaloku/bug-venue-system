@@ -2190,6 +2190,7 @@ body {
 }
 .vms-layout.no-navbar {
   padding-left: 0;
+  padding-top: 0;
 }
 
 .hubers-body-content {

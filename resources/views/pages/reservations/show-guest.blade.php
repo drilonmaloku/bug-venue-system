@@ -135,11 +135,7 @@
             </div>
         @else
             <div class="hubers-empty-tab">
-                @if ($is_on_search)
-                    <h5 class="text-center">{{__('guests.not_found_with_search')}}</h5>
-                @else
-                    <h5 class="text-center">{{__('guests.not_found_without_search')}}</h5>
-                @endif
+                <h5 class="text-center">{{__('guests.not_found_with_search')}}</h5>
             </div>
         @endif
     </div>
