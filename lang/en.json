@@ -220,6 +220,7 @@
     "reservations.table.price_information": "Price Information",
     "reservations.table.time": "Time",
     "reservations.table.menu": "Menu",
+    "reservations.table.guests_menu_link": "Link for guests",
     "reservations.table.menu_price": "Menu Price",
     "reservations.table.menu_total_price": "Total Menu Price",
     "reservations.table.current_payment": "Current Payment",

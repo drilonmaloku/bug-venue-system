@@ -16,7 +16,6 @@
                 <a class="btn hubers-btn danger ml-2" data-toggle="modal" data-target="#deleteReservation">
                     <i class="fa fa-trash"></i>
                 </a>
-
             </div>
             <table>
                 <thead>
@@ -89,6 +88,10 @@
                     <td>{{__('reservations.table.time')}}:</td>
                     <td>{{ $reservation->reservation_type_name }}</td>
                 </tr>
+                <tr>
+                    <td>{{__('reservations.table.guests_menu_link')}}</td>
+                    <td><a href="{{ route('reservations-guests.showGuestMode', $reservation->uuid) }}">{{ route('reservations-guests.showGuestMode', $reservation->uuid) }}</a></td>
+                </tr>
                 </tbody>
             </table>
             <table>
@@ -137,6 +140,17 @@
                 <tr>
                     <td>{{__('reservations.table.manager')}}:</td>
                     <td>{{ $reservation->user ? $reservation->user->username : '' }}</td>
+                </tr>
+                <tr>
+                    <td>{{__('reservations.table.decor')}}:</td>
+                    <td>
+                        @if ($reservation->decor)
+                            <a href="{{ route('decors.view', $reservation->decor->id) }}">
+                                {{ $reservation->decor->name }}
+                            </a>
+                        @else
+                        @endif
+                    </td>
                 </tr>
                 <tr>
                     <td>{{__('reservations.table.decor')}}:</td>

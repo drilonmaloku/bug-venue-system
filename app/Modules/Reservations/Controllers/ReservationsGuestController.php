@@ -97,6 +97,7 @@ class ReservationsGuestController extends Controller
         return view('pages/reservations/show-guest', [
             'reservation' => $reservation,
             'guests' => $reservation->guests,
+            'is_on_search'=>count($request->all()),
         ]);
     }
 

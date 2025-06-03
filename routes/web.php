@@ -56,30 +56,7 @@ Route::get('locale/{locale}', function ($locale){
     Session::put('locale', $locale);
     return redirect()->back();
 });
-Route::get('/migrate', function () {
-    // Run migrations
-    Artisan::call('migrate', [
-        '--force' => true // This option is necessary to run migrations in a production environment
-    ]);
 
-    return response()->json(['message' => 'Migrations ran successfully']);
-});
-
-
-Route::get('/migrate-seed', function () {
-    // Run migrations
-    Artisan::call('migrate:fresh', [
-        '--force' => true // This option is necessary to run migrations in a production environment
-    ]);
-
-
-    Artisan::call('db:seed', [
-        '--class' => 'ProductionSeeder', // Replace with your specific seeder class name
-        '--force' => true // Use '--force' to run the seeder in production
-    ]);
-
-    return response()->json(['message' => 'Migrations and seeding ran successfully']);
-});
 
 Route::get('/google/auth', [GoogleCalendarController::class, 'redirectToGoogle'])->name('google.auth');
 Route::get('/google/callback', [GoogleCalendarController::class, 'handleGoogleCallback'])->name('google.callback');
