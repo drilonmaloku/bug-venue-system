@@ -381,6 +381,7 @@ class ReservationsController extends Controller
             'payment_date' => 'required|date',
             'initial_payment_value' => 'required|numeric',
             'payment_notes' => 'nullable|string',
+            'payment_method' => 'required|in:1,2',
         ]);
 
         // Assuming $reservation has a 'client_id' property or method to get client ID
