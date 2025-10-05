@@ -4,6 +4,7 @@ namespace App\Modules\Reservations\Controllers;
 
 use App\Modules\Clients\Services\ClientsService;
 use App\Modules\Menus\Services\MenuService;
+use App\Modules\Reservations\Exports\ReservationGuestsExport;
 use App\Modules\Reservations\Services\ReservationGuestService;
 use App\Modules\Payments\Services\PaymentsService;
 use App\Modules\Reservations\Models\Reservation;
@@ -879,7 +880,6 @@ class ReservationsController extends Controller
         ]);
     }
 
-
     public function addGuest(Request $request,$id){
         $reservation = $this->reservationsService->getByID($id);
         if (is_null($reservation)) {
@@ -893,7 +893,6 @@ class ReservationsController extends Controller
         }
         return redirect()->back();
     }
-
 
     public function deleteGuest($id, $guestId)
     {
@@ -1020,5 +1019,17 @@ class ReservationsController extends Controller
             'reservation' => $reservation,
             'guests' => $reservation->guests,
         ]);
+    }
+
+    public function exportGuests(Request $request)
+    {
+        $reservationGuests = null;
+
+        if($request->has('ids')) {
+            $reservationGuests = explode(',', $request->input('ids'));
+        }
+        // TODO: Add correct name for this one
+
+        return Excel::download(new ReservationGuestsExport($reservationGuests), "reservation-guests-export.xlsx");
     }
 }

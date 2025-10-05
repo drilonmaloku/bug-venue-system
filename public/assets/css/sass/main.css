@@ -159,9 +159,9 @@
   border-bottom-left-radius: 4px;
 }
 
-.hubers-panel-bordered {
-  border: 2px solid #f8f9fa;
-  padding: 8px;
+.vms-panel-bordered {
+  border: 1px solid #e3e3e3;
+  padding: 12px;
   border-radius: 4px;
 }
 
@@ -2190,7 +2190,6 @@ body {
 }
 .vms-layout.no-navbar {
   padding-left: 0;
-  padding-top: 0;
 }
 
 .hubers-body-content {
