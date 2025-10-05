@@ -27,6 +27,10 @@ class ReservationGuestService
         return ReservationGuest::find($id);
     }
 
+    public function getByIds($ids){
+        return ReservationGuest::whereIn('id', $ids)->get();
+    }
+
     public function store($data, $reservation_id,$currentlocationId = null)
     {
         $locationId = $currentlocationId ? $currentlocationId : auth()->user()->getCurrentLocationId();

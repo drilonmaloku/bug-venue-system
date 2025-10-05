@@ -6,6 +6,7 @@
     <a class="btn hubers-btn" data-toggle="modal" data-target="#addGuestModal">{{__('general.create_btn')}}</a>
 @endsection
 @section('content')
+    test
     <div class="vms_panel">
         @if(count($guests) > 0)
             <div class="table-responsive p-0">

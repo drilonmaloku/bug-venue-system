@@ -5,10 +5,13 @@
 @section('content')
     <div class="vms_panel">
         @foreach($reservations as $reservation)
-            <strong>Data: {{$reservation->date}} <br>
-            Te ftuarit: {{$reservation->number_of_guests}} <br>
-            Menuja:</strong> {!! $reservation->menu_contents !!}
-            <hr>
+            <div class="vms-panel-bordered">
+                <strong>Data:</strong> {{$reservation->date}} <br>
+                <strong>Salla:</strong> {{$reservation->venue->name}} <br>
+                <strong>Te ftuarit:</strong> {{$reservation->number_of_guests}} <br>
+                <strong> Menuja:</strong> {!! $reservation->menu_contents !!}
+            </div>
+
         @endforeach
     </div>
 
