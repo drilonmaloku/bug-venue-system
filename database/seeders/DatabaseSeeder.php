@@ -43,6 +43,9 @@ class DatabaseSeeder extends Seeder
         $this->seedPayments();
         $this->seedExpenses();
         $this->seedLogs();
+        $this->seedPaymentScheduleTemplates();
+        $this->seedPaymentSchedules();
+        $this->seedLatePaymentAlerts();
     }
     
     public function seedVenues() {
@@ -104,6 +107,18 @@ class DatabaseSeeder extends Seeder
     
     public function seedLogs() {
         (new LogsFactory())->count(50)->create();
+    }
+
+    public function seedPaymentScheduleTemplates() {
+        $this->call(PaymentScheduleTemplatesSeeder::class);
+    }
+
+    public function seedPaymentSchedules() {
+        $this->call(PaymentSchedulesSeeder::class);
+    }
+
+    public function seedLatePaymentAlerts() {
+        $this->call(LatePaymentAlertsSeeder::class);
     }
 
     public function seedRoles() {

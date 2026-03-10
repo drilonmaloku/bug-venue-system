@@ -24,8 +24,19 @@ class RouteServiceProvider extends ServiceProvider
      */
     public function boot(): void
     {
+        // Rate limiting for API
         RateLimiter::for('api', function (Request $request) {
-            return Limit::perMinute(60)->by($request->user()?->id ?: $request->ip());
+            // Authenticated users get higher limits
+            if ($request->user()) {
+                return Limit::perMinute(1000)->by($request->user()->id);
+            }
+            // Unauthenticated requests are limited by IP
+            return Limit::perMinute(60)->by($request->ip());
+        });
+
+        // Stricter rate limiting for authentication endpoints
+        RateLimiter::for('auth', function (Request $request) {
+            return Limit::perMinute(10)->by($request->ip());
         });
 
         $this->routes(function () {
@@ -38,7 +49,7 @@ class RouteServiceProvider extends ServiceProvider
             Route::middleware('web')->group(base_path('app/Modules/Logs/Routes/logs-web.php'));
             Route::middleware('web')->group(base_path('app/Modules/Menus/Routes/menus-web.php'));
             Route::middleware('web')->group(base_path('app/Modules/Decors/Routes/decors-web.php'));
-            Route::middleware('web')->group(base_path('app/Modules/Collaborators/Routes/collaborators-web.php'));
+
             Route::middleware('web')->group(base_path('app/Modules/Payments/Routes/payments-web.php'));
             Route::middleware('web')->group(base_path('app/Modules/Reports/Routes/reports-web.php'));
             Route::middleware('web')->group(base_path('app/Modules/Reservations/Routes/reservations-web.php'));

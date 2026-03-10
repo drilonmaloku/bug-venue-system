@@ -6,6 +6,8 @@ use App\Modules\Expenses\Models\Expense;
 use App\Modules\Location\Models\Location;
 use App\Modules\Users\Models\LocationUser;
 use App\Modules\Users\Models\UserSettings;
+use App\Services\Permissions\PermissionManager;
+use App\Services\Permissions\PermissionRegistry;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Illuminate\Database\Eloquent\SoftDeletes;
@@ -199,8 +201,189 @@ class User extends Authenticatable
         return $this->hasOne(UserSettings::class);
     }
 
+    /**
+     * Check if user account is active
+     */
+    public function isActive(): bool
+    {
+        return $this->deleted_at === null;
+    }
 
+    /**
+     * Get the reservations for the user (as manager).
+     */
+    public function reservations()
+    {
+        return $this->hasMany(\App\Modules\Reservations\Models\Reservation::class, 'manager_id');
+    }
 
+    // ==================== PERMISSION SYSTEM METHODS ====================
+
+    /**
+     * Check if user can perform action on resource
+     * Scope-aware permission check
+     */
+    public function canAction(string $resource, string $action, ?string $scope = null, $resourceInstance = null): bool
+    {
+        $permissionManager = app(PermissionManager::class);
+        
+        // Build permission string
+        if ($scope) {
+            $permission = "{$resource}.{$action}.{$scope}";
+        } else {
+            $permission = "{$resource}.{$action}";
+        }
+        
+        // Check base permission
+        if (!$permissionManager->hasPermission($this, $permission)) {
+            return false;
+        }
+        
+        // Additional ownership/resource checks if needed
+        if ($resourceInstance && method_exists($this, 'owns')) {
+            $owns = $this->owns($resourceInstance);
+            
+            // If scope is 'own', verify ownership
+            if ($scope === 'own' && !$owns) {
+                return false;
+            }
+            
+            // If scope is 'assigned', verify assignment
+            if ($scope === 'assigned' && !$this->isAssigned($resourceInstance)) {
+                return false;
+            }
+        }
+        
+        return true;
+    }
+
+    /**
+     * Check if user has specific permission with scope fallback
+     */
+    public function hasPermissionWithFallback(string $permission): bool
+    {
+        $permissionManager = app(PermissionManager::class);
+        return $permissionManager->hasPermission($this, $permission);
+    }
+
+    /**
+     * Get all effective permissions including inherited
+     */
+    public function effectivePermissions(): array
+    {
+        return $this->permissions->pluck('name')->toArray();
+    }
+
+    /**
+     * Check if user has a permission from their role template
+     */
+    public function hasTemplatePermission(string $permission): bool
+    {
+        $role = $this->roles->first();
+        
+        if (!$role) {
+            return false;
+        }
+        
+        $templatePermissions = PermissionRegistry::getRoleTemplate($role->name);
+        return in_array($permission, $templatePermissions);
+    }
+
+    /**
+     * Get user's permission exceptions
+     */
+    public function permissionExceptions()
+    {
+        return $this->hasMany(UserPermissionException::class);
+    }
+
+    /**
+     * Check if user has custom permissions (deviations from template)
+     */
+    public function hasCustomPermissions(): bool
+    {
+        return $this->permissionExceptions()->exists();
+    }
+
+    /**
+     * Reset permissions to role template
+     */
+    public function resetPermissionsToTemplate(?int $performedBy = null): void
+    {
+        $permissionManager = app(PermissionManager::class);
+        $permissionManager->syncWithRoleTemplate($this, $performedBy);
+    }
+
+    /**
+     * Get permission comparison with template
+     */
+    public function permissionComparison(): array
+    {
+        $permissionManager = app(PermissionManager::class);
+        return $permissionManager->compareWithTemplate($this);
+    }
+
+    // ==================== ROLE HELPERS ====================
+
+    /**
+     * Assign role and apply template permissions
+     */
+    public function assignRoleWithPermissions($roles, ?int $performedBy = null): void
+    {
+        $this->assignRole($roles);
+        
+        $role = is_array($roles) ? $roles[0] : $roles;
+        $roleName = $role instanceof \Spatie\Permission\Models\Role ? $role->name : $role;
+        
+        $permissionManager = app(PermissionManager::class);
+        $permissionManager->assignRoleTemplate($this, $roleName, $performedBy);
+    }
+
+    /**
+     * Get role level for hierarchy checks
+     */
+    public function roleLevel(): int
+    {
+        $role = $this->roles->first();
+        
+        if (!$role) {
+            return 0;
+        }
+        
+        return PermissionRegistry::ROLES[$role->name]['level'] ?? 0;
+    }
+
+    /**
+     * Check if user can manage another user (hierarchy check)
+     */
+    public function canManage(User $otherUser): bool
+    {
+        // Cannot manage self
+        if ($this->id === $otherUser->id) {
+            return false;
+        }
+        
+        // System admin can manage everyone except other system admins
+        if ($this->hasRole('system-admin')) {
+            return !$otherUser->hasRole('system-admin') || $this->id < $otherUser->id;
+        }
+        
+        // Location owner can manage users in their locations with lower role level
+        if ($this->hasRole('location-owner')) {
+            return $this->roleLevel() > $otherUser->roleLevel();
+        }
+        
+        // Location admin can manage staff in same location
+        if ($this->hasRole('location-admin')) {
+            $thisLocationId = $this->getCurrentLocationId();
+            $otherLocationId = $otherUser->getCurrentLocationId();
+            
+            return $thisLocationId === $otherLocationId 
+                && $this->roleLevel() > $otherUser->roleLevel();
+        }
+        
+        return false;
+    }
 }
     
 

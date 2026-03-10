@@ -18,15 +18,9 @@ use Illuminate\Support\Facades\App;
 use Illuminate\Support\Facades\Session;
 use Maatwebsite\Excel\Facades\Excel;
 use App\Http\Controllers\Controller;
-use App\Modules\Collaborators\Services\CollaboratorsService;
 use App\Modules\Decors\Services\DecorService;
-use App\Modules\Reservations\Exports\ReservationsExport;
-use App\Modules\Reservations\Models\ReservationCollaborator;
-use App\Modules\Reservations\Models\ReservationComment;
 use App\Modules\Reservations\Models\ReservationStaff;
 use App\Modules\Reservations\Resources\ReservationListCommentResource;
-use App\Modules\Reservations\Services\DiscountReservationsServices;
-use App\Modules\Reservations\Services\ReservationCollaboratorServices;
 use App\Modules\Reservations\Services\ReservationCommentServices;
 use App\Modules\Reservations\Services\ReservationStaffServices;
 use App\Modules\Users\Services\UsersService;
@@ -47,43 +41,14 @@ class ReservationsGuestController extends Controller
     private $commentReservationService;
     private $userService;
     private $discountService;
-    private $staffServices;
-    private $decorService;
-    private $collaboratorService;
-    private $reservationcollaboratorService;
     private $reservationGuestService;
 
     public function __construct(
-        VenuesService $venuesService,
         ReservationsService $reservationsService,
-        ClientsService $clientsService,
-        MenuService $menuService,
-        PaymentsService $paymentsService,
-        ReservationCommentServices $commentReservationService,
-        ReservationStaffServices $staffServices,
-        UsersService $userService,
-        InvoicesServices $invoiceService,
-        DiscountReservationsServices $discountService,
-        DecorService $decorService,
-        CollaboratorsService $collaboratorService,
-        ReservationCollaboratorServices $reservationcollaboratorService,
         ReservationGuestService $reservationGuestService
     ) {
-        $this->venuesService = $venuesService;
         $this->reservationsService = $reservationsService;
-        $this->clientsService = $clientsService;
-        $this->menuService = $menuService;
-        $this->paymentsService = $paymentsService;
-        $this->commentReservationService = $commentReservationService;
-        $this->userService = $userService;
-        $this->invoiceService = $invoiceService;
-        $this->discountService = $discountService;
-        $this->staffServices = $staffServices;
-        $this->decorService = $decorService;
-        $this->collaboratorService = $collaboratorService;
-        $this->reservationcollaboratorService = $reservationcollaboratorService;
         $this->reservationGuestService = $reservationGuestService;
-
     }
 
 

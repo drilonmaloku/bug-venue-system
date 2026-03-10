@@ -4,10 +4,11 @@ namespace App\Modules\Reservations\Models;
 
 use App\Models\User;
 use App\Modules\Clients\Models\Client;
-use App\Modules\Collaborators\Models\Collaborator;
+
 use App\Modules\Decors\Models\Decor;
 use App\Modules\Menus\Models\Menu;
 use App\Modules\Payments\Models\Payment;
+use App\Modules\Payments\Models\PaymentSchedule;
 use App\Modules\Venues\Models\Venue;
 use App\Scopes\CurrentLocationScope;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
@@ -135,11 +136,6 @@ class Reservation extends Model
         return $this->belongsTo(Decor::class,'decor_id');
     }
  
-    public function collaborators()
-    {
-        return $this->belongsToMany(Collaborator::class, 'collaborator_reservation', 'reservation_id', 'collaborator_id');
-    }
-
     public function getTotalInvoiceAmountAttribute()
     {
         return $this->invoices->sum('amount');
@@ -198,5 +194,13 @@ class Reservation extends Model
     public function reminders()
     {
         return $this->hasMany(Reminder::class, 'reservation_id');
+    }
+
+    /**
+     * Get the payment schedule for the reservation.
+     */
+    public function paymentSchedule()
+    {
+        return $this->hasOne(PaymentSchedule::class);
     }
 }

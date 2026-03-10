@@ -136,10 +136,7 @@
     "logs.filter.context.option.menus": "Menu",
     "logs.filter.context.option.invoice": "Invoices",
     "logs.filter.context.option.discount": "Discount",
-    "logs.filter.context.option.collaborators": "Collaborators",
-
     "logs.filter.context.option.decors": "Decors",
-    "no_collaborators": "No Collaborators",
     "venues.forms.create_btn": "Create",
     "venues.forms.create_title": "Create Venue",
     "venues.forms.save": "Save",

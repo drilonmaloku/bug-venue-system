@@ -2,6 +2,11 @@
 
 namespace App\Providers;
 
+use App\Events\PaymentOverdue;
+use App\Events\PaymentReceived;
+use App\Events\PaymentScheduleCreated;
+use App\Listeners\CreateLatePaymentAlert;
+use App\Listeners\UpdatePaymentStatus;
 use App\Modules\Reservations\Models\Reservation;
 use App\Modules\Reservations\Observers\ReservationObserver;
 use Illuminate\Auth\Events\Registered;
@@ -20,6 +25,12 @@ class EventServiceProvider extends ServiceProvider
         Registered::class => [
             SendEmailVerificationNotification::class,
         ],
+        PaymentReceived::class => [
+            UpdatePaymentStatus::class,
+        ],
+        PaymentOverdue::class => [
+            CreateLatePaymentAlert::class,
+        ],
     ];
 
     /**
@@ -28,7 +39,6 @@ class EventServiceProvider extends ServiceProvider
     public function boot(): void
     {
         Reservation::observe(ReservationObserver::class);
-
     }
 
     /**

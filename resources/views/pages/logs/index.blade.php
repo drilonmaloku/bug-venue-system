@@ -46,8 +46,7 @@
                             <option @if(app('request')->input('context') == 8) selected @endif value="8">{{__('logs.filter.context.option.invoice')}}</option>
                             <option @if(app('request')->input('context') == 9) selected @endif value="9">{{__('logs.filter.context.option.discount')}}</option>                            
                             <option @if(app('request')->input('context') == 10) selected @endif value="10">{{__('logs.filter.context.option.decors')}}</option>
-                            <option @if(app('request')->input('context') == 11) selected @endif value="11">{{__('logs.filter.context.option.collaborators')}}</option>
-                            <option @if(app('request')->input('context') == 12) selected @endif value="12">{{__('logs.filter.context.option.location')}}</option>
+                            <option @if(app('request')->input('context') == 11) selected @endif value="11">{{__('logs.filter.context.option.location')}}</option>
                         </select>
                     </div>
                     <div class="hubers-filter-group">

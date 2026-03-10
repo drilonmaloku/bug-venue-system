@@ -19,15 +19,12 @@ use Illuminate\Support\Facades\App;
 use Illuminate\Support\Facades\Session;
 use Maatwebsite\Excel\Facades\Excel;
 use App\Http\Controllers\Controller;
-use App\Modules\Collaborators\Services\CollaboratorsService;
 use App\Modules\Decors\Services\DecorService;
 use App\Modules\Reservations\Exports\ReservationsExport;
-use App\Modules\Reservations\Models\ReservationCollaborator;
 use App\Modules\Reservations\Models\ReservationComment;
 use App\Modules\Reservations\Models\ReservationStaff;
 use App\Modules\Reservations\Resources\ReservationListCommentResource;
 use App\Modules\Reservations\Services\DiscountReservationsServices;
-use App\Modules\Reservations\Services\ReservationCollaboratorServices;
 use App\Modules\Reservations\Services\ReservationCommentServices;
 use App\Modules\Reservations\Services\ReservationStaffServices;
 use App\Modules\Users\Services\UsersService;
@@ -50,8 +47,6 @@ class ReservationsController extends Controller
     private $discountService;
     private $staffServices;
     private $decorService;
-    private $collaboratorService;
-    private $reservationcollaboratorService;
     private $reservationGuestService;
 
     public function __construct(
@@ -66,8 +61,6 @@ class ReservationsController extends Controller
         InvoicesServices $invoiceService,
         DiscountReservationsServices $discountService,
         DecorService $decorService,
-        CollaboratorsService $collaboratorService,
-        ReservationCollaboratorServices $reservationcollaboratorService,
         ReservationGuestService $reservationGuestService
     ) {
         $this->venuesService = $venuesService;
@@ -81,8 +74,6 @@ class ReservationsController extends Controller
         $this->discountService = $discountService;
         $this->staffServices = $staffServices;
         $this->decorService = $decorService;
-        $this->collaboratorService = $collaboratorService;
-        $this->reservationcollaboratorService = $reservationcollaboratorService;
         $this->reservationGuestService = $reservationGuestService;
 
     }
@@ -101,7 +92,6 @@ class ReservationsController extends Controller
             'venues' => $this->venuesService->getVenues(),
             'menus' => $this->menuService->getAll(new Request(), false),
             'decors' => $this->decorService->getAll(new Request(), false),
-            'collaborators' => $this->collaboratorService->getAll(new Request(), false),
         ]);
     }
 
@@ -113,8 +103,6 @@ class ReservationsController extends Controller
             'users' => $this->userService->getAll(request(), false),
             'clients' => $this->clientsService->getAll(request(), false),
             'decors' => $this->decorService->getAll(request(), false),
-            'collaborators' => $this->collaboratorService->getAll(request(), false),
-
         ]);
     }
 
@@ -206,7 +194,6 @@ class ReservationsController extends Controller
             'totalAmount'=>$totalAmount,
             'users' => $this->userService->getStaffUsers(),
             'contract' => $this->reservationsService->generateReservationContract($reservation,$contractContent['contract']),
-            'collaborators' => $this->collaboratorService->getAll(),
             'planning' => json_decode($reservation->planning, true), 
             'hasReminders' => true,
         ]);
@@ -267,7 +254,6 @@ class ReservationsController extends Controller
             'venues' => $this->venuesService->getVenues(),
             'menus' => $this->menuService->getAll(request(), false),
             'decors' => $this->decorService->getAll(request(), false),
-            'collaborators' =>  $this->collaboratorService->getAll(request(), false),
             'planning' => json_decode($reservation->planning, true), 
 
         ]);
@@ -743,53 +729,6 @@ class ReservationsController extends Controller
 
             return redirect()->back()->withErrors(['message' => 'Internal Server Error']);
         }
-    }
-
-    public function addCollaborator($reservation, Request $request)
-    {
-   
-    try {
-        $collaborator = $this->reservationcollaboratorService->addCollaborator($reservation,$request);
-            $request->validate([
-            'collaborator_id' => [
-                'required',
-                Rule::unique('reservation_collaborator', 'collaborator_id')
-                    ->where('reservation_id', $reservationId)
-            ]
-        ]);
-      
-        return redirect()->back()->with('success', 'Bashkpuntori eshte shtuar me sukses');
-
-    } catch (\Exception $e) {
-        \Log::error('Error adding collaborator: ' . $e->getMessage());
-
-        return redirect()->back()->withErrors(['message' => 'Internal Server Error']);
-    }
-}
-
-    public function deleteCollaborator($reservationId, $collaboratorId)
-    {
-        try {
-            $collaborator = ReservationCollaborator::where('reservation_id', $reservationId)
-                ->where('collaborator_id', $collaboratorId)
-                ->first();
-
-            if (is_null($collaborator)) {
-                return redirect()->back()->withErrorMessage('Bashkpuntori nuk u gjet');
-            }
-
-            $deleted = $this->reservationcollaboratorService->deleteCollaborator($collaborator);
-
-            if ($deleted) {
-                return redirect()->back()->withSuccessMessage('Bashkpuntori eshte fshire me sukses');
-            }
-
-            return redirect()->back()->withErrorMessage('Bashkpuntori nuk mund te fshihet');
-
-            } catch (\Exception $e) {
-                \Log::error('Error deleting collaborator: ' . $e->getMessage());
-                return redirect()->back()->withErrorMessage('Ndodhi nje problem gjate fshirjes se bashkpuntorit');
-            }
     }
 
     public function deleteStaff($id)
